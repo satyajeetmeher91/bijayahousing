@@ -159,7 +159,7 @@ html,body{max-width:100%;overflow-x:hidden}
     <div class="brand"><div class="brand-mark">BH</div><span id="brandName">BIJAYA HOUSING</span></div>
     <div class="nav-spacer"></div>
     <div class="search" id="customerSearch"><span>⌕</span><input id="searchInput" placeholder="Search products..."></div>
-    <a class="outline callbtn" href="tel:8114832749">☎ 8114832749</a>
+    <a class="outline callbtn" href="tel:8114832749">☎ Raju</a>
     <button class="outline profilebtn" onclick="openCustomerProfile()">👤 Profile</button>
     <button class="outline adminnavbtn" id="adminNavButton" onclick="showLogin()">Admin</button>
     <button class="iconbtn cartbtn" onclick="openCart()">🛒<span class="badge" id="cartBadge">0</span></button>
@@ -171,11 +171,11 @@ html,body{max-width:100%;overflow-x:hidden}
 <section id="customerGate" class="customer-gate">
   <div class="gate-icon">BH</div>
   <h2>Welcome to BIJAYA HOUSING</h2>
-  <p>Create your customer account first. After admin approval, call BIJAYA HOUSING to receive your Customer ID and Password.</p>
+  <p>Create your account first. After admin approval, call BIJAYA HOUSING to receive your Customer ID and Password.</p>
   <button class="primary" onclick="showCustomerLogin()">Customer Login / Sign Up</button>
   <div class="gate-contact">
-    <a href="tel:8114832749">☎ 8114832749</a>
-    <a href="tel:9078523132">☎ 9078523132</a>
+    <a href="tel:8114832749">☎ Raju</a>
+    <a href="tel:9078523132">☎ Dibya</a>
   </div>
 </section>
 
@@ -192,8 +192,8 @@ html,body{max-width:100%;overflow-x:hidden}
   <section class="contact-strip">
     <div><strong>BIJAYA HOUSING</strong><span>Agalpur</span></div>
     <div class="contact-actions">
-      <a class="outline" href="tel:8114832749">☎ 8114832749</a>
-      <a class="outline" href="tel:9078523132">☎ 9078523132</a>
+      <a class="outline" href="tel:8114832749">☎ Raju</a>
+      <a class="outline" href="tel:9078523132">☎ Dibya</a>
       <a class="primary" target="_blank" href="https://wa.me/918114832749">WhatsApp</a>
     </div>
   </section>
@@ -209,7 +209,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Demo frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
+    <p style="color:var(--muted);font-size:14px">Pro frontend authentication.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -234,7 +234,7 @@ html,body{max-width:100%;overflow-x:hidden}
         <div class="stat"><small>Cart Items</small><strong id="statCart">0</strong></div>
         <div class="stat"><small>Orders Saved</small><strong id="statOrders">0</strong></div>
       </div>
-      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually. For production, connect the Google Sheet section to your Apps Script Web App URL so the catalog is shared across all customers.</p></div>
+      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually. For bulk upload, contact administration.</p></div>
     </div>
     <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><input id="adminProductSearch" placeholder="Search..." style="padding:10px;border:1px solid var(--line);border-radius:10px"></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
     <div id="adminOrdersTab" class="hidden">
@@ -279,7 +279,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">Professional Shop App • Google Sheets connected catalog • Prices displayed in ₹ INR • WhatsApp: 8114832749</footer>
+<footer class="footer">All Rights Reserved • BIJAYA HOUSING AGALPUR • Powered by Satyajeet</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -331,7 +331,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="field"><label>Pincode *</label><input id="custPincode" inputmode="numeric" placeholder="6-digit pincode"></div>
       <div class="field"><label>Order Note</label><input id="custNote" placeholder="Optional"></div>
     </div>
-    <p class="notice" style="margin-top:15px">After submitting, your order will be saved and the order details will open directly in WhatsApp. The invoice can be generated only by the admin.</p>
+    <p class="notice" style="margin-top:15px">After submitting, your order will be saved and the order details will open directly in WhatsApp. The invoice can be generated separately and final price will be different. Kindly contact support number for more details.</p>
     <button class="primary" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order & Open WhatsApp</button>
   </div>
 </div>
