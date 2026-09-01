@@ -22,7 +22,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .iconbtn{border:1px solid var(--line);background:#fff;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:19px;transition:.18s transform}.cartbtn{position:relative}.badge{position:absolute;right:-5px;top:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;display:grid;place-items:center;font-weight:800}
 .container{max-width:1280px;margin:auto;padding:28px 22px 60px}.hero{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:28px;padding:48px;color:#fff;display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:center;box-shadow:var(--shadow);margin-bottom:28px}.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.02;margin:0 0 16px}.hero p{color:#cbd5e1;max-width:650px;font-size:17px;line-height:1.7;margin:0 0 25px}.hero-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:25px}.hero-card .big{font-size:40px;font-weight:900}.hero-card small{color:#cbd5e1}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:28px 0 15px}.section-head h2{margin:0;font-size:24px}.categories{display:flex;gap:10px;overflow:auto;padding:2px 1px 10px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;white-space:nowrap;font-weight:700;color:#475569;transition:.18s}.chip.active,.chip:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(15,23,42,.04);transition:.2s;display:flex;flex-direction:column}.product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.product-img{aspect-ratio:1/1;background:#eef2f7;overflow:hidden}.product-img img{width:100%;height:100%;object-fit:cover;display:block}.product-body{padding:16px}.product-cat{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.product h3{font-size:17px;margin:7px 0}.desc{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}.price{font-size:20px;font-weight:900;margin:12px 0}.size-row{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.size{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:800}.size.selected{border-color:var(--accent);background:#eff6ff;color:var(--accent)}.addrow{display:flex;gap:8px}.addrow .primary{flex:1}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(15,23,42,.04);transition:.2s;display:flex;flex-direction:column}.product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.product-img{aspect-ratio:1/1;background:#eef2f7;overflow:hidden;position:relative}.product-img::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,#eef2f7 25%,#f8fafc 37%,#eef2f7 63%);background-size:400% 100%;animation:imgSkeleton 1.2s ease infinite}.product-img img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;opacity:0;transition:opacity .18s ease}.product-img img.img-ready{opacity:1}.product-img.img-loaded::before{display:none}@keyframes imgSkeleton{0%{background-position:100% 0}100%{background-position:-100% 0}}.product-body{padding:16px}.product-cat{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.product h3{font-size:17px;margin:7px 0}.desc{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}.price{font-size:20px;font-weight:900;margin:12px 0}.size-row{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.size{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:800}.size.selected{border-color:var(--accent);background:#eff6ff;color:var(--accent)}.addrow{display:flex;gap:8px}.addrow .primary{flex:1}
 .empty{padding:50px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cbd5e1;border-radius:18px;grid-column:1/-1}
 .drawer-backdrop,.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.48);z-index:90;display:none}.drawer-backdrop.show,.modal-backdrop.show{display:block}.drawer{position:fixed;z-index:100;right:0;top:0;height:100dvh;width:min(470px,100%);background:#fff;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.15)}.drawer.show{transform:translateX(0)}.drawer-head{padding:20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.drawer-body{padding:18px;overflow:auto;flex:1}.cart-item{display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.cart-item img{width:70px;height:70px;border-radius:12px;object-fit:cover;background:#f1f5f9}.cart-item h4{margin:0 0 5px}.cart-meta{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:8px;margin-top:9px}.qty button{border:1px solid var(--line);background:#fff;width:28px;height:28px;border-radius:8px}.drawer-foot{padding:18px;border-top:1px solid var(--line)}.totalrow{display:flex;justify-content:space-between;font-size:19px;font-weight:900;margin-bottom:14px}
 .modal{position:fixed;z-index:110;left:50%;top:50%;transform:translate(-50%,-47%);width:min(900px,calc(100% - 28px));max-height:90dvh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.22);display:none}.modal.show{display:block;animation:pop .18s ease}.modal-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-body{padding:22px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:800}.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}textarea{min-height:90px;resize:vertical}.checkout-summary{background:var(--surface2);padding:16px;border-radius:15px;margin-bottom:18px}.checkout-line{display:flex;justify-content:space-between;padding:5px 0;font-size:14px}.notice{font-size:12px;color:var(--muted);line-height:1.5}
@@ -46,8 +46,6 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
  .contact-strip{align-items:flex-start;flex-direction:column}.contact-actions{width:100%}.contact-actions a{flex:1;text-align:center}
 }
 
-.mobile-admin-fab{display:none}
-@media(max-width:720px){.mobile-admin-fab{display:block;position:fixed;right:14px;bottom:18px;z-index:80;border:1px solid var(--primary);background:#fff;color:var(--primary);border-radius:999px;padding:11px 15px;font-weight:900;box-shadow:0 12px 30px rgba(15,23,42,.18)}}
 
 .customer-gate{min-height:62vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#fff;border:1px solid var(--line);border-radius:28px;padding:45px 20px;box-shadow:var(--shadow);margin-top:18px}
 .gate-icon{width:78px;height:78px;border-radius:22px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:25px;font-weight:950;margin-bottom:18px}
@@ -159,7 +157,7 @@ html,body{max-width:100%;overflow-x:hidden}
     <div class="brand"><div class="brand-mark">BH</div><span id="brandName">BIJAYA HOUSING</span></div>
     <div class="nav-spacer"></div>
     <div class="search" id="customerSearch"><span>⌕</span><input id="searchInput" placeholder="Search products..."></div>
-    <a class="outline callbtn" href="tel:8114832749">☎ Raju</a>
+    <a class="outline callbtn" href="tel:8114832749">☎ Raj Kishor</a>
     <button class="outline profilebtn" onclick="openCustomerProfile()">👤 Profile</button>
     <button class="outline adminnavbtn" id="adminNavButton" onclick="showLogin()">Admin</button>
     <button class="iconbtn cartbtn" onclick="openCart()">🛒<span class="badge" id="cartBadge">0</span></button>
@@ -171,11 +169,11 @@ html,body{max-width:100%;overflow-x:hidden}
 <section id="customerGate" class="customer-gate">
   <div class="gate-icon">BH</div>
   <h2>Welcome to BIJAYA HOUSING</h2>
-  <p>Create your account first. After admin approval, call BIJAYA HOUSING to receive your Customer ID and Password.</p>
+  <p>Create your customer account first. After admin approval, call BIJAYA HOUSING to receive your Customer ID and Password.</p>
   <button class="primary" onclick="showCustomerLogin()">Customer Login / Sign Up</button>
   <div class="gate-contact">
-    <a href="tel:8114832749">☎ Raju</a>
-    <a href="tel:9078523132">☎ Dibya</a>
+    <a href="tel:8114832749">☎ Raj Kishor</a>
+    <a href="tel:9078523132">☎ Dibya Kishor</a>
   </div>
 </section>
 
@@ -192,8 +190,8 @@ html,body{max-width:100%;overflow-x:hidden}
   <section class="contact-strip">
     <div><strong>BIJAYA HOUSING</strong><span>Agalpur</span></div>
     <div class="contact-actions">
-      <a class="outline" href="tel:8114832749">☎ Raju</a>
-      <a class="outline" href="tel:9078523132">☎ Dibya</a>
+      <a class="outline" href="tel:8114832749">☎ Raj Kishor</a>
+      <a class="outline" href="tel:9078523132">☎ Dibya Kishor</a>
       <a class="primary" target="_blank" href="https://wa.me/918114832749">WhatsApp</a>
     </div>
   </section>
@@ -209,7 +207,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Pro frontend authentication.</p>
+    <p style="color:var(--muted);font-size:14px">Pro frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -234,7 +232,7 @@ html,body{max-width:100%;overflow-x:hidden}
         <div class="stat"><small>Cart Items</small><strong id="statCart">0</strong></div>
         <div class="stat"><small>Orders Saved</small><strong id="statOrders">0</strong></div>
       </div>
-      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually. For bulk upload, contact administration.</p></div>
+      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually. For production, connect the Google Sheet section to your Apps Script Web App URL so the catalog is shared across all customers.</p></div>
     </div>
     <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><input id="adminProductSearch" placeholder="Search..." style="padding:10px;border:1px solid var(--line);border-radius:10px"></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
     <div id="adminOrdersTab" class="hidden">
@@ -279,7 +277,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">All Rights Reserved • BIJAYA HOUSING AGALPUR • Powered by Satyajeet</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -331,7 +329,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="field"><label>Pincode *</label><input id="custPincode" inputmode="numeric" placeholder="6-digit pincode"></div>
       <div class="field"><label>Order Note</label><input id="custNote" placeholder="Optional"></div>
     </div>
-    <p class="notice" style="margin-top:15px">After submitting, your order will be saved and the order details will open directly in WhatsApp. The invoice can be generated separately and final price will be different. Kindly contact support number for more details.</p>
+    <p class="notice" style="margin-top:15px">After submitting, your order will be saved and the order details will open directly in WhatsApp. The invoice can be generated only by the shop. Have patience</p>
     <button class="primary" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order & Open WhatsApp</button>
   </div>
 </div>
@@ -652,8 +650,33 @@ async function customerLogout(){
 /* PRODUCTS */
 function renderCategories(){const cats=["All",...new Set(products.filter(p=>p.active!==false).map(p=>p.category).filter(Boolean))];$("categories").innerHTML=cats.map(c=>`<button class="chip ${category===c?"active":""}" onclick="setCategory('${esc(c).replace(/'/g,"&#39;")}')">${esc(c)}</button>`).join("");if($("statCategories"))$("statCategories").textContent=Math.max(0,cats.length-1)}
 function setCategory(c){category=c;renderCategories();renderProducts()}
-function renderProducts(){const q=$("searchInput")?.value.trim().toLowerCase()||"";const list=products.filter(p=>p.active!==false&&(category==="All"||p.category===category)&&(!q||`${p.name} ${p.category} ${p.description}`.toLowerCase().includes(q)));$("productTitle").textContent=category==="All"?"All Products":category;$("productCount").textContent=`${list.length} item${list.length!==1?"s":""}`;$("productGrid").innerHTML=list.length?list.map(productCard).join(""):`<div class="empty"><h3>No products found</h3><p>Products added in Google Sheets will appear here automatically.</p></div>`}
-function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img src="${esc(p.image||DEFAULT_IMAGE)}" alt="${esc(p.name)}" onerror="this.src='${DEFAULT_IMAGE}'"></div><div class="product-body"><div class="product-cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${esc(p.id)}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${esc(p.id)}">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
+function renderProducts(){const q=$("searchInput")?.value.trim().toLowerCase()||"";const list=products.filter(p=>p.active!==false&&(category==="All"||p.category===category)&&(!q||`${p.name} ${p.category} ${p.description}`.toLowerCase().includes(q)));$("productTitle").textContent=category==="All"?"All Products":category;$("productCount").textContent=`${list.length} item${list.length!==1?"s":""}`;$("productGrid").innerHTML=list.length?list.map(productCard).join(""):`<div class="empty"><h3>No products found</h3><p>Products added in Google Sheets will appear here automatically.</p></div>`;scheduleProductImages()}
+let productImageObserver=null;
+function loadProductImage(img){
+  if(!img||img.dataset.loaded==='1'||img.dataset.loading==='1')return;
+  const src=img.dataset.src;
+  if(!src)return;
+  img.dataset.loading='1';
+  const done=()=>{img.dataset.loaded='1';img.classList.add('img-ready');img.closest('.product-img')?.classList.add('img-loaded');delete img.dataset.loading;};
+  const fail=()=>{img.src=DEFAULT_IMAGE;img.dataset.loaded='1';img.classList.add('img-ready');img.closest('.product-img')?.classList.add('img-loaded');delete img.dataset.loading;};
+  img.onload=done; img.onerror=fail; img.src=src;
+}
+function scheduleProductImages(){
+  const imgs=[...document.querySelectorAll('.async-product-image')];
+  if(productImageObserver)productImageObserver.disconnect();
+  if('IntersectionObserver' in window){
+    productImageObserver=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){loadProductImage(e.target);productImageObserver.unobserve(e.target);}});
+    },{rootMargin:'500px 0px'});
+    imgs.forEach(img=>productImageObserver.observe(img));
+    // Start the first visible batch after the product cards have painted.
+    requestAnimationFrame(()=>requestAnimationFrame(()=>imgs.slice(0,8).forEach(loadProductImage)));
+  }else{
+    requestAnimationFrame(()=>imgs.forEach(loadProductImage));
+  }
+}
+
+function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" decoding="async" data-src="${esc(p.image||DEFAULT_IMAGE)}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${esc(p.id)}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${esc(p.id)}">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
 let viewedProductId=null;
 let viewedProductSize="";
 let viewedProductQty=1;
@@ -744,7 +767,7 @@ function closeProductView(){
 function selectSize(id,size,btn){btn.parentElement.querySelectorAll(".size").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected");const p=products.find(x=>x.id===id),s=p?.sizes?.find(x=>x.name===size);if(s)$("price-"+id).textContent=money(s.price)}
 function getSelectedSize(id){return $("sizes-"+id)?.querySelector(".selected")?.textContent.trim()||""}
 function addToCart(id){if(!customer()){showCustomerLogin();return}const p=products.find(x=>x.id===id);if(!p)return;const size=getSelectedSize(id),s=p.sizes?.find(x=>x.name===size),price=s?s.price:p.price,stock=s?s.stock:p.stock;if(stock<=0){toast("This item is out of stock");return}const key=id+"|"+size,x=cart.find(i=>i.key===key);if(x){if(x.qty>=stock){toast("Maximum available stock reached");return}x.qty++}else cart.push({key,id,size,price,qty:1});saveLocal();updateCart();toast("Added to cart")}
-function updateCart(){const count=cart.reduce((a,x)=>a+x.qty,0);$("cartBadge").textContent=count;$("statCart").textContent=count;$("cartBody").innerHTML=cart.length?cart.map(x=>{const p=products.find(y=>y.id===x.id);return `<div class="cart-item"><img src="${esc(p?.image||DEFAULT_IMAGE)}"><div><h4>${esc(p?.name||"Product")}</h4><div class="cart-meta">${x.size?`Size: ${esc(x.size)} • `:""}${money(x.price)}</div><div class="qty"><button onclick="changeQty('${esc(x.key)}',-1)">−</button><b>${x.qty}</b><button onclick="changeQty('${esc(x.key)}',1)">+</button></div></div><b>${money(x.price*x.qty)}</b></div>`}).join(""):`<div class="empty"><h3>Your cart is empty</h3><p>Add products to continue.</p></div>`;$("cartTotal").textContent=money(cart.reduce((a,x)=>a+x.price*x.qty,0))}
+function updateCart(){const count=cart.reduce((a,x)=>a+x.qty,0);$("cartBadge").textContent=count;$("statCart").textContent=count;$("cartBody").innerHTML=cart.length?cart.map(x=>{const p=products.find(y=>y.id===x.id);return `<div class="cart-item"><img loading="lazy" decoding="async" src="${esc(p?.image||DEFAULT_IMAGE)}"><div><h4>${esc(p?.name||"Product")}</h4><div class="cart-meta">${x.size?`Size: ${esc(x.size)} • `:""}${money(x.price)}</div><div class="qty"><button onclick="changeQty('${esc(x.key)}',-1)">−</button><b>${x.qty}</b><button onclick="changeQty('${esc(x.key)}',1)">+</button></div></div><b>${money(x.price*x.qty)}</b></div>`}).join(""):`<div class="empty"><h3>Your cart is empty</h3><p>Add products to continue.</p></div>`;$("cartTotal").textContent=money(cart.reduce((a,x)=>a+x.price*x.qty,0))}
 function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.find(y=>y.id===x.id);if(!x)return;if(delta>0){const s=p?.sizes?.find(y=>y.name===x.size),stock=s?s.stock:p?.stock||0;if(x.qty>=stock){toast("Maximum stock reached");return}}x.qty+=delta;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveLocal();updateCart()}
 function openCart(){if(!customer()){showCustomerLogin("login");return}$("drawerBackdrop").classList.add("show");$("cartDrawer").classList.add("show")}
 function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer").classList.remove("show")}
@@ -1081,7 +1104,10 @@ async function saveProduct(){const name=$("pName").value.trim(),cat=$("pCategory
 function normalizeProduct(p){return {id:String(p.id||""),name:String(p.name||""),category:String(p.category||""),description:String(p.description||""),image:String(p.image||DEFAULT_IMAGE),price:Number(p.price)||0,stock:Number(p.stock)||0,active:p.active!==false,sizes:Array.isArray(p.sizes)?p.sizes.map(s=>({name:String(s.name||""),price:Number(s.price)||0,stock:Number(s.stock)||0})):[]}}
 async function loadProductsFromApi(showMessage=true){
   try{
-    if(showMessage)toast("Loading products from Google Sheets...");
+    if(showMessage)toast("Loading products...");
+    if($("productGrid") && !products.length){
+      $("productGrid").innerHTML='<div class="empty"><h3>Loading products…</h3><p>Please wait a moment.</p></div>';
+    }
     const d=await apiGet("products");
     const c=customer();
 
@@ -1146,17 +1172,16 @@ async function init(){
   updateCart();
 
   if(customer()){
-    await loadProductsFromApi(false);
-    await loadCustomerOrders();
+    // Products and order history are independent requests. Load them in parallel.
+    await Promise.all([loadProductsFromApi(false), loadCustomerOrders()]);
   }
 
   if(sessionStorage.getItem("admin_token")){
     $("adminNavButton")?.classList.add("hidden");
     $("mobileAdminFab")?.classList.add("hidden");
     $("customerSearch")?.classList.add("hidden");
-    await loadProductsFromApi(false);
-    await loadAdminOrders();
-    await loadAdminCustomers();
+    // Products may already be loaded above only for a customer session.
+    await Promise.all([loadProductsFromApi(false), loadAdminOrders(), loadAdminCustomers()]);
   }else{
     $("adminNavButton")?.classList.remove("hidden");
     $("mobileAdminFab")?.classList.remove("hidden");
@@ -1164,7 +1189,6 @@ async function init(){
 }
 init();
 </script>
-
 
 </body>
 </html>
