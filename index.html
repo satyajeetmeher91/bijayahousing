@@ -215,7 +215,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Pro frontend authentication. </p>
+    <p style="color:var(--muted);font-size:14px">Demo frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -285,7 +285,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.15</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -754,6 +754,206 @@ async function loadProductsFromApi(showMessage=true){
     if(showMessage)toast(products.length+" products loaded");
     return true;
   }catch(e){console.error(e);if(showMessage)toast("Could not load products");return false;}
+}
+
+function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
+function generateInvoice(o){const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(o.id)} - BIJAYA HOUSING</title><style>body{font-family:Arial,sans-serif;padding:35px;color:#111;max-width:900px;margin:auto}h1{margin-bottom:4px}.muted{color:#666}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}th:last-child,td:last-child{text-align:right}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}button{padding:10px 16px;border:1px solid #111;background:#fff;border-radius:8px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button><h1>BIJAYA HOUSING</h1><div>Agalpur</div><div class="muted">8114832749 • 9078523132</div><h2>INVOICE</h2><div class="muted">${esc(o.id)} • ${new Date(o.date).toLocaleString("en-IN")}</div><p><b>${esc(o.customer.name)}</b><br>${esc(o.customer.phone)}<br>${esc(o.customer.address)}<br>${esc(o.customer.pin)}</p><table><tr><th>Code</th><th>Item</th><th>Size</th><th>Qty</th><th>Price</th><th>Amount</th></tr>${o.items.map(x=>`<tr><td>${esc(x.code||x.id||"-")}</td><td>${esc(x.name)}</td><td>${esc(x.size||"-")}</td><td>${x.qty}</td><td>${money(x.price)}</td><td>${money(x.price*x.qty)}</td></tr>`).join("")}</table><div class="total">Total: ${money(o.total)}</div><p class="muted">Thank you for shopping with BIJAYA HOUSING.</p></body></html>`;const url=URL.createObjectURL(new Blob([html],{type:"text/html"}));const a=document.createElement("a");a.href=url;a.download=`${o.id}-invoice.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+
+/* ADMIN */
+function showLogin(){
+  $("customerView").classList.add("hidden");
+  $("adminView").classList.add("show");
+  $("customerSearch")?.classList.add("hidden");
+  const logged=!!sessionStorage.getItem("admin_token");
+  $("adminLoginView").classList.toggle("hidden",logged);
+  $("adminPanel").classList.toggle("hidden",!logged);
+  if(logged){$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden")}else{$("adminNavButton")?.classList.remove("hidden");$("mobileAdminFab")?.classList.remove("hidden")}
+  window.scrollTo(0,0)
+}
+function showCustomer(){
+  $("adminView").classList.remove("show");
+  $("customerView").classList.remove("hidden");
+  $("customerSearch")?.classList.remove("hidden");
+  updateCustomerAccess();
+  window.scrollTo(0,0)
+}
+async function adminLogin(){const username=$("adminUser").value.trim(),password=$("adminPass").value;if(!username||!password){toast("Enter username and password");return}try{const d=await apiPost({action:"loginAdmin",username,password});if(!d.adminToken)throw Error("Admin session token missing");sessionStorage.setItem("admin_token",d.adminToken);sessionStorage.setItem("admin_logged","1");sessionStorage.setItem("admin_user",JSON.stringify(d.admin||{}));$("adminLoginView").classList.add("hidden");$("adminPanel").classList.remove("hidden");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");await loadProductsFromApi(false);await loadAdminOrders();await loadAdminCustomers();toast("Admin login successful")}catch(e){toast("Invalid admin login")}}
+async function adminLogout(){const token=sessionStorage.getItem("admin_token");try{if(token)await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"logoutAdmin",adminToken:token})})}catch(e){}sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_logged");sessionStorage.removeItem("admin_user");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");showCustomer();toast("Admin logged out")}
+function adminTab(tab,btn){document.querySelectorAll(".admin-tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");["dashboard","products","orders","customers","data"].forEach(x=>$("admin"+x[0].toUpperCase()+x.slice(1)+"Tab")?.classList.toggle("hidden",x!==tab));if(tab==="orders")loadAdminOrders();if(tab==="customers")loadAdminCustomers()}
+function renderAdmin(){
+  if($("statProducts"))$("statProducts").textContent=products.length;
+  if($("statOrders"))$("statOrders").textContent=orders.length;
+  if($("statCart"))$("statCart").textContent=cart.reduce((a,x)=>a+x.qty,0);
+  if($("statCategories"))$("statCategories").textContent=new Set(products.map(p=>p.category).filter(Boolean)).size;
+  if($("adminProductsBody"))$("adminProductsBody").innerHTML=products.map(p=>`<tr><td><b>${esc(p.name)}</b><br><span class="cart-meta">${esc(p.id)}</span></td><td>${esc(p.category)}</td><td>${p.sizes?.length?p.sizes.map(s=>`${esc(s.name)} ${money(s.price)}`).join("<br>"):money(p.price)}</td><td>${p.sizes?.length?p.sizes.reduce((a,s)=>a+Number(s.stock||0),0):p.stock}</td><td>${p.active!==false?"Yes":"No"}</td><td><button class="outline" onclick="editProduct('${esc(p.id)}')">Edit</button></td></tr>`).join("");
+  renderAdminOrders();
+}
+function orderStatus(o){return String(o.status||"New").trim()||"New";}
+function orderSortRank(status){const s=status.toLowerCase();if(s==="completed")return 90;if(s==="cancelled"||s==="canceled")return 100;if(s==="new")return 10;if(s==="confirmed")return 20;if(s==="processing")return 30;if(s==="ready")return 40;return 50;}
+function setOrderStatusFilter(value){orderStatusFilter=value||"All";renderAdminOrders();}
+function renderAdminOrders(){
+  const body=$("ordersBody");if(!body)return;
+  const counts={New:0,Confirmed:0,Processing:0,Ready:0,Completed:0,Cancelled:0};
+  orders.forEach(o=>{const s=orderStatus(o),key=s.toLowerCase()==="canceled"?"Cancelled":s;if(counts[key]!==undefined)counts[key]++;});
+  if($("orderSummaryBar"))$("orderSummaryBar").innerHTML=Object.entries(counts).map(([k,v])=>`<span class="order-summary-pill">${k}<strong>${v}</strong></span>`).join("");
+  let list=orders.filter(o=>orderStatusFilter==="All"||orderStatus(o).toLowerCase()===orderStatusFilter.toLowerCase()||(orderStatusFilter==="Cancelled"&&["cancelled","canceled"].includes(orderStatus(o).toLowerCase())));
+  list=[...list].sort((a,b)=>{const r=orderSortRank(orderStatus(a))-orderSortRank(orderStatus(b));return r||new Date(b.date)-new Date(a.date);});
+  body.innerHTML=list.length?list.map(o=>{
+    const items=o.items||[];
+    const itemHtml=items.length?items.map(i=>`<div style="margin-bottom:5px"><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` <span class="cart-meta">(${esc(i.size)})</span>`:""} × ${Number(i.qty)||0} @ ${money(i.price)}</div>`).join(""):`<span class="cart-meta">No item details available</span>`;
+    return `<tr><td><b>${esc(o.id)}</b><br><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></td><td><b>${esc(o.customer?.name||"")}</b><br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span></td><td>${itemHtml}</td><td><b>${money(o.total)}</b></td><td><span class="status">${esc(orderStatus(o))}</span></td><td class="action-cell"><button class="outline" onclick="generateInvoiceById('${esc(o.id)}')">🧾 Generate Invoice</button></td></tr>`;
+  }).join(""):`<tr><td colspan="6"><div class="empty"><h3>No matching orders</h3><p>Try another status filter.</p></div></td></tr>`;
+}
+function generateInvoiceById(id){const o=orders.find(x=>String(x.id)===String(id));if(!o){toast("Order not found");return;}generateInvoice(o);}
+
+/* ADMIN CUSTOMER MANAGEMENT */
+let adminCustomers=[];
+async function loadAdminCustomers(){
+  if(!sessionStorage.getItem("admin_token"))return;
+  try{
+    const d=await apiPost({action:"getCustomers"});
+    adminCustomers=d.customers||[];
+    renderAdminCustomers();
+  }catch(e){
+    toast("Could not load customers: "+e.message);
+  }
+}
+function customerStatusClass(status){
+  const s=String(status||"Pending").toLowerCase();
+  if(s==="active")return "status-active";
+  if(s==="blocked")return "status-blocked";
+  return "status-pending";
+}
+function renderAdminCustomers(){
+  const body=$("adminCustomersBody"); if(!body)return;
+  const q=($("adminCustomerSearch")?.value||"").trim().toLowerCase();
+  const list=adminCustomers.filter(c=>`${c.id} ${c.name} ${c.phone} ${c.type} ${c.accessType}`.toLowerCase().includes(q));
+  body.innerHTML=list.length?list.map(c=>{
+    const st=(c.status||"Pending").toLowerCase();
+    const cls=st==="active"?"status-active":st==="blocked"?"status-blocked":"status-pending";
+    const access=c.accessType||"ALL";
+    const action=st==="pending"
+      ? `<button class="primary" onclick="approveCustomer('${esc(c.id)}')">Approve</button>`
+      : `<button class="outline" onclick="manageCustomerAccess('${esc(c.id)}')">Access</button>
+         <button class="outline" onclick="setCustomerStatus('${esc(c.id)}','${st==="blocked"?"Active":"Blocked"}')">${st==="blocked"?"Unblock":"Block"}</button>`;
+    return `<tr>
+      <td><b>${esc(c.name)}</b></td>
+      <td>${esc(c.type||"Customer")}</td>
+      <td>${esc(c.phone||"")}</td>
+      <td><span class="customer-id-badge">${esc(c.id||"Pending")}</span></td>
+      <td><span class="status ${cls}">${esc(c.status||"Pending")}</span></td>
+      <td>${esc(access)}</td>
+      <td>${c.dateRegistered?new Date(c.dateRegistered).toLocaleDateString("en-IN"):"—"}</td>
+      <td><div class="customer-row-actions">${action}</div></td>
+    </tr>`;
+  }).join(""):`<tr><td colspan="8"><div class="empty"><h3>No customers found</h3><p>New registrations will appear here.</p></div></td></tr>`;
+}
+async function approveCustomer(id){
+  if(!confirm("Approve this customer and generate new login credentials?"))return;
+  try{
+    const d=await apiPost({action:"adminApproveCustomer",customerId:id});
+    showGeneratedCredentials(d);
+    await loadAdminCustomers();
+    toast("Customer approved");
+  }catch(e){
+    toast("Approval failed: "+e.message);
+  }
+}
+async function setCustomerStatus(id,status){
+  const action=status==="Blocked"?"Block":"Unblock";
+  if(!confirm(`${action} this customer?`))return;
+  try{
+    await apiPost({action:"adminSetCustomerStatus",customerId:id,status});
+    await loadAdminCustomers();
+    toast(`Customer ${status.toLowerCase()}`);
+  }catch(e){
+    toast("Could not change status: "+e.message);
+  }
+}
+function showGeneratedCredentials(d){
+  const box=$("adminCustomerCredentialBox");
+  if(!box)return;
+  box.innerHTML=`<div class="credential-box">
+    <b>Give these credentials to the customer</b>
+    <div style="margin-top:10px">Customer ID<br><code>${esc(d.customerId||"")}</code></div>
+    <div style="margin-top:10px">Temporary Password<br><code>${esc(d.temporaryPassword||"")}</code></div>
+    <div class="notice" style="margin-top:10px">The password is stored as a secure hash. Keep this information safe.</div>
+  </div>`;
+  $("adminCustomerModal").classList.add("show");
+  $("modalBackdrop").classList.add("show");
+}
+function openAdminCustomerForm(){
+  $("adminCustName").value="";
+  $("adminCustType").value="Customer";
+  $("adminCustPhone").value="";
+  $("adminCustAddress").value="";
+  $("adminCustPin").value="";
+  $("adminCustomerCredentialBox").innerHTML="";
+  $("adminCustomerModal").classList.add("show");
+  $("modalBackdrop").classList.add("show");
+}
+async function adminCreateCustomer(){
+  const name=$("adminCustName").value.trim();
+  const phone=$("adminCustPhone").value.replace(/\D/g,"");
+  const type=$("adminCustType").value;
+  const address=$("adminCustAddress").value.trim();
+  const pin=$("adminCustPin").value.replace(/\D/g,"");
+
+  if(!name||phone.length!==10||!address||pin.length!==6){
+    toast("Enter valid customer details");
+    return;
+  }
+
+  try{
+    const d=await apiPost({action:"adminCreateCustomer",customer:{name,type,phone,address,pin}});
+    showGeneratedCredentials(d);
+    await loadAdminCustomers();
+    toast("Customer account created");
+  }catch(e){
+    toast("Could not create customer: "+e.message);
+  }
+}
+
+/* CUSTOMER PRODUCT ACCESS */
+let accessCustomerId="";
+async function manageCustomerAccess(id){
+  accessCustomerId=id;
+  const c=adminCustomers.find(x=>String(x.id)===String(id));
+  if(!c)return;
+  $("accessCustomerTitle").textContent=`${c.name} • ${c.type||"Customer"} • ${c.id}`;
+  $("accessType").value=c.accessType||"ALL";
+  await renderAccessChoices(c);
+  $("customerAccessModal").classList.add("show"); $("modalBackdrop").classList.add("show");
+  updateAccessBoxes();
+}
+function updateAccessBoxes(){
+  const t=$("accessType").value;
+  $("categoryAccessBox").classList.toggle("hidden",t!=="CATEGORY");
+  $("productAccessBox").classList.toggle("hidden",t!=="PRODUCT");
+}
+async function renderAccessChoices(c){
+  const cats=[...new Set(products.map(p=>p.category).filter(Boolean))].sort();
+  const allowedCats=String(c.allowedCategories||"").split(",").map(x=>x.trim()).filter(Boolean);
+  const allowedProducts=String(c.allowedProducts||"").split(",").map(x=>x.trim()).filter(Boolean);
+  $("accessCategoriesList").innerHTML=cats.length?cats.map(x=>`<label class="access-check"><input type="checkbox" value="${esc(x)}" ${allowedCats.includes(x)?"checked":""}> <span>${esc(x)}</span></label>`).join(""):`<div class="notice">No categories found.</div>`;
+  $("accessProductsList").innerHTML=products.length?products.map(p=>`<label class="access-check"><input type="checkbox" value="${esc(p.id)}" ${allowedProducts.includes(p.id)?"checked":""}> <span><b>${esc(p.id)}</b> — ${esc(p.name)} <small>(${esc(p.category)})</small></span></label>`).join(""):`<div class="notice">No products found.</div>`;
+}
+async function saveCustomerAccess(){
+  const type=$("accessType").value;
+  const categories=[...document.querySelectorAll("#accessCategoriesList input:checked")].map(x=>x.value);
+  const productIds=[...document.querySelectorAll("#accessProductsList input:checked")].map(x=>x.value);
+  if(type==="CATEGORY" && !categories.length){toast("Select at least one category");return}
+  if(type==="PRODUCT" && !productIds.length){toast("Select at least one product");return}
+  try{
+    const result=await apiPost({action:"adminSetCustomerAccess",customerId:accessCustomerId,accessType:type,allowedCategories:categories.join(","),allowedProducts:productIds.join(",")});
+    if(!result || result.ok===false)throw Error(result?.error||"Unknown server error");
+    await loadAdminCustomers();
+    closeModal();
+    toast("Customer product access saved");
+  }catch(e){
+    console.error("Customer access save error:",e);
+    toast("Could not save access: "+e.message);
+  }
 }
 
 async function loadAdminOrders(){
