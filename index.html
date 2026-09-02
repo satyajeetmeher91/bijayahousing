@@ -207,11 +207,11 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Demo frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
+    <p style="color:var(--muted);font-size:14px">Pro frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button class="primary" style="width:100%" onclick="adminLogin()">Login</button>
-    <button class="outline" style="width:100%;margin-top:9px" onclick="showCustomer()">← Back to Store</button>
+    <button class="outline" style="width:100%;margin-top:9px" onclick="goBackToStore()">← Back to Store</button>
   </div>
   <div id="adminPanel" class="hidden">
     <div class="admin-toolbar">
@@ -277,7 +277,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.17</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.18</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -465,6 +465,7 @@ html,body{max-width:100%;overflow-x:hidden}
 let API_URL=localStorage.getItem("bijaya_api_url")||"https://script.google.com/macros/s/AKfycbwXpRGn-_VTG7qTbGp-I-rNDmm_XBzvqgPIH3eB_OsNsq7OtD7R3KZnsXGMyWvJj8e4/exec";
 const WHATSAPP_NUMBER="918114832749";
 const DEFAULT_IMAGE="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80";
+let productsLoadPromise=null;
 let products=[],cart=JSON.parse(localStorage.getItem("shop_cart")||"[]"),orders=JSON.parse(localStorage.getItem("shop_orders")||"[]"),category="All",editingId=null,orderStatusFilter="All";
 const $=id=>document.getElementById(id);
 const money=n=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:2}).format(Number(n)||0);
@@ -929,24 +930,35 @@ function renderCustomerOrders(){
 function generateInvoice(o){const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(o.id)} - BIJAYA HOUSING</title><style>body{font-family:Arial,sans-serif;padding:35px;color:#111;max-width:900px;margin:auto}h1{margin-bottom:4px}.muted{color:#666}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}th:last-child,td:last-child{text-align:right}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}button{padding:10px 16px;border:1px solid #111;background:#fff;border-radius:8px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button><h1>BIJAYA HOUSING</h1><div>Agalpur</div><div class="muted">8114832749 • 9078523132</div><h2>INVOICE</h2><div class="muted">${esc(o.id)} • ${new Date(o.date).toLocaleString("en-IN")}</div><p><b>${esc(o.customer.name)}</b><br>${esc(o.customer.phone)}<br>${esc(o.customer.address)}<br>${esc(o.customer.pin)}</p><table><tr><th>Code</th><th>Item</th><th>Size</th><th>Qty</th><th>Price</th><th>Amount</th></tr>${o.items.map(x=>`<tr><td>${esc(x.code||x.id||"-")}</td><td>${esc(x.name)}</td><td>${esc(x.size||"-")}</td><td>${x.qty}</td><td>${money(x.price)}</td><td>${money(x.price*x.qty)}</td></tr>`).join("")}</table><div class="total">Total: ${money(o.total)}</div><p class="muted">Thank you for shopping with BIJAYA HOUSING.</p></body></html>`;const url=URL.createObjectURL(new Blob([html],{type:"text/html"}));const a=document.createElement("a");a.href=url;a.download=`${o.id}-invoice.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 
 /* ADMIN */
-function showLogin(){
-  $("customerView").classList.add("hidden");
-  $("adminView").classList.add("show");
-  $("customerSearch")?.classList.add("hidden");
-  const logged=!!sessionStorage.getItem("admin_token");
-  $("adminLoginView").classList.toggle("hidden",logged);
-  $("adminPanel").classList.toggle("hidden",!logged);
-  if(logged){$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden")}else{$("adminNavButton")?.classList.remove("hidden");$("mobileAdminFab")?.classList.remove("hidden")}
-  window.scrollTo(0,0)
-}
-function showCustomer(){
-  $("adminView").classList.remove("show");
-  $("customerView").classList.remove("hidden");
-  $("customerSearch")?.classList.remove("hidden");
+let appView="customer";
+let navigationLock=false;
+function setAppView(view,push=true){
+  if(navigationLock)return;
+  appView=view;
+  $("customerView")?.classList.toggle("hidden",view!=="customer");
+  $("adminView")?.classList.toggle("show",view==="admin");
+  $("customerSearch")?.classList.toggle("hidden",view!=="customer" || !customer());
+  if(view==="admin") {
+    const logged=!!sessionStorage.getItem("admin_token");
+    $("adminLoginView")?.classList.toggle("hidden",logged);
+    $("adminPanel")?.classList.toggle("hidden",!logged);
+  }
   updateCustomerAccess();
-  window.scrollTo(0,0)
+  window.scrollTo({top:0,behavior:"instant"});
+  if(push && history.pushState) history.pushState({view},"",view==="admin"?"#admin":"#store");
 }
-async function adminLogin(){const username=$("adminUser").value.trim(),password=$("adminPass").value;if(!username||!password){toast("Enter username and password");return}try{const d=await apiPost({action:"loginAdmin",username,password});if(!d.adminToken)throw Error("Admin session token missing");sessionStorage.setItem("admin_token",d.adminToken);sessionStorage.setItem("admin_logged","1");sessionStorage.setItem("admin_user",JSON.stringify(d.admin||{}));$("adminLoginView").classList.add("hidden");$("adminPanel").classList.remove("hidden");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");await loadProductsFromApi(false);await loadAdminOrders();await loadAdminCustomers();toast("Admin login successful")}catch(e){toast("Invalid admin login")}}
+function showLogin(){setAppView("admin",true);}
+function showCustomer(){setAppView("customer",true);}
+function goBackToStore(){
+  if(history.length>1 && location.hash==="#admin") history.back();
+  else setAppView("customer",false);
+}
+window.addEventListener("popstate",()=>{
+  navigationLock=true;
+  setAppView(location.hash==="#admin"?"admin":"customer",false);
+  navigationLock=false;
+});
+async function adminLogin(){const username=$("adminUser").value.trim(),password=$("adminPass").value;if(!username||!password){toast("Enter username and password");return}try{const d=await apiPost({action:"loginAdmin",username,password});if(!d.adminToken)throw Error("Admin session token missing");sessionStorage.setItem("admin_token",d.adminToken);sessionStorage.setItem("admin_logged","1");sessionStorage.setItem("admin_user",JSON.stringify(d.admin||{}));$("adminLoginView").classList.add("hidden");$("adminPanel").classList.remove("hidden");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");await loadProductsFromApi(false,true);await Promise.all([loadAdminOrders(),loadAdminCustomers()]);toast("Admin login successful")}catch(e){toast("Invalid admin login")}}
 async function adminLogout(){const token=sessionStorage.getItem("admin_token");try{if(token)await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"logoutAdmin",adminToken:token})})}catch(e){}sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_logged");sessionStorage.removeItem("admin_user");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");showCustomer();toast("Admin logged out")}
 function adminTab(tab,btn){document.querySelectorAll(".admin-tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");["dashboard","products","orders","customers","data"].forEach(x=>$("admin"+x[0].toUpperCase()+x.slice(1)+"Tab")?.classList.toggle("hidden",x!==tab));if(tab==="orders")loadAdminOrders();if(tab==="customers")loadAdminCustomers()}
 function renderAdmin(){
@@ -1148,49 +1160,55 @@ function openProductForm(){editingId=null;$("productModalTitle").textContent="Ad
 function editProduct(id){const p=products.find(x=>x.id===id);if(!p)return;editingId=id;$("productModalTitle").textContent="Edit Product";$("pName").value=p.name||"";$("pCategory").value=p.category||"";$("pDescription").value=p.description||"";$("pImage").value=p.image||"";$("pPrice").value=p.price||0;$("pSizes").value=(p.sizes||[]).map(s=>`${s.name}:${s.price}:${s.stock}`).join(", ");$("pStock").value=p.stock||0;$("pActive").value=String(p.active!==false);$("productModal").classList.add("show");$("modalBackdrop").classList.add("show")}
 async function saveProduct(){const name=$("pName").value.trim(),cat=$("pCategory").value.trim();if(!name||!cat){toast("Product name and category are required");return}const sizes=$("pSizes").value.split(",").map(x=>x.trim()).filter(Boolean).map(x=>{const [n,pr,st]=x.split(":");return{name:n.trim(),price:Number(pr)||0,stock:st!==undefined?Number(st)||0:Number($("pStock").value)||0}}).filter(x=>x.name);const p={id:editingId||"P"+Date.now(),name,category:cat,description:$("pDescription").value.trim(),image:$("pImage").value.trim()||DEFAULT_IMAGE,price:Number($("pPrice").value)||0,stock:Number($("pStock").value)||0,active:$("pActive").value==="true",sizes};try{await apiPost({action:"saveProduct",product:p});await loadProductsFromApi(false);closeModal();toast("Product saved to Google Sheet")}catch(e){toast("Could not save product: "+e.message)}}
 function normalizeProduct(p){return {id:String(p.id||""),name:String(p.name||""),category:String(p.category||""),description:String(p.description||""),image:String(p.image||DEFAULT_IMAGE),price:Number(p.price)||0,stock:Number(p.stock)||0,active:p.active!==false,sizes:Array.isArray(p.sizes)?p.sizes.map(s=>({name:String(s.name||""),price:Number(s.price)||0,stock:Number(s.stock)||0})):[]}}
-async function loadProductsFromApi(showMessage=true){
-  try{
-    if(showMessage)toast("Loading products...");
-    if($("productGrid") && !products.length){
-      $("productGrid").innerHTML='<div class="empty"><h3>Loading products…</h3><p>Please wait a moment.</p></div>';
+async function loadProductsFromApi(showMessage=true, force=false){
+  if(productsLoadPromise && !force) return productsLoadPromise;
+
+  productsLoadPromise=(async()=>{
+    try{
+      if(showMessage)toast("Loading products...");
+      const grid=$("productGrid");
+      if(grid && !products.length){
+        grid.innerHTML='<div class="empty"><h3>Loading products…</h3><p>Getting product details...</p></div>';
+      }
+
+      let d;
+      try{
+        d=await apiGet("products");
+      }catch(firstError){
+        console.warn("Product request failed; retrying once",firstError);
+        await new Promise(r=>setTimeout(r,350));
+        d=await apiGet("products");
+      }
+
+      const c=customer();
+      if(c && d.access){
+        c.accessType=String(d.access.accessType||"ALL").toUpperCase();
+        c.allowedCategories=Array.isArray(d.access.allowedCategories)?d.access.allowedCategories.join(","):String(d.access.allowedCategories||"");
+        c.allowedProducts=Array.isArray(d.access.allowedProducts)?d.access.allowedProducts.join(","):String(d.access.allowedProducts||"");
+        localStorage.setItem("bijaya_customer",JSON.stringify(c));
+      }
+
+      let loaded=(d.products||[]).map(normalizeProduct).filter(p=>p.id&&p.name);
+      if(c) loaded=filterProductsForCustomer(loaded,c);
+      products=loaded;
+
+      renderCategories();
+      renderProducts();
+      renderAdmin();
+      if($("apiStatus"))$("apiStatus").textContent="● Connected — "+products.length+" product(s) loaded.";
+      if(showMessage)toast(products.length+" products loaded");
+      return true;
+    }catch(e){
+      console.error("Product loading error:",e);
+      if($("apiStatus"))$("apiStatus").textContent="● Product connection failed";
+      if($("productGrid"))$("productGrid").innerHTML='<div class="empty"><h3>Products could not be loaded</h3><p>Tap Refresh Products to try again.</p><button class="outline" onclick="loadProductsFromApi(true,true)">↻ Refresh Products</button></div>';
+      if(showMessage)toast("Could not load products: "+(e.message||"connection error"));
+      return false;
+    }finally{
+      productsLoadPromise=null;
     }
-    let d;
-    try {
-      d=await apiGet("products");
-    } catch(firstError) {
-      console.warn("Initial product request failed; retrying once:", firstError);
-      await new Promise(r=>setTimeout(r,700));
-      d=await apiGet("products");
-    }
-    const c=customer();
-
-    // Always refresh the customer's access from the server. This is important
-    // when admin changes permissions while the customer is already logged in.
-    if(c && d.access){
-      c.accessType=String(d.access.accessType||"ALL").toUpperCase();
-      c.allowedCategories=Array.isArray(d.access.allowedCategories)?d.access.allowedCategories.join(","):String(d.access.allowedCategories||"");
-      c.allowedProducts=Array.isArray(d.access.allowedProducts)?d.access.allowedProducts.join(","):String(d.access.allowedProducts||"");
-      localStorage.setItem("bijaya_customer",JSON.stringify(c));
-    }
-
-    products=(d.products||[]).map(normalizeProduct).filter(p=>p.id&&p.name);
-
-    // Second-layer UI filtering. Apps Script is the real security boundary;
-    // this prevents stale/incorrect UI data from remaining visible.
-    if(c) products=filterProductsForCustomer(products,c);
-
-    renderCategories();
-    renderProducts();
-    renderAdmin();
-    if($("apiStatus"))$("apiStatus").textContent="● Connected — "+products.length+" product(s) loaded from Google Sheets.";
-    if(showMessage)toast(products.length+" products loaded");
-    return true;
-  }catch(e){
-    console.error(e);
-    if($("apiStatus"))$("apiStatus").textContent="● Connection failed — check Apps Script deployment.";
-    if(showMessage)toast("Could not load products");
-    return false;
-  }
+  })();
+  return productsLoadPromise;
 }
 
 function filterProductsForCustomer(list,c){
@@ -1224,23 +1242,31 @@ async function init(){
   updateCustomerAccess();
   updateCart();
 
-  if(customer()){
-    // Products and order history are independent requests. Load them in parallel.
-    await Promise.all([loadProductsFromApi(false), loadCustomerOrders()]);
-  }
-
-  if(sessionStorage.getItem("admin_token")){
-    $("adminNavButton")?.classList.add("hidden");
-    $("mobileAdminFab")?.classList.add("hidden");
-    $("customerSearch")?.classList.add("hidden");
-    // Products may already be loaded above only for a customer session.
-    await Promise.all([loadProductsFromApi(false), loadAdminOrders(), loadAdminCustomers()]);
+  const adminLogged=!!sessionStorage.getItem("admin_token");
+  if(adminLogged){
+    setAppView("admin",false);
+    await Promise.all([loadProductsFromApi(false),loadAdminOrders(),loadAdminCustomers()]);
+  }else if(customer()){
+    setAppView("customer",false);
+    await Promise.all([loadProductsFromApi(false),loadCustomerOrders()]);
   }else{
-    $("adminNavButton")?.classList.remove("hidden");
-    $("mobileAdminFab")?.classList.remove("hidden");
+    setAppView("customer",false);
   }
 }
+
+window.addEventListener("pageshow",()=>{
+  // If the browser restores the page from back/forward cache, repair the visible view.
+  setAppView(location.hash==="#admin" && sessionStorage.getItem("admin_token")?"admin":"customer",false);
+});
+
 init();
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if($("cartDrawer")?.classList.contains("show"))closeCart();
+    else if(document.querySelector(".modal.show"))closeModal();
+  }
+});
+
 </script>
 
 </body>
