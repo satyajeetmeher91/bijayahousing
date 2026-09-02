@@ -24,7 +24,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:28px 0 15px}.section-head h2{margin:0;font-size:24px}.categories{display:flex;gap:10px;overflow:auto;padding:2px 1px 10px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;white-space:nowrap;font-weight:700;color:#475569;transition:.18s}.chip.active,.chip:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(15,23,42,.04);transition:.2s;display:flex;flex-direction:column}.product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.product-img{aspect-ratio:1/1;background:#eef2f7;overflow:hidden;position:relative}.product-img::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,#eef2f7 25%,#f8fafc 37%,#eef2f7 63%);background-size:400% 100%;animation:imgSkeleton 1.2s ease infinite}.product-img img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;opacity:0;transition:opacity .18s ease}.product-img img.img-ready{opacity:1}.product-img.img-loaded::before{display:none}@keyframes imgSkeleton{0%{background-position:100% 0}100%{background-position:-100% 0}}.product-body{padding:16px}.product-cat{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.product h3{font-size:17px;margin:7px 0}.desc{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}.price{font-size:20px;font-weight:900;margin:12px 0}.size-row{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.size{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:800}.size.selected{border-color:var(--accent);background:#eff6ff;color:var(--accent)}.addrow{display:flex;gap:8px}.addrow .primary{flex:1}
 .empty{padding:50px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cbd5e1;border-radius:18px;grid-column:1/-1}
-.drawer-backdrop,.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.48);z-index:90;display:none}.drawer-backdrop.show,.modal-backdrop.show{display:block}.drawer{position:fixed;z-index:100;right:0;top:0;height:100dvh;width:min(470px,100%);background:#fff;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.15)}.drawer.show{transform:translateX(0)}.drawer-head{padding:20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.drawer-body{padding:18px;overflow:auto;flex:1}.cart-item{display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.cart-item img{width:70px;height:70px;border-radius:12px;object-fit:cover;background:#f1f5f9}.cart-item h4{margin:0 0 5px}.cart-meta{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:8px;margin-top:9px}.qty button{border:1px solid var(--line);background:#fff;width:28px;height:28px;border-radius:8px}.drawer-foot{padding:18px;border-top:1px solid var(--line)}.totalrow{display:flex;justify-content:space-between;font-size:19px;font-weight:900;margin-bottom:14px}
+.drawer-backdrop,.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.48);z-index:90;display:none}.drawer-backdrop.show,.modal-backdrop.show{display:block}.drawer{position:fixed;z-index:100;right:0;top:0;height:100dvh;width:min(470px,100%);background:#fff;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.15)}.drawer.show{transform:translateX(0)}.drawer-head{padding:20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.drawer-body{padding:18px;overflow:auto;flex:1}.cart-item{display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.cart-item img{width:70px;height:70px;border-radius:12px;object-fit:cover;background:#f1f5f9}.cart-item h4{margin:0 0 5px}.cart-meta{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:8px;margin-top:9px}.qty button{border:1px solid var(--line);background:#fff;width:28px;height:28px;border-radius:8px}.cart-qty-input{width:58px;height:30px;padding:3px 5px}.drawer-foot{padding:18px;border-top:1px solid var(--line)}.totalrow{display:flex;justify-content:space-between;font-size:19px;font-weight:900;margin-bottom:14px}
 .modal{position:fixed;z-index:110;left:50%;top:50%;transform:translate(-50%,-47%);width:min(900px,calc(100% - 28px));max-height:90dvh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.22);display:none}.modal.show{display:block;animation:pop .18s ease}.modal-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-body{padding:22px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:800}.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}textarea{min-height:90px;resize:vertical}.checkout-summary{background:var(--surface2);padding:16px;border-radius:15px;margin-bottom:18px}.checkout-line{display:flex;justify-content:space-between;padding:5px 0;font-size:14px}.notice{font-size:12px;color:var(--muted);line-height:1.5}
 .admin-layout{display:none}.admin-layout.show{display:block}.admin-nav{display:flex;gap:8px;overflow:auto;margin-bottom:18px}.admin-tab{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:11px;font-weight:800;white-space:nowrap}.admin-tab.active{background:var(--primary);color:#fff}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:28px;margin-top:6px}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:18px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:760px}.table th,.table td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:13px}.table th{color:var(--muted);font-size:12px;text-transform:uppercase}.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-weight:800;font-size:11px}
 .login-card{max-width:430px;margin:70px auto;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow)}.login-card h2{margin-top:0}.login-card .field{margin-bottom:13px}.admin-toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
@@ -104,7 +104,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .product-view-stock{font-size:12px;color:var(--muted);margin:4px 0 16px}
 .product-view-qty{display:flex;align-items:center;gap:12px;margin-bottom:18px}
 .product-view-qty button{width:38px;height:38px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;font-size:20px;font-weight:900}
-.product-view-qty strong{min-width:28px;text-align:center;font-size:16px}
+.product-view-qty strong{min-width:28px;text-align:center;font-size:16px}.qty-input{width:70px;height:38px;text-align:center;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:10px;font-weight:900;outline:none}.qty-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 .product-view-actions{display:flex;gap:9px;margin-top:auto;padding-top:10px}
 .product-view-actions .primary{flex:1}
 .product-clickable{cursor:pointer}
@@ -148,6 +148,13 @@ html,body{max-width:100%;overflow-x:hidden}
 .customer-row-actions{display:flex;gap:7px;flex-wrap:wrap}
 .credential-box{background:#f8fafc;border:1px dashed #94a3b8;border-radius:14px;padding:14px;margin-top:14px}
 .credential-box code{font-size:16px;font-weight:900;letter-spacing:.04em}
+
+/* PERSISTENT PRODUCT CACHE */
+.product-cache-note{font-size:12px;color:var(--muted);background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 12px}
+.product-img{position:relative}.product-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:imgShimmer 1.2s infinite;pointer-events:none}.product-img.img-loaded::after{display:none}
+@keyframes imgShimmer{to{transform:translateX(100%)}}
+.qty-input{width:58px;height:34px;border:1px solid var(--line);border-radius:9px;text-align:center;background:var(--surface);color:var(--text);font-weight:800;outline:none}
+.qty-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 </style>
 </head>
 <body>
@@ -183,7 +190,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
       <h1>Shop smarter.<br>Choose what you need.</h1>
       <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
-      <button class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
+      <button class="primary" onclick="document.getElementById('categories').scrollIntoView()">Explore Products →</button>
     </div>
     <div class="hero-card"><small>Order support</small><div class="big">WhatsApp</div><small>Fast order confirmation through 8114832749</small></div>
   </section>
@@ -195,10 +202,11 @@ html,body{max-width:100%;overflow-x:hidden}
       <a class="primary" target="_blank" href="https://wa.me/918114832749">WhatsApp</a>
     </div>
   </section>
-  <div class="section-head"><h2>Categories</h2></div>
+  <div class="section-head"><h2>Categories</h2><span id="categoryStatus" style="color:var(--muted);font-size:13px"></span></div>
   <div class="categories" id="categories"></div>
-  <section id="productsSection">
-    <div class="section-head"><h2 id="productTitle">All Products</h2><span id="productCount" style="color:var(--muted);font-size:13px"></span></div>
+  <section id="productsSection" class="hidden">
+    <div class="section-head"><h2 id="productTitle">Products</h2><span id="productCount" style="color:var(--muted);font-size:13px"></span></div>
+    <div id="productCacheNote" class="product-cache-note hidden"></div>
     <div class="grid" id="productGrid"></div>
   </section>
   </div>
@@ -207,7 +215,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Pro frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
+    <p style="color:var(--muted);font-size:14px">Pro frontend authentication. </p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -307,7 +315,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="product-view-label">Quantity</div>
       <div class="product-view-qty">
         <button onclick="changeViewQty(-1)" aria-label="Decrease quantity">−</button>
-        <strong id="viewProductQty">1</strong>
+        <input id="viewProductQty" class="qty-input" type="number" min="1" inputmode="numeric" value="1" aria-label="Quantity" oninput="setViewQty(this.value)" onchange="setViewQty(this.value)">
         <button onclick="changeViewQty(1)" aria-label="Increase quantity">+</button>
       </div>
       <div class="product-view-actions">
@@ -329,7 +337,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="field"><label>Pincode *</label><input id="custPincode" inputmode="numeric" placeholder="6-digit pincode"></div>
       <div class="field"><label>Order Note</label><input id="custNote" placeholder="Optional"></div>
     </div>
-    <p class="notice" style="margin-top:15px">After submitting, your order will be saved and the order details will open directly in WhatsApp. The invoice can be generated only by the shop. Have patience</p>
+    <p class="notice" style="margin-top:15px">After submitting, your order will be saved and the order details will open directly in WhatsApp. The invoice can be generated only by the admin.</p>
     <button class="primary" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order & Open WhatsApp</button>
   </div>
 </div>
@@ -473,8 +481,8 @@ function saveLocal(){localStorage.setItem("shop_cart",JSON.stringify(cart));loca
 function toast(msg){const t=$("toast");if(!t)return;t.textContent=msg;t.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),2400)}
 function customer(){try{return JSON.parse(localStorage.getItem("bijaya_customer")||"null")}catch(e){return null}}
 function getCustomer(){return customer();}
-async function apiGet(action){
-  const params=new URLSearchParams({action,t:String(Date.now())});
+async function apiGet(action,extra={}){
+  const params=new URLSearchParams({action,t:String(Date.now()),...extra});
   const c=customer();
   const adminToken=sessionStorage.getItem("admin_token");
   if(c?.token)params.set("customerToken",c.token);
@@ -583,8 +591,9 @@ async function customerLogin(){
     localStorage.setItem("bijaya_customer",JSON.stringify(saved));
     closeModal();
     updateCustomerAccess();
-    await loadProductsFromApi(false);
+    await loadCustomerCategories(false);
     await loadCustomerOrders();
+    startCatalogSync(false);
     toast("Login successful");
   }catch(e){
     toast("Login failed: "+e.message);
@@ -647,509 +656,106 @@ async function customerLogout(){
   toast("Logged out");
 }
 
-/* PRODUCTS */
-function renderCategories(){const cats=["All",...new Set(products.filter(p=>p.active!==false).map(p=>p.category).filter(Boolean))];$("categories").innerHTML=cats.map(c=>`<button class="chip ${category===c?"active":""}" onclick="setCategory('${esc(c).replace(/'/g,"&#39;")}')">${esc(c)}</button>`).join("");if($("statCategories"))$("statCategories").textContent=Math.max(0,cats.length-1)}
-function setCategory(c){category=c;renderCategories();renderProducts()}
-function renderProducts(){const q=$("searchInput")?.value.trim().toLowerCase()||"";const list=products.filter(p=>p.active!==false&&(category==="All"||p.category===category)&&(!q||`${p.name} ${p.category} ${p.description}`.toLowerCase().includes(q)));$("productTitle").textContent=category==="All"?"All Products":category;$("productCount").textContent=`${list.length} item${list.length!==1?"s":""}`;$("productGrid").innerHTML=list.length?list.map(productCard).join(""):`<div class="empty"><h3>No products found</h3><p>Products added in Google Sheets will appear here automatically.</p></div>`;scheduleProductImages()}
+/* PRODUCTS — CATEGORY FIRST + PERSISTENT LOCAL CACHE */
+let customerCategories=[];
+let categoryLoadToken=0;
+let productCache={};
 let productImageObserver=null;
-function loadProductImage(img){
-  if(!img||img.dataset.loaded==='1'||img.dataset.loading==='1')return;
-  const src=img.dataset.src;
-  if(!src)return;
-  img.dataset.loading='1';
-  const done=()=>{img.dataset.loaded='1';img.classList.add('img-ready');img.closest('.product-img')?.classList.add('img-loaded');delete img.dataset.loading;};
-  const fail=()=>{img.src=DEFAULT_IMAGE;img.dataset.loaded='1';img.classList.add('img-ready');img.closest('.product-img')?.classList.add('img-loaded');delete img.dataset.loading;};
-  img.onload=done; img.onerror=fail; img.src=src;
+const IDB_NAME="bijaya_shop_cache_v1";
+const IDB_STORE="products";
+const IDB_META="meta";
+function openCatalogDB(){return new Promise((resolve,reject)=>{if(!window.indexedDB)return resolve(null);const r=indexedDB.open(IDB_NAME,1);r.onupgradeneeded=()=>{const db=r.result;if(!db.objectStoreNames.contains(IDB_STORE))db.createObjectStore(IDB_STORE,{keyPath:"key"});if(!db.objectStoreNames.contains(IDB_META))db.createObjectStore(IDB_META,{keyPath:"key"});};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
+async function idbPutProducts(categoryName,list){const db=await openCatalogDB();if(!db)return;return new Promise((resolve,reject)=>{const tx=db.transaction(IDB_STORE,"readwrite"),st=tx.objectStore(IDB_STORE);st.put({key:normalizeAccessValue(categoryName),category:categoryName,products:list,savedAt:Date.now()});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});}
+async function idbGetProducts(categoryName){const db=await openCatalogDB();if(!db)return null;return new Promise((resolve,reject)=>{const r=db.transaction(IDB_STORE,"readonly").objectStore(IDB_STORE).get(normalizeAccessValue(categoryName));r.onsuccess=()=>resolve(r.result?.products||null);r.onerror=()=>reject(r.error);});}
+async function idbPutMeta(key,value){const db=await openCatalogDB();if(!db)return;return new Promise((resolve,reject)=>{const tx=db.transaction(IDB_META,"readwrite");tx.objectStore(IDB_META).put({key,value});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);});}
+async function idbGetMeta(key){const db=await openCatalogDB();if(!db)return null;return new Promise((resolve,reject)=>{const r=db.transaction(IDB_META,"readonly").objectStore(IDB_META).get(key);r.onsuccess=()=>resolve(r.result?.value??null);r.onerror=()=>reject(r.error);});}
+function cacheProductsToMemory(list){(list||[]).forEach(p=>{const n=normalizeProduct(p);if(n.id&&n.name)productCache[n.id]=n;});}
+function getCachedCategory(c){return idbGetProducts(c).catch(()=>null)}
+function showCacheNote(text){const el=$("productCacheNote");if(!el)return;if(text){el.textContent=text;el.classList.remove("hidden");}else el.classList.add("hidden")}
+function renderCategories(){
+  const isCustomer=!!customer();
+  const cats=isCustomer?customerCategories:["All",...new Set(products.filter(p=>p.active!==false).map(p=>p.category).filter(Boolean))];
+  const box=$("categories");if(!box)return;
+  if(!cats.length){box.innerHTML='<div class="empty" style="width:100%">No categories available for this account.</div>';return;}
+  box.innerHTML=cats.map(c=>`<button class="chip ${category===c?"active":""}" onclick="setCategory('${esc(c).replace(/'/g,"&#39;")}')">${esc(c)}</button>`).join("");
+  if($("statCategories"))$("statCategories").textContent=isCustomer?cats.length:Math.max(0,cats.length-1);
 }
-function scheduleProductImages(){
-  const imgs=[...document.querySelectorAll('.async-product-image')];
-  if(productImageObserver)productImageObserver.disconnect();
-  if('IntersectionObserver' in window){
-    productImageObserver=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){loadProductImage(e.target);productImageObserver.unobserve(e.target);}});
-    },{rootMargin:'500px 0px'});
-    imgs.forEach(img=>productImageObserver.observe(img));
-    // Start the first visible batch after the product cards have painted.
-    requestAnimationFrame(()=>requestAnimationFrame(()=>imgs.slice(0,8).forEach(loadProductImage)));
-  }else{
-    requestAnimationFrame(()=>imgs.forEach(loadProductImage));
-  }
+function setCategory(c){
+  if(!customer())return showCustomerLogin();
+  category=String(c||"");renderCategories();loadCategoryProducts(category,true);
 }
-
-function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" decoding="async" data-src="${esc(p.image||DEFAULT_IMAGE)}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${esc(p.id)}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${esc(p.id)}">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
-let viewedProductId=null;
-let viewedProductSize="";
-let viewedProductQty=1;
-
-function openProductView(id){
-  const p=products.find(x=>x.id===id);
-  if(!p)return;
-  viewedProductId=id;
-  viewedProductQty=1;
-  viewedProductSize=p.sizes?.[0]?.name||"";
-
-  $("viewProductImage").src=p.image||DEFAULT_IMAGE;
-  $("viewProductImage").alt=p.name||"Product";
-  $("viewProductCategory").textContent=p.category||"";
-  $("viewProductName").textContent=p.name||"Product";
-  $("viewProductCode").textContent="Product Code: "+(p.id||"-");
-  $("viewProductDescription").textContent=p.description||"No description available.";
-  $("viewProductQty").textContent="1";
-
-  const hasSizes=Array.isArray(p.sizes)&&p.sizes.length;
-  $("viewSizeLabel").classList.toggle("hidden",!hasSizes);
-  $("viewProductSizes").classList.toggle("hidden",!hasSizes);
-  $("viewProductSizes").innerHTML=hasSizes?p.sizes.map(s=>`<button class="product-view-size ${s.name===viewedProductSize?"selected":""}" onclick="selectViewedSize('${esc(s.name)}',this)">${esc(s.name)}</button>`).join(""):"";
-
-  updateProductViewPrice();
-  $("productViewModal").classList.add("show");
-  $("modalBackdrop").classList.add("show");
-  document.body.style.overflow="hidden";
-}
-
-function selectViewedSize(size,btn){
-  viewedProductSize=size;
-  document.querySelectorAll("#viewProductSizes .product-view-size").forEach(b=>b.classList.remove("selected"));
-  btn.classList.add("selected");
-  viewedProductQty=1;
-  $("viewProductQty").textContent="1";
-  updateProductViewPrice();
-}
-
-function updateProductViewPrice(){
-  const p=products.find(x=>x.id===viewedProductId);
-  if(!p)return;
-  const s=p.sizes?.find(x=>x.name===viewedProductSize);
-  const price=s?s.price:p.price;
-  const stock=s?s.stock:p.stock;
-  $("viewProductPrice").textContent=money(price);
-  $("viewProductStock").textContent=stock>0?`${stock} available`:"Out of stock";
-  const btn=$("viewAddToCartBtn");
-  if(btn){btn.disabled=stock<=0;btn.textContent=stock>0?"Add to Cart":"Out of Stock";}
-}
-
-function changeViewQty(delta){
-  const p=products.find(x=>x.id===viewedProductId);
-  if(!p)return;
-  const s=p.sizes?.find(x=>x.name===viewedProductSize);
-  const stock=Number(s?s.stock:p.stock)||0;
-  const next=Math.max(1,Math.min(stock||1,viewedProductQty+delta));
-  if(delta>0&&next===viewedProductQty&&stock>0)toast("Maximum available stock reached");
-  viewedProductQty=next;
-  $("viewProductQty").textContent=String(viewedProductQty);
-}
-
-function addViewedProductToCart(){
-  if(!customer()){closeProductView();showCustomerLogin();return;}
-  const p=products.find(x=>x.id===viewedProductId);
-  if(!p)return;
-  const s=p.sizes?.find(x=>x.name===viewedProductSize);
-  const price=s?s.price:p.price;
-  const stock=Number(s?s.stock:p.stock)||0;
-  if(stock<=0){toast("This item is out of stock");return;}
-  const key=p.id+"|"+viewedProductSize;
-  const existing=cart.find(i=>i.key===key);
-  const current=existing?existing.qty:0;
-  if(current+viewedProductQty>stock){toast("Maximum available stock reached");return;}
-  if(existing)existing.qty+=viewedProductQty;
-  else cart.push({key,id:p.id,size:viewedProductSize,price,qty:viewedProductQty});
-  saveLocal();updateCart();closeProductView();toast("Added to cart");
-}
-
-function closeProductView(){
-  $("productViewModal")?.classList.remove("show");
-  // Keep backdrop if another modal is open; otherwise remove it.
-  const anyOpen=["checkoutModal","productModal","profileModal","customerLoginModal"].some(id=>$(id)?.classList.contains("show"));
-  if(!anyOpen)$("modalBackdrop")?.classList.remove("show");
-  document.body.style.overflow="";
-}
-
-function selectSize(id,size,btn){btn.parentElement.querySelectorAll(".size").forEach(x=>x.classList.remove("selected"));btn.classList.add("selected");const p=products.find(x=>x.id===id),s=p?.sizes?.find(x=>x.name===size);if(s)$("price-"+id).textContent=money(s.price)}
-function getSelectedSize(id){return $("sizes-"+id)?.querySelector(".selected")?.textContent.trim()||""}
-function addToCart(id){if(!customer()){showCustomerLogin();return}const p=products.find(x=>x.id===id);if(!p)return;const size=getSelectedSize(id),s=p.sizes?.find(x=>x.name===size),price=s?s.price:p.price,stock=s?s.stock:p.stock;if(stock<=0){toast("This item is out of stock");return}const key=id+"|"+size,x=cart.find(i=>i.key===key);if(x){if(x.qty>=stock){toast("Maximum available stock reached");return}x.qty++}else cart.push({key,id,size,price,qty:1});saveLocal();updateCart();toast("Added to cart")}
-function updateCart(){const count=cart.reduce((a,x)=>a+x.qty,0);$("cartBadge").textContent=count;$("statCart").textContent=count;$("cartBody").innerHTML=cart.length?cart.map(x=>{const p=products.find(y=>y.id===x.id);return `<div class="cart-item"><img loading="lazy" decoding="async" src="${esc(p?.image||DEFAULT_IMAGE)}"><div><h4>${esc(p?.name||"Product")}</h4><div class="cart-meta">${x.size?`Size: ${esc(x.size)} • `:""}${money(x.price)}</div><div class="qty"><button onclick="changeQty('${esc(x.key)}',-1)">−</button><b>${x.qty}</b><button onclick="changeQty('${esc(x.key)}',1)">+</button></div></div><b>${money(x.price*x.qty)}</b></div>`}).join(""):`<div class="empty"><h3>Your cart is empty</h3><p>Add products to continue.</p></div>`;$("cartTotal").textContent=money(cart.reduce((a,x)=>a+x.price*x.qty,0))}
-function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.find(y=>y.id===x.id);if(!x)return;if(delta>0){const s=p?.sizes?.find(y=>y.name===x.size),stock=s?s.stock:p?.stock||0;if(x.qty>=stock){toast("Maximum stock reached");return}}x.qty+=delta;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveLocal();updateCart()}
-function openCart(){if(!customer()){showCustomerLogin("login");return}$("drawerBackdrop").classList.add("show");$("cartDrawer").classList.add("show")}
-function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer").classList.remove("show")}
-
-/* CHECKOUT + WHATSAPP */
-function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=c.address||"";$("custPincode").value=c.pin||"";closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
-function validateCheckout(){const name=$("custName").value.trim(),phone=$("custPhone").value.replace(/\D/g,""),address=$("custAddress").value.trim(),pin=$("custPincode").value.replace(/\D/g,"");if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid name, phone, address and pincode");return null}return{name,phone,address,pin,note:$("custNote").value.trim()}}
-async function placeOrder(){
-  const c = validateCheckout();
-  if(!c) return;
-
-  const total = cart.reduce((a,x)=>a+x.price*x.qty,0);
-  const id = "ORD-" + Date.now().toString().slice(-8);
-
-  const order = {
-    id,
-    date:new Date().toISOString(),
-    customer:c,
-    items:cart.map(x=>({
-      ...x,
-      code:x.id,
-      name:products.find(p=>p.id===x.id)?.name||"Product"
-    })),
-    total,
-    status:"New"
-  };
-
-  const button = document.querySelector("#checkoutModal .primary");
-  if(button) button.disabled = true;
-
-  try{
-    const loggedCustomer=customer();
-    const result = await apiPost({action:"saveOrder",order,customerToken:loggedCustomer?.token});
-    if(result.orderId) order.id = result.orderId;
-
-    orders.unshift(order);
-    saveLocal();
-
-    // Checkout only sends the order to WhatsApp. Invoice is admin-only.
-    const lines = [
-      `*NEW ORDER ${order.id}*`,
-      `Customer: ${c.name}`,
-      `Phone: ${c.phone}`,
-      `Address: ${c.address}`,
-      `Pincode: ${c.pin}`,
-      c.note ? `Note: ${c.note}` : "",
-      "",
-      "*Items:*",
-      ...order.items.map(x => `• [${x.code}] ${x.name}${x.size?" ("+x.size+")":""} × ${x.qty} = ${money(x.price*x.qty)}`),
-      `*Total: ${money(total)}*`
-    ];
-
-    cart = [];
-    saveLocal();
-    updateCart();
-    closeModal();
-    renderAdmin();
-    renderCustomerOrders();
-
-    toast("Order placed. Opening WhatsApp...");
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.filter(Boolean).join("\n"))}`;
-    // Open immediately after the user action; delayed window.open() is often blocked on Android.
-    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      window.location.href = url;
-    } else {
-      const w = window.open(url, "_blank", "noopener,noreferrer");
-      if (!w) window.location.href = url;
-    }
-  }catch(error){
-    toast("Order could not be saved: " + error.message);
-  }finally{
-    if(button) button.disabled = false;
-  }
-}
-
-async function loadCustomerOrders(){
-  const c=getCustomer();
-  if(!c) return;
-  try{
-    const result=await apiPost({action:"getCustomerOrders",customerToken:c.token});
-    if(result.orders){
-      orders=result.orders.map(normalizeServerOrder);
-      saveLocal();
-    }
-    renderCustomerOrders();
-  }catch(e){
-    console.error("Customer order history error:",e);
-    renderCustomerOrders();
-  }
-}
-
-function normalizeServerOrder(o){
-  return {
-    id:o.id||"",
-    date:o.date||new Date().toISOString(),
-    customer:o.customer||{},
-    items:(o.items||[]).map(i=>({
-      id:i.code||i.id||"",
-      code:i.code||i.id||"",
-      name:i.name||"Product",
-      size:i.size||"",
-      qty:Number(i.quantity??i.qty??0),
-      price:Number(i.price||0)
-    })),
-    total:Number(o.total||0),
-    status:o.status||"New"
-  };
-}
-
-function renderCustomerOrders(){
-  const c=getCustomer(),box=$("customerOrders");
-  if(!box)return;
-  if(!c){box.innerHTML="";return;}
-  const customerId=String(c.customerId||c.id||"").toUpperCase();
-  const phone=String(c.phone||"").replace(/\D/g,"").slice(-10);
-  const mine=orders.filter(o=>{
-    const oid=String(o.customer?.id||o.customer?.customerId||"").toUpperCase();
-    return (customerId && oid===customerId) ||
-           (!oid && String(o.customer?.phone||"").replace(/\D/g,"").slice(-10)===phone);
-  });
-  box.innerHTML=mine.length?mine.map(o=>`<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><strong>${money(o.total)}</strong><span class="status">${esc(o.status||"New")}</span></div></div>`).join(""): `<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
-}
-
-function generateInvoice(o){const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(o.id)} - BIJAYA HOUSING</title><style>body{font-family:Arial,sans-serif;padding:35px;color:#111;max-width:900px;margin:auto}h1{margin-bottom:4px}.muted{color:#666}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}th:last-child,td:last-child{text-align:right}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}button{padding:10px 16px;border:1px solid #111;background:#fff;border-radius:8px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button><h1>BIJAYA HOUSING</h1><div>Agalpur</div><div class="muted">8114832749 • 9078523132</div><h2>INVOICE</h2><div class="muted">${esc(o.id)} • ${new Date(o.date).toLocaleString("en-IN")}</div><p><b>${esc(o.customer.name)}</b><br>${esc(o.customer.phone)}<br>${esc(o.customer.address)}<br>${esc(o.customer.pin)}</p><table><tr><th>Code</th><th>Item</th><th>Size</th><th>Qty</th><th>Price</th><th>Amount</th></tr>${o.items.map(x=>`<tr><td>${esc(x.code||x.id||"-")}</td><td>${esc(x.name)}</td><td>${esc(x.size||"-")}</td><td>${x.qty}</td><td>${money(x.price)}</td><td>${money(x.price*x.qty)}</td></tr>`).join("")}</table><div class="total">Total: ${money(o.total)}</div><p class="muted">Thank you for shopping with BIJAYA HOUSING.</p></body></html>`;const url=URL.createObjectURL(new Blob([html],{type:"text/html"}));const a=document.createElement("a");a.href=url;a.download=`${o.id}-invoice.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-
-/* ADMIN */
-function showLogin(){
-  $("customerView").classList.add("hidden");
-  $("adminView").classList.add("show");
-  $("customerSearch")?.classList.add("hidden");
-  const logged=!!sessionStorage.getItem("admin_token");
-  $("adminLoginView").classList.toggle("hidden",logged);
-  $("adminPanel").classList.toggle("hidden",!logged);
-  if(logged){$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden")}else{$("adminNavButton")?.classList.remove("hidden");$("mobileAdminFab")?.classList.remove("hidden")}
-  window.scrollTo(0,0)
-}
-function showCustomer(){
-  $("adminView").classList.remove("show");
-  $("customerView").classList.remove("hidden");
-  $("customerSearch")?.classList.remove("hidden");
-  updateCustomerAccess();
-  window.scrollTo(0,0)
-}
-async function adminLogin(){const username=$("adminUser").value.trim(),password=$("adminPass").value;if(!username||!password){toast("Enter username and password");return}try{const d=await apiPost({action:"loginAdmin",username,password});if(!d.adminToken)throw Error("Admin session token missing");sessionStorage.setItem("admin_token",d.adminToken);sessionStorage.setItem("admin_logged","1");sessionStorage.setItem("admin_user",JSON.stringify(d.admin||{}));$("adminLoginView").classList.add("hidden");$("adminPanel").classList.remove("hidden");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");await loadProductsFromApi(false);await loadAdminOrders();await loadAdminCustomers();toast("Admin login successful")}catch(e){toast("Invalid admin login")}}
-async function adminLogout(){const token=sessionStorage.getItem("admin_token");try{if(token)await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"logoutAdmin",adminToken:token})})}catch(e){}sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_logged");sessionStorage.removeItem("admin_user");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");showCustomer();toast("Admin logged out")}
-function adminTab(tab,btn){document.querySelectorAll(".admin-tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");["dashboard","products","orders","customers","data"].forEach(x=>$("admin"+x[0].toUpperCase()+x.slice(1)+"Tab")?.classList.toggle("hidden",x!==tab));if(tab==="orders")loadAdminOrders();if(tab==="customers")loadAdminCustomers()}
-function renderAdmin(){
-  if($("statProducts"))$("statProducts").textContent=products.length;
-  if($("statOrders"))$("statOrders").textContent=orders.length;
-  if($("statCart"))$("statCart").textContent=cart.reduce((a,x)=>a+x.qty,0);
-  if($("statCategories"))$("statCategories").textContent=new Set(products.map(p=>p.category).filter(Boolean)).size;
-  if($("adminProductsBody"))$("adminProductsBody").innerHTML=products.map(p=>`<tr><td><b>${esc(p.name)}</b><br><span class="cart-meta">${esc(p.id)}</span></td><td>${esc(p.category)}</td><td>${p.sizes?.length?p.sizes.map(s=>`${esc(s.name)} ${money(s.price)}`).join("<br>"):money(p.price)}</td><td>${p.sizes?.length?p.sizes.reduce((a,s)=>a+Number(s.stock||0),0):p.stock}</td><td>${p.active!==false?"Yes":"No"}</td><td><button class="outline" onclick="editProduct('${esc(p.id)}')">Edit</button></td></tr>`).join("");
-  renderAdminOrders();
-}
-function orderStatus(o){return String(o.status||"New").trim()||"New";}
-function orderSortRank(status){const s=status.toLowerCase();if(s==="completed")return 90;if(s==="cancelled"||s==="canceled")return 100;if(s==="new")return 10;if(s==="confirmed")return 20;if(s==="processing")return 30;if(s==="ready")return 40;return 50;}
-function setOrderStatusFilter(value){orderStatusFilter=value||"All";renderAdminOrders();}
-function renderAdminOrders(){
-  const body=$("ordersBody");if(!body)return;
-  const counts={New:0,Confirmed:0,Processing:0,Ready:0,Completed:0,Cancelled:0};
-  orders.forEach(o=>{const s=orderStatus(o),key=s.toLowerCase()==="canceled"?"Cancelled":s;if(counts[key]!==undefined)counts[key]++;});
-  if($("orderSummaryBar"))$("orderSummaryBar").innerHTML=Object.entries(counts).map(([k,v])=>`<span class="order-summary-pill">${k}<strong>${v}</strong></span>`).join("");
-  let list=orders.filter(o=>orderStatusFilter==="All"||orderStatus(o).toLowerCase()===orderStatusFilter.toLowerCase()||(orderStatusFilter==="Cancelled"&&["cancelled","canceled"].includes(orderStatus(o).toLowerCase())));
-  list=[...list].sort((a,b)=>{const r=orderSortRank(orderStatus(a))-orderSortRank(orderStatus(b));return r||new Date(b.date)-new Date(a.date);});
-  body.innerHTML=list.length?list.map(o=>{
-    const items=o.items||[];
-    const itemHtml=items.length?items.map(i=>`<div style="margin-bottom:5px"><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` <span class="cart-meta">(${esc(i.size)})</span>`:""} × ${Number(i.qty)||0} @ ${money(i.price)}</div>`).join(""):`<span class="cart-meta">No item details available</span>`;
-    return `<tr><td><b>${esc(o.id)}</b><br><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></td><td><b>${esc(o.customer?.name||"")}</b><br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span></td><td>${itemHtml}</td><td><b>${money(o.total)}</b></td><td><span class="status">${esc(orderStatus(o))}</span></td><td class="action-cell"><button class="outline" onclick="generateInvoiceById('${esc(o.id)}')">🧾 Generate Invoice</button></td></tr>`;
-  }).join(""):`<tr><td colspan="6"><div class="empty"><h3>No matching orders</h3><p>Try another status filter.</p></div></td></tr>`;
-}
-function generateInvoiceById(id){const o=orders.find(x=>String(x.id)===String(id));if(!o){toast("Order not found");return;}generateInvoice(o);}
-
-/* ADMIN CUSTOMER MANAGEMENT */
-let adminCustomers=[];
-
-async function loadAdminCustomers(){
-  if(!sessionStorage.getItem("admin_token"))return;
-  try{
-    const d=await apiPost({action:"getCustomers"});
-    adminCustomers=d.customers||[];
-    renderAdminCustomers();
-  }catch(e){
-    toast("Could not load customers: "+e.message);
-  }
-}
-
-function customerStatusClass(status){
-  const s=String(status||"Pending").toLowerCase();
-  if(s==="active")return "status-active";
-  if(s==="blocked")return "status-blocked";
-  return "status-pending";
-}
-
-function renderAdminCustomers(){
-  const body=$("adminCustomersBody"); if(!body)return;
-  const q=($("adminCustomerSearch")?.value||"").trim().toLowerCase();
-  const list=adminCustomers.filter(c=>`${c.id} ${c.name} ${c.phone} ${c.type} ${c.accessType}`.toLowerCase().includes(q));
-  body.innerHTML=list.length?list.map(c=>{
-    const st=(c.status||"Pending").toLowerCase();
-    const cls=st==="active"?"status-active":st==="blocked"?"status-blocked":"status-pending";
-    const access=c.accessType||"ALL";
-    const action=st==="pending"
-      ? `<button class="primary" onclick="approveCustomer('${esc(c.id)}')">Approve</button>`
-      : `<button class="outline" onclick="manageCustomerAccess('${esc(c.id)}')">Access</button>
-         <button class="outline" onclick="setCustomerStatus('${esc(c.id)}','${st==="blocked"?"Active":"Blocked"}')">${st==="blocked"?"Unblock":"Block"}</button>`;
-    return `<tr>
-      <td><b>${esc(c.name)}</b></td>
-      <td>${esc(c.type||"Customer")}</td>
-      <td>${esc(c.phone||"")}</td>
-      <td><span class="customer-id-badge">${esc(c.id||"Pending")}</span></td>
-      <td><span class="status ${cls}">${esc(c.status||"Pending")}</span></td>
-      <td>${esc(access)}</td>
-      <td>${c.dateRegistered?new Date(c.dateRegistered).toLocaleDateString("en-IN"):"—"}</td>
-      <td><div class="customer-row-actions">${action}</div></td>
-    </tr>`;
-  }).join(""):`<tr><td colspan="8"><div class="empty"><h3>No customers found</h3><p>New registrations will appear here.</p></div></td></tr>`;
-}
-
-async function approveCustomer(id){
-  if(!confirm("Approve this customer and generate new login credentials?"))return;
-  try{
-    const d=await apiPost({action:"adminApproveCustomer",customerId:id});
-    showGeneratedCredentials(d);
-    await loadAdminCustomers();
-    toast("Customer approved");
-  }catch(e){
-    toast("Approval failed: "+e.message);
-  }
-}
-
-async function setCustomerStatus(id,status){
-  const action=status==="Blocked"?"Block":"Unblock";
-  if(!confirm(`${action} this customer?`))return;
-  try{
-    await apiPost({action:"adminSetCustomerStatus",customerId:id,status});
-    await loadAdminCustomers();
-    toast(`Customer ${status.toLowerCase()}`);
-  }catch(e){
-    toast("Could not change status: "+e.message);
-  }
-}
-
-function showGeneratedCredentials(d){
-  const box=$("adminCustomerCredentialBox");
-  if(!box)return;
-  box.innerHTML=`<div class="credential-box">
-    <b>Give these credentials to the customer</b>
-    <div style="margin-top:10px">Customer ID<br><code>${esc(d.customerId||"")}</code></div>
-    <div style="margin-top:10px">Temporary Password<br><code>${esc(d.temporaryPassword||"")}</code></div>
-    <div class="notice" style="margin-top:10px">The password is stored as a secure hash. Keep this information safe.</div>
-  </div>`;
-  $("adminCustomerModal").classList.add("show");
-  $("modalBackdrop").classList.add("show");
-}
-
-function openAdminCustomerForm(){
-  $("adminCustName").value="";
-  $("adminCustType").value="Customer";
-  $("adminCustPhone").value="";
-  $("adminCustAddress").value="";
-  $("adminCustPin").value="";
-  $("adminCustomerCredentialBox").innerHTML="";
-  $("adminCustomerModal").classList.add("show");
-  $("modalBackdrop").classList.add("show");
-}
-
-async function adminCreateCustomer(){
-  const name=$("adminCustName").value.trim();
-  const phone=$("adminCustPhone").value.replace(/\D/g,"");
-  const type=$("adminCustType").value;
-  const address=$("adminCustAddress").value.trim();
-  const pin=$("adminCustPin").value.replace(/\D/g,"");
-
-  if(!name||phone.length!==10||!address||pin.length!==6){
-    toast("Enter valid customer details");
-    return;
-  }
-
-  try{
-    const d=await apiPost({action:"adminCreateCustomer",customer:{name,type,phone,address,pin}});
-    showGeneratedCredentials(d);
-    await loadAdminCustomers();
-    toast("Customer account created");
-  }catch(e){
-    toast("Could not create customer: "+e.message);
-  }
-}
-
-/* CUSTOMER PRODUCT ACCESS */
-let accessCustomerId="";
-async function manageCustomerAccess(id){
-  accessCustomerId=id;
-  const c=adminCustomers.find(x=>String(x.id)===String(id));
-  if(!c)return;
-  $("accessCustomerTitle").textContent=`${c.name} • ${c.type||"Customer"} • ${c.id}`;
-  $("accessType").value=c.accessType||"ALL";
-  await renderAccessChoices(c);
-  $("customerAccessModal").classList.add("show"); $("modalBackdrop").classList.add("show");
-  updateAccessBoxes();
-}
-function updateAccessBoxes(){
-  const t=$("accessType").value;
-  $("categoryAccessBox").classList.toggle("hidden",t!=="CATEGORY");
-  $("productAccessBox").classList.toggle("hidden",t!=="PRODUCT");
-}
-async function renderAccessChoices(c){
-  const cats=[...new Set(products.map(p=>p.category).filter(Boolean))].sort();
-  const allowedCats=String(c.allowedCategories||"").split(",").map(x=>x.trim()).filter(Boolean);
-  const allowedProducts=String(c.allowedProducts||"").split(",").map(x=>x.trim()).filter(Boolean);
-  $("accessCategoriesList").innerHTML=cats.length?cats.map(x=>`<label class="access-check"><input type="checkbox" value="${esc(x)}" ${allowedCats.includes(x)?"checked":""}> <span>${esc(x)}</span></label>`).join(""):`<div class="notice">No categories found.</div>`;
-  $("accessProductsList").innerHTML=products.length?products.map(p=>`<label class="access-check"><input type="checkbox" value="${esc(p.id)}" ${allowedProducts.includes(p.id)?"checked":""}> <span><b>${esc(p.id)}</b> — ${esc(p.name)} <small>(${esc(p.category)})</small></span></label>`).join(""):`<div class="notice">No products found.</div>`;
-}
-async function saveCustomerAccess(){
-  const type=$("accessType").value;
-  const categories=[...document.querySelectorAll("#accessCategoriesList input:checked")].map(x=>x.value);
-  const productIds=[...document.querySelectorAll("#accessProductsList input:checked")].map(x=>x.value);
-  if(type==="CATEGORY" && !categories.length){toast("Select at least one category");return}
-  if(type==="PRODUCT" && !productIds.length){toast("Select at least one product");return}
-  try{
-    const result=await apiPost({action:"adminSetCustomerAccess",customerId:accessCustomerId,accessType:type,allowedCategories:categories.join(","),allowedProducts:productIds.join(",")});
-    if(!result || result.ok===false)throw Error(result?.error||"Unknown server error");
-    await loadAdminCustomers();
-    closeModal();
-    toast("Customer product access saved");
-  }catch(e){
-    console.error("Customer access save error:",e);
-    toast("Could not save access: "+e.message);
-  }
-}
-function openProductForm(){editingId=null;$("productModalTitle").textContent="Add Product";["pName","pCategory","pDescription","pImage","pPrice","pSizes"].forEach(id=>$(id).value="");$("pStock").value=0;$("pActive").value="true";$("productModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-function editProduct(id){const p=products.find(x=>x.id===id);if(!p)return;editingId=id;$("productModalTitle").textContent="Edit Product";$("pName").value=p.name||"";$("pCategory").value=p.category||"";$("pDescription").value=p.description||"";$("pImage").value=p.image||"";$("pPrice").value=p.price||0;$("pSizes").value=(p.sizes||[]).map(s=>`${s.name}:${s.price}:${s.stock}`).join(", ");$("pStock").value=p.stock||0;$("pActive").value=String(p.active!==false);$("productModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-async function saveProduct(){const name=$("pName").value.trim(),cat=$("pCategory").value.trim();if(!name||!cat){toast("Product name and category are required");return}const sizes=$("pSizes").value.split(",").map(x=>x.trim()).filter(Boolean).map(x=>{const [n,pr,st]=x.split(":");return{name:n.trim(),price:Number(pr)||0,stock:st!==undefined?Number(st)||0:Number($("pStock").value)||0}}).filter(x=>x.name);const p={id:editingId||"P"+Date.now(),name,category:cat,description:$("pDescription").value.trim(),image:$("pImage").value.trim()||DEFAULT_IMAGE,price:Number($("pPrice").value)||0,stock:Number($("pStock").value)||0,active:$("pActive").value==="true",sizes};try{await apiPost({action:"saveProduct",product:p});await loadProductsFromApi(false);closeModal();toast("Product saved to Google Sheet")}catch(e){toast("Could not save product: "+e.message)}}
-function normalizeProduct(p){return {id:String(p.id||""),name:String(p.name||""),category:String(p.category||""),description:String(p.description||""),image:String(p.image||DEFAULT_IMAGE),price:Number(p.price)||0,stock:Number(p.stock)||0,active:p.active!==false,sizes:Array.isArray(p.sizes)?p.sizes.map(s=>({name:String(s.name||""),price:Number(s.price)||0,stock:Number(s.stock)||0})):[]}}
-async function loadProductsFromApi(showMessage=true){
-  try{
-    if(showMessage)toast("Loading products...");
-    if($("productGrid") && !products.length){
-      $("productGrid").innerHTML='<div class="empty"><h3>Loading products…</h3><p>Please wait a moment.</p></div>';
-    }
-    const d=await apiGet("products");
+function filterVisibleProducts(list){const q=$("searchInput")?.value.trim().toLowerCase()||"";return (list||[]).filter(p=>p.active!==false&&(!q||`${p.name} ${p.category} ${p.description} ${p.id}`.toLowerCase().includes(q)));}
+function renderProducts(list=products){const filtered=filterVisibleProducts(list);$("productsSection")?.classList.remove("hidden");$("productTitle").textContent=category||"Products";$("productCount").textContent=`${filtered.length} item${filtered.length!==1?"s":""}`;$("productGrid").innerHTML=filtered.length?filtered.map(productCard).join(""):`<div class="empty"><h3>No products found</h3><p>There are no products available in this category.</p></div>`;scheduleProductImages();}
+function renderProductsProgressive(list){const filtered=filterVisibleProducts(list);const grid=$("productGrid");grid.innerHTML="";$("productCount").textContent=`${filtered.length} item${filtered.length!==1?"s":""}`;if(!filtered.length){grid.innerHTML='<div class="empty"><h3>No products found</h3><p>There are no products available in this category.</p></div>';return;}let i=0;const addNext=()=>{if(i>=filtered.length){scheduleProductImages();return;}grid.insertAdjacentHTML("beforeend",productCard(filtered[i++]));requestAnimationFrame(addNext)};requestAnimationFrame(addNext);}
+function showProductLoading(message="Loading products…"){$("productsSection")?.classList.remove("hidden");$("productTitle").textContent=category||"Products";$("productCount").textContent="";showCacheNote("");$("productGrid").innerHTML=`<div class="empty"><h3>${esc(message)}</h3><p>Product details appear first. Images load separately.</p></div>`;}
+async function loadCustomerCategories(showMessage=true){
+  if(!customer())return false;
+  try{if(showMessage)toast("Loading categories…");$("categoryStatus").textContent="Loading…";const d=await apiGet("categories");
     const c=customer();
-
-    // Always refresh the customer's access from the server. This is important
-    // when admin changes permissions while the customer is already logged in.
-    if(c && d.access){
+    if(c&&d.access){
       c.accessType=String(d.access.accessType||"ALL").toUpperCase();
       c.allowedCategories=Array.isArray(d.access.allowedCategories)?d.access.allowedCategories.join(","):String(d.access.allowedCategories||"");
       c.allowedProducts=Array.isArray(d.access.allowedProducts)?d.access.allowedProducts.join(","):String(d.access.allowedProducts||"");
       localStorage.setItem("bijaya_customer",JSON.stringify(c));
     }
+    customerCategories=(d.categories||[]).map(x=>String(x).trim()).filter(Boolean);category="";products=[];renderCategories();$("productsSection")?.classList.add("hidden");$("categoryStatus").textContent=`${customerCategories.length} categories`;if(showMessage)toast("Categories ready");return true}catch(e){console.error(e);$("categoryStatus").textContent="Could not load";if(showMessage)toast("Could not load categories");return false;}}
+async function fetchFreshCategory(c){const d=await apiGet("categoryProducts",{category:c});return (d.products||[]).map(normalizeProduct).filter(p=>p.id&&p.name);}
+async function loadCategoryProducts(c,showMessage=true){
+  if(!customer())return false;const myToken=++categoryLoadToken;category=c;$("productsSection")?.classList.remove("hidden");
+  let cached=null;try{cached=await getCachedCategory(c)}catch(e){}
+  if(myToken!==categoryLoadToken)return false;
+  if(cached&&cached.length){const normalized=cached.map(normalizeProduct).filter(p=>p.id&&p.name);cacheProductsToMemory(normalized);products=normalized;renderCategories();renderProductsProgressive(normalized);showCacheNote("Showing saved products while checking for updates…");}
+  else{showProductLoading(`Loading ${c}…`);}
+  try{
+    if(showMessage&&!cached)toast(`Loading ${c}…`);
+    const fresh=await fetchFreshCategory(c);if(myToken!==categoryLoadToken)return false;
+    cacheProductsToMemory(fresh);products=fresh;await idbPutProducts(c,fresh);renderCategories();renderProductsProgressive(fresh);showCacheNote(cached?"✓ Products synchronized with latest catalog.":"");if(showMessage&&!cached)toast(`${fresh.length} product${fresh.length!==1?"s":""} loaded`);return true;
+  }catch(e){console.error(e);if(cached&&cached.length){showCacheNote("Offline/server unavailable — showing your saved products.");toast("Showing saved products");}else{$("productGrid").innerHTML=`<div class="empty"><h3>Could not load products</h3><p>${esc(e.message||"Please try again.")}</p></div>`;toast("Could not load category products");}return false;}
+}
+async function syncCatalog(force=false){if(!customer())return;try{const d=await apiGet("catalogMeta");const serverVersion=String(d.version||"1");const localVersion=String(await idbGetMeta("catalogVersion")||"");if(!localVersion){await idbPutMeta("catalogVersion",serverVersion);return;}if(force||serverVersion!==localVersion){await idbPutMeta("catalogVersion",serverVersion);if(!customerCategories.length)await loadCustomerCategories(false);const cats=[...customerCategories];for(const c of cats){try{const fresh=await fetchFreshCategory(c);await idbPutProducts(c,fresh);cacheProductsToMemory(fresh);if(category===c){products=fresh;renderProductsProgressive(fresh);showCacheNote("✓ Products synchronized with latest catalog.");}}catch(e){console.warn("Sync category failed",c,e)}}}}catch(e){console.warn("Catalog sync skipped",e)}}
+function startCatalogSync(force=false){setTimeout(()=>syncCatalog(force),800);}
+function scheduleProductImages(){const imgs=[...document.querySelectorAll("#productGrid .async-product-image")];if(productImageObserver)productImageObserver.disconnect();if("IntersectionObserver" in window){productImageObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){loadProductImage(e.target);productImageObserver.unobserve(e.target)}}),{rootMargin:"350px 0px"});imgs.forEach(img=>productImageObserver.observe(img));requestAnimationFrame(()=>requestAnimationFrame(()=>imgs.slice(0,6).forEach(loadProductImage)));}else imgs.slice(0,6).forEach(loadProductImage);}
+async function loadProductImage(img){
+  if(!img||img.dataset.loaded==="1"||img.dataset.loading==="1")return;
+  const src=img.dataset.src;if(!src)return;
+  img.dataset.loading="1";
+  const done=()=>{img.dataset.loaded="1";img.classList.add("img-ready");img.closest(".product-img")?.classList.add("img-loaded");delete img.dataset.loading};
+  const fail=()=>{img.src=DEFAULT_IMAGE;done()};
+  try{
+    if(window.caches){
+      const cache=await caches.open("bijaya-product-images-v1");
+      const hit=await cache.match(src);
+      if(hit){const blob=await hit.blob();const url=URL.createObjectURL(blob);img.onload=()=>{done();setTimeout(()=>URL.revokeObjectURL(url),1000)};img.onerror=fail;img.src=url;return;}
+    }
+  }catch(e){}
+  img.onload=done;img.onerror=fail;img.src=src;
+  // Best-effort persistent image cache. Cross-origin image servers may deny fetch;
+  // normal image loading still works in that case.
+  if(window.caches){fetch(src,{mode:"no-cors",cache:"force-cache"}).then(r=>caches.open("bijaya-product-images-v1").then(c=>c.put(src,r))).catch(()=>{});}
+}
+function findProduct(id){return productCache[id]||products.find(p=>String(p.id).trim().toLowerCase()===String(id).trim().toLowerCase())||null}
 
+// Admin still needs the full catalogue for product management. Customers never call this.
+async function loadProductsFromApi(showMessage=true){
+  try{
+    if(showMessage)toast("Loading products...");
+    const d=await apiGet("products");
+    const c=customer();
+    if(c&&d.access){
+      c.accessType=String(d.access.accessType||"ALL").toUpperCase();
+      c.allowedCategories=Array.isArray(d.access.allowedCategories)?d.access.allowedCategories.join(","):String(d.access.allowedCategories||"");
+      c.allowedProducts=Array.isArray(d.access.allowedProducts)?d.access.allowedProducts.join(","):String(d.access.allowedProducts||"");
+      localStorage.setItem("bijaya_customer",JSON.stringify(c));
+    }
     products=(d.products||[]).map(normalizeProduct).filter(p=>p.id&&p.name);
-
-    // Second-layer UI filtering. Apps Script is the real security boundary;
-    // this prevents stale/incorrect UI data from remaining visible.
-    if(c) products=filterProductsForCustomer(products,c);
-
-    renderCategories();
-    renderProducts();
-    renderAdmin();
-    if($("apiStatus"))$("apiStatus").textContent="● Connected — "+products.length+" product(s) loaded from Google Sheets.";
+    if(c)products=filterProductsForCustomer(products,c);
+    cacheProductsToMemory(products);
+    if(!c){renderCategories();renderProducts();renderAdmin();}
     if(showMessage)toast(products.length+" products loaded");
     return true;
-  }catch(e){
-    console.error(e);
-    if($("apiStatus"))$("apiStatus").textContent="● Connection failed — check Apps Script deployment.";
-    if(showMessage)toast("Could not load products");
-    return false;
-  }
+  }catch(e){console.error(e);if(showMessage)toast("Could not load products");return false;}
 }
 
-function filterProductsForCustomer(list,c){
-  const type=String(c.accessType||"ALL").trim().toUpperCase();
-  if(type==="ALL")return list;
-  const cats=String(c.allowedCategories||"").split(",").map(normalizeAccessValue).filter(Boolean);
-  const ids=String(c.allowedProducts||"").split(",").map(normalizeAccessValue).filter(Boolean);
-  if(type==="CATEGORY")return list.filter(p=>cats.includes(normalizeAccessValue(p.category)));
-  if(type==="PRODUCT")return list.filter(p=>ids.includes(normalizeAccessValue(p.id)));
-  return [];
-}
-function normalizeAccessValue(v){return String(v||"").replace(/\u00a0/g," ").trim().replace(/\s+/g," ").toLowerCase()}
 async function loadAdminOrders(){
   if(!sessionStorage.getItem("admin_token"))return;
   try{
@@ -1172,8 +778,9 @@ async function init(){
   updateCart();
 
   if(customer()){
-    // Products and order history are independent requests. Load them in parallel.
-    await Promise.all([loadProductsFromApi(false), loadCustomerOrders()]);
+    // Customer opens on categories only. Products come from persistent cache or selected category.
+    await Promise.all([loadCustomerCategories(false), loadCustomerOrders()]);
+    startCatalogSync(false);
   }
 
   if(sessionStorage.getItem("admin_token")){
