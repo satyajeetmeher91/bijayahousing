@@ -208,7 +208,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Custom Backend authentication.</p>
+    <p style="color:var(--muted);font-size:14px">Satyajeet's Backend authentication.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -278,7 +278,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.22</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.23</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -483,8 +483,13 @@ async function apiGet(action){
   const params=new URLSearchParams({action,t:String(Date.now())});
   const c=customer();
   const adminToken=sessionStorage.getItem("admin_token");
-  if(c?.token)params.set("customerToken",c.token);
-  if(adminToken)params.set("adminToken",adminToken);
+  // Never send a customer token together with an admin catalog request.
+  // Otherwise the backend may return the customer-restricted catalog.
+  if(adminToken){
+    params.set("adminToken",adminToken);
+  }else if(c?.token){
+    params.set("customerToken",c.token);
+  }
 
   const r=await fetch(API_URL+"?"+params.toString(),{cache:"no-store"});
   if(!r.ok)throw Error("HTTP "+r.status);
@@ -657,6 +662,82 @@ async function customerLogout(){
   toast("Logged out");
 }
 
+/* PRODUCTS / CATALOG LOADING */
+function normalizeAccessValue(v){return String(v??"").trim().toLowerCase();}
+function normalizeProduct(p){
+  const sizes=Array.isArray(p?.sizes)?p.sizes.map(s=>({
+    name:String(s?.name??"").trim(),
+    price:Number(s?.price??0)||0,
+    stock:Number(s?.stock??0)||0
+  })).filter(s=>s.name):[];
+  return {
+    id:String(p?.id??p?.["Product ID"]??"").trim(),
+    name:String(p?.name??p?.["Product Name"]??"").trim(),
+    category:String(p?.category??p?.Category??"").trim(),
+    subcategory:String(p?.subcategory??p?.Subcategory??"").trim(),
+    description:String(p?.description??p?.Description??"").trim(),
+    imageId:String(p?.imageId??p?.["Image ID"]??"").trim().toUpperCase(),
+    image:String(p?.image??p?.["Image URL"]??"").trim(),
+    price:Number(p?.price??p?.["Default Price (₹)"]??0)||0,
+    stock:Number(p?.stock??p?.Stock??0)||0,
+    active:p?.active===undefined ? String(p?.Active??"").toUpperCase()==="TRUE" : p.active!==false,
+    sizes
+  };
+}
+function filterProductsForCustomer(list,c){
+  if(!c)return list||[];
+  const type=String(c.accessType||"ALL").trim().toUpperCase();
+  if(type==="ALL")return list||[];
+  const cats=String(c.allowedCategories||"").split(",").map(normalizeAccessValue).filter(Boolean);
+  const ids=String(c.allowedProducts||"").split(",").map(normalizeAccessValue).filter(Boolean);
+  if(type==="CATEGORY")return (list||[]).filter(p=>cats.includes(normalizeAccessValue(p.category)));
+  if(type==="PRODUCT")return (list||[]).filter(p=>ids.includes(normalizeAccessValue(p.id)));
+  return [];
+}
+async function loadProductsFromApi(force=false,isAdmin=false){
+  if(productsLoadPromise && !force)return productsLoadPromise;
+  productsLoadPromise=(async()=>{
+    const status=$("apiStatus");
+    if(status)status.textContent="● Loading products…";
+    try{
+      const d=await apiGet("products");
+      if(!Array.isArray(d.products))throw Error("Products data was not returned by Apps Script.");
+      let loaded=d.products.map(normalizeProduct).filter(p=>p.id&&p.name);
+      const c=customer();
+      if(c && !isAdmin && d.access){
+        c.accessType=d.access.accessType||"ALL";
+        c.allowedCategories=Array.isArray(d.access.allowedCategories)?d.access.allowedCategories.join(", "):String(d.access.allowedCategories||"");
+        c.allowedProducts=Array.isArray(d.access.allowedProducts)?d.access.allowedProducts.join(", "):String(d.access.allowedProducts||"");
+        localStorage.setItem("bijaya_customer",JSON.stringify(c));
+      }
+      if(c && !isAdmin)loaded=filterProductsForCustomer(loaded,c);
+      products=loaded;
+      catalogVersion=String(d.catalogVersion||"");
+      renderCategories();
+      renderProducts();
+      renderAdmin();
+      if(status)status.textContent=`● Connected • ${products.length} product${products.length===1?"":"s"} loaded`;
+      return products;
+    }catch(e){
+      console.error("Product loading error:",e);
+      if(status)status.textContent="● Product loading failed: "+e.message;
+      throw e;
+    }finally{
+      productsLoadPromise=null;
+    }
+  })();
+  return productsLoadPromise;
+}
+async function reloadProducts(){
+  const btn=$("reloadProductsBtn");
+  if(btn){btn.disabled=true;btn.textContent="↻ Reloading…";}
+  try{
+    await loadProductsFromApi(true,!!sessionStorage.getItem("admin_token"));
+    toast("Products reloaded");
+  }catch(e){toast("Could not load products: "+e.message);}
+  finally{if(btn){btn.disabled=false;btn.textContent="↻ Reload Products";}}
+}
+
 /* PRODUCTS */
 function renderCategories(){
   const cats=["All",...new Set(products.filter(p=>p.active!==false).map(p=>String(p.category||"").trim()).filter(Boolean))];
@@ -707,7 +788,8 @@ function scheduleProductImages(){
 }
 
 function githubImageUrl(imageId){const id=String(imageId||"").trim();return id?GITHUB_IMAGE_BASE+encodeURIComponent(id)+".webp":""}
-function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=githubImageUrl(p.imageId);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" decoding="async" data-src="${esc(imageUrl)}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${esc(p.id)}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${esc(p.id)}">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
+function productDomKey(id){return "p_"+encodeURIComponent(String(id||"")).replace(/%/g,"_");}
+function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" decoding="async" data-src="${esc(imageUrl)}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
 let viewedProductId=null;
 let viewedProductSize="";
 let viewedProductQty=1;
@@ -819,8 +901,31 @@ function selectSize(id,size,btn){
   btn?.classList.add("selected");
   const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));
   const s=p?.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(size));
-  const priceEl=$("price-"+id);
+  const priceEl=$("price-"+productDomKey(id));
   if(priceEl&&s)priceEl.textContent=money(s.price);
+}
+
+function getSelectedSize(id){
+  const el=$("sizes-"+productDomKey(id));
+  return el?.querySelector(".size.selected")?.textContent.trim()||"";
+}
+
+function addToCart(id){
+  if(!customer()){showCustomerLogin();return;}
+  const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));
+  if(!p)return;
+  const size=getSelectedSize(id);
+  const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(size));
+  const price=s?s.price:p.price;
+  const stock=Number(s?s.stock:p.stock)||0;
+  if(stock<=0){toast("This item is out of stock");return;}
+  const key=p.id+"|"+size;
+  const existing=cart.find(i=>i.key===key);
+  const current=existing?Number(existing.qty)||0:0;
+  if(current+1>stock){toast("Maximum available stock reached");return;}
+  if(existing)existing.qty+=1;
+  else cart.push({key,id:p.id,size,price,qty:1});
+  saveLocal();updateCart();toast("Added to cart");
 }
 
 function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.find(y=>y.id===x.id);if(!x)return;if(delta>0){const s=p?.sizes?.find(y=>y.name===x.size),stock=s?s.stock:p?.stock||0;if(x.qty>=stock){toast("Maximum stock reached");return}}x.qty+=delta;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveLocal();updateCart()}
