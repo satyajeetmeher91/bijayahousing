@@ -208,7 +208,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Satyajeet's backend authentication.</p>
+    <p style="color:var(--muted);font-size:14px">Satyajeet's Backend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -278,7 +278,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.24</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.25</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -471,7 +471,7 @@ const GITHUB_IMAGE_BASE="https://satyajeetmeher91.github.io/bijayahousing/images
 const DEFAULT_IMAGE="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="#eef1f5"/><text x="400" y="285" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#667085">IMAGE NOT AVAILABLE</text><text x="400" y="335" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#98a2b3">BIJAYA HOUSING</text></svg>`);
 let productsLoadPromise=null;
 let catalogVersion="";
-const PRODUCT_CACHE_PREFIX="bijaya_products_cache_v4_";
+const PRODUCT_CACHE_PREFIX="bijaya_products_cache_v5_";
 const IMAGE_MEMORY_CACHE=new Map();
 let productImageObserver=null;
 let products=[],cart=JSON.parse(localStorage.getItem("shop_cart")||"[]"),orders=JSON.parse(localStorage.getItem("shop_orders")||"[]"),category="All",editingId=null,orderStatusFilter="All";
@@ -740,40 +740,35 @@ async function loadProductsFromApi(force=false,isAdmin=false){
   if(productsLoadPromise && !force)return productsLoadPromise;
   productsLoadPromise=(async()=>{
     const status=$("apiStatus");
-    if(status)status.textContent="● Checking product cache…";
     const cached=readProductCache(adminMode);
-    try{
-      // Fast path: show cached catalog immediately, then only contact Apps Script
-      // with a tiny version request. Full product data is downloaded only when needed.
-      if(cached && !force){
-        catalogVersion=String(cached.version||"");
-        applyLoadedProducts(cached.products,cached.access,adminMode);
-        if(status)status.textContent=`● Cached • ${products.length} product${products.length===1?"":"s"}`;
-        try{
-          const serverVersion=await getCatalogVersionFromApi();
-          if(serverVersion===catalogVersion){
-            if(status)status.textContent=`● Cached • ${products.length} product${products.length===1?"":"s"}`;
-            return products;
-          }
-        }catch(versionErr){
-          console.warn("Catalog version check failed; keeping cache",versionErr);
-          return products;
-        }
-      }
+    const CACHE_CHECK_MS=10*60*1000;
+    const cacheFresh=cached && (Date.now()-Number(cached.savedAt||0)<CACHE_CHECK_MS);
 
-      if(status)status.textContent="● Loading latest products…";
+    // Immediate UI: cached catalogue is shown without waiting for Google Apps Script.
+    if(cached && !force){
+      catalogVersion=String(cached.version||"");
+      applyLoadedProducts(cached.products,cached.access,adminMode);
+      if(status)status.textContent=`● Cached • ${products.length} product${products.length===1?"":"s"}`;
+      if(cacheFresh){
+        // Let the user browse immediately. Check freshness in the background only.
+        setTimeout(()=>refreshProductCatalogueInBackground(adminMode),1200);
+        return products;
+      }
+    }
+
+    try{
+      if(status)status.textContent=force?"● Reloading latest products…":"● Loading latest products…";
       const d=await apiGet("products");
       if(!Array.isArray(d.products))throw Error("Products data was not returned by Apps Script.");
       catalogVersion=String(d.catalogVersion||"");
       applyLoadedProducts(d.products,d.access,adminMode);
       writeProductCache({version:catalogVersion,products:d.products,access:d.access},adminMode);
       if(status)status.textContent=`● Connected • ${products.length} product${products.length===1?"":"s"} loaded`;
+      if(!force)toast(products.length+" products loaded");
       return products;
     }catch(e){
       console.error("Product loading error:",e);
-      // If the network/API fails, keep showing the last known catalog.
       if(cached){
-        catalogVersion=String(cached.version||"");
         applyLoadedProducts(cached.products,cached.access,adminMode);
         if(status)status.textContent=`● Offline cache • ${products.length} product${products.length===1?"":"s"}`;
         return products;
@@ -784,6 +779,23 @@ async function loadProductsFromApi(force=false,isAdmin=false){
   })();
   return productsLoadPromise;
 }
+
+async function refreshProductCatalogueInBackground(isAdmin=false){
+  try{
+    const cached=readProductCache(isAdmin);
+    if(!cached)return;
+    const d=await apiGet("products");
+    const serverVersion=String(d.catalogVersion||"");
+    if(serverVersion && serverVersion===String(cached.version||""))return;
+    if(Array.isArray(d.products)){
+      catalogVersion=serverVersion;
+      applyLoadedProducts(d.products,d.access,isAdmin);
+      writeProductCache({version:catalogVersion,products:d.products,access:d.access},isAdmin);
+      toast("Product catalogue updated");
+    }
+  }catch(e){console.warn("Background catalogue refresh skipped:",e);}
+}
+
 async function reloadProducts(){
   const btn=$("reloadProductsBtn");
   if(btn){btn.disabled=true;btn.textContent="↻ Reloading…";}
@@ -828,16 +840,52 @@ function renderProducts(){
   scheduleProductImages();
 }
 
+function githubImageCandidates(imageId, directUrl=""){
+  const raw=String(imageId||"").trim();
+  const direct=String(directUrl||"").trim();
+  const out=[];
+  if(direct)out.push(direct);
+  if(raw){
+    // If Image ID is already a complete URL, use it directly.
+    if(/^https?:\/\//i.test(raw))out.push(raw);
+    else{
+      // GitHub Pages paths are case-sensitive. Try the exact sheet value,
+      // then upper/lower-case variants and common image extensions.
+      const ids=[raw,raw.toUpperCase(),raw.toLowerCase()];
+      const exts=[".webp",".jpg",".jpeg",".png",".WEBP",".JPG",".JPEG",".PNG"];
+      ids.forEach(id=>exts.forEach(ext=>out.push(GITHUB_IMAGE_BASE+encodeURIComponent(id)+ext)));
+    }
+  }
+  return [...new Set(out)];
+}
+
 function loadProductImage(img){
   if(!img||img.dataset.loading==="1"||img.dataset.loaded==="1")return;
-  const src=img.dataset.src||"";
-  if(!src){img.src=DEFAULT_IMAGE;img.dataset.loaded="1";return;}
-  if(IMAGE_MEMORY_CACHE.get(src)){img.src=src;img.dataset.loaded="1";return;}
-  img.dataset.loading="1";
-  const done=()=>{img.dataset.loading="";img.dataset.loaded="1";IMAGE_MEMORY_CACHE.set(src,true);};
-  img.onload=done;
-  img.onerror=()=>{img.dataset.loading="";img.src=DEFAULT_IMAGE;};
-  img.src=src;
+  const candidates=githubImageCandidates(img.dataset.imageId||"",img.dataset.directSrc||"");
+  if(!candidates.length){img.src=DEFAULT_IMAGE;img.dataset.loaded="1";img.closest(".product-img")?.classList.add("img-loaded");return;}
+
+  let index=0;
+  const tryNext=()=>{
+    if(index>=candidates.length){
+      img.dataset.loading="";
+      img.src=DEFAULT_IMAGE;
+      img.closest(".product-img")?.classList.add("img-loaded");
+      return;
+    }
+    const src=candidates[index++];
+    if(IMAGE_MEMORY_CACHE.get(src)){
+      img.src=src;img.dataset.loading="";img.dataset.loaded="1";
+      img.classList.add("img-ready");img.closest(".product-img")?.classList.add("img-loaded");return;
+    }
+    img.dataset.loading="1";
+    img.onload=()=>{
+      img.dataset.loading="";img.dataset.loaded="1";IMAGE_MEMORY_CACHE.set(src,true);
+      img.classList.add("img-ready");img.closest(".product-img")?.classList.add("img-loaded");
+    };
+    img.onerror=tryNext;
+    img.src=src;
+  };
+  tryNext();
 }
 
 function scheduleProductImages(){
@@ -846,18 +894,19 @@ function scheduleProductImages(){
   if('IntersectionObserver' in window){
     productImageObserver=new IntersectionObserver(entries=>{
       entries.forEach(e=>{if(e.isIntersecting){loadProductImage(e.target);productImageObserver.unobserve(e.target);}});
-    },{rootMargin:'500px 0px'});
+    },{rootMargin:'900px 0px'});
     imgs.forEach(img=>productImageObserver.observe(img));
-    // Start the first visible batch after the product cards have painted.
-    requestAnimationFrame(()=>requestAnimationFrame(()=>imgs.slice(0,8).forEach(loadProductImage)));
+    // Start visible images immediately after cards paint. Do not wait for scrolling.
+    requestAnimationFrame(()=>imgs.slice(0,12).forEach(loadProductImage));
   }else{
     requestAnimationFrame(()=>imgs.forEach(loadProductImage));
   }
 }
 
-function githubImageUrl(imageId){const id=String(imageId||"").trim();return id?GITHUB_IMAGE_BASE+encodeURIComponent(id)+".webp":""}
+function githubImageUrl(imageId){return githubImageCandidates(imageId)[0]||""}
+
 function productDomKey(id){return "p_"+encodeURIComponent(String(id||"")).replace(/%/g,"_");}
-function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" data-src="${esc(imageUrl)}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
+function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
 let viewedProductId=null;
 let viewedProductSize="";
 let viewedProductQty=1;
@@ -873,8 +922,10 @@ function openProductView(id){
   const viewImg=$("viewProductImage");
   viewImg.src=DEFAULT_IMAGE;
   viewImg.alt=p.name||"Product";
-  const viewSrc=githubImageUrl(p.imageId);
-  if(viewSrc){viewImg.onload=()=>{viewImg.dataset.loaded="1"};viewImg.onerror=()=>{viewImg.src=DEFAULT_IMAGE};viewImg.src=viewSrc;}
+  const viewCandidates=githubImageCandidates(p.imageId,p.image);
+  let vi=0;
+  const tryViewImage=()=>{if(vi>=viewCandidates.length){viewImg.src=DEFAULT_IMAGE;return;}const src=viewCandidates[vi++];viewImg.onerror=tryViewImage;viewImg.onload=()=>{viewImg.classList.add("img-ready")};viewImg.src=src};
+  tryViewImage();
   $("viewProductImage").alt=p.name||"Product";
   $("viewProductCategory").textContent=p.category||"";
   $("viewProductName").textContent=p.name||"Product";
