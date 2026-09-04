@@ -195,7 +195,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <a class="primary" target="_blank" href="https://wa.me/918114832749">WhatsApp</a>
     </div>
   </section>
-  <div class="section-head"><h2>Categories</h2></div>
+  <div class="section-head"><h2>Categories</h2><button class="outline" id="reloadProductsBtn" onclick="reloadProducts()">↻ Reload Products</button></div>
   <div class="categories" id="categories"></div>
   <section id="productsSection">
     <div class="section-head"><h2 id="productTitle">All Products</h2><span id="productCount" style="color:var(--muted);font-size:13px"></span></div>
@@ -207,7 +207,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Demo frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
+    <p style="color:var(--muted);font-size:14px">Custom Backend authentication. </p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -232,9 +232,9 @@ html,body{max-width:100%;overflow-x:hidden}
         <div class="stat"><small>Cart Items</small><strong id="statCart">0</strong></div>
         <div class="stat"><small>Orders Saved</small><strong id="statOrders">0</strong></div>
       </div>
-      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually. For production, connect the Google Sheet section to your Apps Script Web App URL so the catalog is shared across all customers.</p></div>
+      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually.</p></div>
     </div>
-    <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><input id="adminProductSearch" placeholder="Search..." style="padding:10px;border:1px solid var(--line);border-radius:10px"></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
+    <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><button class="outline" onclick="reloadProducts()">↻ Reload Products</button></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
     <div id="adminOrdersTab" class="hidden">
       <div class="panel">
         <div class="admin-toolbar orders-toolbar">
@@ -277,7 +277,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.20</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.21</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -657,6 +657,15 @@ async function customerLogout(){
 }
 
 /* PRODUCTS */
+async function reloadProducts(){
+  const btn=$("reloadProductsBtn");
+  if(btn){btn.disabled=true;btn.textContent="↻ Reloading...";}
+  try{
+    await loadProductsFromApi(true,true);
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent="↻ Reload Products";}
+  }
+}
 function renderCategories(){const cats=["All",...new Set(products.filter(p=>p.active!==false).map(p=>p.category).filter(Boolean))];$("categories").innerHTML=cats.map(c=>`<button class="chip ${category===c?"active":""}" onclick="setCategory('${esc(c).replace(/'/g,"&#39;")}')">${esc(c)}</button>`).join("");if($("statCategories"))$("statCategories").textContent=Math.max(0,cats.length-1)}
 function setCategory(c){
   category=String(c||"All").trim();
@@ -694,7 +703,7 @@ function productCard(p){
   const first=p.sizes?.[0],price=first?first.price:p.price;
   const imageUrl=githubImageUrl(p.imageId);
   const pid=safeProductArg(p.id);
-  return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView(decodeProductArg('${pid}'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView(decodeProductArg('${pid}'))}"><div class="product-img"><img class="async-product-image" decoding="async" loading="lazy" data-src="${esc(imageUrl)}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${esc(p.id)}">${money(price)}</div>${p.sizes?.length?`<div class="size-row">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize(decodeProductArg('${pid}'),'${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart(decodeProductArg('${pid}'))">Add to Cart</button></div></div></article>`
+  return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView(decodeProductArg('${pid}'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView(decodeProductArg('${pid}'))}"><div class="product-img"><img class="async-product-image" decoding="async" loading="lazy" data-src="${esc(imageUrl)}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price">${money(price)}</div>${p.sizes?.length?`<div class="size-row">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize(decodeProductArg('${pid}'),'${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart(decodeProductArg('${pid}'))">Add to Cart</button></div></div></article>`
 }
 
 let viewedProductId=null;
@@ -849,6 +858,11 @@ async function placeOrder(){
   const button = document.querySelector("#checkoutModal .primary");
   if(button) button.disabled = true;
 
+  // Open a blank WhatsApp tab immediately while this click is still a user gesture.
+  // After the order is saved, it is redirected to the prefilled WhatsApp message.
+  let whatsappWindow=null;
+  try{ whatsappWindow=window.open("about:blank","_blank"); }catch(e){}
+
   try{
     const loggedCustomer=customer();
     const result = await apiPost({action:"saveOrder",order,customerToken:loggedCustomer?.token});
@@ -857,20 +871,8 @@ async function placeOrder(){
     orders.unshift(order);
     saveLocal();
 
-    // Checkout only sends the order to WhatsApp. Invoice is admin-only.
-    const lines = [
-      `*NEW ORDER ${order.id}*`,
-      `Customer: ${c.name}`,
-      `Phone: ${c.phone}`,
-      `Address: ${c.address}`,
-      `Pincode: ${c.pin}`,
-      c.note ? `Note: ${c.note}` : "",
-      "",
-      "*Items:*",
-      ...order.items.map(x => `• [${x.code}] ${x.name}${x.size?" ("+x.size+")":""} × ${x.qty} = ${money(x.price*x.qty)}`),
-      `*Total: ${money(total)}*`
-    ];
-
+    // Save the order first, then open WhatsApp. The same message can be resent later from My Orders.
+    order.customer.note=c.note||"";
     cart = [];
     saveLocal();
     updateCart();
@@ -878,16 +880,15 @@ async function placeOrder(){
     renderAdmin();
     renderCustomerOrders();
 
-    toast("Order placed. Opening WhatsApp...");
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.filter(Boolean).join("\n"))}`;
-    // Open immediately after the user action; delayed window.open() is often blocked on Android.
-    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      window.location.href = url;
-    } else {
-      const w = window.open(url, "_blank", "noopener,noreferrer");
-      if (!w) window.location.href = url;
+    toast("Order saved. Opening WhatsApp...");
+    const whatsappUrl=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildOrderWhatsAppMessage(order))}`;
+    if(whatsappWindow && !whatsappWindow.closed){
+      try{whatsappWindow.location.href=whatsappUrl;whatsappWindow.opener=null;}catch(e){window.location.href=whatsappUrl;}
+    }else{
+      window.location.href=whatsappUrl;
     }
   }catch(error){
+    try{if(whatsappWindow&&!whatsappWindow.closed)whatsappWindow.close();}catch(e){}
     toast("Order could not be saved: " + error.message);
   }finally{
     if(button) button.disabled = false;
@@ -928,20 +929,49 @@ function normalizeServerOrder(o){
   };
 }
 
+function buildOrderWhatsAppMessage(o){
+  const c=o?.customer||{};
+  const items=o?.items||[];
+  const lines=[
+    `*ORDER ${o?.id||""}*`,
+    `Customer: ${c.name||""}`,
+    `Phone: ${c.phone||""}`,
+    `Address: ${c.address||""}`,
+    `Pincode: ${c.pin||""}`,
+    c.note ? `Note: ${c.note}` : "",
+    "",
+    "*Items:*",
+    ...items.map(x=>`• [${x.code||x.id||"-"}] ${x.name||"Product"}${x.size?" ("+x.size+")":""} × ${Number(x.qty)||0} = ${money(Number(x.price||0)*Number(x.qty||0))}`),
+    `*Total: ${money(o?.total||0)}*`
+  ];
+  return lines.filter(Boolean).join("\n");
+}
+function sendOrderToWhatsApp(o){
+  if(!o||!o.id){toast("Order details are unavailable");return;}
+  const url=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildOrderWhatsAppMessage(o))}`;
+  const w=window.open(url,"_blank");
+  if(!w){window.location.href=url;return;}
+  try{w.opener=null;}catch(e){}
+}
+function resendOrderById(id){
+  const wanted=String(id||"").trim().toLowerCase();
+  const o=orders.find(x=>String(x.id||"").trim().toLowerCase()===wanted);
+  if(!o){toast("Order not found. Reload your orders and try again.");return;}
+  sendOrderToWhatsApp(o);
+}
 function renderCustomerOrders(){
   const c=getCustomer(),box=$("customerOrders");
   if(!box)return;
   if(!c){box.innerHTML="";return;}
-  const customerId=String(c.customerId||c.id||"").toUpperCase();
+  const customerId=String(c.customerId||c.id||"").trim().toUpperCase();
   const phone=String(c.phone||"").replace(/\D/g,"").slice(-10);
   const mine=orders.filter(o=>{
-    const oid=String(o.customer?.id||o.customer?.customerId||"").toUpperCase();
-    return (customerId && oid===customerId) ||
-           (!oid && String(o.customer?.phone||"").replace(/\D/g,"").slice(-10)===phone);
+    const oid=String(o.customer?.id||o.customer?.customerId||"").trim().toUpperCase();
+    const op=String(o.customer?.phone||"").replace(/\D/g,"").slice(-10);
+    return (customerId && oid===customerId) || (!oid && phone && op===phone);
   });
-  box.innerHTML=mine.length?mine.map(o=>`<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><strong>${money(o.total)}</strong><span class="status">${esc(o.status||"New")}</span></div></div>`).join(""): `<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
+  box.innerHTML=mine.length?mine.map(o=>`<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><strong>${money(o.total)}</strong><span class="status">${esc(o.status||"New")}</span></div><button class="outline" style="width:100%;margin-top:4px" onclick="resendOrderById('${safeProductArg(o.id)}')">↗ Resend Order to WhatsApp</button></div>`).join(""): `<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
 }
-
 function generateInvoice(o){const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(o.id)} - BIJAYA HOUSING</title><style>body{font-family:Arial,sans-serif;padding:35px;color:#111;max-width:900px;margin:auto}h1{margin-bottom:4px}.muted{color:#666}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}th:last-child,td:last-child{text-align:right}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}button{padding:10px 16px;border:1px solid #111;background:#fff;border-radius:8px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button><h1>BIJAYA HOUSING</h1><div>Agalpur</div><div class="muted">8114832749 • 9078523132</div><h2>INVOICE</h2><div class="muted">${esc(o.id)} • ${new Date(o.date).toLocaleString("en-IN")}</div><p><b>${esc(o.customer.name)}</b><br>${esc(o.customer.phone)}<br>${esc(o.customer.address)}<br>${esc(o.customer.pin)}</p><table><tr><th>Code</th><th>Item</th><th>Size</th><th>Qty</th><th>Price</th><th>Amount</th></tr>${o.items.map(x=>`<tr><td>${esc(x.code||x.id||"-")}</td><td>${esc(x.name)}</td><td>${esc(x.size||"-")}</td><td>${x.qty}</td><td>${money(x.price)}</td><td>${money(x.price*x.qty)}</td></tr>`).join("")}</table><div class="total">Total: ${money(o.total)}</div><p class="muted">Thank you for shopping with BIJAYA HOUSING.</p></body></html>`;const url=URL.createObjectURL(new Blob([html],{type:"text/html"}));const a=document.createElement("a");a.href=url;a.download=`${o.id}-invoice.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 
 /* ADMIN */
@@ -1328,7 +1358,7 @@ async function loadAdminOrders(){
   }catch(e){console.error("Admin orders error:",e);toast("Could not load orders: "+e.message);}
 }
 
-if($("searchInput"))$("searchInput").addEventListener("input",()=>{if(customer())renderProducts();});if($("adminCustomerSearch"))$("adminCustomerSearch").addEventListener("input",renderAdminCustomers);if($("accessType"))$("accessType").addEventListener("change",updateAccessBoxes);if($("adminProductSearch"))$("adminProductSearch").addEventListener("input",function(){const q=this.value.toLowerCase();document.querySelectorAll("#adminProductsBody tr").forEach(r=>r.style.display=r.textContent.toLowerCase().includes(q)?"":"none")});
+if($("searchInput"))$("searchInput").addEventListener("input",()=>{if(customer())renderProducts();});if($("adminCustomerSearch"))$("adminCustomerSearch").addEventListener("input",renderAdminCustomers);if($("accessType"))$("accessType").addEventListener("change",updateAccessBoxes);
 async function init(){
   if($("apiUrl"))$("apiUrl").value=API_URL;
   updateCustomerAccess();
