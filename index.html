@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSING</title>
+<title>BIJAYA HOUSINGe</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -24,7 +24,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:28px 0 15px}.section-head h2{margin:0;font-size:24px}.categories{display:flex;gap:10px;overflow:auto;padding:2px 1px 10px} .subcategories{display:flex;gap:8px;overflow:auto;padding:0 1px 12px;margin-top:-3px}.subcategories .chip{font-size:12px;padding:8px 12px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;white-space:nowrap;font-weight:700;color:#475569;transition:.18s}.chip.active,.chip:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(15,23,42,.04);transition:.2s;display:flex;flex-direction:column}.product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.product-img{aspect-ratio:1/1;background:#eef2f7;overflow:hidden;position:relative}.product-img::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,#eef2f7 25%,#f8fafc 37%,#eef2f7 63%);background-size:400% 100%;animation:imgSkeleton 1.2s ease infinite}.product-img img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;opacity:0;transition:opacity .18s ease}.product-img img.img-ready{opacity:1}.product-img.img-loaded::before{display:none}@keyframes imgSkeleton{0%{background-position:100% 0}100%{background-position:-100% 0}}.product-body{padding:16px}.product-cat{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.product h3{font-size:17px;margin:7px 0}.desc{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}.price{font-size:20px;font-weight:900;margin:12px 0}.size-row{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.size{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:800}.size.selected{border-color:var(--accent);background:#eff6ff;color:var(--accent)}.addrow{display:flex;gap:8px}.addrow .primary{flex:1}
 .empty{padding:50px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cbd5e1;border-radius:18px;grid-column:1/-1}
-.drawer-backdrop,.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.48);z-index:90;display:none}.drawer-backdrop.show,.modal-backdrop.show{display:block}.drawer{position:fixed;z-index:100;right:0;top:0;height:100dvh;width:min(470px,100%);background:#fff;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.15)}.drawer.show{transform:translateX(0)}.drawer-head{padding:20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.drawer-body{padding:18px;overflow:auto;flex:1}.cart-item{display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.cart-item img{width:70px;height:70px;border-radius:12px;object-fit:cover;background:#f1f5f9}.cart-item h4{margin:0 0 5px}.cart-meta{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:8px;margin-top:9px}.qty button{border:1px solid var(--line);background:#fff;width:28px;height:28px;border-radius:8px}.cart-qty-input{width:58px;height:30px;padding:3px 5px}.drawer-foot{padding:18px;border-top:1px solid var(--line)}.totalrow{display:flex;justify-content:space-between;font-size:19px;font-weight:900;margin-bottom:14px}
+.drawer-backdrop,.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.48);z-index:90;display:none;pointer-events:none}.drawer-backdrop.show,.modal-backdrop.show{pointer-events:auto}.drawer-backdrop.show,.modal-backdrop.show{display:block}.drawer{position:fixed;z-index:100;right:0;top:0;height:100dvh;width:min(470px,100%);background:#fff;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.15)}.drawer.show{transform:translateX(0)}.drawer-head{padding:20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.drawer-body{padding:18px;overflow:auto;flex:1}.cart-item{display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.cart-item img{width:70px;height:70px;border-radius:12px;object-fit:cover;background:#f1f5f9}.cart-item h4{margin:0 0 5px}.cart-meta{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:8px;margin-top:9px}.qty button{border:1px solid var(--line);background:#fff;width:28px;height:28px;border-radius:8px}.cart-qty-input{width:58px;height:30px;padding:3px 5px}.drawer-foot{padding:18px;border-top:1px solid var(--line)}.totalrow{display:flex;justify-content:space-between;font-size:19px;font-weight:900;margin-bottom:14px}
 .modal{position:fixed;z-index:110;left:50%;top:50%;transform:translate(-50%,-47%);width:min(900px,calc(100% - 28px));max-height:90dvh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.22);display:none}.modal.show{display:block;animation:pop .18s ease}.modal-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-body{padding:22px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:800}.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}textarea{min-height:90px;resize:vertical}.checkout-summary{background:var(--surface2);padding:16px;border-radius:15px;margin-bottom:18px}.checkout-line{display:flex;justify-content:space-between;padding:5px 0;font-size:14px}.notice{font-size:12px;color:var(--muted);line-height:1.5}
 .admin-layout{display:none}.admin-layout.show{display:block}.admin-nav{display:flex;gap:8px;overflow:auto;margin-bottom:18px}.admin-tab{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:11px;font-weight:800;white-space:nowrap}.admin-tab.active{background:var(--primary);color:#fff}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:28px;margin-top:6px}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:18px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:760px}.table th,.table td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:13px}.table th{color:var(--muted);font-size:12px;text-transform:uppercase}.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-weight:800;font-size:11px}
 .login-card{max-width:430px;margin:70px auto;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow)}.login-card h2{margin-top:0}.login-card .field{margin-bottom:13px}.admin-toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
@@ -158,9 +158,9 @@ html,body{max-width:100%;overflow-x:hidden}
     <div class="nav-spacer"></div>
     <div class="search" id="customerSearch"><span>⌕</span><input id="searchInput" placeholder="Search products..."></div>
     <a class="outline callbtn" href="tel:8114832749">☎ Raj Kishor</a>
-    <button class="outline profilebtn" onclick="openCustomerProfile()">👤 Profile</button>
-    <button class="outline adminnavbtn" id="adminNavButton" onclick="showLogin()">Admin</button>
-    <button class="iconbtn cartbtn" onclick="openCart()">🛒<span class="badge" id="cartBadge">0</span></button>
+    <button type="button" class="outline profilebtn" onclick="openCustomerProfile()">👤 Profile</button>
+    <button type="button" class="outline adminnavbtn" id="adminNavButton" onclick="showLogin()">Admin</button>
+    <button type="button" class="iconbtn cartbtn" onclick="openCart()">🛒<span class="badge" id="cartBadge">0</span></button>
   </div>
 </header>
 
@@ -170,7 +170,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div class="gate-icon">BH</div>
   <h2>Welcome to BIJAYA HOUSING</h2>
   <p>Create your customer account first. After admin approval, call BIJAYA HOUSING to receive your Customer ID and Password.</p>
-  <button class="primary" onclick="showCustomerLogin()">Customer Login / Sign Up</button>
+  <button type="button" class="primary" onclick="showCustomerLogin()">Customer Login / Sign Up</button>
   <div class="gate-contact">
     <a href="tel:8114832749">☎ Raj Kishor</a>
     <a href="tel:9078523132">☎ Dibya Kishor</a>
@@ -183,7 +183,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
       <h1>Shop smarter.<br>Choose what you need.</h1>
       <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
-      <button class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
+      <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
     </div>
     <div class="hero-card"><small>Order support</small><div class="big">WhatsApp</div><small>Fast order confirmation through 8114832749</small></div>
   </section>
@@ -195,7 +195,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <a class="primary" target="_blank" href="https://wa.me/918114832749">WhatsApp</a>
     </div>
   </section>
-  <div class="section-head"><h2>Categories</h2><button class="outline" id="reloadProductsBtn" onclick="reloadProducts()">↻ Reload Products</button></div>
+  <div class="section-head"><h2>Categories</h2><button type="button" class="outline" id="reloadProductsBtn" onclick="reloadProducts()">↻ Reload Products</button></div>
   <div class="categories" id="categories"></div>
   <div class="subcategories hidden" id="subcategories"></div>
   <section id="productsSection">
@@ -208,23 +208,23 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Satyajeet's Backend authentication.</p>
+    <p style="color:var(--muted);font-size:14px">Satyajeet's backend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
-    <button class="primary" style="width:100%" onclick="adminLogin()">Login</button>
-    <button class="outline" style="width:100%;margin-top:9px" onclick="goBackToStore()">← Back to Store</button>
+    <button type="button" class="primary" style="width:100%" onclick="adminLogin()">Login</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="goBackToStore()">← Back to Store</button>
   </div>
   <div id="adminPanel" class="hidden">
     <div class="admin-toolbar">
       <div><h2 style="margin:0">Admin Dashboard</h2><div style="color:var(--muted);font-size:13px">Manage your catalog and orders</div></div>
-      <div style="display:flex;gap:8px"><button class="outline" onclick="openProductForm()">+ Add Product</button><button class="outline" onclick="adminLogout()">Logout</button></div>
+      <div style="display:flex;gap:8px"><button type="button" class="outline" onclick="openProductForm()">+ Add Product</button><button type="button" class="outline" onclick="adminLogout()">Logout</button></div>
     </div>
     <div class="admin-nav" style="margin-top:18px">
-      <button class="admin-tab active" onclick="adminTab('dashboard',this)">Dashboard</button>
-      <button class="admin-tab" onclick="adminTab('products',this)">Products</button>
-      <button class="admin-tab" onclick="adminTab('orders',this)">Orders</button>
-      <button class="admin-tab" onclick="adminTab('customers',this)">Customers</button>
-      <button class="admin-tab" onclick="adminTab('data',this)">Google Sheet</button>
+      <button type="button" class="admin-tab active" onclick="adminTab('dashboard',this)">Dashboard</button>
+      <button type="button" class="admin-tab" onclick="adminTab('products',this)">Products</button>
+      <button type="button" class="admin-tab" onclick="adminTab('orders',this)">Orders</button>
+      <button type="button" class="admin-tab" onclick="adminTab('customers',this)">Customers</button>
+      <button type="button" class="admin-tab" onclick="adminTab('data',this)">Google Sheet</button>
     </div>
     <div id="adminDashboardTab">
       <div class="stats">
@@ -235,7 +235,7 @@ html,body{max-width:100%;overflow-x:hidden}
       </div>
       <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually. For production, connect the Google Sheet section to your Apps Script Web App URL so the catalog is shared across all customers.</p></div>
     </div>
-    <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><button class="outline" onclick="loadProductsFromApi(true,true)">↻ Reload Products</button></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Subcategory</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
+    <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><button type="button" class="outline" onclick="loadProductsFromApi(true,true)">↻ Reload Products</button></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Subcategory</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
     <div id="adminOrdersTab" class="hidden">
       <div class="panel">
         <div class="admin-toolbar orders-toolbar">
@@ -259,8 +259,8 @@ html,body{max-width:100%;overflow-x:hidden}
             <div class="notice" style="margin-top:4px">Approve registrations, issue login credentials, and block/unblock customers.</div>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="outline" onclick="openAdminCustomerForm()">+ Create Customer</button>
-            <button class="outline" onclick="loadAdminCustomers()">↻ Refresh</button>
+            <button type="button" class="outline" onclick="openAdminCustomerForm()">+ Create Customer</button>
+            <button type="button" class="outline" onclick="loadAdminCustomers()">↻ Refresh</button>
           </div>
         </div>
         <div class="panel" style="margin-top:14px;padding:14px;background:var(--surface2)">
@@ -274,25 +274,25 @@ html,body{max-width:100%;overflow-x:hidden}
         </div>
       </div>
     </div>
-    <div id="adminDataTab" class="hidden"><div class="panel"><h3>Connect Google Sheets</h3><p class="notice">Paste your deployed Apps Script Web App <b>/exec</b> URL. The app will fetch the live Products sheet. <b>Size Stock is retained.</b></p><div class="field"><label>Apps Script Web App URL</label><input id="apiUrl" placeholder="https://script.google.com/macros/s/.../exec"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="primary" onclick="saveApi()">Save &amp; Load Products</button><button class="outline" onclick="loadProductsFromApi(true)">↻ Refresh Products</button></div><div id="apiStatus" class="notice" style="margin-top:12px;font-weight:800"></div></div></div>
+    <div id="adminDataTab" class="hidden"><div class="panel"><h3>Connect Google Sheets</h3><p class="notice">Paste your deployed Apps Script Web App <b>/exec</b> URL. The app will fetch the live Products sheet. <b>Size Stock is retained.</b></p><div class="field"><label>Apps Script Web App URL</label><input id="apiUrl" placeholder="https://script.google.com/macros/s/.../exec"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button type="button" class="primary" onclick="saveApi()">Save &amp; Load Products</button><button type="button" class="outline" onclick="loadProductsFromApi(true)">↻ Refresh Products</button></div><div id="apiStatus" class="notice" style="margin-top:12px;font-weight:800"></div></div></div>
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.27</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.28</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
 <aside class="drawer" id="cartDrawer">
-  <div class="drawer-head"><h2 style="margin:0">Your Cart</h2><button class="iconbtn" onclick="closeCart()">×</button></div>
+  <div class="drawer-head"><h2 style="margin:0">Your Cart</h2><button type="button" class="iconbtn" onclick="closeCart()">×</button></div>
   <div class="drawer-body" id="cartBody"></div>
-  <div class="drawer-foot"><div class="totalrow"><span>Total</span><span id="cartTotal">₹0</span></div><button class="primary" style="width:100%" onclick="openCheckout()">Proceed to Checkout →</button></div>
+  <div class="drawer-foot"><div class="totalrow"><span>Total</span><span id="cartTotal">₹0</span></div><button type="button" class="primary" style="width:100%" onclick="openCheckout()">Proceed to Checkout →</button></div>
 </aside>
 
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
 <div class="modal product-view-modal" id="productViewModal">
   <div class="modal-head">
     <div><strong>Product Details</strong></div>
-    <button class="iconbtn" onclick="closeProductView()" aria-label="Close product details">×</button>
+    <button type="button" class="iconbtn" onclick="closeProductView()" aria-label="Close product details">×</button>
   </div>
   <div class="product-view-body">
     <div class="product-view-image"><img id="viewProductImage" src="" alt="Product"></div>
@@ -307,20 +307,20 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="product-view-stock" id="viewProductStock"></div>
       <div class="product-view-label">Quantity</div>
       <div class="product-view-qty">
-        <button onclick="changeViewQty(-1)" aria-label="Decrease quantity">−</button>
+        <button type="button" onclick="changeViewQty(-1)" aria-label="Decrease quantity">−</button>
         <input id="viewProductQty" class="qty-input" type="number" min="1" inputmode="numeric" value="1" aria-label="Quantity" oninput="setViewQty(this.value)" onchange="setViewQty(this.value)">
-        <button onclick="changeViewQty(1)" aria-label="Increase quantity">+</button>
+        <button type="button" onclick="changeViewQty(1)" aria-label="Increase quantity">+</button>
       </div>
       <div class="product-view-actions">
-        <button class="outline" onclick="closeProductView()">Close</button>
-        <button class="primary" id="viewAddToCartBtn" onclick="addViewedProductToCart()">Add to Cart</button>
+        <button type="button" class="outline" onclick="closeProductView()">Close</button>
+        <button type="button" class="primary" id="viewAddToCartBtn" onclick="addViewedProductToCart()">Add to Cart</button>
       </div>
     </div>
   </div>
 </div>
 
 <div class="modal" id="checkoutModal">
-  <div class="modal-head"><div><h2 style="margin:0">Checkout</h2><div style="font-size:12px;color:var(--muted)">Enter customer details</div></div><button class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-head"><div><h2 style="margin:0">Checkout</h2><div style="font-size:12px;color:var(--muted)">Enter customer details</div></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
     <div class="checkout-summary" id="checkoutSummary"></div>
     <div class="formgrid">
@@ -331,14 +331,14 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="field"><label>Order Note</label><input id="custNote" placeholder="Optional"></div>
     </div>
     <p class="notice" style="margin-top:15px">After submitting, your order will be saved and the order details will open directly in WhatsApp. The invoice can be generated only by the admin.</p>
-    <button class="primary" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order & Open WhatsApp</button>
+    <button type="button" class="primary" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order & Open WhatsApp</button>
   </div>
 </div>
 
 <div class="modal" id="orderSuccessModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Order Submitted Successfully</h2><div style="font-size:12px;color:var(--muted)">Your order is ready for approval</div></div>
-    <button class="iconbtn" onclick="closeOrderSuccess()">×</button>
+    <button type="button" class="iconbtn" onclick="closeOrderSuccess()">×</button>
   </div>
   <div class="modal-body">
     <div class="checkout-summary" style="text-align:center">
@@ -346,13 +346,13 @@ html,body{max-width:100%;overflow-x:hidden}
       <h3 style="margin:0 0 8px">Thank you for your order.</h3>
       <p class="notice" style="font-size:14px">Your order has been saved to your profile and is being processed for approval by BIJAYA HOUSING. Please open WhatsApp and send the prepared order message to complete your submission.</p>
     </div>
-    <button class="primary" id="sendOrderWhatsAppBtn" style="width:100%;margin-top:10px" onclick="sendPendingOrderToWhatsApp()">↗ Send Order to WhatsApp</button>
-    <button class="outline" style="width:100%;margin-top:9px" onclick="closeOrderSuccess()">View My Orders</button>
+    <button type="button" class="primary" id="sendOrderWhatsAppBtn" style="width:100%;margin-top:10px" onclick="sendPendingOrderToWhatsApp()">↗ Send Order to WhatsApp</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeOrderSuccess()">View My Orders</button>
   </div>
 </div>
 
 <div class="modal" id="productModal">
-  <div class="modal-head"><h2 id="productModalTitle" style="margin:0">Add Product</h2><button class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-head"><h2 id="productModalTitle" style="margin:0">Add Product</h2><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
     <div class="formgrid">
       <div class="field"><label>Product ID / Product Code *</label><input id="pId" placeholder="Example: TILE 001"><div class="notice">Existing product code. Spaces are allowed.</div></div>
@@ -366,16 +366,16 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="field"><label>Stock</label><input id="pStock" type="number" min="0" value="0"></div>
       <div class="field"><label>Active</label><select id="pActive"><option value="true">Yes</option><option value="false">No</option></select></div>
     </div>
-    <button class="primary" style="width:100%;margin-top:16px" onclick="saveProduct()">Save Product</button>
+    <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="saveProduct()">Save Product</button>
   </div>
 </div>
 
 <div class="modal" id="profileModal">
-  <div class="modal-head"><div><h2 style="margin:0">My Profile</h2><div style="font-size:12px;color:var(--muted)">Your saved customer details</div></div><button class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-head"><div><h2 style="margin:0">My Profile</h2><div style="font-size:12px;color:var(--muted)">Your saved customer details</div></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
     <div id="profileLoggedOut" class="hidden">
       <div class="checkout-summary"><b>You're not logged in.</b><br><span class="notice">Log in or create a profile to save your details for faster checkout.</span></div>
-      <button class="primary" style="width:100%" onclick="showCustomerLogin()">Customer Login / Sign Up</button>
+      <button type="button" class="primary" style="width:100%" onclick="showCustomerLogin()">Customer Login / Sign Up</button>
     </div>
     <div id="profileLoggedIn" class="hidden">
       <div class="profile-card">
@@ -393,8 +393,8 @@ html,body{max-width:100%;overflow-x:hidden}
         <div class="field full"><label>Address</label><textarea id="profileAddressInput"></textarea></div>
         <div class="field"><label>Pincode</label><input id="profilePinInput" inputmode="numeric"></div>
       </div>
-      <button class="primary" style="width:100%;margin-top:14px" onclick="saveCustomerProfile()">Save Profile</button>
-      <button class="outline" style="width:100%;margin-top:9px" onclick="customerLogout()">Logout</button>
+      <button type="button" class="primary" style="width:100%;margin-top:14px" onclick="saveCustomerProfile()">Save Profile</button>
+      <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="customerLogout()">Logout</button>
       <div class="profile-orders" style="margin-top:22px">
         <div class="section-head" style="margin-bottom:10px"><div><div class="eyebrow">ORDER HISTORY</div><h3 style="margin:4px 0">My Orders</h3></div></div>
         <div id="customerOrders"></div>
@@ -406,18 +406,18 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="modal" id="customerLoginModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Customer Account</h2><div style="font-size:12px;color:var(--muted)">Login with your Customer ID and Password</div></div>
-    <button class="iconbtn" onclick="closeModal()">×</button>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
   </div>
   <div class="modal-body">
     <div class="auth-switch">
-      <button class="primary" id="loginModeBtn" onclick="showAuthMode('login')">Login</button>
-      <button class="outline" id="signupModeBtn" onclick="showAuthMode('signup')">Sign Up</button>
+      <button type="button" class="primary" id="loginModeBtn" onclick="showAuthMode('login')">Login</button>
+      <button type="button" class="outline" id="signupModeBtn" onclick="showAuthMode('signup')">Sign Up</button>
     </div>
 
     <div id="customerLoginForm">
       <div class="field"><label>Customer ID *</label><input id="loginCustomerId" autocomplete="username" placeholder="Example: BH10001"></div>
       <div class="field" style="margin-top:12px"><label>Password *</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Your password"></div>
-      <button class="primary" style="width:100%;margin-top:16px" onclick="customerLogin()">Login</button>
+      <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="customerLogin()">Login</button>
       <div class="account-note" style="margin-top:14px">If you are registered but do not have your Customer ID and Password, please call <b>8114832749</b> or <b>9078523132</b>.</div>
     </div>
 
@@ -427,7 +427,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="field" style="margin-top:12px"><label>Mobile Number *</label><input id="signupPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
       <div class="field" style="margin-top:12px"><label>Address *</label><textarea id="signupAddress" placeholder="House / street / village / town"></textarea></div>
       <div class="field" style="margin-top:12px"><label>Pincode *</label><input id="signupPin" inputmode="numeric" placeholder="6-digit pincode"></div>
-      <button class="primary" style="width:100%;margin-top:16px" onclick="customerSignup()">Submit Registration</button>
+      <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="customerSignup()">Submit Registration</button>
       <div class="account-note" style="margin-top:14px">Your registration will be <b>Pending</b> until BIJAYA HOUSING approves it. After approval, call <b>8114832749</b> to receive your Customer ID and Password.</div>
     </div>
   </div>
@@ -436,7 +436,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="modal" id="customerAccessModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Manage Product Access</h2><div id="accessCustomerTitle" class="notice" style="margin-top:4px"></div></div>
-    <button class="iconbtn" onclick="closeModal()">×</button>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
   </div>
   <div class="modal-body">
     <div class="formgrid">
@@ -455,14 +455,14 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="field"><label>Allowed Products</label><div style="display:flex;gap:7px;margin-bottom:8px"><button type="button" class="outline" onclick="toggleAccessChecks('#accessProductsList',true)">Select All</button><button type="button" class="outline" onclick="toggleAccessChecks('#accessProductsList',false)">Clear All</button></div><div class="access-list" id="accessProductsList"></div></div>
     </div>
     <div class="account-note" style="margin-top:14px">The customer will see only the selected categories/products after the app refreshes or the customer logs in again. Access is enforced by Google Apps Script.</div>
-    <button class="primary" style="width:100%;margin-top:16px" onclick="saveCustomerAccess()">Save Product Access</button>
+    <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="saveCustomerAccess()">Save Product Access</button>
   </div>
 </div>
 
 <div class="modal" id="adminCustomerModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Create Customer</h2><div style="font-size:12px;color:var(--muted)">Admin account creation</div></div>
-    <button class="iconbtn" onclick="closeModal()">×</button>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
   </div>
   <div class="modal-body">
     <div class="formgrid">
@@ -472,7 +472,7 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="field full"><label>Address *</label><textarea id="adminCustAddress" placeholder="Address"></textarea></div>
       <div class="field"><label>Pincode *</label><input id="adminCustPin" inputmode="numeric" placeholder="6-digit pincode"></div>
     </div>
-    <button class="primary" style="width:100%;margin-top:16px" onclick="adminCreateCustomer()">Create Active Account</button>
+    <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="adminCreateCustomer()">Create Active Account</button>
     <div id="adminCustomerCredentialBox"></div>
   </div>
 </div>
@@ -481,7 +481,8 @@ html,body{max-width:100%;overflow-x:hidden}
 
 <script>
 /* BIJAYA HOUSING — LIVE GOOGLE SHEETS CONNECTION */
-let API_URL=localStorage.getItem("bijaya_api_url")||"https://script.google.com/macros/s/AKfycbwXpRGn-_VTG7qTbGp-I-rNDmm_XBzvqgPIH3eB_OsNsq7OtD7R3KZnsXGMyWvJj8e4/exec";
+const DEFAULT_API_URL="https://script.google.com/macros/s/AKfycbwXpRGn-_VTG7qTbGp-I-rNDmm_XBzvqgPIH3eB_OsNsq7OtD7R3KZnsXGMyWvJj8e4/exec";
+let API_URL=localStorage.getItem("bijaya_api_url")||DEFAULT_API_URL;
 const WHATSAPP_NUMBER="918114832749";
 const GITHUB_IMAGE_BASE="https://satyajeetmeher91.github.io/bijayahousing/images/";
 const DEFAULT_IMAGE="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="#eef1f5"/><text x="400" y="285" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#667085">IMAGE NOT AVAILABLE</text><text x="400" y="335" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#98a2b3">BIJAYA HOUSING</text></svg>`);
@@ -827,7 +828,7 @@ function renderCategories(){
   const cats=["All",...new Set(products.filter(p=>p.active!==false).map(p=>String(p.category||"").trim()).filter(Boolean))];
   const normalizedCurrent=normalizeAccessValue(category);
   if(category!=="All" && !cats.some(c=>normalizeAccessValue(c)===normalizedCurrent)) category="All";
-  $("categories").innerHTML=cats.map(c=>`<button class="chip ${normalizeAccessValue(category)===normalizeAccessValue(c)?"active":""}" onclick="setCategory(decodeURIComponent('${encodeURIComponent(c)}'))">${esc(c)}</button>`).join("");
+  $("categories").innerHTML=cats.map(c=>`<button type="button" class="chip ${normalizeAccessValue(category)===normalizeAccessValue(c)?"active":""}" onclick="setCategory(decodeURIComponent('${encodeURIComponent(c)}'))">${esc(c)}</button>`).join("");
   if($("statCategories"))$("statCategories").textContent=Math.max(0,cats.length-1);
   renderSubcategories();
 }
@@ -839,7 +840,7 @@ function renderSubcategories(){
   if(!subs.length){box.classList.add("hidden");box.innerHTML="";return;}
   const current=window.selectedSubcategory||"All";
   box.classList.remove("hidden");
-  box.innerHTML=["All",...subs].map(s=>`<button class="chip ${normalizeAccessValue(current)===normalizeAccessValue(s)?"active":""}" onclick="setSubcategory(decodeURIComponent('${encodeURIComponent(s)}'))">${esc(s)}</button>`).join("");
+  box.innerHTML=["All",...subs].map(s=>`<button type="button" class="chip ${normalizeAccessValue(current)===normalizeAccessValue(s)?"active":""}" onclick="setSubcategory(decodeURIComponent('${encodeURIComponent(s)}'))">${esc(s)}</button>`).join("");
 }
 function setCategory(c){category=String(c||"All").trim()||"All";window.selectedSubcategory="All";renderCategories();renderProducts();}
 function setSubcategory(s){window.selectedSubcategory=String(s||"All").trim()||"All";renderSubcategories();renderProducts();}
@@ -922,7 +923,7 @@ function scheduleProductImages(){
 function githubImageUrl(imageId){return githubImageCandidates(imageId)[0]||""}
 
 function productDomKey(id){return "p_"+String(id||"").trim().replace(/[^a-zA-Z0-9_-]/g,"_");}
-function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
+function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
 let viewedProductId=null;
 let viewedProductSize="";
 let viewedProductQty=1;
@@ -952,7 +953,7 @@ function openProductView(id){
   const hasSizes=Array.isArray(p.sizes)&&p.sizes.length;
   $("viewSizeLabel").classList.toggle("hidden",!hasSizes);
   $("viewProductSizes").classList.toggle("hidden",!hasSizes);
-  $("viewProductSizes").innerHTML=hasSizes?p.sizes.map(s=>`<button class="product-view-size ${s.name===viewedProductSize?"selected":""}" onclick="selectViewedSize('${esc(s.name)}',this)">${esc(s.name)}</button>`).join(""):"";
+  $("viewProductSizes").innerHTML=hasSizes?p.sizes.map(s=>`<button type="button" class="product-view-size ${s.name===viewedProductSize?"selected":""}" onclick="selectViewedSize('${esc(s.name)}',this)">${esc(s.name)}</button>`).join(""):"";
 
   updateProductViewPrice();
   $("productViewModal").classList.add("show");
@@ -1157,8 +1158,7 @@ function buildOrderWhatsAppMessage(o){
     `💰 *GRAND TOTAL: ${money(o?.total||0)}*`,
     "━━━━━━━━━━━━━━━━━━━━",
     "**I'm completely aware of price differentiation in the final invoice.",
-    "***I have no objection to the final price change.",
-    "***I will pay the final price made by Bijaya Housing."
+    "***I have no objection to the final price change & ready to pay.",
     ""
   ];
   return lines.join("\n");
@@ -1249,43 +1249,41 @@ function renderCustomerOrders(){
     const op=String(o.customer?.phone||"").replace(/\D/g,"").slice(-10);
     return (customerId&&oid===customerId)||(!oid&&phone&&op===phone);
   });
-  box.innerHTML=mine.length?mine.map(o=>`<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><strong>${money(o.total)}</strong><span class="status">${esc(o.status||"New")}</span></div><button class="outline" style="width:100%;margin-top:4px" onclick="resendOrderById('${safeProductArg(o.id)}')">↗ Resend Order to WhatsApp</button></div>`).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
+  box.innerHTML=mine.length?mine.map(o=>`<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><strong>${money(o.total)}</strong><span class="status">${esc(o.status||"New")}</span></div><button type="button" class="outline" style="width:100%;margin-top:4px" onclick="resendOrderById('${safeProductArg(o.id)}')">↗ Resend Order to WhatsApp</button></div>`).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
 }
 
 function generateInvoice(o){
-  const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(o.id)} - BIJAYA HOUSING</title><style>body{font-family:Arial,sans-serif;padding:35px;color:#111;max-width:950px;margin:auto}h1{margin:0 0 4px}.muted{color:#666}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:10px;border:1px solid #ddd;text-align:left;font-size:13px}th{background:#f4f4f4}th:nth-child(1),td:nth-child(1),th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4){text-align:center}th:nth-child(5),td:nth-child(5),th:nth-child(6),td:nth-child(6){text-align:right}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}.note{margin-top:28px;color:#666;font-size:12px}button{padding:10px 16px;border:1px solid #111;background:#fff;border-radius:8px;margin-bottom:18px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">Print / Save as PDF</button><h1>BIJAYA HOUSING</h1><div>Agalpur</div><div class="muted">8114832749 • 9078523132</div><h2>INVOICE</h2><div class="muted">Order ID: ${esc(o.id)} • ${new Date(o.date).toLocaleString("en-IN")}</div><p><b>${esc(o.customer?.name||"")}</b><br>Phone: ${esc(o.customer?.phone||"")}<br>${esc(o.customer?.address||"")}<br>Pincode: ${esc(o.customer?.pin||"")}</p><table><tr><th>Sl. No.</th><th>Product Name</th><th>Product Size</th><th>Quantity</th><th>Rate</th><th>Amount</th></tr>${(o.items||[]).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name||"Product")}${x.code?`<br><span class="muted">Code: ${esc(x.code)}</span>`:""}</td><td>${esc(x.size||"-")}</td><td>${Number(x.qty)||0}</td><td>${money(x.price)}</td><td>${money(Number(x.price||0)*Number(x.qty||0))}</td></tr>`).join("")}</table><div class="total">Grand Total: ${money(o.total)}</div><div class="note">Thank you for shopping with BIJAYA HOUSING.</div></body></html>`;
+  const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(o.id)} - BIJAYA HOUSING</title><style>body{font-family:Arial,sans-serif;padding:35px;color:#111;max-width:950px;margin:auto}h1{margin:0 0 4px}.muted{color:#666}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:10px;border:1px solid #ddd;text-align:left;font-size:13px}th{background:#f4f4f4}th:nth-child(1),td:nth-child(1),th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4){text-align:center}th:nth-child(5),td:nth-child(5),th:nth-child(6),td:nth-child(6){text-align:right}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}.note{margin-top:28px;color:#666;font-size:12px}button{padding:10px 16px;border:1px solid #111;background:#fff;border-radius:8px;margin-bottom:18px}@media print{button{display:none}}</style></head><body><button type="button" onclick="window.print()">Print / Save as PDF</button><h1>BIJAYA HOUSING</h1><div>Agalpur</div><div class="muted">8114832749 • 9078523132</div><h2>INVOICE</h2><div class="muted">Order ID: ${esc(o.id)} • ${new Date(o.date).toLocaleString("en-IN")}</div><p><b>${esc(o.customer?.name||"")}</b><br>Phone: ${esc(o.customer?.phone||"")}<br>${esc(o.customer?.address||"")}<br>Pincode: ${esc(o.customer?.pin||"")}</p><table><tr><th>Sl. No.</th><th>Product Name</th><th>Product Size</th><th>Quantity</th><th>Rate</th><th>Amount</th></tr>${(o.items||[]).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name||"Product")}${x.code?`<br><span class="muted">Code: ${esc(x.code)}</span>`:""}</td><td>${esc(x.size||"-")}</td><td>${Number(x.qty)||0}</td><td>${money(x.price)}</td><td>${money(Number(x.price||0)*Number(x.qty||0))}</td></tr>`).join("")}</table><div class="total">Grand Total: ${money(o.total)}</div><div class="note">Thank you for shopping with BIJAYA HOUSING.</div></body></html>`;
   const url=URL.createObjectURL(new Blob([html],{type:"text/html"}));const a=document.createElement("a");a.href=url;a.download=`${o.id}-invoice.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
 /* ADMIN */
 let appView="customer";
 let navigationLock=false;
+function closeAllOverlays(){
+  ["drawerBackdrop","modalBackdrop"].forEach(id=>$(id)?.classList.remove("show"));
+  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal"].forEach(id=>$(id)?.classList.remove("show"));
+  document.body.style.overflow="";
+}
 function setAppView(view,push=true){
   if(navigationLock)return;
-  appView=view;
-  $("customerView")?.classList.toggle("hidden",view!=="customer");
-  $("adminView")?.classList.toggle("show",view==="admin");
-  $("customerSearch")?.classList.toggle("hidden",view!=="customer" || !customer());
-  if(view==="admin") {
+  appView=view==="admin"?"admin":"customer";
+  $("customerView")?.classList.toggle("hidden",appView!=="customer");
+  $("adminView")?.classList.toggle("show",appView==="admin");
+  $("customerSearch")?.classList.toggle("hidden",appView!=="customer" || !customer());
+  if(appView==="admin"){
     const logged=!!sessionStorage.getItem("admin_token");
     $("adminLoginView")?.classList.toggle("hidden",logged);
     $("adminPanel")?.classList.toggle("hidden",!logged);
   }
   updateCustomerAccess();
   window.scrollTo(0,0);
-  if(push && history.pushState) history.pushState({view},"",view==="admin"?"#admin":"#store");
+  if(push && history.pushState) history.pushState({view:appView},"",appView==="admin"?"#admin":"#store");
 }
-function showLogin(){setAppView("admin",true);}
-function showCustomer(){setAppView("customer",true);}
-function goBackToStore(){
-  if(history.length>1 && location.hash==="#admin") history.back();
-  else setAppView("customer",false);
-}
-window.addEventListener("popstate",()=>{
-  navigationLock=true;
-  setAppView(location.hash==="#admin"?"admin":"customer",false);
-  navigationLock=false;
-});
+function showLogin(){closeAllOverlays();setAppView("admin",true);}
+function showCustomer(){closeAllOverlays();setAppView("customer",true);}
+function goBackToStore(){closeAllOverlays();setAppView("customer",true);}
+window.addEventListener("popstate",()=>{setAppView(location.hash==="#admin"?"admin":"customer",false);});
 async function adminLogin(){const username=$("adminUser").value.trim(),password=$("adminPass").value;if(!username||!password){toast("Enter username and password");return}try{const d=await apiPost({action:"loginAdmin",username,password});if(!d.adminToken)throw Error("Admin session token missing");sessionStorage.setItem("admin_token",d.adminToken);sessionStorage.setItem("admin_logged","1");sessionStorage.setItem("admin_user",JSON.stringify(d.admin||{}));$("adminLoginView").classList.add("hidden");$("adminPanel").classList.remove("hidden");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");await loadProductsFromApi(false,true);await Promise.all([loadAdminOrders(),loadAdminCustomers()]);toast("Admin login successful")}catch(e){toast("Invalid admin login")}}
 async function adminLogout(){const token=sessionStorage.getItem("admin_token");try{if(token)await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"logoutAdmin",adminToken:token})})}catch(e){}sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_logged");sessionStorage.removeItem("admin_user");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");showCustomer();toast("Admin logged out")}
 function adminTab(tab,btn){document.querySelectorAll(".admin-tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");["dashboard","products","orders","customers","data"].forEach(x=>$("admin"+x[0].toUpperCase()+x.slice(1)+"Tab")?.classList.toggle("hidden",x!==tab));if(tab==="orders")loadAdminOrders();if(tab==="customers")loadAdminCustomers()}
@@ -1294,7 +1292,7 @@ function renderAdmin(){
   if($("statOrders"))$("statOrders").textContent=orders.length;
   if($("statCart"))$("statCart").textContent=cart.reduce((a,x)=>a+x.qty,0);
   if($("statCategories"))$("statCategories").textContent=new Set(products.map(p=>p.category).filter(Boolean)).size;
-  if($("adminProductsBody"))$("adminProductsBody").innerHTML=products.map(p=>`<tr><td><b>${esc(p.name)}</b><br><span class="cart-meta">${esc(p.id)}</span></td><td>${esc(p.category)}</td><td>${esc(p.subcategory||"—")}</td><td>${esc(p.imageId||"—")}</td><td>${p.sizes?.length?p.sizes.map(s=>`${esc(s.name)} ${money(s.price)}`).join("<br>"):money(p.price)}</td><td>${p.sizes?.length?p.sizes.reduce((a,s)=>a+Number(s.stock||0),0):p.stock}</td><td>${p.active!==false?"Yes":"No"}</td><td><button class="outline" onclick="editProduct(decodeProductArg('${safeProductArg(p.id)}'))">Edit</button></td></tr>`).join("");
+  if($("adminProductsBody"))$("adminProductsBody").innerHTML=products.map(p=>`<tr><td><b>${esc(p.name)}</b><br><span class="cart-meta">${esc(p.id)}</span></td><td>${esc(p.category)}</td><td>${esc(p.subcategory||"—")}</td><td>${esc(p.imageId||"—")}</td><td>${p.sizes?.length?p.sizes.map(s=>`${esc(s.name)} ${money(s.price)}`).join("<br>"):money(p.price)}</td><td>${p.sizes?.length?p.sizes.reduce((a,s)=>a+Number(s.stock||0),0):p.stock}</td><td>${p.active!==false?"Yes":"No"}</td><td><button type="button" class="outline" onclick="editProduct(decodeProductArg('${safeProductArg(p.id)}'))">Edit</button></td></tr>`).join("");
   renderAdminOrders();
 }
 
@@ -1311,7 +1309,7 @@ function renderAdminOrders(){
   body.innerHTML=list.length?list.map(o=>{
     const items=o.items||[];
     const itemHtml=items.length?items.map(i=>`<div style="margin-bottom:5px"><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` <span class="cart-meta">(${esc(i.size)})</span>`:""} × ${Number(i.qty)||0} @ ${money(i.price)}</div>`).join(""):`<span class="cart-meta">No item details available</span>`;
-    return `<tr><td><b>${esc(o.id)}</b><br><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></td><td><b>${esc(o.customer?.name||"")}</b><br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span></td><td>${itemHtml}</td><td><b>${money(o.total)}</b></td><td><span class="status">${esc(orderStatus(o))}</span></td><td class="action-cell"><button class="outline" onclick="generateInvoiceById('${esc(o.id)}')">🧾 Generate Invoice</button></td></tr>`;
+    return `<tr><td><b>${esc(o.id)}</b><br><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></td><td><b>${esc(o.customer?.name||"")}</b><br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span></td><td>${itemHtml}</td><td><b>${money(o.total)}</b></td><td><span class="status">${esc(orderStatus(o))}</span></td><td class="action-cell"><button type="button" class="outline" onclick="generateInvoiceById('${esc(o.id)}')">🧾 Generate Invoice</button></td></tr>`;
   }).join(""):`<tr><td colspan="6"><div class="empty"><h3>No matching orders</h3><p>Try another status filter.</p></div></td></tr>`;
 }
 function generateInvoiceById(id){const o=orders.find(x=>String(x.id)===String(id));if(!o){toast("Order not found");return;}generateInvoice(o);}
@@ -1346,9 +1344,9 @@ function renderAdminCustomers(){
     const cls=st==="active"?"status-active":st==="blocked"?"status-blocked":"status-pending";
     const access=c.accessType||"ALL";
     const action=st==="pending"
-      ? `<button class="primary" onclick="approveCustomer('${esc(c.id)}')">Approve</button>`
-      : `<button class="outline" onclick="manageCustomerAccess('${esc(c.id)}')">Access</button>
-         <button class="outline" onclick="setCustomerStatus('${esc(c.id)}','${st==="blocked"?"Active":"Blocked"}')">${st==="blocked"?"Unblock":"Block"}</button>`;
+      ? `<button type="button" class="primary" onclick="approveCustomer('${esc(c.id)}')">Approve</button>`
+      : `<button type="button" class="outline" onclick="manageCustomerAccess('${esc(c.id)}')">Access</button>
+         <button type="button" class="outline" onclick="setCustomerStatus('${esc(c.id)}','${st==="blocked"?"Active":"Blocked"}')">${st==="blocked"?"Unblock":"Block"}</button>`;
     return `<tr>
       <td><b>${esc(c.name)}</b></td>
       <td>${esc(c.type||"Customer")}</td>
@@ -1496,7 +1494,6 @@ async function saveProduct(){
   try{await apiPost({action:"saveProduct",product:p});await loadProductsFromApi(false,true);closeModal();toast("Product saved to Google Sheet")}catch(e){toast("Could not save product: "+e.message)}
 }
 
-function normalizeAccessValue(v){return String(v||"").replace(/\u00a0/g," ").trim().replace(/\s+/g," ").toLowerCase()}
 async function loadAdminOrders(){
   if(!sessionStorage.getItem("admin_token"))return;
   try{
@@ -1514,6 +1511,7 @@ async function loadAdminOrders(){
 
 if($("searchInput"))$("searchInput").addEventListener("input",()=>{if(customer())renderProducts();});if($("adminCustomerSearch"))$("adminCustomerSearch").addEventListener("input",renderAdminCustomers);if($("accessType"))$("accessType").addEventListener("change",updateAccessBoxes);
 async function init(){
+  closeAllOverlays();
   if($("apiUrl"))$("apiUrl").value=API_URL;
   updateCustomerAccess();
   updateCart();
