@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSINGe</title>
+<title>BIJAYA HOUSING</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -208,7 +208,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Satyajeet's backend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
+    <p style="color:var(--muted);font-size:14px">Demo frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button type="button" class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -278,7 +278,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.28</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.29</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -923,7 +923,7 @@ function scheduleProductImages(){
 function githubImageUrl(imageId){return githubImageCandidates(imageId)[0]||""}
 
 function productDomKey(id){return "p_"+String(id||"").trim().replace(/[^a-zA-Z0-9_-]/g,"_");}
-function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
+function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" data-size="${esc(s.name)}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" onclick="event.preventDefault();event.stopImmediatePropagation();addToCart(decodeURIComponent('${encodeURIComponent(p.id)}'))">Add to Cart</button></div></div></article>`}
 let viewedProductId=null;
 let viewedProductSize="";
 let viewedProductQty=1;
@@ -1043,28 +1043,165 @@ function selectSize(id,size,btn){
 
 function getSelectedSize(id){
   const el=$("sizes-"+productDomKey(id));
-  return el?.querySelector(".size.selected")?.textContent.trim()||"";
+  const selected=el?.querySelector(".size.selected");
+  return selected ? String(selected.dataset.size || selected.textContent || "").trim() : "";
 }
 
 function addToCart(id){
-  if(!customer()){showCustomerLogin();return;}
-  const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));
-  if(!p)return;
-  const size=getSelectedSize(id);
-  const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(size));
-  const price=s?s.price:p.price;
-  const stock=Number(s?s.stock:p.stock)||0;
-  if(stock<=0){toast("This item is out of stock");return;}
-  const key=p.id+"|"+size;
-  const existing=cart.find(i=>i.key===key);
-  const current=existing?Number(existing.qty)||0:0;
-  if(current+1>stock){toast("Maximum available stock reached");return;}
-  if(existing)existing.qty+=1;
-  else cart.push({key,id:p.id,size,price,qty:1});
-  saveLocal();updateCart();toast("Added to cart");
+  try{
+    if(!customer()){
+      showCustomerLogin();
+      return;
+    }
+
+    const wanted=normalizeAccessValue(id);
+    const p=products.find(x=>normalizeAccessValue(x.id)===wanted);
+    if(!p){
+      toast("Product could not be found. Please reload products.");
+      return;
+    }
+
+    // If the product has sizes, always use the currently selected size.
+    // If no size is selected for any reason, use the first available size.
+    let size=getSelectedSize(p.id);
+    if(p.sizes?.length && !size) size=String(p.sizes[0].name||"").trim();
+
+    const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(size));
+    const price=Number(s?s.price:p.price)||0;
+    const stock=Number(s?s.stock:p.stock)||0;
+
+    if(stock<=0){
+      toast("This item is out of stock");
+      return;
+    }
+
+    const key=String(p.id)+"|"+String(size);
+    let existing=cart.find(i=>String(i.key)===key);
+
+    if(existing){
+      const current=Number(existing.qty)||0;
+      if(current+1>stock){
+        toast("Maximum available stock reached");
+        return;
+      }
+      existing.qty=current+1;
+      // Refresh the stored price in case the sheet was reloaded.
+      existing.price=price;
+    }else{
+      cart.push({
+        key,
+        id:p.id,
+        code:p.id,
+        size,
+        price,
+        qty:1
+      });
+    }
+
+    // Update the UI first so the customer immediately sees the item.
+    updateCart();
+    try{ saveLocal(); }catch(storageError){ console.warn("Cart could not be persisted:",storageError); }
+    toast(`${p.name}${size?` (${size})`:""} added to cart`);
+  }catch(error){
+    console.error("Add to cart error:",error);
+    toast("Could not add this product to cart. Please try again.");
+  }
 }
 
-function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.find(y=>y.id===x.id);if(!x)return;if(delta>0){const s=p?.sizes?.find(y=>y.name===x.size),stock=s?s.stock:p?.stock||0;if(x.qty>=stock){toast("Maximum stock reached");return}}x.qty+=delta;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveLocal();updateCart()}
+function updateCart(){
+  const badge=$("cartBadge");
+  const body=$("cartBody");
+  const totalEl=$("cartTotal");
+
+  const count=cart.reduce((sum,item)=>sum+(Number(item.qty)||0),0);
+  const total=cart.reduce((sum,item)=>sum+(Number(item.price)||0)*(Number(item.qty)||0),0);
+
+  if(badge){
+    badge.textContent=String(count);
+    badge.classList.toggle("hidden",count<=0);
+  }
+  if(totalEl)totalEl.textContent=money(total);
+
+  if(!body)return;
+
+  if(!cart.length){
+    body.innerHTML='<div class="empty"><h3>Your cart is empty</h3><p>Add products to your cart to continue.</p></div>';
+    return;
+  }
+
+  body.innerHTML=cart.map(item=>{
+    const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(item.id));
+    const name=p?.name||item.name||"Product";
+    const imageId=p?.imageId||"";
+    const imageUrl=String(p?.image||"").trim()||githubImageUrl(imageId);
+    const qty=Math.max(1,Number(item.qty)||1);
+    const price=Number(item.price)||0;
+    const itemTotal=price*qty;
+
+    return `<div class="cart-item">
+      <img src="${esc(imageUrl||DEFAULT_IMAGE)}" alt="${esc(name)}" onerror="this.onerror=null;this.src=DEFAULT_IMAGE">
+      <div>
+        <h4>${esc(name)}</h4>
+        <div class="cart-meta">${item.size?`Size: ${esc(item.size)} • `:""}${money(price)} each</div>
+        <div class="qty">
+          <button type="button" onclick="changeQty('${encodeURIComponent(item.key)}',-1)">−</button>
+          <input class="cart-qty-input" type="number" min="1" value="${qty}" inputmode="numeric"
+            onchange="setCartQty(decodeURIComponent('${encodeURIComponent(item.key)}'),this.value)"
+            aria-label="Quantity">
+          <button type="button" onclick="changeQty('${encodeURIComponent(item.key)}',1)">+</button>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <b>${money(itemTotal)}</b>
+        <button type="button" class="outline" style="margin-top:8px;padding:6px 9px;font-size:11px"
+          onclick="removeFromCart(decodeURIComponent('${encodeURIComponent(item.key)}'))">Remove</button>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function setCartQty(key,value){
+  const item=cart.find(x=>String(x.key)===String(key));
+  if(!item)return;
+  let qty=parseInt(String(value).replace(/\D/g,""),10);
+  if(!Number.isFinite(qty)||qty<1)qty=1;
+
+  const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(item.id));
+  const size=p?.sizes?.find(s=>normalizeAccessValue(s.name)===normalizeAccessValue(item.size));
+  const stock=Number(size?size.stock:p?.stock)||0;
+
+  if(stock>0)qty=Math.min(qty,stock);
+  item.qty=qty;
+  saveLocal();
+  updateCart();
+}
+
+function removeFromCart(key){
+  cart=cart.filter(x=>String(x.key)!==String(key));
+  saveLocal();
+  updateCart();
+  toast("Removed from cart");
+}
+
+function changeQty(key,delta){
+  const x=cart.find(i=>String(i.key)===String(key));
+  const p=x&&products.find(y=>normalizeAccessValue(y.id)===normalizeAccessValue(x.id));
+  if(!x)return;
+
+  if(delta>0){
+    const s=p?.sizes?.find(y=>normalizeAccessValue(y.name)===normalizeAccessValue(x.size));
+    const stock=Number(s?s.stock:p?.stock||0)||0;
+    if(stock>0 && Number(x.qty||0)>=stock){
+      toast("Maximum stock reached");
+      return;
+    }
+  }
+
+  x.qty=(Number(x.qty)||0)+Number(delta||0);
+  if(x.qty<=0)cart=cart.filter(i=>String(i.key)!==String(key));
+  saveLocal();
+  updateCart();
+}
 function openCart(){if(!customer()){showCustomerLogin("login");return}$("drawerBackdrop").classList.add("show");$("cartDrawer").classList.add("show")}
 function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer").classList.remove("show")}
 
@@ -1158,7 +1295,7 @@ function buildOrderWhatsAppMessage(o){
     `💰 *GRAND TOTAL: ${money(o?.total||0)}*`,
     "━━━━━━━━━━━━━━━━━━━━",
     "**I'm completely aware of price differentiation in the final invoice.",
-    "***I have no objection to the final price change & ready to pay.",
+    "***I have no objection to the final price change.",
     ""
   ];
   return lines.join("\n");
