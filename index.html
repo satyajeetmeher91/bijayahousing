@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSING — Online Store</title>
+<title>BIJAYA HOUSING</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -208,7 +208,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Demo frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
+    <p style="color:var(--muted);font-size:14px">PRO authentication.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button type="button" class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -278,7 +278,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.30</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.31</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -641,7 +641,10 @@ function openCustomerProfile(){
     $("profilePhoneInput").value=c.phone||"";
     $("profileAddressInput").value=c.address||"";
     $("profilePinInput").value=c.pin||"";
-    try { renderCustomerOrders(); } catch (err) {
+    try {
+      renderCustomerOrders();
+      loadCustomerOrders();
+    } catch (err) {
       console.error("Profile order history render error:", err);
       const box = $("customerOrders");
       if (box) box.innerHTML = '<div class="empty"><h3>Order history unavailable</h3><p>Your profile is still available.</p></div>';
@@ -728,7 +731,23 @@ function readProductCache(isAdmin=false){
     const raw=localStorage.getItem(productCacheKey(isAdmin));
     if(!raw)return null;
     const data=JSON.parse(raw);
-    if(!data||!Array.isArray(data.products)||!data.version)return null;
+    if(!data||!Array.isArray(data.products))return null;
+
+    // Customer cache is only trusted when it belongs to the customer's
+    // current access rules. This prevents an old restricted/empty catalogue
+    // from appearing after admin changes access.
+    if(!isAdmin){
+      const c=customer();
+      const ca=data.access;
+      if(!c || !ca)return null;
+      const norm=v=>String(v??"").trim().toLowerCase();
+      if(norm(ca.accessType||"ALL")!==norm(c.accessType||"ALL"))return null;
+      const cachedCats=(Array.isArray(ca.allowedCategories)?ca.allowedCategories.join(","):String(ca.allowedCategories||"")).split(",").map(norm).filter(Boolean).sort().join(",");
+      const currentCats=String(c.allowedCategories||"").split(",").map(norm).filter(Boolean).sort().join(",");
+      const cachedIds=(Array.isArray(ca.allowedProducts)?ca.allowedProducts.join(","):String(ca.allowedProducts||"")).split(",").map(norm).filter(Boolean).sort().join(",");
+      const currentIds=String(c.allowedProducts||"").split(",").map(norm).filter(Boolean).sort().join(",");
+      if(cachedCats!==currentCats || cachedIds!==currentIds)return null;
+    }
     return data;
   }catch(e){return null;}
 }
@@ -867,14 +886,18 @@ function githubImageCandidates(imageId, directUrl=""){
   const out=[];
   if(direct)out.push(direct);
   if(raw){
-    // If Image ID is already a complete URL, use it directly.
-    if(/^https?:\/\//i.test(raw))out.push(raw);
-    else{
-      // GitHub Pages paths are case-sensitive. Try the exact sheet value,
-      // then upper/lower-case variants and common image extensions.
-      const ids=[raw,raw.toUpperCase(),raw.toLowerCase()];
-      const exts=[".webp",".jpg",".jpeg",".png",".WEBP",".JPG",".JPEG",".PNG"];
-      ids.forEach(id=>exts.forEach(ext=>out.push(GITHUB_IMAGE_BASE+encodeURIComponent(id)+ext)));
+    if(/^https?:\/\//i.test(raw)){
+      out.push(raw);
+    }else{
+      // Product sheet Image ID is normally the GitHub filename, e.g. IMG001.webp.
+      // Never try case variants or many extensions: GitHub is case-sensitive and
+      // multiple failed requests were making the catalogue unnecessarily slow.
+      if(/\.(webp|jpg|jpeg|png)$/i.test(raw)){
+        out.push(GITHUB_IMAGE_BASE+encodeURIComponent(raw));
+      }else{
+        out.push(GITHUB_IMAGE_BASE+encodeURIComponent(raw)+".webp");
+        out.push(GITHUB_IMAGE_BASE+encodeURIComponent(raw)+".jpg");
+      }
     }
   }
   return [...new Set(out)];
@@ -1102,7 +1125,7 @@ async function placeOrder(){
     updateCart();
     closeModal();
     renderAdmin();
-    renderCustomerOrders();
+    await loadCustomerOrders();
     window.pendingWhatsAppOrder=order;
     showOrderSuccess();
     // Try to launch WhatsApp automatically. The popup button remains as a reliable fallback
