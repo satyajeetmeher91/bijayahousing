@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSING</title>
+<title>BIJAYA HOUSING — Online Store</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -208,7 +208,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">PRO authentication.</p>
+    <p style="color:var(--muted);font-size:14px">Demo frontend authentication. Connect this form to your Apps Script endpoint before using it online.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
     <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
     <button type="button" class="primary" style="width:100%" onclick="adminLogin()">Login</button>
@@ -278,7 +278,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.31</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • version 1.0.32</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -609,16 +609,16 @@ async function customerLogin(){
       pin:c.pin||"",
       status:c.status||"Active",
       type:c.type||"Customer",
-      accessType:c.accessType||"ALL",
-      allowedCategories:c.allowedCategories||"",
-      allowedProducts:c.allowedProducts||"",
+      accessType:c.accessType||d.access?.accessType||"ALL",
+      allowedCategories:c.allowedCategories||d.access?.allowedCategories||"",
+      allowedProducts:c.allowedProducts||d.access?.allowedProducts||"",
       token:d.customerToken
     };
 
     localStorage.setItem("bijaya_customer",JSON.stringify(saved));
     closeModal();
     updateCustomerAccess();
-    await loadProductsFromApi(false);
+    await loadProductsFromApi(true);
     await loadCustomerOrders();
     toast("Login successful");
   }catch(e){
@@ -626,7 +626,7 @@ async function customerLogin(){
   }
 }
 
-function openCustomerProfile(){
+async function openCustomerProfile(){
   const c=customer();
   $("profileLoggedOut").classList.toggle("hidden",!!c);
   $("profileLoggedIn").classList.toggle("hidden",!c);
@@ -641,18 +641,14 @@ function openCustomerProfile(){
     $("profilePhoneInput").value=c.phone||"";
     $("profileAddressInput").value=c.address||"";
     $("profilePinInput").value=c.pin||"";
-    try {
-      renderCustomerOrders();
-      loadCustomerOrders();
-    } catch (err) {
-      console.error("Profile order history render error:", err);
-      const box = $("customerOrders");
-      if (box) box.innerHTML = '<div class="empty"><h3>Order history unavailable</h3><p>Your profile is still available.</p></div>';
-    }
+    const box=$("customerOrders");
+    if(box)box.innerHTML='<div class="empty"><h3>Loading your orders…</h3><p>Checking your saved orders.</p></div>';
   }
 
   $("profileModal").classList.add("show");
   $("modalBackdrop").classList.add("show");
+  document.body.style.overflow="hidden";
+  if(c) await loadCustomerOrders(true);
 }
 
 async function saveCustomerProfile(){
@@ -703,7 +699,7 @@ function normalizeProduct(p){
     category:String(p?.category??p?.Category??"").trim(),
     subcategory:String(p?.subcategory??p?.Subcategory??"").trim(),
     description:String(p?.description??p?.Description??"").trim(),
-    imageId:String(p?.imageId??p?.["Image ID"]??"").trim().toUpperCase(),
+    imageId:String(p?.imageId??p?.["Image ID"]??"").trim(),
     image:String(p?.image??p?.["Image URL"]??"").trim(),
     price:Number(p?.price??p?.["Default Price (₹)"]??0)||0,
     stock:Number(p?.stock??p?.Stock??0)||0,
@@ -741,7 +737,9 @@ function readProductCache(isAdmin=false){
       const ca=data.access;
       if(!c || !ca)return null;
       const norm=v=>String(v??"").trim().toLowerCase();
-      if(norm(ca.accessType||"ALL")!==norm(c.accessType||"ALL"))return null;
+      const cachedType=norm(ca.accessType||"ALL");
+      const currentType=norm(c.accessType||"ALL");
+      if(cachedType!==currentType)return null;
       const cachedCats=(Array.isArray(ca.allowedCategories)?ca.allowedCategories.join(","):String(ca.allowedCategories||"")).split(",").map(norm).filter(Boolean).sort().join(",");
       const currentCats=String(c.allowedCategories||"").split(",").map(norm).filter(Boolean).sort().join(",");
       const cachedIds=(Array.isArray(ca.allowedProducts)?ca.allowedProducts.join(","):String(ca.allowedProducts||"")).split(",").map(norm).filter(Boolean).sort().join(",");
@@ -772,8 +770,7 @@ function applyLoadedProducts(list,access,isAdmin=false){
   renderAdmin();
 }
 async function getCatalogVersionFromApi(){
-  const d=await apiGet("catalogVersion");
-  return String(d.catalogVersion||"");
+  try{const d=await apiGet("catalogVersion");return String(d.catalogVersion||"");}catch(e){return "";}
 }
 async function loadProductsFromApi(force=false,isAdmin=false){
   const adminMode=!!sessionStorage.getItem("admin_token") || isAdmin;
@@ -801,6 +798,9 @@ async function loadProductsFromApi(force=false,isAdmin=false){
       const d=await apiGet("products");
       if(!Array.isArray(d.products))throw Error("Products data was not returned by Apps Script.");
       catalogVersion=String(d.catalogVersion||"");
+      if(d.products.length===0 && !adminMode){
+        throw Error("Google Sheet returned 0 customer-visible products. Check Active and customer access settings.");
+      }
       applyLoadedProducts(d.products,d.access,adminMode);
       writeProductCache({version:catalogVersion,products:d.products,access:d.access},adminMode);
       if(status)status.textContent=`● Connected • ${products.length} product${products.length===1?"":"s"} loaded`;
@@ -840,8 +840,13 @@ async function reloadProducts(){
   const btn=$("reloadProductsBtn");
   if(btn){btn.disabled=true;btn.textContent="↻ Reloading…";}
   try{
-    await loadProductsFromApi(true,!!sessionStorage.getItem("admin_token"));
-    toast("Latest products loaded");
+    const adminMode=!!sessionStorage.getItem("admin_token");
+    const loaded=await loadProductsFromApi(true,adminMode);
+    if(!Array.isArray(loaded) || loaded.length===0){
+      toast("Google Sheet returned 0 products");
+    }else{
+      toast(`${loaded.length} latest products loaded`);
+    }
   }catch(e){toast("Could not load products: "+e.message);}
   finally{if(btn){btn.disabled=false;btn.textContent="↻ Reload Products";}}
 }
@@ -896,7 +901,6 @@ function githubImageCandidates(imageId, directUrl=""){
         out.push(GITHUB_IMAGE_BASE+encodeURIComponent(raw));
       }else{
         out.push(GITHUB_IMAGE_BASE+encodeURIComponent(raw)+".webp");
-        out.push(GITHUB_IMAGE_BASE+encodeURIComponent(raw)+".jpg");
       }
     }
   }
@@ -950,7 +954,7 @@ function scheduleProductImages(){
 function githubImageUrl(imageId){return githubImageCandidates(imageId)[0]||""}
 
 function productDomKey(id){return "p_"+String(id||"").trim().replace(/[^a-zA-Z0-9_-]/g,"_");}
-function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView('${esc(p.id)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView('${esc(p.id)}')}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize('${esc(p.id)}','${esc(s.name)}',this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" onclick="event.stopPropagation();addToCart('${esc(p.id)}')">Add to Cart</button></div></div></article>`}
+function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView(decodeProductArg('${safeProductArg(p.id)}'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView(decodeProductArg('${safeProductArg(p.id)}'))}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize(decodeProductArg('${safeProductArg(p.id)}'),decodeProductArg('${safeProductArg(s.name)}'),this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" onclick="event.stopPropagation();addToCart(decodeProductArg('${safeProductArg(p.id)}'))">Add to Cart</button></div></div></article>`}
 let viewedProductId=null;
 let viewedProductSize="";
 let viewedProductQty=1;
@@ -1193,13 +1197,10 @@ function buildOrderWhatsAppMessage(o){
 function whatsappWebUrl(o){return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildOrderWhatsAppMessage(o))}`;}
 function whatsappIntentUrl(o){return `intent://send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(buildOrderWhatsAppMessage(o))}#Intent;scheme=whatsapp;package=com.whatsapp;end`;}
 function tryOpenWhatsApp(o){
-  if(!o)return;
-  const mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if(mobile && /Android/i.test(navigator.userAgent)){
-    window.location.href=whatsappIntentUrl(o);
-  }else{
-    window.location.href=whatsappWebUrl(o);
-  }
+  if(!o||!o.id){toast("Order details are unavailable");return;}
+  const url=whatsappWebUrl(o);
+  const w=window.open(url,"_blank","noopener,noreferrer");
+  if(!w)window.location.href=url;
 }
 function showOrderSuccess(){
   $("orderSuccessModal")?.classList.add("show");
@@ -1224,26 +1225,33 @@ function sendOrderToWhatsApp(o){
   if(!o||!o.id){toast("Order details are unavailable");return;}
   tryOpenWhatsApp(o);
 }
-function resendOrderById(id){
+async function resendOrderById(id){
   const wanted=String(id||"").trim().toLowerCase();
-  const o=orders.find(x=>String(x.id||"").trim().toLowerCase()===wanted);
-  if(!o){toast("Order not found. Reload your orders and try again.");return;}
+  let o=orders.find(x=>String(x.id||"").trim().toLowerCase()===wanted);
+  if(!o){
+    await loadCustomerOrders(true);
+    o=orders.find(x=>String(x.id||"").trim().toLowerCase()===wanted);
+  }
+  if(!o){toast("Order not found. Please refresh your orders.");return;}
   sendOrderToWhatsApp(o);
 }
 
-async function loadCustomerOrders(){
+async function loadCustomerOrders(showError=false){
   const c=getCustomer();
-  if(!c) return;
+  if(!c?.token){renderCustomerOrders();return false;}
   try{
     const result=await apiPost({action:"getCustomerOrders",customerToken:c.token});
-    if(result.orders){
+    if(Array.isArray(result.orders)){
       orders=result.orders.map(normalizeServerOrder);
       saveLocal();
     }
     renderCustomerOrders();
+    return true;
   }catch(e){
     console.error("Customer order history error:",e);
     renderCustomerOrders();
+    if(showError)toast("Could not load orders: "+e.message);
+    return false;
   }
 }
 
@@ -1276,7 +1284,7 @@ function renderCustomerOrders(){
     const op=String(o.customer?.phone||"").replace(/\D/g,"").slice(-10);
     return (customerId&&oid===customerId)||(!oid&&phone&&op===phone);
   });
-  box.innerHTML=mine.length?mine.map(o=>`<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><strong>${money(o.total)}</strong><span class="status">${esc(o.status||"New")}</span></div><button type="button" class="outline" style="width:100%;margin-top:4px" onclick="resendOrderById('${safeProductArg(o.id)}')">↗ Resend Order to WhatsApp</button></div>`).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
+  box.innerHTML=mine.length?mine.map(o=>`<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><strong>${money(o.total)}</strong><span class="status">${esc(o.status||"New")}</span></div><button type="button" class="outline" style="width:100%;margin-top:4px" onclick="resendOrderById(decodeProductArg('${safeProductArg(o.id)}'))">↗ Resend Order to WhatsApp</button></div>`).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
 }
 
 function generateInvoice(o){
