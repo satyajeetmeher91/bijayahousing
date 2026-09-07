@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA </title>
+<title>BIJAYA HOUSING</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -233,7 +233,7 @@ html,body{max-width:100%;overflow-x:hidden}
         <div class="stat"><small>Cart Items</small><strong id="statCart">0</strong></div>
         <div class="stat"><small>Orders Saved</small><strong id="statOrders">0</strong></div>
       </div>
-      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually.</p></div>
+      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually. For production, connect the Google Sheet section to your Apps Script Web App URL so the catalog is shared across all customers.</p></div>
     </div>
     <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><button type="button" class="outline" onclick="loadProductsFromApi(true,true)">↻ Reload Products</button></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Subcategory</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
     <div id="adminOrdersTab" class="hidden">
@@ -278,7 +278,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.35</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.36</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -348,6 +348,18 @@ html,body{max-width:100%;overflow-x:hidden}
     </div>
     <button type="button" class="primary" id="sendOrderWhatsAppBtn" style="width:100%;margin-top:10px" onclick="sendPendingOrderToWhatsApp()">↗ Send Order to WhatsApp</button>
     <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeOrderSuccess()">View My Orders</button>
+  </div>
+</div>
+
+<div class="modal" id="waFallbackModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Couldn't Open WhatsApp</h2><div style="font-size:12px;color:var(--muted)">You can still send your order manually</div></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <p class="notice" style="font-size:14px">Your phone didn't open the WhatsApp app automatically. Tap "Copy Order Message" below, then open WhatsApp yourself and paste it into a chat with BIJAYA HOUSING.</p>
+    <button type="button" class="primary" id="waFallbackCopyBtn" style="width:100%">📋 Copy Order Message</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Close</button>
   </div>
 </div>
 
@@ -423,7 +435,7 @@ html,body{max-width:100%;overflow-x:hidden}
 
     <div id="customerSignupForm" class="hidden">
       <div class="field"><label>Full Name *</label><input id="signupName" placeholder="Your full name"></div>
-      <div class="field" style="margin-top:12px"><label>What are you? *</label><select id="signupType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
+      <div class="field" style="margin-top:12px"><label>What are you? *</label><select id="signupType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Dealer">Dealer</option></select></div>
       <div class="field" style="margin-top:12px"><label>Mobile Number *</label><input id="signupPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
       <div class="field" style="margin-top:12px"><label>Address *</label><textarea id="signupAddress" placeholder="House / street / village / town"></textarea></div>
       <div class="field" style="margin-top:12px"><label>Pincode *</label><input id="signupPin" inputmode="numeric" placeholder="6-digit pincode"></div>
@@ -1218,7 +1230,7 @@ function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer"
 
 /* CHECKOUT + WHATSAPP */
 function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=c.address||"";$("custPincode").value=c.pin||"";closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
+function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
 function validateCheckout(){const name=$("custName").value.trim(),phone=$("custPhone").value.replace(/\D/g,""),address=$("custAddress").value.trim(),pin=$("custPincode").value.replace(/\D/g,"");if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid name, phone, address and pincode");return null}return{name,phone,address,pin,note:$("custNote").value.trim()}}
 async function placeOrder(){
   const c=validateCheckout();
@@ -1313,40 +1325,88 @@ function buildOrderWhatsAppMessage(o){
 }
 function whatsappWebUrl(o){return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildOrderWhatsAppMessage(o))}`;}
 function whatsappIntentUrl(o){return `intent://send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(buildOrderWhatsAppMessage(o))}#Intent;scheme=whatsapp;package=com.whatsapp;end`;}
+function whatsappSchemeUrl(o){return `whatsapp://send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(buildOrderWhatsAppMessage(o))}`;}
 function isAndroidRuntime(){return /Android/i.test(navigator.userAgent||"");}
+
+async function copyOrderTextToClipboard(text){
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  }catch(e){}
+  try{
+    const ta=document.createElement("textarea");
+    ta.value=text;
+    ta.style.position="fixed";
+    ta.style.top="0";
+    ta.style.left="0";
+    ta.style.opacity="0";
+    document.body.appendChild(ta);
+    ta.focus();ta.select();
+    const ok=document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  }catch(e){return false;}
+}
+
+function showWhatsAppCopyFallback(o){
+  const text=buildOrderWhatsAppMessage(o);
+  const btn=$("waFallbackCopyBtn");
+  if(btn)btn.onclick=async()=>{
+    const ok=await copyOrderTextToClipboard(text);
+    toast(ok?"Order copied — now open WhatsApp and paste it":"Couldn't copy automatically. Please screenshot this order instead.");
+  };
+  $("waFallbackModal")?.classList.add("show");
+  $("modalBackdrop")?.classList.add("show");
+}
+
 function tryOpenWhatsApp(o){
   if(!o||!o.id){toast("Order details are unavailable");return;}
   const webUrl=whatsappWebUrl(o);
   if(!isAndroidRuntime()){
-    // iOS / desktop browsers understand https://wa.me links natively.
+    // iOS / desktop browsers understand https://wa.me links natively and
+    // are not affected by the embedded-WebView issue described below.
     const w=window.open(webUrl,"_blank","noopener,noreferrer");
     if(!w)window.location.href=webUrl;
     return;
   }
-  // ANDROID FIX: when this page runs inside a WebView-wrapped APK (built
-  // from a plain "website to APK" tool), a plain https://wa.me link is
-  // just a normal page navigation as far as the WebView is concerned - it
-  // has no special knowledge that this particular link should hand off to
-  // the WhatsApp app, so nothing visibly happens when the customer taps
-  // "Send Order to WhatsApp". The intent:// scheme is the standard way a
-  // web page asks Android to launch an installed app, and it is the
-  // pattern virtually every WebView-wrapper app already knows how to
-  // handle (it's also understood natively by mobile Chrome). We try that
-  // first, and only fall back to the plain wa.me link if the page is
-  // still visible shortly after - which means the intent hand-off did not
-  // happen (nothing else opened to cover this page).
+
+  // ANDROID, INSIDE THE APK's WEBVIEW:
+  // A plain https://wa.me (or api.whatsapp.com) link commonly fails here
+  // with net::ERR_BLOCKED_BY_RESPONSE - WhatsApp's own redirect service
+  // frequently refuses to serve wa.me when the request comes from an
+  // embedded WebView rather than a real browser or a native Android
+  // intent, and that failure replaces this whole page with Chromium's
+  // "Web page not available" screen with no way back. So on Android we
+  // deliberately NEVER navigate this WebView to wa.me directly. Instead:
+  //   1) try intent:// (the scheme most WebView-wrapper apps already
+  //      know how to hand off to Android's app launcher),
+  //   2) try the raw whatsapp:// deep link as a second, different
+  //      attempt (some WebViews resolve this even without intent://
+  //      handling),
+  //   3) if neither visibly handed off, show an in-app "copy your
+  //      order" fallback instead of ever risking that broken-looking
+  //      error page - this always works, regardless of what the
+  //      specific APK-building tool does or doesn't support.
   let handedOff=false;
   const onHide=()=>{handedOff=true;};
   document.addEventListener("visibilitychange",onHide,{once:true});
   window.addEventListener("pagehide",onHide,{once:true});
+
   try{window.location.href=whatsappIntentUrl(o);}catch(e){}
+
   setTimeout(()=>{
-    document.removeEventListener("visibilitychange",onHide);
-    window.removeEventListener("pagehide",onHide);
     if(handedOff||document.hidden)return;
-    const w=window.open(webUrl,"_blank","noopener,noreferrer");
-    if(!w)window.location.href=webUrl;
-  },900);
+    try{window.location.href=whatsappSchemeUrl(o);}catch(e){}
+
+    setTimeout(()=>{
+      document.removeEventListener("visibilitychange",onHide);
+      window.removeEventListener("pagehide",onHide);
+      if(handedOff||document.hidden)return;
+      showWhatsAppCopyFallback(o);
+    },700);
+  },700);
 }
 function showOrderSuccess(){
   $("orderSuccessModal")?.classList.add("show");
@@ -1443,7 +1503,7 @@ let appView="customer";
 let navigationLock=false;
 function closeAllOverlays(){
   ["drawerBackdrop","modalBackdrop"].forEach(id=>$(id)?.classList.remove("show"));
-  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal"].forEach(id=>$(id)?.classList.remove("show"));
+  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal"].forEach(id=>$(id)?.classList.remove("show"));
   document.body.style.overflow="";
 }
 function setAppView(view,push=true){
