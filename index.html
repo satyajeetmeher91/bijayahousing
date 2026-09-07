@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSING — Online Store</title>
+<title>BIJAYA</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -278,7 +278,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • version 1.0.32</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.33</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -755,14 +755,16 @@ function writeProductCache(data,isAdmin=false){
   }catch(e){console.warn("Product cache could not be saved",e);}
 }
 function applyLoadedProducts(list,access,isAdmin=false){
-  let loaded=(list||[]).map(normalizeProduct).filter(p=>p.id&&p.name);
+  // Apps Script already applies the customer's access rules before returning
+  // the catalogue. Do not filter the same list a second time in the browser;
+  // stale local access data was causing valid customer catalogues to become empty.
+  const loaded=(list||[]).map(normalizeProduct).filter(p=>p.id&&p.name);
   const c=customer();
   if(c && !isAdmin && access){
     c.accessType=access.accessType||"ALL";
     c.allowedCategories=Array.isArray(access.allowedCategories)?access.allowedCategories.join(", "):String(access.allowedCategories||"");
     c.allowedProducts=Array.isArray(access.allowedProducts)?access.allowedProducts.join(", "):String(access.allowedProducts||"");
     localStorage.setItem("bijaya_customer",JSON.stringify(c));
-    loaded=filterProductsForCustomer(loaded,c);
   }
   products=loaded;
   renderCategories();
@@ -1080,19 +1082,32 @@ function getSelectedSize(id){
 function addToCart(id){
   if(!customer()){showCustomerLogin();return;}
   const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));
-  if(!p)return;
-  const size=getSelectedSize(id);
+  if(!p){toast("Product is not available. Please reload products.");return;}
+
+  // A product with sizes always uses its first size when the card has not
+  // explicitly selected one. This keeps Add to Cart reliable on mobile too.
+  let size=getSelectedSize(p.id);
+  if(!size && Array.isArray(p.sizes) && p.sizes.length) size=String(p.sizes[0].name||"").trim();
+
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(size));
-  const price=s?s.price:p.price;
+  const price=Number(s?s.price:p.price)||0;
   const stock=Number(s?s.stock:p.stock)||0;
   if(stock<=0){toast("This item is out of stock");return;}
+
   const key=p.id+"|"+size;
   const existing=cart.find(i=>i.key===key);
   const current=existing?Number(existing.qty)||0:0;
   if(current+1>stock){toast("Maximum available stock reached");return;}
-  if(existing)existing.qty+=1;
-  else cart.push({key,id:p.id,size,price,qty:1});
-  saveLocal();updateCart();toast("Added to cart");
+
+  if(existing){
+    existing.qty=current+1;
+    existing.price=price;
+  }else{
+    cart.push({key,id:p.id,size,price,qty:1});
+  }
+  saveLocal();
+  updateCart();
+  toast(`${p.name}${size?" • "+size:""} added to cart`);
 }
 
 function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.find(y=>y.id===x.id);if(!x)return;if(delta>0){const s=p?.sizes?.find(y=>y.name===x.size),stock=s?s.stock:p?.stock||0;if(x.qty>=stock){toast("Maximum stock reached");return}}x.qty+=delta;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveLocal();updateCart()}
@@ -1199,8 +1214,9 @@ function whatsappIntentUrl(o){return `intent://send?phone=${WHATSAPP_NUMBER}&tex
 function tryOpenWhatsApp(o){
   if(!o||!o.id){toast("Order details are unavailable");return;}
   const url=whatsappWebUrl(o);
-  const w=window.open(url,"_blank","noopener,noreferrer");
-  if(!w)window.location.href=url;
+  // Direct navigation is more reliable inside GitHub Pages/WebView than
+  // window.open, which is commonly blocked on mobile browsers.
+  try{ window.location.href=url; }catch(e){ window.open(url,"_blank"); }
 }
 function showOrderSuccess(){
   $("orderSuccessModal")?.classList.add("show");
