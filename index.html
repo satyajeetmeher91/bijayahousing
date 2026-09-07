@@ -180,7 +180,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div id="customerContent" class="hidden">
   <section class="hero">
     <div>
-      <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
+      <div style="font-size:12px;letter-spacing:.12em;font-weight:1200;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
       <h1>Shop smarter.<br>Choose what you need.</h1>
       <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
       <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
@@ -217,7 +217,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div id="adminPanel" class="hidden">
     <div class="admin-toolbar">
       <div><h2 style="margin:0">Admin Dashboard</h2><div style="color:var(--muted);font-size:13px">Manage your catalog and orders</div></div>
-      <div style="display:flex;gap:8px"><button type="button" class="outline" onclick="openProductForm()">+ Add Product</button><button type="button" class="outline" onclick="adminLogout()">Logout</button></div>
+      <div style="display:flex;gap:28px"><button type="button" class="outline" onclick="openProductForm()">+ Add Product</button><button type="button" class="outline" onclick="adminLogout()">Logout</button></div>
     </div>
     <div class="admin-nav" style="margin-top:18px">
       <button type="button" class="admin-tab active" onclick="adminTab('dashboard',this)">Dashboard</button>
@@ -233,7 +233,7 @@ html,body{max-width:100%;overflow-x:hidden}
         <div class="stat"><small>Cart Items</small><strong id="statCart">0</strong></div>
         <div class="stat"><small>Orders Saved</small><strong id="statOrders">0</strong></div>
       </div>
-      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually. For production, connect the Google Sheet section to your Apps Script Web App URL so the catalog is shared across all customers.</p></div>
+      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually.</p></div>
     </div>
     <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><button type="button" class="outline" onclick="loadProductsFromApi(true,true)">↻ Reload Products</button></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Subcategory</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
     <div id="adminOrdersTab" class="hidden">
@@ -357,7 +357,7 @@ html,body{max-width:100%;overflow-x:hidden}
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
   </div>
   <div class="modal-body">
-    <p class="notice" style="font-size:14px">Your phone didn't open the WhatsApp app automatically. Tap "Copy Order Message" below, then open WhatsApp yourself and paste it into a chat with BIJAYA HOUSING.</p>
+    <p class="notice" style="font-size:14px">If Your device didn't open the WhatsApp app automatically. Tap "Copy Order Message" below, then open WhatsApp yourself and paste it into a chat with BIJAYA HOUSING.</p>
     <button type="button" class="primary" id="waFallbackCopyBtn" style="width:100%">📋 Copy Order Message</button>
     <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Close</button>
   </div>
