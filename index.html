@@ -180,7 +180,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div id="customerContent" class="hidden">
   <section class="hero">
     <div>
-      <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
+      <div style="font-size:18px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:14px">WELCOME TO BIJAYA HOUSING.</div>
       <h1>Shop smarter.<br>Choose what you need.</h1>
       <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
       <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
@@ -273,7 +273,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.37</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.38</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -394,6 +394,8 @@ html,body{max-width:100%;overflow-x:hidden}
           <div class="customer-id-badge" style="margin-top:6px">ID: <span id="profileCustomerId">—</span></div>
         </div>
       </div>
+      <input type="file" id="profilePhotoInput" accept="image/*" class="hidden" onchange="handleProfilePhotoSelected(this.files[0])">
+      <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="document.getElementById('profilePhotoInput').click()">📷 Change Photo</button>
       <div class="formgrid" style="margin-top:16px">
         <div class="field"><label>Full Name</label><input id="profileNameInput"></div>
         <div class="field"><label>Phone Number</label><input id="profilePhoneInput" readonly></div>
@@ -421,8 +423,9 @@ html,body{max-width:100%;overflow-x:hidden}
       <button type="button" class="outline" id="signupModeBtn" onclick="showAuthMode('signup')">Sign Up</button>
     </div>
 
+    <div id="signupSuccessBox" class="hidden" style="margin-bottom:14px"></div>
     <div id="customerLoginForm">
-      <div class="field"><label>Customer ID *</label><input id="loginCustomerId" autocomplete="username" placeholder="Example: BH10001"></div>
+      <div class="field"><label>Customer ID *</label><input id="loginCustomerId" autocomplete="username" placeholder="Example: BH-CU-2026-4821"></div>
       <div class="field" style="margin-top:12px"><label>Password *</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Your password"></div>
       <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="customerLogin()">Login</button>
       <div class="account-note" style="margin-top:14px">If you are registered but do not have your Customer ID and Password, please call <b>8114832749</b> or <b>9078523132</b>.</div>
@@ -430,12 +433,12 @@ html,body{max-width:100%;overflow-x:hidden}
 
     <div id="customerSignupForm" class="hidden">
       <div class="field"><label>Full Name *</label><input id="signupName" placeholder="Your full name"></div>
-      <div class="field" style="margin-top:12px"><label>What are you? *</label><select id="signupType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Dealer">Dealer</option></select></div>
+      <div class="field" style="margin-top:12px"><label>What are you? *</label><select id="signupType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
       <div class="field" style="margin-top:12px"><label>Mobile Number *</label><input id="signupPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
       <div class="field" style="margin-top:12px"><label>Address *</label><textarea id="signupAddress" placeholder="House / street / village / town"></textarea></div>
       <div class="field" style="margin-top:12px"><label>Pincode *</label><input id="signupPin" inputmode="numeric" placeholder="6-digit pincode"></div>
       <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="customerSignup()">Submit Registration</button>
-      <div class="account-note" style="margin-top:14px">Your registration will be <b>Pending</b> until BIJAYA HOUSING approves it. After approval, call <b>8114832749</b> to receive your Customer ID and Password.</div>
+      <div class="account-note" style="margin-top:14px">Your registration will be <b>Pending</b> until BIJAYA HOUSING approves it. Save the Customer ID shown after you submit — after approval, call <b>8114832749</b> to receive your password.</div>
     </div>
   </div>
 </div>
@@ -474,7 +477,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div class="modal-body">
     <div class="formgrid">
       <div class="field"><label>Full Name *</label><input id="adminCustName" placeholder="Customer name"></div>
-      <div class="field"><label>Customer Type *</label><select id="adminCustType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Dealer">Dealer</option></select></div>
+      <div class="field"><label>Customer Type *</label><select id="adminCustType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
       <div class="field"><label>Phone Number *</label><input id="adminCustPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
       <div class="field full"><label>Address *</label><textarea id="adminCustAddress" placeholder="Address"></textarea></div>
       <div class="field"><label>Pincode *</label><input id="adminCustPin" inputmode="numeric" placeholder="6-digit pincode"></div>
@@ -636,7 +639,7 @@ async function apiGet(action,_retried){
 async function apiPost(data,_retried){
   const payload={...data};
   const adminActions=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess"];
-  const customerActions=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer"];
+  const customerActions=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto"];
 
   if(adminActions.includes(payload.action)){
     const token=sessionStorage.getItem("admin_token");
@@ -685,6 +688,7 @@ function showCustomerLogin(mode="login"){
 
 function showAuthMode(mode){
   const login=mode==="login";
+  $("signupSuccessBox")?.classList.add("hidden");
   $("customerLoginForm")?.classList.toggle("hidden",!login);
   $("customerSignupForm")?.classList.toggle("hidden",login);
   $("loginModeBtn")?.classList.toggle("primary",login);
@@ -705,7 +709,13 @@ async function customerSignup(){
   try{
     const d=await apiPost({action:"signupCustomer",customer:{name,type,phone,address,pin}});
     $("signupName").value=""; $("signupPhone").value=""; $("signupAddress").value=""; $("signupPin").value="";
-    showAuthMode("login"); toast(d.message||"Registration submitted");
+    showAuthMode("login");
+    const box=$("signupSuccessBox");
+    if(box && d.customerId){
+      box.innerHTML=`<div class="credential-box"><b>Registration submitted!</b><div style="margin-top:8px">Your Customer ID</div><div style="font-size:18px;font-weight:800;letter-spacing:0.5px">${esc(d.customerId)}</div><div class="notice" style="margin-top:8px">Save this ID — you'll need it to log in once approved. Call <b>8114832749</b> or <b>9078523132</b> after approval to get your password.</div></div>`;
+      box.classList.remove("hidden");
+    }
+    toast(d.message||"Registration submitted");
   }catch(e){ toast("Signup failed: "+e.message); }
 }
 
@@ -757,6 +767,7 @@ async function openCustomerProfile(){
 
   if(c){
     $("profileAvatar").textContent=(c.name||"B")[0].toUpperCase();
+    $("profileAvatar").style.background="";
     $("profileName").textContent=c.name||"Customer";
     $("profilePhone").textContent=c.phone||"";
     $("profileType").textContent="Type: "+(c.type||"Customer");
@@ -767,6 +778,7 @@ async function openCustomerProfile(){
     $("profilePinInput").value=c.pin||"";
     const box=$("customerOrders");
     if(box)box.innerHTML='<div class="empty"><h3>Loading your orders…</h3><p>Checking your saved orders.</p></div>';
+    loadCustomerPhoto(c);
   }
 
   $("profileModal").classList.add("show");
@@ -791,6 +803,70 @@ async function saveCustomerProfile(){
     toast("Profile saved");
   }catch(e){
     toast("Could not save profile: "+e.message);
+  }
+}
+
+function setAvatarImage(el,base64){
+  if(!el)return;
+  el.innerHTML="";
+  if(base64){
+    el.style.background="none";
+    const img=document.createElement("img");
+    img.src="data:image/jpeg;base64,"+base64;
+    img.style.width="100%";img.style.height="100%";img.style.objectFit="cover";img.style.borderRadius="50%";
+    el.appendChild(img);
+  }
+}
+
+function compressImageFile(file,maxDim,quality){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error("Could not read that file"));
+    reader.onload=()=>{
+      const img=new Image();
+      img.onerror=()=>reject(new Error("Could not read that image"));
+      img.onload=()=>{
+        let w=img.width,h=img.height;
+        if(w>=h && w>maxDim){h=Math.round(h*maxDim/w);w=maxDim;}
+        else if(h>w && h>maxDim){w=Math.round(w*maxDim/h);h=maxDim;}
+        const canvas=document.createElement("canvas");
+        canvas.width=w;canvas.height=h;
+        canvas.getContext("2d").drawImage(img,0,0,w,h);
+        resolve(canvas.toDataURL("image/jpeg",quality).split(",")[1]);
+      };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handleProfilePhotoSelected(file){
+  if(!file)return;
+  if(!file.type||!file.type.startsWith("image/")){toast("Please choose an image file");return;}
+  const c=customer();
+  if(!c)return;
+  try{
+    toast("Uploading photo…");
+    const compressed=await compressImageFile(file,640,0.82);
+    await apiPost({action:"uploadCustomerPhoto",customerToken:c.token,photoBase64:compressed});
+    window.__customerPhotoBase64=compressed;
+    setAvatarImage($("profileAvatar"),compressed);
+    toast("Photo updated");
+  }catch(e){
+    toast("Could not upload photo: "+e.message);
+  }finally{
+    const input=$("profilePhotoInput");
+    if(input)input.value="";
+  }
+}
+
+async function loadCustomerPhoto(c){
+  try{
+    const d=await apiPost({action:"getCustomerPhoto",customerToken:c.token});
+    window.__customerPhotoBase64=d.photoBase64||null;
+    if(d.photoBase64)setAvatarImage($("profileAvatar"),d.photoBase64);
+  }catch(e){
+    window.__customerPhotoBase64=null;
   }
 }
 
