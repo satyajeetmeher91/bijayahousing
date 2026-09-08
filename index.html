@@ -180,7 +180,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div id="customerContent" class="hidden">
   <section class="hero">
     <div>
-      <div style="font-size:12px;letter-spacing:.12em;font-weight:1200;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
+      <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
       <h1>Shop smarter.<br>Choose what you need.</h1>
       <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
       <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
@@ -217,14 +217,13 @@ html,body{max-width:100%;overflow-x:hidden}
   <div id="adminPanel" class="hidden">
     <div class="admin-toolbar">
       <div><h2 style="margin:0">Admin Dashboard</h2><div style="color:var(--muted);font-size:13px">Manage your catalog and orders</div></div>
-      <div style="display:flex;gap:28px"><button type="button" class="outline" onclick="openProductForm()">+ Add Product</button><button type="button" class="outline" onclick="adminLogout()">Logout</button></div>
+      <div style="display:flex;gap:8px"><button type="button" class="outline" onclick="openProductForm()">+ Add Product</button><button type="button" class="outline" onclick="adminLogout()">Logout</button></div>
     </div>
     <div class="admin-nav" style="margin-top:18px">
       <button type="button" class="admin-tab active" onclick="adminTab('dashboard',this)">Dashboard</button>
       <button type="button" class="admin-tab" onclick="adminTab('products',this)">Products</button>
       <button type="button" class="admin-tab" onclick="adminTab('orders',this)">Orders</button>
       <button type="button" class="admin-tab" onclick="adminTab('customers',this)">Customers</button>
-      <button type="button" class="admin-tab" onclick="adminTab('data',this)">Google Sheet</button>
     </div>
     <div id="adminDashboardTab">
       <div class="stats">
@@ -233,7 +232,6 @@ html,body{max-width:100%;overflow-x:hidden}
         <div class="stat"><small>Cart Items</small><strong id="statCart">0</strong></div>
         <div class="stat"><small>Orders Saved</small><strong id="statOrders">0</strong></div>
       </div>
-      <div class="panel"><h3>Quick start</h3><p class="notice">Use Products to add items manually.</p></div>
     </div>
     <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><button type="button" class="outline" onclick="loadProductsFromApi(true,true)">↻ Reload Products</button></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Subcategory</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
     <div id="adminOrdersTab" class="hidden">
@@ -263,9 +261,6 @@ html,body{max-width:100%;overflow-x:hidden}
             <button type="button" class="outline" onclick="loadAdminCustomers()">↻ Refresh</button>
           </div>
         </div>
-        <div class="panel" style="margin-top:14px;padding:14px;background:var(--surface2)">
-          <input id="adminCustomerSearch" placeholder="Search name, phone or Customer ID..." style="width:100%;padding:11px;border:1px solid var(--line);border-radius:11px">
-        </div>
         <div class="tablewrap admin-table-wrap">
           <table class="table">
             <thead><tr><th>Customer</th><th>Type</th><th>Contact</th><th>Customer ID</th><th>Status</th><th>Access</th><th>Registered</th><th>Action</th></tr></thead>
@@ -278,7 +273,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.36</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.37</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -357,7 +352,7 @@ html,body{max-width:100%;overflow-x:hidden}
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
   </div>
   <div class="modal-body">
-    <p class="notice" style="font-size:14px">If Your device didn't open the WhatsApp app automatically. Tap "Copy Order Message" below, then open WhatsApp yourself and paste it into a chat with BIJAYA HOUSING.</p>
+    <p class="notice" style="font-size:14px">Your phone didn't open the WhatsApp app automatically. Tap "Copy Order Message" below, then open WhatsApp yourself and paste it into a chat with BIJAYA HOUSING.</p>
     <button type="button" class="primary" id="waFallbackCopyBtn" style="width:100%">📋 Copy Order Message</button>
     <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Close</button>
   </div>
@@ -982,11 +977,33 @@ async function reloadProducts(){
 
 /* PRODUCTS */
 function renderCategories(){
-  const cats=["All",...new Set(products.filter(p=>p.active!==false).map(p=>String(p.category||"").trim()).filter(Boolean))];
+  const isAdmin=appView==="admin";
+  const uniqueCats=[...new Set(products.filter(p=>p.active!==false).map(p=>String(p.category||"").trim()).filter(Boolean))];
+  const sortedCats=[...uniqueCats].sort((a,b)=>a.localeCompare(b));
+  // Admin still gets "All" to manage the whole catalog. Customers only ever
+  // see the categories their account is actually allowed to browse - no
+  // "All" chip - listed alphabetically instead of sheet/insertion order.
+  const cats=isAdmin?["All",...sortedCats]:sortedCats;
+
   const normalizedCurrent=normalizeAccessValue(category);
-  if(category!=="All" && !cats.some(c=>normalizeAccessValue(c)===normalizedCurrent)) category="All";
-  $("categories").innerHTML=cats.map(c=>`<button type="button" class="chip ${normalizeAccessValue(category)===normalizeAccessValue(c)?"active":""}" onclick="setCategory(decodeURIComponent('${encodeURIComponent(c)}'))">${esc(c)}</button>`).join("");
-  if($("statCategories"))$("statCategories").textContent=Math.max(0,cats.length-1);
+  if(!cats.some(c=>normalizeAccessValue(c)===normalizedCurrent)){
+    category=cats[0]||"All";
+  }
+
+  const box=$("categories");
+  if(box){
+    if(!isAdmin && cats.length<=1){
+      // Exactly one allowed category (or none) - nothing to switch between,
+      // so skip the category bar entirely and just show that category's
+      // products directly.
+      box.classList.add("hidden");
+      box.innerHTML="";
+    }else{
+      box.classList.remove("hidden");
+      box.innerHTML=cats.map(c=>`<button type="button" class="chip ${normalizeAccessValue(category)===normalizeAccessValue(c)?"active":""}" onclick="setCategory(decodeURIComponent('${encodeURIComponent(c)}'))">${esc(c)}</button>`).join("");
+    }
+  }
+  if($("statCategories"))$("statCategories").textContent=uniqueCats.length;
   renderSubcategories();
 }
 function renderSubcategories(){
@@ -1578,8 +1595,7 @@ function customerStatusClass(status){
 
 function renderAdminCustomers(){
   const body=$("adminCustomersBody"); if(!body)return;
-  const q=($("adminCustomerSearch")?.value||"").trim().toLowerCase();
-  const list=adminCustomers.filter(c=>`${c.id} ${c.name} ${c.phone} ${c.type} ${c.accessType}`.toLowerCase().includes(q));
+  const list=adminCustomers;
   body.innerHTML=list.length?list.map(c=>{
     const st=(c.status||"Pending").toLowerCase();
     const cls=st==="active"?"status-active":st==="blocked"?"status-blocked":"status-pending";
@@ -1753,7 +1769,7 @@ async function loadAdminOrders(){
   }catch(e){console.error("Admin orders error:",e);toast("Could not load orders: "+e.message);}
 }
 
-if($("searchInput"))$("searchInput").addEventListener("input",()=>{if(customer())renderProducts();});if($("adminCustomerSearch"))$("adminCustomerSearch").addEventListener("input",renderAdminCustomers);if($("accessType"))$("accessType").addEventListener("change",updateAccessBoxes);
+if($("searchInput"))$("searchInput").addEventListener("input",()=>{if(customer())renderProducts();});if($("accessType"))$("accessType").addEventListener("change",updateAccessBoxes);
 async function init(){
   closeAllOverlays();
   if($("apiUrl"))$("apiUrl").value=API_URL;
