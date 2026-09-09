@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSING</title>
+<title>BIJAYA HOUSING — Online Store</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -180,7 +180,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div id="customerContent" class="hidden">
   <section class="hero">
     <div>
-      <div style="font-size:18px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:14px">WELCOME TO BIJAYA HOUSING.</div>
+      <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
       <h1>Shop smarter.<br>Choose what you need.</h1>
       <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
       <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
@@ -273,7 +273,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.38</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.41</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -358,6 +358,17 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </div>
 
+<div class="modal" id="idCardModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Customer ID Card</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    <div id="idCardCanvasWrap" style="max-width:320px;margin:0 auto"></div>
+    <button type="button" class="primary" id="idCardDownloadBtn" style="width:100%;margin-top:14px">⬇ Download ID Card (JPG)</button>
+  </div>
+</div>
+
 <div class="modal" id="productModal">
   <div class="modal-head"><h2 id="productModalTitle" style="margin:0">Add Product</h2><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
@@ -396,6 +407,7 @@ html,body{max-width:100%;overflow-x:hidden}
       </div>
       <input type="file" id="profilePhotoInput" accept="image/*" class="hidden" onchange="handleProfilePhotoSelected(this.files[0])">
       <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="document.getElementById('profilePhotoInput').click()">📷 Change Photo</button>
+      <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="viewMyIdCard()">🪪 View ID Card</button>
       <div class="formgrid" style="margin-top:16px">
         <div class="field"><label>Full Name</label><input id="profileNameInput"></div>
         <div class="field"><label>Phone Number</label><input id="profilePhoneInput" readonly></div>
@@ -870,6 +882,261 @@ async function loadCustomerPhoto(c){
   }
 }
 
+/* =========================
+   CUSTOMER ID CARD
+
+   Rendered entirely on an in-memory <canvas> (no server round trip, no
+   external image-generation library) and exported as a JPG. The photo is
+   drawn from a base64 string (never a cross-origin URL) specifically so
+   canvas.toDataURL() never fails with a "tainted canvas" security error.
+========================= */
+function roundRectPath(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+
+function drawCurvedIdText(ctx,text,cx,cy,radius,startAngleDeg,arcDegrees,flip){
+  ctx.save();
+  ctx.translate(cx,cy);
+  ctx.textAlign="center";
+  ctx.textBaseline="middle";
+  const startAngle=(startAngleDeg*Math.PI)/180;
+  const totalAngle=(arcDegrees*Math.PI)/180;
+  const chars=text.split("");
+  // Bottom-arc (flipped) text must be traversed in the opposite angular
+  // direction as well as rotated 180 - otherwise flipping each glyph alone
+  // still reads back-to-front overall.
+  const step=(flip?-1:1)*totalAngle/(chars.length-1||1);
+  let angle=startAngle-(flip?-1:1)*totalAngle/2;
+  chars.forEach(ch=>{
+    ctx.save();
+    ctx.rotate(angle);
+    ctx.translate(0,-radius);
+    if(flip)ctx.rotate(Math.PI);
+    ctx.fillText(ch,0,0);
+    ctx.restore();
+    angle+=step;
+  });
+  ctx.restore();
+}
+
+function drawIdStamp(ctx,cx,cy,radius){
+  ctx.save();
+  ctx.globalAlpha=0.88;
+  ctx.translate(cx,cy);
+  ctx.rotate(-0.12);
+  ctx.strokeStyle="#c0221c";
+  ctx.fillStyle="#c0221c";
+  ctx.lineWidth=5;
+  ctx.beginPath();ctx.arc(0,0,radius,0,Math.PI*2);ctx.stroke();
+  ctx.lineWidth=2;
+  ctx.beginPath();ctx.arc(0,0,radius-9,0,Math.PI*2);ctx.stroke();
+  ctx.font="bold 13px Arial";
+  drawCurvedIdText(ctx,"\u2605 BIJAYA HOUSING \u2605",0,0,radius-18,-90,200,false);
+  drawCurvedIdText(ctx,"\u2605 AGALPUR \u2605",0,0,radius-18,90,140,true);
+  ctx.beginPath();ctx.arc(0,0,radius-29,0,Math.PI*2);ctx.lineWidth=1.5;ctx.stroke();
+  ctx.font="900 26px Arial";
+  ctx.textAlign="center";
+  ctx.textBaseline="middle";
+  ctx.fillText("BH",0,-2);
+  ctx.restore();
+}
+
+function wrapCanvasText(ctx,text,maxWidth){
+  const words=String(text||"").split(" ");
+  let line="",lines=[];
+  words.forEach(w=>{
+    const test=line?line+" "+w:w;
+    if(ctx.measureText(test).width>maxWidth && line){lines.push(line);line=w;}
+    else line=test;
+  });
+  if(line)lines.push(line);
+  return lines;
+}
+
+function loadImageFromBase64(base64){
+  if(!base64)return Promise.resolve(null);
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>resolve(img);
+    img.onerror=()=>resolve(null);
+    img.src="data:image/jpeg;base64,"+base64;
+  });
+}
+
+async function renderIdCardCanvas(data){
+  const W=640,H=1020;
+  const canvas=document.createElement("canvas");
+  canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext("2d");
+
+  const NAVY="#0f172a",ACCENT="#2563eb",MUTED="#64748b";
+
+  ctx.fillStyle="#ffffff";
+  roundRectPath(ctx,0,0,W,H,28);
+  ctx.fill();
+  ctx.save();
+  roundRectPath(ctx,0,0,W,H,28);
+  ctx.clip();
+
+  const headerH=150;
+  const grad=ctx.createLinearGradient(0,0,W,headerH);
+  grad.addColorStop(0,NAVY);
+  grad.addColorStop(1,"#1e293b");
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,0,W,headerH);
+
+  ctx.fillStyle="#ffffff";
+  ctx.textAlign="center";
+  ctx.font="900 34px Arial";
+  ctx.fillText("BIJAYA HOUSING",W/2,62);
+  ctx.font="600 17px Arial";
+  ctx.fillStyle="#cbd5e1";
+  ctx.fillText("AGALPUR, BALANGIR, ODISHA",W/2,92);
+  ctx.font="700 14px Arial";
+  ctx.fillStyle=ACCENT;
+  ctx.fillText("\u2022 CUSTOMER IDENTITY CARD \u2022",W/2,122);
+  ctx.restore();
+
+  const photoSize=260;
+  const photoX=W/2-photoSize/2;
+  const photoY=headerH+40;
+
+  const photoImg=await loadImageFromBase64(data.photoBase64);
+  ctx.save();
+  roundRectPath(ctx,photoX,photoY,photoSize,photoSize,18);
+  ctx.clip();
+  if(photoImg){
+    ctx.drawImage(photoImg,photoX,photoY,photoSize,photoSize);
+  }else{
+    ctx.fillStyle="#eef1f5";
+    ctx.fillRect(photoX,photoY,photoSize,photoSize);
+    ctx.fillStyle="#98a2b3";
+    ctx.font="700 15px Arial";
+    ctx.textAlign="center";
+    ctx.fillText("NO PHOTO",photoX+photoSize/2,photoY+photoSize/2);
+  }
+  ctx.restore();
+  ctx.save();
+  roundRectPath(ctx,photoX,photoY,photoSize,photoSize,18);
+  ctx.lineWidth=4;ctx.strokeStyle=NAVY;ctx.stroke();
+  ctx.restore();
+
+  drawIdStamp(ctx,W/2+62,photoY+photoSize,66);
+
+  let y=photoY+photoSize+96;
+  ctx.fillStyle=NAVY;
+  ctx.font="900 30px Arial";
+  ctx.textAlign="center";
+  ctx.fillText(String(data.name||"").toUpperCase(),W/2,y);
+
+  y+=34;
+  const typeText=String(data.type||"Customer").toUpperCase();
+  ctx.font="700 14px Arial";
+  const badgeW=ctx.measureText(typeText).width+34;
+  ctx.fillStyle="#eff6ff";
+  roundRectPath(ctx,W/2-badgeW/2,y-16,badgeW,30,15);
+  ctx.fill();
+  ctx.strokeStyle=ACCENT;ctx.lineWidth=1.3;
+  roundRectPath(ctx,W/2-badgeW/2,y-16,badgeW,30,15);
+  ctx.stroke();
+  ctx.fillStyle=ACCENT;
+  ctx.fillText(typeText,W/2,y+4);
+
+  y+=48;
+  const leftX=56;
+  const rows=[
+    ["MOBILE NUMBER",data.phone||"-"],
+    ["ADDRESS",data.address||"-"],
+    ["PINCODE",data.pin||"-"]
+  ];
+  ctx.textAlign="left";
+  rows.forEach(([label,value])=>{
+    ctx.fillStyle=MUTED;
+    ctx.font="700 12px Arial";
+    ctx.fillText(label,leftX,y);
+    ctx.fillStyle=NAVY;
+    ctx.font="600 19px Arial";
+    const lines=wrapCanvasText(ctx,value,W-leftX*2);
+    lines.forEach((l,i)=>ctx.fillText(l,leftX,y+26+i*24));
+    y+=26+lines.length*24+12;
+  });
+
+  y+=8;
+  const idBandH=78;
+  ctx.fillStyle=NAVY;
+  roundRectPath(ctx,40,y,W-80,idBandH,14);
+  ctx.fill();
+  ctx.textAlign="center";
+  ctx.fillStyle="#94a3b8";
+  ctx.font="700 12px Arial";
+  ctx.fillText("CUSTOMER ID",W/2,y+24);
+  ctx.fillStyle="#ffffff";
+  ctx.font="900 30px Arial";
+  ctx.fillText(String(data.customerId||"-"),W/2,y+56);
+
+  ctx.fillStyle=MUTED;
+  ctx.font="500 12px Arial";
+  ctx.fillText("Valid while account is active  \u2022  Contact 8114832749",W/2,H-26);
+
+  return canvas;
+}
+
+async function showIdCardFor(data){
+  const wrap=$("idCardCanvasWrap");
+  if(wrap)wrap.innerHTML='<div class="notice">Generating ID card\u2026</div>';
+  $("idCardModal")?.classList.add("show");
+  $("modalBackdrop")?.classList.add("show");
+  document.body.style.overflow="hidden";
+
+  const canvas=await renderIdCardCanvas(data);
+  canvas.style.width="100%";
+  canvas.style.borderRadius="18px";
+  canvas.style.boxShadow="0 10px 30px rgba(15,23,42,.18)";
+  if(wrap){wrap.innerHTML="";wrap.appendChild(canvas);}
+
+  const filename=`ID-${String(data.customerId||"card").replace(/[^A-Za-z0-9-]/g,"")}.jpg`;
+  const btn=$("idCardDownloadBtn");
+  if(btn)btn.onclick=()=>{
+    const a=document.createElement("a");
+    a.href=canvas.toDataURL("image/jpeg",0.92);
+    a.download=filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  };
+}
+
+async function viewMyIdCard(){
+  const c=customer();
+  if(!c)return;
+  await showIdCardFor({
+    name:c.name,type:c.type,phone:c.phone,address:c.address,pin:c.pin,
+    customerId:c.customerId||c.id,
+    photoBase64:window.__customerPhotoBase64||null
+  });
+}
+
+async function viewCustomerIdCardAdmin(id){
+  const c=adminCustomers.find(x=>x.id===id);
+  if(!c){toast("Customer not found");return;}
+  let photoBase64=null;
+  try{
+    const token=sessionStorage.getItem("admin_token");
+    const d=await apiPost({action:"getCustomerPhoto",adminToken:token,customerId:id});
+    photoBase64=d.photoBase64||null;
+  }catch(e){}
+  await showIdCardFor({
+    name:c.name,type:c.type,phone:c.phone,address:c.address,pin:c.pin,
+    customerId:c.id,photoBase64
+  });
+}
+
 async function customerLogout(){
   const c=customer();
   try{
@@ -1323,7 +1590,7 @@ function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer"
 
 /* CHECKOUT + WHATSAPP */
 function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=c.address||"";$("custPincode").value=c.pin||"";closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
+function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
 function validateCheckout(){const name=$("custName").value.trim(),phone=$("custPhone").value.replace(/\D/g,""),address=$("custAddress").value.trim(),pin=$("custPincode").value.replace(/\D/g,"");if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid name, phone, address and pincode");return null}return{name,phone,address,pin,note:$("custNote").value.trim()}}
 async function placeOrder(){
   const c=validateCheckout();
@@ -1596,7 +1863,7 @@ let appView="customer";
 let navigationLock=false;
 function closeAllOverlays(){
   ["drawerBackdrop","modalBackdrop"].forEach(id=>$(id)?.classList.remove("show"));
-  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal"].forEach(id=>$(id)?.classList.remove("show"));
+  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal"].forEach(id=>$(id)?.classList.remove("show"));
   document.body.style.overflow="";
 }
 function setAppView(view,push=true){
@@ -1677,8 +1944,10 @@ function renderAdminCustomers(){
     const cls=st==="active"?"status-active":st==="blocked"?"status-blocked":"status-pending";
     const access=c.accessType||"ALL";
     const action=st==="pending"
-      ? `<button type="button" class="primary" onclick="approveCustomer('${esc(c.id)}')">Approve</button>`
+      ? `<button type="button" class="primary" onclick="approveCustomer('${esc(c.id)}')">Approve</button>
+         <button type="button" class="outline" onclick="viewCustomerIdCardAdmin('${esc(c.id)}')">View ID</button>`
       : `<button type="button" class="outline" onclick="manageCustomerAccess('${esc(c.id)}')">Access</button>
+         <button type="button" class="outline" onclick="viewCustomerIdCardAdmin('${esc(c.id)}')">View ID</button>
          <button type="button" class="outline" onclick="setCustomerStatus('${esc(c.id)}','${st==="blocked"?"Active":"Blocked"}')">${st==="blocked"?"Unblock":"Block"}</button>`;
     return `<tr>
       <td><b>${esc(c.name)}</b></td>
