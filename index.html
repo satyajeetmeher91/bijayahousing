@@ -273,7 +273,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.41</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.42</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -365,7 +365,8 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
   <div class="modal-body" style="text-align:center">
     <div id="idCardCanvasWrap" style="max-width:320px;margin:0 auto"></div>
-    <button type="button" class="primary" id="idCardDownloadBtn" style="width:100%;margin-top:14px">⬇ Download ID Card (JPG)</button>
+    <p id="idCardHint" class="notice hidden" style="margin-top:12px"></p>
+    <button type="button" class="primary hidden" id="idCardDownloadBtn" style="width:100%;margin-top:14px">⬇ Download ID Card (JPG)</button>
   </div>
 </div>
 
@@ -652,6 +653,13 @@ async function apiPost(data,_retried){
   const payload={...data};
   const adminActions=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess"];
   const customerActions=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto"];
+  // Photo actions are non-critical and often run in the background (e.g.
+  // while a profile screen is simply open). If their session has expired
+  // and a silent refresh doesn't succeed, fail quietly rather than forcing
+  // a full logout - the customer may be in the middle of something else
+  // entirely, and losing their session because a background photo fetch
+  // failed is a worse experience than just not showing a photo.
+  const backgroundActions=["getCustomerPhoto"];
 
   if(adminActions.includes(payload.action)){
     const token=sessionStorage.getItem("admin_token");
@@ -673,7 +681,9 @@ async function apiPost(data,_retried){
         const freshCustomer=customer();
         return apiPost({...data,customerToken:freshCustomer?.token},true);
       }
-      forceCustomerLogout("Your session expired. Please log in again.");
+      if(!backgroundActions.includes(payload.action)){
+        forceCustomerLogout("Your session expired. Please log in again.");
+      }
     }
     throw Error(d.error||"Request failed");
   }
@@ -1089,27 +1099,69 @@ async function renderIdCardCanvas(data){
 
 async function showIdCardFor(data){
   const wrap=$("idCardCanvasWrap");
+  const hintEl=$("idCardHint");
+  const downloadBtn=$("idCardDownloadBtn");
+
   if(wrap)wrap.innerHTML='<div class="notice">Generating ID card\u2026</div>';
+  if(hintEl)hintEl.classList.add("hidden");
+  if(downloadBtn){downloadBtn.classList.add("hidden");downloadBtn.onclick=null;}
   $("idCardModal")?.classList.add("show");
   $("modalBackdrop")?.classList.add("show");
   document.body.style.overflow="hidden";
 
-  const canvas=await renderIdCardCanvas(data);
-  canvas.style.width="100%";
-  canvas.style.borderRadius="18px";
-  canvas.style.boxShadow="0 10px 30px rgba(15,23,42,.18)";
-  if(wrap){wrap.innerHTML="";wrap.appendChild(canvas);}
+  // IMPORTANT: everything below is wrapped in try/catch. Previously, any
+  // failure here (a bad photo, a canvas error, anything) left the modal
+  // stuck on "Generating ID card..." forever with no visible explanation -
+  // which is exactly what "customer can't see their ID card at all" looks
+  // like from the outside. Now the person always sees either the card or
+  // a clear, specific error instead of a silent hang.
+  let canvas,dataUrl;
+  try{
+    canvas=await renderIdCardCanvas(data);
+    dataUrl=canvas.toDataURL("image/jpeg",0.92);
+  }catch(e){
+    if(wrap)wrap.innerHTML=`<div class="notice" style="color:var(--danger)">Could not generate the ID card (${esc(e && e.message || "unknown error")}). Please close this and try again.</div>`;
+    return;
+  }
+
+  if(wrap){
+    wrap.innerHTML="";
+    const img=document.createElement("img");
+    img.src=dataUrl;
+    img.alt="Customer ID card";
+    img.style.width="100%";
+    img.style.borderRadius="18px";
+    img.style.boxShadow="0 10px 30px rgba(15,23,42,.18)";
+    wrap.appendChild(img);
+  }
 
   const filename=`ID-${String(data.customerId||"card").replace(/[^A-Za-z0-9-]/g,"")}.jpg`;
-  const btn=$("idCardDownloadBtn");
-  if(btn)btn.onclick=()=>{
-    const a=document.createElement("a");
-    a.href=canvas.toDataURL("image/jpeg",0.92);
-    a.download=filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-  };
+
+  if(isAndroidRuntime()){
+    // A programmatic <a download> click has been unreliable (and has
+    // crashed the app) inside the WebView-wrapped APK on some devices,
+    // since it depends on the wrapper implementing native download
+    // handling. Long-pressing an <img> to save it is a built-in Android
+    // gesture that always works, with no dependency on the wrapper app.
+    if(hintEl){
+      hintEl.textContent="Touch and hold the image above, then choose \"Download image\" to save it to your phone.";
+      hintEl.classList.remove("hidden");
+    }
+  }else if(downloadBtn){
+    downloadBtn.classList.remove("hidden");
+    downloadBtn.onclick=()=>{
+      try{
+        const a=document.createElement("a");
+        a.href=dataUrl;
+        a.download=filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }catch(e){
+        toast("Could not start the download. Try right-clicking the image and choosing Save Image instead.");
+      }
+    };
+  }
 }
 
 async function viewMyIdCard(){
