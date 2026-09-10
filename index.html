@@ -303,7 +303,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.44</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.45</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -417,6 +417,7 @@ html,body{max-width:100%;overflow-x:hidden}
     <div id="idCardCanvasWrap" style="max-width:320px;margin:0 auto"></div>
     <p id="idCardHint" class="notice hidden" style="margin-top:12px"></p>
     <button type="button" class="primary hidden" id="idCardDownloadBtn" style="width:100%;margin-top:14px">⬇ Download ID Card (JPG)</button>
+    <p class="notice" style="margin-top:14px;font-size:12.5px">Unable to download your ID card? Contact BIJAYA HOUSING Administration at <b>8114832749</b> and they can send it to you directly.</p>
   </div>
 </div>
 
@@ -456,8 +457,8 @@ html,body{max-width:100%;overflow-x:hidden}
           <div class="customer-id-badge" style="margin-top:6px">ID: <span id="profileCustomerId">—</span></div>
         </div>
       </div>
-      <input type="file" id="profilePhotoInput" accept="image/*" class="hidden" onchange="handleProfilePhotoSelected(this.files[0])">
-      <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="document.getElementById('profilePhotoInput').click()">📷 Change Photo</button>
+      <input type="file" id="profilePhotoInput" onchange="handleProfilePhotoSelected(this.files[0])" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;z-index:-1">
+      <label for="profilePhotoInput" class="outline" style="display:block;width:100%;margin-top:10px;text-align:center;cursor:pointer;box-sizing:border-box">📷 Change Photo</label>
       <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="viewMyIdCard()">🪪 View ID Card</button>
       <div class="formgrid" style="margin-top:16px">
         <div class="field"><label>Full Name</label><input id="profileNameInput"></div>
