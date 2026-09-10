@@ -39,6 +39,19 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .callbtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
 .profile-card{display:flex;align-items:center;gap:13px;background:var(--surface2);padding:15px;border-radius:16px}
 .avatar{width:48px;height:48px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:900;font-size:20px}
+.app-loading-screen{position:fixed;inset:0;z-index:100000;background:linear-gradient(160deg,#0f172a,#1e293b 60%,#0f172a);display:flex;align-items:center;justify-content:center;transition:opacity .5s ease,visibility .5s ease}
+.app-loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.app-loading-inner{text-align:center;color:#fff;padding:24px}
+.app-loading-badge{width:76px;height:76px;border-radius:50%;background:var(--accent);color:#fff;font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 0 0 8px rgba(37,99,235,.18);animation:app-loading-pulse 1.8s ease-in-out infinite}
+.app-loading-inner h1{font-size:26px;font-weight:900;letter-spacing:.03em;margin:0 0 8px}
+.app-loading-inner p{font-size:13px;color:#94a3b8;margin:0 0 26px;letter-spacing:.02em}
+.app-loading-spinner{width:34px;height:34px;border-radius:50%;border:3px solid rgba(255,255,255,.18);border-top-color:#fff;margin:0 auto 14px;animation:app-loading-spin .9s linear infinite}
+.app-loading-text{font-size:13px;color:#cbd5e1}
+@keyframes app-loading-spin{to{transform:rotate(360deg)}}
+@keyframes app-loading-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.update-banner{position:fixed;top:0;left:0;right:0;z-index:99999;background:var(--primary);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:14px;font-size:13px;flex-wrap:wrap;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.update-banner.hidden{display:none}
+.update-banner button{background:var(--accent);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-weight:700;font-size:13px}
 .contact-strip{display:flex;align-items:center;justify-content:space-between;gap:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:0 0 28px;box-shadow:0 5px 18px rgba(15,23,42,.04)}
 .contact-strip strong{display:block;font-size:16px}.contact-strip span{color:var(--muted);font-size:13px}.contact-actions{display:flex;gap:8px;flex-wrap:wrap}.contact-actions a{text-decoration:none}
 @media(max-width:720px){
@@ -151,6 +164,19 @@ html,body{max-width:100%;overflow-x:hidden}
 </style>
 </head>
 <body>
+<div id="appLoadingScreen" class="app-loading-screen">
+  <div class="app-loading-inner">
+    <div class="app-loading-badge">BH</div>
+    <h1>BIJAYA HOUSING</h1>
+    <p>Cement &bull; TMT Bars &bull; Paints &bull; Tiles &bull; Electricals &bull; Hardware</p>
+    <div class="app-loading-spinner"></div>
+    <span class="app-loading-text">Loading your shop&hellip;</span>
+  </div>
+</div>
+<div id="updateBanner" class="update-banner hidden">
+  <span>A new version of the app is available.</span>
+  <button type="button" onclick="location.reload()">Reload</button>
+</div>
 <div class="app">
 <header class="topbar">
   <div class="nav">
@@ -273,7 +299,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.42</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.43</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -2167,21 +2193,74 @@ async function loadAdminOrders(){
 }
 
 if($("searchInput"))$("searchInput").addEventListener("input",()=>{if(customer())renderProducts();});if($("accessType"))$("accessType").addEventListener("change",updateAccessBoxes);
+/* =========================
+   UPDATE CHECKER
+
+   The APK's WebView loads this page from a live GitHub Pages URL, but
+   once loaded, a long-running session keeps running the JS it already
+   has in memory - it won't notice a new commit on its own. This
+   periodically re-fetches the same URL fresh and compares a hash of the
+   raw HTML against what was loaded at the start of this session. If they
+   differ, a commit has landed since this session started, so a small
+   banner offers a one-tap reload (which re-fetches everything fresh).
+========================= */
+const __canonicalAppUrl=location.origin+location.pathname;
+let __appBaselineHash=null;
+
+function computeSimpleHash(text){
+  // Not cryptographic - just a fast, dependency-free change detector, so
+  // this works on every WebView without relying on crypto.subtle support.
+  let hash=0;
+  for(let i=0;i<text.length;i++){
+    hash=(hash*31+text.charCodeAt(i))|0;
+  }
+  return String(hash);
+}
+
+async function checkForAppUpdate(){
+  try{
+    const res=await fetch(__canonicalAppUrl,{cache:"no-store"});
+    if(!res.ok)return;
+    const text=await res.text();
+    const hash=computeSimpleHash(text);
+    if(__appBaselineHash===null){__appBaselineHash=hash;return;}
+    if(hash!==__appBaselineHash){
+      $("updateBanner")?.classList.remove("hidden");
+    }
+  }catch(e){
+    // Offline, or the request was blocked - this is a non-critical
+    // background check, so fail silently rather than bothering anyone.
+  }
+}
+
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState==="visible")checkForAppUpdate();
+});
+setInterval(checkForAppUpdate,5*60*1000);
+
 async function init(){
   closeAllOverlays();
   if($("apiUrl"))$("apiUrl").value=API_URL;
   updateCustomerAccess();
   updateCart();
+  checkForAppUpdate();
 
-  const adminLogged=!!sessionStorage.getItem("admin_token");
-  if(adminLogged){
-    setAppView("admin",false);
-    await Promise.all([loadProductsFromApi(false,true),loadAdminOrders(),loadAdminCustomers()]);
-  }else if(customer()){
-    setAppView("customer",false);
-    await Promise.all([loadProductsFromApi(false),loadCustomerOrders()]);
-  }else{
-    setAppView("customer",false);
+  try{
+    const adminLogged=!!sessionStorage.getItem("admin_token");
+    if(adminLogged){
+      setAppView("admin",false);
+      await Promise.all([loadProductsFromApi(false,true),loadAdminOrders(),loadAdminCustomers()]);
+    }else if(customer()){
+      setAppView("customer",false);
+      await Promise.all([loadProductsFromApi(false),loadCustomerOrders()]);
+    }else{
+      setAppView("customer",false);
+    }
+  }finally{
+    // Always hide the loading screen, even if something above failed -
+    // a stuck full-screen loading screen would be worse than showing the
+    // (possibly incomplete) app underneath.
+    $("appLoadingScreen")?.classList.add("hidden");
   }
 }
 
@@ -2190,6 +2269,10 @@ window.addEventListener("pageshow",()=>{
   setAppView(location.hash==="#admin" && sessionStorage.getItem("admin_token")?"admin":"customer",false);
 });
 
+// Safety net: no matter what happens in init() (a slow network, an
+// unexpected error, anything), never let the loading screen stay stuck
+// forever and block the whole app from being usable.
+setTimeout(()=>{$("appLoadingScreen")?.classList.add("hidden");},15000);
 init();
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"){
