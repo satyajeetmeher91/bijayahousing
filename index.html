@@ -52,6 +52,10 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .update-banner{position:fixed;top:0;left:0;right:0;z-index:99999;background:var(--primary);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:center;gap:14px;font-size:13px;flex-wrap:wrap;box-shadow:0 2px 10px rgba(0,0,0,.15)}
 .update-banner.hidden{display:none}
 .update-banner button{background:var(--accent);color:#fff;border:none;padding:7px 16px;border-radius:8px;font-weight:700;font-size:13px}
+.crop-stage{position:relative;width:280px;height:280px;margin:0 auto;overflow:hidden;border-radius:16px;background:#111;touch-action:none;cursor:grab}
+.crop-stage:active{cursor:grabbing}
+.crop-image{position:absolute;top:0;left:0;transform-origin:0 0;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.crop-frame{position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2000px rgba(0,0,0,.45);border:3px solid #fff;pointer-events:none}
 .contact-strip{display:flex;align-items:center;justify-content:space-between;gap:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:0 0 28px;box-shadow:0 5px 18px rgba(15,23,42,.04)}
 .contact-strip strong{display:block;font-size:16px}.contact-strip span{color:var(--muted);font-size:13px}.contact-actions{display:flex;gap:8px;flex-wrap:wrap}.contact-actions a{text-decoration:none}
 @media(max-width:720px){
@@ -299,7 +303,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.43</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.44</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -381,6 +385,26 @@ html,body{max-width:100%;overflow-x:hidden}
     <p class="notice" style="font-size:14px">Your phone didn't open the WhatsApp app automatically. Tap "Copy Order Message" below, then open WhatsApp yourself and paste it into a chat with BIJAYA HOUSING.</p>
     <button type="button" class="primary" id="waFallbackCopyBtn" style="width:100%">📋 Copy Order Message</button>
     <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<div class="modal" id="photoCropModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Adjust Your Photo</h2></div>
+    <button type="button" class="iconbtn" onclick="cancelPhotoCrop()">×</button>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    <div id="cropStage" class="crop-stage">
+      <img id="cropImage" class="crop-image" alt="">
+      <div class="crop-frame"></div>
+    </div>
+    <div style="margin-top:16px;display:flex;align-items:center;gap:10px">
+      <span style="font-size:18px">\ud83d\udd0d</span>
+      <input type="range" id="cropZoomSlider" min="100" max="300" value="100" oninput="onCropZoomChange(this.value)" style="flex:1">
+    </div>
+    <p class="notice" style="margin-top:8px">Drag the photo to position it, use the slider to zoom.</p>
+    <button type="button" class="primary" style="width:100%;margin-top:14px" onclick="confirmPhotoCrop()">Use This Photo</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="cancelPhotoCrop()">Cancel</button>
   </div>
 </div>
 
@@ -891,14 +915,179 @@ function compressImageFile(file,maxDim,quality){
 async function handleProfilePhotoSelected(file){
   if(!file)return;
   if(!file.type||!file.type.startsWith("image/")){toast("Please choose an image file");return;}
+  if(!customer())return;
+  openPhotoCropModal(file);
+}
+
+/* =========================
+   PHOTO CROP TOOL
+
+   A simple pan + zoom cropper: the frame stays fixed (matching the
+   circular avatar shape) and the person drags/zooms the photo behind it,
+   the same interaction pattern most apps use for profile photos. The
+   image is clamped so it always fully covers the frame - no empty
+   corners. On confirm, the exact visible region is redrawn onto an
+   output canvas at a higher fixed resolution for the actual upload.
+========================= */
+let __cropState=null;
+
+function openPhotoCropModal(file){
+  const reader=new FileReader();
+  reader.onerror=()=>toast("Could not read that file");
+  reader.onload=()=>{
+    const probeImg=new Image();
+    probeImg.onerror=()=>toast("Could not read that image");
+    probeImg.onload=()=>{
+      const stage=$("cropStage");
+      const stageSize=(stage && stage.clientWidth) || 280;
+      const baseScale=Math.max(stageSize/probeImg.naturalWidth,stageSize/probeImg.naturalHeight);
+      __cropState={
+        img:probeImg,
+        naturalWidth:probeImg.naturalWidth,
+        naturalHeight:probeImg.naturalHeight,
+        stageSize,
+        baseScale,
+        zoom:1,
+        offsetX:(stageSize-probeImg.naturalWidth*baseScale)/2,
+        offsetY:(stageSize-probeImg.naturalHeight*baseScale)/2,
+        dragging:false,
+        lastX:0,
+        lastY:0
+      };
+      const cropImg=$("cropImage");
+      if(cropImg)cropImg.src=reader.result;
+      const slider=$("cropZoomSlider");
+      if(slider)slider.value=100;
+      applyCropTransform();
+      setupCropStageEvents();
+      $("photoCropModal")?.classList.add("show");
+      $("modalBackdrop")?.classList.add("show");
+      document.body.style.overflow="hidden";
+    };
+    probeImg.src=reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function clampCropOffsets(){
+  const s=__cropState;
+  if(!s)return;
+  const scale=s.baseScale*s.zoom;
+  const dispW=s.naturalWidth*scale;
+  const dispH=s.naturalHeight*scale;
+  const minX=s.stageSize-dispW;
+  const minY=s.stageSize-dispH;
+  s.offsetX=Math.min(0,Math.max(minX,s.offsetX));
+  s.offsetY=Math.min(0,Math.max(minY,s.offsetY));
+}
+
+function applyCropTransform(){
+  const s=__cropState;
+  if(!s)return;
+  clampCropOffsets();
+  const scale=s.baseScale*s.zoom;
+  const cropImg=$("cropImage");
+  if(!cropImg)return;
+  cropImg.style.width=s.naturalWidth+"px";
+  cropImg.style.height=s.naturalHeight+"px";
+  cropImg.style.transform=`translate(${s.offsetX}px,${s.offsetY}px) scale(${scale})`;
+}
+
+function onCropZoomChange(value){
+  const s=__cropState;
+  if(!s)return;
+  s.zoom=Math.max(1,Number(value)/100||1);
+  applyCropTransform();
+}
+
+function cropPointerDown(x,y){
+  const s=__cropState;
+  if(!s)return;
+  s.dragging=true;
+  s.lastX=x;
+  s.lastY=y;
+}
+function cropPointerMove(x,y){
+  const s=__cropState;
+  if(!s||!s.dragging)return;
+  s.offsetX+=x-s.lastX;
+  s.offsetY+=y-s.lastY;
+  s.lastX=x;
+  s.lastY=y;
+  applyCropTransform();
+}
+function cropPointerUp(){
+  const s=__cropState;
+  if(!s)return;
+  s.dragging=false;
+}
+
+function setupCropStageEvents(){
+  const stage=$("cropStage");
+  if(!stage||stage.__cropEventsBound)return;
+  stage.__cropEventsBound=true;
+
+  stage.addEventListener("mousedown",e=>{cropPointerDown(e.clientX,e.clientY);e.preventDefault();});
+  window.addEventListener("mousemove",e=>{cropPointerMove(e.clientX,e.clientY);});
+  window.addEventListener("mouseup",cropPointerUp);
+
+  stage.addEventListener("touchstart",e=>{
+    if(e.touches.length!==1)return;
+    cropPointerDown(e.touches[0].clientX,e.touches[0].clientY);
+  },{passive:true});
+  stage.addEventListener("touchmove",e=>{
+    if(e.touches.length!==1)return;
+    cropPointerMove(e.touches[0].clientX,e.touches[0].clientY);
+    e.preventDefault();
+  },{passive:false});
+  stage.addEventListener("touchend",cropPointerUp);
+  stage.addEventListener("touchcancel",cropPointerUp);
+}
+
+function closePhotoCropModal(){
+  $("photoCropModal")?.classList.remove("show");
+  __cropState=null;
+}
+
+function cancelPhotoCrop(){
+  closePhotoCropModal();
+  const input=$("profilePhotoInput");
+  if(input)input.value="";
+}
+
+async function confirmPhotoCrop(){
+  const s=__cropState;
+  if(!s)return;
+  const outputSize=480;
+  try{
+    const scale=s.baseScale*s.zoom;
+    const outputScale=outputSize/s.stageSize;
+    const canvas=document.createElement("canvas");
+    canvas.width=outputSize;
+    canvas.height=outputSize;
+    const ctx=canvas.getContext("2d");
+    ctx.drawImage(
+      s.img,
+      0,0,s.naturalWidth,s.naturalHeight,
+      s.offsetX*outputScale,s.offsetY*outputScale,
+      s.naturalWidth*scale*outputScale,s.naturalHeight*scale*outputScale
+    );
+    const base64=canvas.toDataURL("image/jpeg",0.85).split(",")[1];
+    closePhotoCropModal();
+    await uploadCroppedPhotoBase64(base64);
+  }catch(e){
+    toast("Could not crop that photo. Please try a different image.");
+  }
+}
+
+async function uploadCroppedPhotoBase64(base64){
   const c=customer();
   if(!c)return;
   try{
-    toast("Uploading photo…");
-    const compressed=await compressImageFile(file,640,0.82);
-    await apiPost({action:"uploadCustomerPhoto",customerToken:c.token,photoBase64:compressed});
-    window.__customerPhotoBase64=compressed;
-    setAvatarImage($("profileAvatar"),compressed);
+    toast("Uploading photo\u2026");
+    await apiPost({action:"uploadCustomerPhoto",customerToken:c.token,photoBase64:base64});
+    window.__customerPhotoBase64=base64;
+    setAvatarImage($("profileAvatar"),base64);
     toast("Photo updated");
   }catch(e){
     toast("Could not upload photo: "+e.message);
@@ -1668,7 +1857,7 @@ function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer"
 
 /* CHECKOUT + WHATSAPP */
 function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=c.address||"";$("custPincode").value=c.pin||"";closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
+function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
 function validateCheckout(){const name=$("custName").value.trim(),phone=$("custPhone").value.replace(/\D/g,""),address=$("custAddress").value.trim(),pin=$("custPincode").value.replace(/\D/g,"");if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid name, phone, address and pincode");return null}return{name,phone,address,pin,note:$("custNote").value.trim()}}
 async function placeOrder(){
   const c=validateCheckout();
@@ -1941,7 +2130,7 @@ let appView="customer";
 let navigationLock=false;
 function closeAllOverlays(){
   ["drawerBackdrop","modalBackdrop"].forEach(id=>$(id)?.classList.remove("show"));
-  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal"].forEach(id=>$(id)?.classList.remove("show"));
+  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal"].forEach(id=>$(id)?.classList.remove("show"));
   document.body.style.overflow="";
 }
 function setAppView(view,push=true){
