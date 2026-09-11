@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSING — Online Store</title>
+<title>BIJAYA HOUSING</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -56,6 +56,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .crop-stage:active{cursor:grabbing}
 .crop-image{position:absolute;top:0;left:0;transform-origin:0 0;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .crop-frame{position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2000px rgba(0,0,0,.45);border:3px solid #fff;pointer-events:none}
+.order-status-select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-weight:700;font-size:13px;background:var(--surface)}
 .contact-strip{display:flex;align-items:center;justify-content:space-between;gap:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:0 0 28px;box-shadow:0 5px 18px rgba(15,23,42,.04)}
 .contact-strip strong{display:block;font-size:16px}.contact-strip span{color:var(--muted);font-size:13px}.contact-actions{display:flex;gap:8px;flex-wrap:wrap}.contact-actions a{text-decoration:none}
 @media(max-width:720px){
@@ -184,7 +185,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="app">
 <header class="topbar">
   <div class="nav">
-    <div class="brand"><div class="brand-mark">BH</div><span id="brandName">BIJAYA HOUSING</span></div>
+    <div class="brand"><div class="brand-mark">BH</div><span id="brandName">BIJAYA</span></div>
     <div class="nav-spacer"></div>
     <div class="search" id="customerSearch"><span>⌕</span><input id="searchInput" placeholder="Search products..."></div>
     <a class="outline callbtn" href="tel:8114832749">☎ Raj Kishor</a>
@@ -210,7 +211,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div id="customerContent" class="hidden">
   <section class="hero">
     <div>
-      <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
+      <div style="font-size:16px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:14px">WELCOME TO BIJAYA HOUSING.</div>
       <h1>Shop smarter.<br>Choose what you need.</h1>
       <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
       <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
@@ -303,7 +304,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.45</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.46</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -385,6 +386,34 @@ html,body{max-width:100%;overflow-x:hidden}
     <p class="notice" style="font-size:14px">Your phone didn't open the WhatsApp app automatically. Tap "Copy Order Message" below, then open WhatsApp yourself and paste it into a chat with BIJAYA HOUSING.</p>
     <button type="button" class="primary" id="waFallbackCopyBtn" style="width:100%">📋 Copy Order Message</button>
     <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<div class="modal" id="priceEditModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Edit Order Prices</h2><div style="font-size:12px;color:var(--muted)" id="priceEditOrderId"></div></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <div id="priceEditItemsList"></div>
+    <div style="display:flex;justify-content:space-between;margin-top:14px;font-weight:800;font-size:17px">
+      <span>New Total</span><span id="priceEditNewTotal">₹0</span>
+    </div>
+    <button type="button" class="primary" style="width:100%;margin-top:14px" onclick="savePriceEdit()">Save Prices</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<div class="modal" id="invoiceModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Invoice</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    <div id="invoiceCanvasWrap" style="max-width:360px;margin:0 auto"></div>
+    <p id="invoiceHint" class="notice hidden" style="margin-top:12px"></p>
+    <button type="button" class="primary hidden" id="invoiceDownloadBtn" style="width:100%;margin-top:14px">⬇ Download Invoice (JPG)</button>
+    <p class="notice" style="margin-top:14px;font-size:12.5px">Unable to download your invoice? Contact BIJAYA HOUSING Administration at <b>8114832749</b> and they can send it to you directly.</p>
   </div>
 </div>
 
@@ -702,7 +731,7 @@ async function apiGet(action,_retried){
 }
 async function apiPost(data,_retried){
   const payload={...data};
-  const adminActions=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess"];
+  const adminActions=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing"];
   const customerActions=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto"];
   // Photo actions are non-critical and often run in the background (e.g.
   // while a profile screen is simply open). If their session has expired
@@ -1858,7 +1887,7 @@ function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer"
 
 /* CHECKOUT + WHATSAPP */
 function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=c.address||"";$("custPincode").value=c.pin||"";closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
+function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal","priceEditModal","invoiceModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
 function validateCheckout(){const name=$("custName").value.trim(),phone=$("custPhone").value.replace(/\D/g,""),address=$("custAddress").value.trim(),pin=$("custPincode").value.replace(/\D/g,"");if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid name, phone, address and pincode");return null}return{name,phone,address,pin,note:$("custNote").value.trim()}}
 async function placeOrder(){
   const c=validateCheckout();
@@ -2103,6 +2132,7 @@ function normalizeServerOrder(o){
       price:Number(i.price||0)
     })),
     total:Number(o.total||0),
+    originalTotal:o.originalTotal!=null?Number(o.originalTotal):Number(o.total||0),
     status:o.status||"New"
   };
 }
@@ -2118,12 +2148,203 @@ function renderCustomerOrders(){
     const op=String(o.customer?.phone||"").replace(/\D/g,"").slice(-10);
     return (customerId&&oid===customerId)||(!oid&&phone&&op===phone);
   });
-  box.innerHTML=mine.length?mine.map(o=>`<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><strong>${money(o.total)}</strong><span class="status">${esc(o.status||"New")}</span></div><button type="button" class="outline" style="width:100%;margin-top:4px" onclick="resendOrderById(decodeProductArg('${safeProductArg(o.id)}'))">↗ Resend Order to WhatsApp</button></div>`).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
+  box.innerHTML=mine.length?mine.map(o=>{
+    const status=String(o.status||"New");
+    const statusLower=status.toLowerCase();
+    const canDownloadInvoice=statusLower!=="new" && statusLower!=="cancelled" && statusLower!=="canceled";
+    const priceChanged=o.originalTotal!=null && Number(o.originalTotal)!==Number(o.total);
+    const amountHtml=priceChanged
+      ?`<span class="cart-meta" style="text-decoration:line-through">${money(o.originalTotal)}</span> <strong>${money(o.total)}</strong> <span class="cart-meta">(revised)</span>`
+      :`<strong>${money(o.total)}</strong>`;
+    return `<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty!=null?i.qty:i.quantity)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">${amountHtml}<span class="status">${esc(status)}</span></div><button type="button" class="outline" style="width:100%;margin-top:4px" onclick="resendOrderById(decodeProductArg('${safeProductArg(o.id)}'))">↗ Resend Order to WhatsApp</button>${canDownloadInvoice?`<button type="button" class="outline" style="width:100%;margin-top:8px" onclick="downloadInvoiceById(decodeProductArg('${safeProductArg(o.id)}'))">\ud83e\uddfe Download Invoice</button>`:`<p class="cart-meta" style="margin-top:8px;text-align:center">Invoice available once your order is confirmed</p>`}</div>`;
+  }).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
+}
+
+function downloadInvoiceById(id){
+  const o=orders.find(x=>String(x.id)===String(id));
+  if(!o){toast("Order not found. Please refresh your orders.");return;}
+  generateInvoice(o);
 }
 
 function generateInvoice(o){
-  const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(o.id)} - BIJAYA HOUSING</title><style>body{font-family:Arial,sans-serif;padding:35px;color:#111;max-width:950px;margin:auto}h1{margin:0 0 4px}.muted{color:#666}table{width:100%;border-collapse:collapse;margin-top:25px}th,td{padding:10px;border:1px solid #ddd;text-align:left;font-size:13px}th{background:#f4f4f4}th:nth-child(1),td:nth-child(1),th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4){text-align:center}th:nth-child(5),td:nth-child(5),th:nth-child(6),td:nth-child(6){text-align:right}.total{text-align:right;font-size:20px;font-weight:bold;margin-top:20px}.note{margin-top:28px;color:#666;font-size:12px}button{padding:10px 16px;border:1px solid #111;background:#fff;border-radius:8px;margin-bottom:18px}@media print{button{display:none}}</style></head><body><button type="button" onclick="window.print()">Print / Save as PDF</button><h1>BIJAYA HOUSING</h1><div>Agalpur</div><div class="muted">8114832749 • 9078523132</div><h2>INVOICE</h2><div class="muted">Order ID: ${esc(o.id)} • ${new Date(o.date).toLocaleString("en-IN")}</div><p><b>${esc(o.customer?.name||"")}</b><br>Phone: ${esc(o.customer?.phone||"")}<br>${esc(o.customer?.address||"")}<br>Pincode: ${esc(o.customer?.pin||"")}</p><table><tr><th>Sl. No.</th><th>Product Name</th><th>Product Size</th><th>Quantity</th><th>Rate</th><th>Amount</th></tr>${(o.items||[]).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name||"Product")}${x.code?`<br><span class="muted">Code: ${esc(x.code)}</span>`:""}</td><td>${esc(x.size||"-")}</td><td>${Number(x.qty)||0}</td><td>${money(x.price)}</td><td>${money(Number(x.price||0)*Number(x.qty||0))}</td></tr>`).join("")}</table><div class="total">Grand Total: ${money(o.total)}</div><div class="note">Thank you for shopping with BIJAYA HOUSING.</div></body></html>`;
-  const url=URL.createObjectURL(new Blob([html],{type:"text/html"}));const a=document.createElement("a");a.href=url;a.download=`${o.id}-invoice.html`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  showInvoiceFor(o);
+}
+
+async function renderInvoiceCanvas(o){
+  const items=o.items||[];
+  const W=640;
+  const headerH=140;
+  const topBlockH=170;
+  const rowH=34;
+  const tableHeaderH=32;
+  const tableTop=headerH+topBlockH+20;
+  const tableH=tableHeaderH+Math.max(1,items.length)*rowH;
+  const totalBlockH=100;
+  const footerH=60;
+  const H=tableTop+tableH+totalBlockH+footerH+30;
+
+  const canvas=document.createElement("canvas");
+  canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext("2d");
+  const NAVY="#0f172a",ACCENT="#2563eb",MUTED="#64748b",LINE="#e2e8f0";
+
+  ctx.fillStyle="#ffffff";
+  roundRectPath(ctx,0,0,W,H,20);
+  ctx.fill();
+  ctx.save();
+  roundRectPath(ctx,0,0,W,H,20);
+  ctx.clip();
+
+  const grad=ctx.createLinearGradient(0,0,W,headerH);
+  grad.addColorStop(0,NAVY);
+  grad.addColorStop(1,"#1e293b");
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,0,W,headerH);
+  ctx.fillStyle="#ffffff";
+  ctx.textAlign="center";
+  ctx.font="900 28px Arial";
+  ctx.fillText("BIJAYA HOUSING",W/2,50);
+  ctx.font="600 14px Arial";
+  ctx.fillStyle="#cbd5e1";
+  ctx.fillText("Agalpur, Balangir, Odisha  \u2022  8114832749 / 9078523132",W/2,76);
+  ctx.font="700 15px Arial";
+  ctx.fillStyle=ACCENT;
+  ctx.fillText("\u2022 SALES INVOICE \u2022",W/2,104);
+  ctx.restore();
+
+  let y=headerH+30;
+  ctx.textAlign="left";
+  ctx.fillStyle=NAVY;
+  ctx.font="800 15px Arial";
+  ctx.fillText(`Order ID: ${o.id||"-"}`,40,y);
+  ctx.font="500 13px Arial";
+  ctx.fillStyle=MUTED;
+  ctx.fillText(new Date(o.date).toLocaleString("en-IN"),40,y+20);
+
+  y+=48;
+  ctx.fillStyle=NAVY;
+  ctx.font="800 15px Arial";
+  ctx.fillText(String(o.customer?.name||"-"),40,y);
+  ctx.font="500 13px Arial";
+  ctx.fillStyle=MUTED;
+  ctx.fillText(`Phone: ${o.customer?.phone||"-"}`,40,y+20);
+  const addrLines=wrapCanvasText(ctx,`${o.customer?.address||""} - ${o.customer?.pin||""}`,W-80);
+  addrLines.forEach((l,i)=>ctx.fillText(l,40,y+40+i*18));
+
+  // Table
+  let tableY=tableTop;
+  ctx.fillStyle=NAVY;
+  ctx.fillRect(30,tableY,W-60,tableHeaderH);
+  ctx.fillStyle="#ffffff";
+  ctx.font="700 12px Arial";
+  const cols=[{x:40,w:30,label:"#",align:"left"},{x:75,w:230,label:"Product",align:"left"},{x:320,w:60,label:"Qty",align:"center"},{x:390,w:100,label:"Rate",align:"right"},{x:500,w:100,label:"Amount",align:"right"}];
+  cols.forEach(c=>{ctx.textAlign=c.align;ctx.fillText(c.label,c.align==="right"?c.x+c.w:c.align==="center"?c.x+c.w/2:c.x,tableY+21);});
+
+  tableY+=tableHeaderH;
+  (items.length?items:[{name:"-",qty:0,price:0}]).forEach((it,i)=>{
+    if(i%2===1){ctx.fillStyle="#f8fafc";ctx.fillRect(30,tableY,W-60,rowH);}
+    ctx.fillStyle=NAVY;
+    ctx.font="500 13px Arial";
+    const qty=Number(it.qty!=null?it.qty:it.quantity)||0;
+    const rowVals=[String(i+1),`${it.name||"Product"}${it.size?" ("+it.size+")":""}`,String(qty),money(it.price),money((Number(it.price)||0)*qty)];
+    cols.forEach((c,ci)=>{
+      ctx.textAlign=c.align;
+      let text=rowVals[ci];
+      if(ci===1 && ctx.measureText(text).width>c.w){
+        while(ctx.measureText(text+"\u2026").width>c.w && text.length>3){text=text.slice(0,-1);}
+        text+="\u2026";
+      }
+      ctx.fillText(text,c.align==="right"?c.x+c.w:c.align==="center"?c.x+c.w/2:c.x,tableY+22);
+    });
+    ctx.strokeStyle=LINE;ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(30,tableY+rowH);ctx.lineTo(W-30,tableY+rowH);ctx.stroke();
+    tableY+=rowH;
+  });
+
+  // Total block
+  y=tableY+30;
+  const priceChanged=o.originalTotal!=null && Number(o.originalTotal)!==Number(o.total);
+  if(priceChanged){
+    ctx.textAlign="right";
+    ctx.fillStyle=MUTED;
+    ctx.font="500 14px Arial";
+    ctx.fillText(`Original Amount: ${money(o.originalTotal)}`,W-40,y);
+    y+=26;
+  }
+  ctx.fillStyle=NAVY;
+  roundRectPath(ctx,W-260,y-6,220,50,12);
+  ctx.fill();
+  ctx.textAlign="right";
+  ctx.fillStyle="#94a3b8";
+  ctx.font="700 11px Arial";
+  ctx.fillText(priceChanged?"REVISED TOTAL":"GRAND TOTAL",W-52,y+12);
+  ctx.fillStyle="#ffffff";
+  ctx.font="900 22px Arial";
+  ctx.fillText(money(o.total),W-52,y+37);
+
+  y+=70;
+  ctx.textAlign="center";
+  ctx.fillStyle=MUTED;
+  ctx.font="500 12px Arial";
+  ctx.fillText("Thank you for shopping with BIJAYA HOUSING.",W/2,y);
+
+  return canvas;
+}
+
+async function showInvoiceFor(o){
+  const wrap=$("invoiceCanvasWrap");
+  const hintEl=$("invoiceHint");
+  const downloadBtn=$("invoiceDownloadBtn");
+
+  if(wrap)wrap.innerHTML='<div class="notice">Generating invoice\u2026</div>';
+  if(hintEl)hintEl.classList.add("hidden");
+  if(downloadBtn){downloadBtn.classList.add("hidden");downloadBtn.onclick=null;}
+  $("invoiceModal")?.classList.add("show");
+  $("modalBackdrop")?.classList.add("show");
+  document.body.style.overflow="hidden";
+
+  let canvas,dataUrl;
+  try{
+    canvas=await renderInvoiceCanvas(o);
+    dataUrl=canvas.toDataURL("image/jpeg",0.92);
+  }catch(e){
+    if(wrap)wrap.innerHTML=`<div class="notice" style="color:var(--danger)">Could not generate the invoice (${esc(e && e.message || "unknown error")}). Please close this and try again.</div>`;
+    return;
+  }
+
+  if(wrap){
+    wrap.innerHTML="";
+    const img=document.createElement("img");
+    img.src=dataUrl;
+    img.alt="Invoice";
+    img.style.width="100%";
+    img.style.borderRadius="14px";
+    img.style.boxShadow="0 10px 30px rgba(15,23,42,.18)";
+    wrap.appendChild(img);
+  }
+
+  const filename=`Invoice-${String(o.id||"order").replace(/[^A-Za-z0-9-]/g,"")}.jpg`;
+
+  if(isAndroidRuntime()){
+    if(hintEl){
+      hintEl.textContent="Touch and hold the invoice above, then choose \"Download image\" to save it to your phone.";
+      hintEl.classList.remove("hidden");
+    }
+  }else if(downloadBtn){
+    downloadBtn.classList.remove("hidden");
+    downloadBtn.onclick=()=>{
+      try{
+        const a=document.createElement("a");
+        a.href=dataUrl;
+        a.download=filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }catch(e){
+        toast("Could not start the download. Try right-clicking the image and choosing Save Image instead.");
+      }
+    };
+  }
 }
 
 /* ADMIN */
@@ -2131,7 +2352,7 @@ let appView="customer";
 let navigationLock=false;
 function closeAllOverlays(){
   ["drawerBackdrop","modalBackdrop"].forEach(id=>$(id)?.classList.remove("show"));
-  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal"].forEach(id=>$(id)?.classList.remove("show"));
+  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal","priceEditModal","invoiceModal"].forEach(id=>$(id)?.classList.remove("show"));
   document.body.style.overflow="";
 }
 function setAppView(view,push=true){
@@ -2175,12 +2396,82 @@ function renderAdminOrders(){
   if($("orderSummaryBar"))$("orderSummaryBar").innerHTML=Object.entries(counts).map(([k,v])=>`<span class="order-summary-pill">${k}<strong>${v}</strong></span>`).join("");
   let list=orders.filter(o=>orderStatusFilter==="All"||orderStatus(o).toLowerCase()===orderStatusFilter.toLowerCase()||(orderStatusFilter==="Cancelled"&&["cancelled","canceled"].includes(orderStatus(o).toLowerCase())));
   list=[...list].sort((a,b)=>{const r=orderSortRank(orderStatus(a))-orderSortRank(orderStatus(b));return r||new Date(b.date)-new Date(a.date);});
+  const statusOptions=["New","Confirmed","Processing","Ready","Completed","Cancelled"];
   body.innerHTML=list.length?list.map(o=>{
     const items=o.items||[];
     const itemHtml=items.length?items.map(i=>`<div style="margin-bottom:5px"><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` <span class="cart-meta">(${esc(i.size)})</span>`:""} × ${Number(i.qty)||0} @ ${money(i.price)}</div>`).join(""):`<span class="cart-meta">No item details available</span>`;
-    return `<tr><td><b>${esc(o.id)}</b><br><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></td><td><b>${esc(o.customer?.name||"")}</b><br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span></td><td>${itemHtml}</td><td><b>${money(o.total)}</b></td><td><span class="status">${esc(orderStatus(o))}</span></td><td class="action-cell"><button type="button" class="outline" onclick="generateInvoiceById('${esc(o.id)}')">🧾 Generate Invoice</button></td></tr>`;
+    const priceChanged=o.originalTotal!=null && Number(o.originalTotal)!==Number(o.total);
+    const amountHtml=priceChanged?`<span class="cart-meta" style="text-decoration:line-through">${money(o.originalTotal)}</span><br><b>${money(o.total)}</b>`:`<b>${money(o.total)}</b>`;
+    const currentStatus=orderStatus(o);
+    return `<tr><td><b>${esc(o.id)}</b><br><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></td><td><b>${esc(o.customer?.name||"")}</b><br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span></td><td>${itemHtml}</td><td>${amountHtml}</td><td><select class="order-status-select" onchange="adminChangeOrderStatus('${esc(o.id)}',this.value)">${statusOptions.map(s=>`<option value="${s}" ${currentStatus===s?"selected":""}>${s}</option>`).join("")}</select></td><td class="action-cell"><button type="button" class="outline" onclick="openPriceEditModal('${esc(o.id)}')">\u270f\ufe0f Edit Prices</button><button type="button" class="outline" onclick="generateInvoiceById('${esc(o.id)}')">\ud83e\uddfe Generate Invoice</button></td></tr>`;
   }).join(""):`<tr><td colspan="6"><div class="empty"><h3>No matching orders</h3><p>Try another status filter.</p></div></td></tr>`;
 }
+
+async function adminChangeOrderStatus(orderId,status){
+  try{
+    await apiPost({action:"updateOrderStatus",orderId,status});
+    const o=orders.find(x=>String(x.id)===String(orderId));
+    if(o)o.status=status;
+    renderAdminOrders();
+    toast("Order status updated");
+  }catch(e){
+    toast("Could not update status: "+e.message);
+    renderAdminOrders();
+  }
+}
+
+let __priceEditOrderId=null;
+let __priceEditItems=[];
+
+function openPriceEditModal(orderId){
+  const o=orders.find(x=>String(x.id)===String(orderId));
+  if(!o){toast("Order not found");return;}
+  __priceEditOrderId=orderId;
+  __priceEditItems=(o.items||[]).map(it=>({...it}));
+  if($("priceEditOrderId"))$("priceEditOrderId").textContent=orderId;
+  renderPriceEditItems();
+  $("priceEditModal")?.classList.add("show");
+  $("modalBackdrop")?.classList.add("show");
+  document.body.style.overflow="hidden";
+}
+
+function renderPriceEditItems(){
+  const box=$("priceEditItemsList");
+  if(!box)return;
+  box.innerHTML=__priceEditItems.map((it,i)=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)">
+      <div><b>${esc(it.name||"Product")}</b>${it.size?`<div class="cart-meta">${esc(it.size)}</div>`:""}<div class="cart-meta">Qty: ${Number(it.qty!=null?it.qty:it.quantity)||0}</div></div>
+      <input type="number" min="0" step="0.01" value="${Number(it.price)||0}" style="width:100px;padding:8px;border:1px solid var(--line);border-radius:10px;text-align:right" oninput="updatePriceEditItem(${i},this.value)">
+    </div>`).join("");
+  updatePriceEditTotal();
+}
+
+function updatePriceEditItem(index,value){
+  if(!__priceEditItems[index])return;
+  __priceEditItems[index].price=Number(value)||0;
+  updatePriceEditTotal();
+}
+
+function updatePriceEditTotal(){
+  const total=__priceEditItems.reduce((a,it)=>a+(Number(it.price)||0)*(Number(it.qty!=null?it.qty:it.quantity)||0),0);
+  if($("priceEditNewTotal"))$("priceEditNewTotal").textContent=money(total);
+}
+
+async function savePriceEdit(){
+  if(!__priceEditOrderId)return;
+  try{
+    const items=__priceEditItems.map(it=>({code:it.code||it.id||"",name:it.name||"",size:it.size||"",quantity:Number(it.qty!=null?it.qty:it.quantity)||0,price:Number(it.price)||0}));
+    const d=await apiPost({action:"adminUpdateOrderPricing",orderId:__priceEditOrderId,items});
+    const o=orders.find(x=>String(x.id)===String(__priceEditOrderId));
+    if(o){o.total=d.total;o.items=d.items;}
+    renderAdminOrders();
+    closeModal();
+    toast("Prices updated");
+  }catch(e){
+    toast("Could not save prices: "+e.message);
+  }
+}
+
 function generateInvoiceById(id){const o=orders.find(x=>String(x.id)===String(id));if(!o){toast("Order not found");return;}generateInvoice(o);}
 
 /* ADMIN CUSTOMER MANAGEMENT */
@@ -2376,7 +2667,7 @@ async function loadAdminOrders(){
       let items=[];
       if(o["Items JSON"]){try{const parsed=JSON.parse(o["Items JSON"]);if(Array.isArray(parsed))items=parsed.map(i=>({id:String(i.code||i.id||""),code:String(i.code||i.id||""),name:String(i.name||"Product"),size:String(i.size||""),qty:Number(i.quantity??i.qty??0),price:Number(i.price||0)}));}catch(e){}}
       if(!items.length){const names=String(o.Products||"").split(" | ").filter(Boolean),codes=String(o["Product Codes"]||"").split(" | "),qtys=String(o.Quantities||"").split(" | ");items=names.map((name,i)=>({id:codes[i]||"",code:codes[i]||"",name,qty:Number(qtys[i])||1,price:0,size:""}));}
-      return {id:String(o["Order ID"]||""),date:o["Order Date"]||new Date().toISOString(),customer:{name:String(o["Customer Name"]||""),phone:String(o.Phone||""),address:String(o.Address||""),pin:String(o.Pincode||"")},items,total:Number(o["Total (₹)"]||0),status:String(o.Status||"New")};
+      return {id:String(o["Order ID"]||""),date:o["Order Date"]||new Date().toISOString(),customer:{name:String(o["Customer Name"]||""),phone:String(o.Phone||""),address:String(o.Address||""),pin:String(o.Pincode||"")},items,total:Number(o["Total (₹)"]||0),originalTotal:o["Original Total (₹)"]!=null&&o["Original Total (₹)"]!==""?Number(o["Original Total (₹)"]):Number(o["Total (₹)"]||0),status:String(o.Status||"New")};
     });
     renderAdmin();
   }catch(e){console.error("Admin orders error:",e);toast("Could not load orders: "+e.message);}
