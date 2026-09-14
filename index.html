@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSING</title>
+<title>BIJAYA HOUSING — Online Store</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -57,6 +57,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .crop-image{position:absolute;top:0;left:0;transform-origin:0 0;user-select:none;-webkit-user-drag:none;pointer-events:none}
 .crop-frame{position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2000px rgba(0,0,0,.45);border:3px solid #fff;pointer-events:none}
 .order-status-select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-weight:700;font-size:13px;background:var(--surface)}
+.link-button{background:none;border:none;padding:0;font:inherit;color:var(--accent);text-decoration:underline;cursor:pointer;text-align:left}
 .contact-strip{display:flex;align-items:center;justify-content:space-between;gap:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:0 0 28px;box-shadow:0 5px 18px rgba(15,23,42,.04)}
 .contact-strip strong{display:block;font-size:16px}.contact-strip span{color:var(--muted);font-size:13px}.contact-actions{display:flex;gap:8px;flex-wrap:wrap}.contact-actions a{text-decoration:none}
 @media(max-width:720px){
@@ -185,7 +186,7 @@ html,body{max-width:100%;overflow-x:hidden}
 <div class="app">
 <header class="topbar">
   <div class="nav">
-    <div class="brand"><div class="brand-mark">BH</div><span id="brandName">BIJAYA</span></div>
+    <div class="brand"><div class="brand-mark">BH</div><span id="brandName">BIJAYA HOUSING</span></div>
     <div class="nav-spacer"></div>
     <div class="search" id="customerSearch"><span>⌕</span><input id="searchInput" placeholder="Search products..."></div>
     <a class="outline callbtn" href="tel:8114832749">☎ Raj Kishor</a>
@@ -211,7 +212,7 @@ html,body{max-width:100%;overflow-x:hidden}
   <div id="customerContent" class="hidden">
   <section class="hero">
     <div>
-      <div style="font-size:16px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:14px">WELCOME TO BIJAYA HOUSING.</div>
+      <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
       <h1>Shop smarter.<br>Choose what you need.</h1>
       <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
       <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
@@ -304,7 +305,7 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • Version 1.0.46</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.47</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -434,6 +435,30 @@ html,body{max-width:100%;overflow-x:hidden}
     <p class="notice" style="margin-top:8px">Drag the photo to position it, use the slider to zoom.</p>
     <button type="button" class="primary" style="width:100%;margin-top:14px" onclick="confirmPhotoCrop()">Use This Photo</button>
     <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="cancelPhotoCrop()">Cancel</button>
+  </div>
+</div>
+
+<div class="modal" id="customerDetailModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0" id="customerDetailTitle">Customer</h2><div style="font-size:12px;color:var(--muted)" id="customerDetailId"></div></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="field"><label>Full Name</label><input id="cdName"></div>
+    <div class="field"><label>Type</label><select id="cdType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
+    <div class="field"><label>Phone</label><input id="cdPhone" inputmode="numeric"></div>
+    <div class="field"><label>Address</label><input id="cdAddress"></div>
+    <div class="field"><label>Pincode</label><input id="cdPin" inputmode="numeric"></div>
+    <button type="button" class="primary" style="width:100%;margin-top:10px" onclick="saveCustomerDetailEdit()">Save Changes</button>
+
+    <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+      <a class="outline" id="cdCallBtn" href="tel:" style="flex:1;min-width:100px;text-align:center;text-decoration:none;display:block;padding:10px;box-sizing:border-box">☎ Call</a>
+      <button type="button" class="outline" style="flex:1;min-width:100px" onclick="viewCustomerIdCardAdmin(__customerDetailId)">🪪 View ID</button>
+      <button type="button" class="outline" style="flex:1;min-width:100px" onclick="adminResetPasswordFor(__customerDetailId)">🔑 Reset Password</button>
+    </div>
+
+    <h3 style="margin-top:24px;margin-bottom:8px">Order History</h3>
+    <div id="customerDetailOrders"></div>
   </div>
 </div>
 
@@ -731,7 +756,7 @@ async function apiGet(action,_retried){
 }
 async function apiPost(data,_retried){
   const payload={...data};
-  const adminActions=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing"];
+  const adminActions=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword"];
   const customerActions=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto"];
   // Photo actions are non-critical and often run in the background (e.g.
   // while a profile screen is simply open). If their session has expired
@@ -1887,7 +1912,7 @@ function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer"
 
 /* CHECKOUT + WHATSAPP */
 function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=c.address||"";$("custPincode").value=c.pin||"";closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal","priceEditModal","invoiceModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
+function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal","priceEditModal","invoiceModal","customerDetailModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
 function validateCheckout(){const name=$("custName").value.trim(),phone=$("custPhone").value.replace(/\D/g,""),address=$("custAddress").value.trim(),pin=$("custPincode").value.replace(/\D/g,"");if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid name, phone, address and pincode");return null}return{name,phone,address,pin,note:$("custNote").value.trim()}}
 async function placeOrder(){
   const c=validateCheckout();
@@ -2352,7 +2377,7 @@ let appView="customer";
 let navigationLock=false;
 function closeAllOverlays(){
   ["drawerBackdrop","modalBackdrop"].forEach(id=>$(id)?.classList.remove("show"));
-  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal","priceEditModal","invoiceModal"].forEach(id=>$(id)?.classList.remove("show"));
+  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal","priceEditModal","invoiceModal","customerDetailModal"].forEach(id=>$(id)?.classList.remove("show"));
   document.body.style.overflow="";
 }
 function setAppView(view,push=true){
@@ -2502,14 +2527,18 @@ function renderAdminCustomers(){
     const st=(c.status||"Pending").toLowerCase();
     const cls=st==="active"?"status-active":st==="blocked"?"status-blocked":"status-pending";
     const access=c.accessType||"ALL";
+    const telHref="tel:"+String(c.phone||"").replace(/\D/g,"");
+    const callBtn=`<a class="outline" href="${telHref}" style="display:inline-block;text-decoration:none;text-align:center">\u260e Call</a>`;
     const action=st==="pending"
       ? `<button type="button" class="primary" onclick="approveCustomer('${esc(c.id)}')">Approve</button>
+         ${callBtn}
          <button type="button" class="outline" onclick="viewCustomerIdCardAdmin('${esc(c.id)}')">View ID</button>`
       : `<button type="button" class="outline" onclick="manageCustomerAccess('${esc(c.id)}')">Access</button>
+         ${callBtn}
          <button type="button" class="outline" onclick="viewCustomerIdCardAdmin('${esc(c.id)}')">View ID</button>
          <button type="button" class="outline" onclick="setCustomerStatus('${esc(c.id)}','${st==="blocked"?"Active":"Blocked"}')">${st==="blocked"?"Unblock":"Block"}</button>`;
     return `<tr>
-      <td><b>${esc(c.name)}</b></td>
+      <td><button type="button" class="link-button" onclick="openCustomerDetailModal('${esc(c.id)}')"><b>${esc(c.name)}</b></button></td>
       <td>${esc(c.type||"Customer")}</td>
       <td>${esc(c.phone||"")}</td>
       <td><span class="customer-id-badge">${esc(c.id||"Pending")}</span></td>
@@ -2519,6 +2548,77 @@ function renderAdminCustomers(){
       <td><div class="customer-row-actions">${action}</div></td>
     </tr>`;
   }).join(""):`<tr><td colspan="8"><div class="empty"><h3>No customers found</h3><p>New registrations will appear here.</p></div></td></tr>`;
+}
+
+let __customerDetailId=null;
+
+function openCustomerDetailModal(id){
+  const c=adminCustomers.find(x=>x.id===id);
+  if(!c){toast("Customer not found");return;}
+  __customerDetailId=id;
+  if($("customerDetailTitle"))$("customerDetailTitle").textContent=c.name||"Customer";
+  if($("customerDetailId"))$("customerDetailId").textContent=c.id||"";
+  if($("cdName"))$("cdName").value=c.name||"";
+  if($("cdType"))$("cdType").value=c.type||"Customer";
+  if($("cdPhone"))$("cdPhone").value=c.phone||"";
+  if($("cdAddress"))$("cdAddress").value=c.address||"";
+  if($("cdPin"))$("cdPin").value=c.pin||"";
+  if($("cdCallBtn"))$("cdCallBtn").href="tel:"+String(c.phone||"").replace(/\D/g,"");
+  renderCustomerDetailOrders(c);
+  $("customerDetailModal")?.classList.add("show");
+  $("modalBackdrop")?.classList.add("show");
+  document.body.style.overflow="hidden";
+}
+
+function renderCustomerDetailOrders(c){
+  const box=$("customerDetailOrders");
+  if(!box)return;
+  const customerId=String(c.id||"").trim().toUpperCase();
+  const phone=String(c.phone||"").replace(/\D/g,"").slice(-10);
+  const mine=orders.filter(o=>{
+    const oid=String(o.customer?.id||"").trim().toUpperCase();
+    const op=String(o.customer?.phone||"").replace(/\D/g,"").slice(-10);
+    return (customerId&&oid===customerId)||(!oid&&phone&&op===phone);
+  });
+  box.innerHTML=mine.length?mine.map(o=>{
+    const priceChanged=o.originalTotal!=null && Number(o.originalTotal)!==Number(o.total);
+    const amountHtml=priceChanged?`<span class="cart-meta" style="text-decoration:line-through">${money(o.originalTotal)}</span> <b>${money(o.total)}</b>`:`<b>${money(o.total)}</b>`;
+    return `<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div>${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">${amountHtml}<span class="status">${esc(o.status||"New")}</span></div></div>`;
+  }).join(""):`<div class="empty"><h3>No orders yet</h3><p>This customer hasn't placed any orders.</p></div>`;
+}
+
+async function saveCustomerDetailEdit(){
+  if(!__customerDetailId)return;
+  const customer={
+    name:$("cdName").value.trim(),
+    type:$("cdType").value,
+    phone:$("cdPhone").value.replace(/\D/g,""),
+    address:$("cdAddress").value.trim(),
+    pin:$("cdPin").value.replace(/\D/g,"")
+  };
+  if(!customer.name||customer.phone.length!==10||!customer.address||customer.pin.length!==6){
+    toast("Enter a valid name, 10-digit phone, address and 6-digit pincode");return;
+  }
+  try{
+    await apiPost({action:"adminUpdateCustomerDetails",customerId:__customerDetailId,customer});
+    await loadAdminCustomers();
+    toast("Customer details updated");
+    closeModal();
+  }catch(e){
+    toast("Could not save: "+e.message);
+  }
+}
+
+async function adminResetPasswordFor(id){
+  if(!id)return;
+  if(!confirm("Reset this customer's password? They will need the new password to log in, and any other device they're logged into will be signed out."))return;
+  try{
+    const d=await apiPost({action:"adminResetCustomerPassword",customerId:id});
+    closeModal();
+    showGeneratedCredentials({customerId:id,temporaryPassword:d.temporaryPassword});
+  }catch(e){
+    toast("Could not reset password: "+e.message);
+  }
 }
 
 async function approveCustomer(id){
