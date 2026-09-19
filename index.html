@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSING — Online Store</title>
+<title>BIJAYA HOUSING</title>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -20,7 +20,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .outline{border:1px solid #cbd5e1;background:#fff;color:var(--text);padding:10px 15px;border-radius:12px;font-weight:700;transition:.18s transform,.18s box-shadow,.18s background}.outline:hover{box-shadow:0 8px 20px rgba(15,23,42,.09);transform:translateY(-1px)}.outline:active,.primary:active,.iconbtn:active{transform:scale(.96)}
 .primary{border:1px solid var(--primary);background:var(--primary);color:#fff;padding:11px 17px;border-radius:12px;font-weight:800;transition:.18s transform,.18s box-shadow}.primary:hover{box-shadow:0 9px 22px rgba(15,23,42,.18);transform:translateY(-1px)}
 .iconbtn{border:1px solid var(--line);background:#fff;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:19px;transition:.18s transform}.cartbtn{position:relative}.badge{position:absolute;right:-5px;top:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;display:grid;place-items:center;font-weight:800}
-.container{max-width:1280px;margin:auto;padding:28px 22px 60px}.hero{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:28px;padding:48px;color:#fff;display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:center;box-shadow:var(--shadow);margin-bottom:28px}.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.02;margin:0 0 16px}.hero p{color:#cbd5e1;max-width:650px;font-size:17px;line-height:1.7;margin:0 0 25px}.hero-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:25px}.hero-card .big{font-size:40px;font-weight:900}.hero-card small{color:#cbd5e1}
+.container{max-width:1280px;margin:auto;padding:28px 22px 60px}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:28px 0 15px}.section-head h2{margin:0;font-size:24px}.categories{display:flex;gap:10px;overflow:auto;padding:2px 1px 10px} .subcategories{display:flex;gap:8px;overflow:auto;padding:0 1px 12px;margin-top:-3px}.subcategories .chip{font-size:12px;padding:8px 12px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;white-space:nowrap;font-weight:700;color:#475569;transition:.18s}.chip.active,.chip:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(15,23,42,.04);transition:.2s;display:flex;flex-direction:column}.product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.product-img{aspect-ratio:1/1;background:#eef2f7;overflow:hidden;position:relative}.product-img::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,#eef2f7 25%,#f8fafc 37%,#eef2f7 63%);background-size:400% 100%;animation:imgSkeleton 1.2s ease infinite}.product-img img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;opacity:0;transition:opacity .18s ease}.product-img img.img-ready{opacity:1}.product-img.img-loaded::before{display:none}@keyframes imgSkeleton{0%{background-position:100% 0}100%{background-position:-100% 0}}.product-body{padding:16px}.product-cat{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.product h3{font-size:17px;margin:7px 0}.desc{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}.price{font-size:20px;font-weight:900;margin:12px 0}.size-row{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.size{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:800}.size.selected{border-color:var(--accent);background:#eff6ff;color:var(--accent)}.addrow{display:flex;gap:8px}.addrow .primary{flex:1}
 .empty{padding:50px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cbd5e1;border-radius:18px;grid-column:1/-1}
@@ -32,8 +32,8 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .footer{max-width:1280px;margin:auto;padding:25px 22px 45px;color:var(--muted);font-size:13px;text-align:center}
 .hidden{display:none!important}
 @keyframes pop{from{opacity:0;transform:translate(-50%,-43%) scale(.98)}to{opacity:1;transform:translate(-50%,-47%) scale(1)}}
-@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr}.search{width:280px}.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:720px){.nav{height:64px;padding:0 14px;gap:9px}.brand span:last-child{display:inline}.search{width:auto;flex:1}.search input{padding-left:37px}.nav .outline{display:none}.container{padding:18px 14px 45px}.hero{padding:30px 22px;border-radius:22px}.hero-card{display:none}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product{border-radius:16px}.product-body{padding:12px}.product h3{font-size:15px}.desc{font-size:12px}.price{font-size:17px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.modal{max-height:94dvh}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:23px}.admin-toolbar{align-items:flex-start}}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.search{width:280px}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.nav{height:64px;padding:0 14px;gap:9px}.brand span:last-child{display:inline}.search{width:auto;flex:1}.search input{padding-left:37px}.nav .outline{display:none}.container{padding:18px 14px 45px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product{border-radius:16px}.product-body{padding:12px}.product h3{font-size:15px}.desc{font-size:12px}.price{font-size:17px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.modal{max-height:94dvh}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:23px}.admin-toolbar{align-items:flex-start}}
 @media(max-width:430px){.grid{grid-template-columns:1fr 1fr}.product-img{aspect-ratio:1/1}.addrow .primary{padding:9px 10px;font-size:12px}.iconbtn{width:40px;height:40px}}
 
 .callbtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
@@ -72,7 +72,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .customer-gate p{color:var(--muted);max-width:460px;line-height:1.6;margin:0 0 22px}
 .gate-contact{display:flex;gap:12px;margin-top:15px;flex-wrap:wrap;justify-content:center}
 .gate-contact a{color:var(--text);text-decoration:none;border:1px solid var(--line);padding:9px 13px;border-radius:11px;font-weight:800;font-size:13px}
-.order-card{border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0;background:var(--card);display:grid;gap:7px}.order-card span,.order-card small{color:var(--muted)}
+.order-card{border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0;background:var(--surface);display:grid;gap:7px}.order-card span,.order-card small{color:var(--muted)}
 /* FINAL MOBILE FIX */
 html,body{max-width:100%;overflow-x:hidden}
 @media(max-width:720px){
@@ -84,7 +84,6 @@ html,body{max-width:100%;overflow-x:hidden}
   .profilebtn{font-size:12px;padding:9px 10px}
   .adminnavbtn{font-size:12px;padding:9px 10px}
   .container{width:100%;box-sizing:border-box}
-  .hero{grid-template-columns:1fr}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .modal{width:calc(100vw - 20px);max-width:none}
   .formgrid{grid-template-columns:1fr!important}
@@ -162,11 +161,95 @@ html,body{max-width:100%;overflow-x:hidden}
 .access-check:last-child{border-bottom:0}
 .access-check input{accent-color:var(--accent)}
 @media(max-width:720px){.access-grid{grid-template-columns:1fr}}
-.status-active{background:#ecfdf5;color:#15803d}.status-blocked{background:#fef2f2;color:#b91c1c}.status-pending{background:#fff7ed;color:#c2410c}
-.customer-id-badge{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:10px;background:#eff6ff;color:#1d4ed8;font-weight:900;font-size:12px}
-.customer-row-actions{display:flex;gap:7px;flex-wrap:wrap}
-.credential-box{background:#f8fafc;border:1px dashed #94a3b8;border-radius:14px;padding:14px;margin-top:14px}
-.credential-box code{font-size:16px;font-weight:900;letter-spacing:.04em}
+
+/* ===== Shared ===== */
+.muted{color:var(--muted);font-size:13px}
+.between{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+button:disabled{opacity:.55;cursor:not-allowed}
+.modal-head{position:sticky;top:0;background:#fff;z-index:2;border-radius:24px 24px 0 0}
+.modal.over{z-index:120}
+.modal.sm{width:min(460px,calc(100% - 28px))}
+.profilebtn{position:relative}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap}
+.status.st-pending,.order-status-select.st-pending{background:#fff7ed;color:#c2410c}
+.status.st-verifying,.order-status-select.st-verifying{background:#eff6ff;color:#1d4ed8}
+.status.st-paid,.order-status-select.st-paid{background:#ecfdf5;color:#15803d}
+.status.st-failed,.order-status-select.st-failed{background:#fef2f2;color:#b91c1c}
+.status.st-cancelled,.order-status-select.st-cancelled{background:#f1f5f9;color:#64748b}
+
+/* ===== Payments (customer side) ===== */
+.pay-amount{font-size:46px;font-weight:950;letter-spacing:-.02em;margin:6px 0 2px}
+.pay-card{border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:10px;background:var(--surface2);display:grid;gap:7px}
+.pay-card .row-actions .primary,.pay-card .row-actions .outline{flex:1}
+.pay-done{background:var(--success);border-color:var(--success)}
+.pw-box{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:14px}
+.pw-box summary{font-weight:800;cursor:pointer}
+.pw-box .field{margin-top:12px}
+
+/* ===== Admin layout ===== */
+body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbtn,body.admin-mode .callbtn{display:none!important}
+#adminView{max-width:1440px}
+.admin-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.admin-head h2{margin:0}
+.admin-nav{scrollbar-width:none;padding-bottom:2px}
+.admin-nav::-webkit-scrollbar{display:none}
+.admin-tab{flex:0 0 auto}
+.tab-badge{display:inline-grid;place-items:center;min-width:19px;height:19px;padding:0 5px;margin-left:6px;border-radius:99px;background:var(--danger);color:#fff;font-size:11px}
+.stats{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.stat{text-align:left;font:inherit;color:inherit;cursor:pointer;transition:.18s transform,.18s box-shadow}
+.stat:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.stat small{display:block}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.toolbar .grow{flex:1 1 220px}
+.toolbar .field select,.toolbar .field input{min-width:0;width:100%}
+.panel .toolbar+.toolbar{margin-top:12px}
+.pick-list{display:flex;flex-direction:column;gap:6px;margin-top:8px;max-height:230px;overflow:auto}
+.pick-item{text-align:left;border:1px solid var(--line);background:#fff;border-radius:11px;padding:10px 12px}
+.pick-item:hover{border-color:var(--accent);background:#eff6ff}
+.chosen{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#eff6ff;border-radius:12px;padding:10px 12px;font-weight:800}
+
+/* ===== Customer hub (admin) ===== */
+.cd-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.cd-actions>*{flex:1 1 auto;text-align:center;text-decoration:none;box-sizing:border-box}
+.subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
+.subtab{border:0;background:none;padding:10px 14px;font-weight:800;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}
+.subtab.active{color:var(--text);border-color:var(--primary)}
+.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;margin:16px 0;font-size:13px}
+.info-grid b{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.cred-row{background:#f8fafc;border:1px dashed #94a3b8;border-radius:14px;padding:14px;margin-top:12px}
+.cred-row code{display:block;font-size:20px;font-weight:900;letter-spacing:.04em;margin-top:4px;word-break:break-all}
+
+/* ===== Responsive tables: cards on small screens ===== */
+@media(max-width:820px){
+  .table.rtable,.orders-table.rtable{min-width:0}
+  .rtable thead{display:none}
+  .rtable,.rtable tbody,.rtable tr,.rtable td{display:block;width:100%}
+  .rtable tr{border:1px solid var(--line);border-radius:14px;padding:6px 14px;margin-bottom:10px;background:#fff}
+  .rtable td{border:0;padding:8px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:14px;text-align:right}
+  .rtable td+td{border-top:1px solid var(--surface2)}
+  .rtable td::before{content:attr(data-label);flex:0 0 78px;text-align:left;font-weight:800;color:var(--muted);font-size:11px;text-transform:uppercase;padding-top:3px}
+  .rtable td.full{display:block;text-align:left}
+  .rtable td.full::before{content:none}
+  .rtable td .row-actions,.rtable td .customer-row-actions{justify-content:flex-end}
+  .rtable td .order-status-select{min-width:150px}
+  .rtable .action-cell{white-space:normal}
+  .rtable .action-cell .outline{margin:2px 0 2px 4px}
+}
+@media(max-width:720px){
+  .admin-head .head-actions{width:100%}
+  .admin-head .head-actions>*{flex:1}
+  .toolbar>.primary,.toolbar>.outline{flex:1 1 auto}
+  .panel{padding:14px;border-radius:16px}
+  .info-grid{grid-template-columns:1fr 1fr}
+  .modal.sheet{width:100%;height:100dvh;max-height:100dvh;left:0;top:0;transform:none;border-radius:0}
+  .modal.sheet.show{animation:productMobileIn .2s ease}
+  .modal.sheet .modal-head{border-radius:0}
+  .pay-amount{font-size:40px}
+}
+.drawer:not(.show){box-shadow:none}
+.rtable td.stack{display:block;text-align:left}
+@media(max-width:720px){.nav-spacer{display:none}}
+@media(max-width:820px){.rtable td.stack::before{display:block;margin-bottom:4px}}
 </style>
 </head>
 <body>
@@ -190,7 +273,7 @@ html,body{max-width:100%;overflow-x:hidden}
     <div class="nav-spacer"></div>
     <div class="search" id="customerSearch"><span>⌕</span><input id="searchInput" placeholder="Search products..."></div>
     <a class="outline callbtn" href="tel:8114832749">☎ Raj Kishor</a>
-    <button type="button" class="outline profilebtn" onclick="openCustomerProfile()">👤 Profile</button>
+    <button type="button" class="outline profilebtn" onclick="openCustomerProfile()">👤 Profile<span class="badge hidden" id="profileBadge">0</span></button>
     <button type="button" class="outline adminnavbtn" id="adminNavButton" onclick="showLogin()">Admin</button>
     <button type="button" class="iconbtn cartbtn" onclick="openCart()">🛒<span class="badge" id="cartBadge">0</span></button>
   </div>
@@ -210,15 +293,6 @@ html,body{max-width:100%;overflow-x:hidden}
 </section>
 
   <div id="customerContent" class="hidden">
-  <section class="hero">
-    <div>
-      <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
-      <h1>Shop smarter.<br>Choose what you need.</h1>
-      <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
-      <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
-    </div>
-    <div class="hero-card"><small>Order support</small><div class="big">WhatsApp</div><small>Fast order confirmation through 8114832749</small></div>
-  </section>
   <section class="contact-strip">
     <div><strong>BIJAYA HOUSING</strong><span>Agalpur</span></div>
     <div class="contact-actions">
@@ -240,72 +314,64 @@ html,body{max-width:100%;overflow-x:hidden}
 <main class="container admin-layout" id="adminView">
   <div id="adminLoginView" class="login-card">
     <h2>Admin Login</h2>
-    <p style="color:var(--muted);font-size:14px">Enter your BIJAYA HOUSING admin credentials to manage products, orders and customers.</p>
     <div class="field"><label>Username</label><input id="adminUser" autocomplete="username" placeholder="Admin username"></div>
-    <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password"></div>
-    <button type="button" class="primary" style="width:100%" onclick="adminLogin()">Login</button>
+    <div class="field"><label>Password</label><input id="adminPass" type="password" autocomplete="current-password" placeholder="Password" onkeydown="if(event.key==='Enter')adminLogin()"></div>
+    <button type="button" class="primary" id="adminLoginBtn" style="width:100%" onclick="adminLogin()">Login</button>
     <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="goBackToStore()">← Back to Store</button>
   </div>
   <div id="adminPanel" class="hidden">
-    <div class="admin-toolbar">
-      <div><h2 style="margin:0">Admin Dashboard</h2><div style="color:var(--muted);font-size:13px">Manage your catalog and orders</div></div>
-      <div style="display:flex;gap:8px"><button type="button" class="outline" onclick="openProductForm()">+ Add Product</button><button type="button" class="outline" onclick="adminLogout()">Logout</button></div>
+    <div class="admin-head">
+      <div><h2>Admin Dashboard</h2><div class="muted" id="adminWho"></div></div>
+      <div class="head-actions" style="display:flex;gap:8px"><button type="button" class="outline" onclick="goBackToStore()">Store</button><button type="button" class="outline" onclick="adminLogout()">Logout</button></div>
     </div>
     <div class="admin-nav" style="margin-top:18px">
-      <button type="button" class="admin-tab active" onclick="adminTab('dashboard',this)">Dashboard</button>
-      <button type="button" class="admin-tab" onclick="adminTab('products',this)">Products</button>
-      <button type="button" class="admin-tab" onclick="adminTab('orders',this)">Orders</button>
-      <button type="button" class="admin-tab" onclick="adminTab('customers',this)">Customers</button>
+      <button type="button" class="admin-tab active" data-tab="dashboard" onclick="adminTab('dashboard')">Dashboard</button>
+      <button type="button" class="admin-tab" data-tab="products" onclick="adminTab('products')">Products</button>
+      <button type="button" class="admin-tab" data-tab="orders" onclick="adminTab('orders')">Orders</button>
+      <button type="button" class="admin-tab" data-tab="customers" onclick="adminTab('customers')">Customers</button>
+      <button type="button" class="admin-tab" data-tab="payments" onclick="adminTab('payments')">Payments<span class="tab-badge hidden" id="payTabBadge">0</span></button>
     </div>
-    <div id="adminDashboardTab">
-      <div class="stats">
-        <div class="stat"><small>Products</small><strong id="statProducts">0</strong></div>
-        <div class="stat"><small>Categories</small><strong id="statCategories">0</strong></div>
-        <div class="stat"><small>Cart Items</small><strong id="statCart">0</strong></div>
-        <div class="stat"><small>Orders Saved</small><strong id="statOrders">0</strong></div>
+
+    <div id="adminDashboardTab"><div class="stats" id="adminStats"></div></div>
+
+    <div id="adminProductsTab" class="hidden"><div class="panel">
+      <div class="toolbar"><h3 class="grow" style="margin:0">Product Catalog</h3><button type="button" class="primary" onclick="openProductForm()">+ Add Product</button><button type="button" class="outline" onclick="loadProductsFromApi(true,true)">↻ Reload</button></div>
+      <div class="tablewrap" style="margin-top:12px"><table class="table rtable"><thead><tr><th>Product</th><th>Category</th><th>Subcategory</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div>
+    </div></div>
+
+    <div id="adminOrdersTab" class="hidden"><div class="panel">
+      <div class="toolbar orders-toolbar">
+        <h3 class="grow" style="margin:0">Orders</h3>
+        <div class="field"><select id="orderStatusFilter" onchange="setOrderStatusFilter(this.value)">
+          <option value="All">All Orders</option><option value="New">New</option><option value="Confirmed">Confirmed</option><option value="Processing">Processing</option><option value="Ready">Ready</option><option value="Completed">Completed</option><option value="Cancelled">Cancelled</option>
+        </select></div>
       </div>
-    </div>
-    <div id="adminProductsTab" class="hidden"><div class="panel"><div class="admin-toolbar"><h3 style="margin:0">Product Catalog</h3><button type="button" class="outline" onclick="loadProductsFromApi(true,true)">↻ Reload Products</button></div><div class="tablewrap"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Subcategory</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div></div></div>
-    <div id="adminOrdersTab" class="hidden">
-      <div class="panel">
-        <div class="admin-toolbar orders-toolbar">
-          <div><h3 style="margin:0">Orders</h3><div class="notice" style="margin-top:4px">Active orders stay on top. Completed and cancelled orders are shown below.</div></div>
-          <div class="order-filter-wrap">
-            <label for="orderStatusFilter" style="font-size:12px;font-weight:800;color:var(--muted)">FILTER STATUS</label>
-            <select id="orderStatusFilter" onchange="setOrderStatusFilter(this.value)">
-              <option value="All">All Orders</option><option value="New">New</option><option value="Confirmed">Confirmed</option><option value="Processing">Processing</option><option value="Ready">Ready</option><option value="Completed">Completed</option><option value="Cancelled">Cancelled</option>
-            </select>
-          </div>
-        </div>
-        <div class="order-summary-bar" id="orderSummaryBar"></div>
-        <div class="tablewrap admin-table-wrap"><table class="table orders-table"><thead><tr><th>Order</th><th>Customer</th><th>Items / Product Code</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+      <div class="order-summary-bar" id="orderSummaryBar"></div>
+      <div class="tablewrap"><table class="table orders-table rtable"><thead><tr><th>Order</th><th>Customer</th><th>Items / Product Code</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+    </div></div>
+
+    <div id="adminCustomersTab" class="hidden"><div class="panel">
+      <div class="toolbar"><h3 class="grow" style="margin:0">Customers</h3><button type="button" class="primary" onclick="openAdminCustomerForm()">+ Create Customer</button><button type="button" class="outline" onclick="loadAdminCustomers(true)">↻ Refresh</button></div>
+      <div class="toolbar">
+        <div class="field grow"><input id="custSearch" placeholder="Search name, phone or ID" oninput="renderAdminCustomers()"></div>
+        <div class="field"><select id="custStatusFilter" onchange="renderAdminCustomers()"><option value="All">All statuses</option><option value="Pending">Pending</option><option value="Active">Active</option><option value="Blocked">Blocked</option></select></div>
       </div>
-    </div>
-    <div id="adminCustomersTab" class="hidden">
-      <div class="panel">
-        <div class="admin-toolbar">
-          <div>
-            <h3 style="margin:0">Customer Accounts</h3>
-            <div class="notice" style="margin-top:4px">Approve registrations, issue login credentials, and block/unblock customers.</div>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button type="button" class="outline" onclick="openAdminCustomerForm()">+ Create Customer</button>
-            <button type="button" class="outline" onclick="loadAdminCustomers()">↻ Refresh</button>
-          </div>
-        </div>
-        <div class="tablewrap admin-table-wrap">
-          <table class="table">
-            <thead><tr><th>Customer</th><th>Type</th><th>Contact</th><th>Customer ID</th><th>Status</th><th>Access</th><th>Registered</th><th>Action</th></tr></thead>
-            <tbody id="adminCustomersBody"></tbody>
-          </table>
-        </div>
+      <div class="tablewrap" style="margin-top:12px"><table class="table rtable"><thead><tr><th>Customer</th><th>Phone</th><th>Customer ID</th><th>Status</th><th>Registered</th><th>Action</th></tr></thead><tbody id="adminCustomersBody"></tbody></table></div>
+    </div></div>
+
+    <div id="adminPaymentsTab" class="hidden"><div class="panel">
+      <div class="toolbar"><h3 class="grow" style="margin:0">Payment Requests</h3><button type="button" class="primary" onclick="openPaymentForm()">+ New Request</button><button type="button" class="outline" onclick="loadAdminPayments(false,true)">↻ Refresh</button></div>
+      <div class="toolbar">
+        <div class="field grow"><input id="payAdminSearch" placeholder="Search customer, request ID, note or UTR" oninput="renderAdminPayments()"></div>
+        <div class="field"><select id="payAdminFilter" onchange="renderAdminPayments()"><option value="All">All statuses</option><option value="Due">Due (Pending + Failed)</option><option value="Pending">Pending</option><option value="Verifying">Verifying</option><option value="Paid">Paid</option><option value="Failed">Failed</option><option value="Cancelled">Cancelled</option></select></div>
       </div>
-    </div>
-    <div id="adminDataTab" class="hidden"><div class="panel"><h3>Connect Google Sheets</h3><p class="notice">Paste your deployed Apps Script Web App <b>/exec</b> URL. The app will fetch the live Products sheet. <b>Size Stock is retained.</b></p><div class="field"><label>Apps Script Web App URL</label><input id="apiUrl" placeholder="https://script.google.com/macros/s/.../exec"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button type="button" class="primary" onclick="saveApi()">Save &amp; Load Products</button><button type="button" class="outline" onclick="loadProductsFromApi(true)">↻ Refresh Products</button></div><div id="apiStatus" class="notice" style="margin-top:12px;font-weight:800"></div></div></div>
+      <div class="order-summary-bar" id="paySummaryBar"></div>
+      <div class="tablewrap"><table class="table rtable"><thead><tr><th>Request</th><th>Customer</th><th>Amount</th><th>Details</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminPaymentsBody"></tbody></table></div>
+    </div></div>
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.47</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.48</footer>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -347,7 +413,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </div>
 
 <div class="modal" id="checkoutModal">
-  <div class="modal-head"><div><h2 style="margin:0">Checkout</h2><div style="font-size:12px;color:var(--muted)">Enter customer details</div></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-head"><div><h2 style="margin:0">Checkout</h2></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
     <div class="checkout-summary" id="checkoutSummary"></div>
     <div class="formgrid">
@@ -357,36 +423,8 @@ html,body{max-width:100%;overflow-x:hidden}
       <div class="field"><label>Pincode *</label><input id="custPincode" inputmode="numeric" placeholder="6-digit pincode"></div>
       <div class="field"><label>Order Note</label><input id="custNote" placeholder="Optional"></div>
     </div>
-    <p class="notice" style="margin-top:15px">After submitting, your order will be saved and the order details will open directly in WhatsApp. The invoice can be generated only by the admin.</p>
+    <p class="notice" style="margin-top:15px">Your order is saved, then opens in WhatsApp.</p>
     <button type="button" class="primary" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order & Open WhatsApp</button>
-  </div>
-</div>
-
-<div class="modal" id="orderSuccessModal">
-  <div class="modal-head">
-    <div><h2 style="margin:0">Order Submitted Successfully</h2><div style="font-size:12px;color:var(--muted)">Your order is ready for approval</div></div>
-    <button type="button" class="iconbtn" onclick="closeOrderSuccess()">×</button>
-  </div>
-  <div class="modal-body">
-    <div class="checkout-summary" style="text-align:center">
-      <div style="font-size:42px;margin-bottom:8px">✓</div>
-      <h3 style="margin:0 0 8px">Thank you for your order.</h3>
-      <p class="notice" style="font-size:14px">Your order has been saved to your profile and is being processed for approval by BIJAYA HOUSING. Please open WhatsApp and send the prepared order message to complete your submission.</p>
-    </div>
-    <button type="button" class="primary" id="sendOrderWhatsAppBtn" style="width:100%;margin-top:10px" onclick="sendPendingOrderToWhatsApp()">↗ Send Order to WhatsApp</button>
-    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeOrderSuccess()">View My Orders</button>
-  </div>
-</div>
-
-<div class="modal" id="waFallbackModal">
-  <div class="modal-head">
-    <div><h2 style="margin:0">Couldn't Open WhatsApp</h2><div style="font-size:12px;color:var(--muted)">You can still send your order manually</div></div>
-    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
-  </div>
-  <div class="modal-body">
-    <p class="notice" style="font-size:14px">Your phone didn't open the WhatsApp app automatically. Tap "Copy Order Message" below, then open WhatsApp yourself and paste it into a chat with BIJAYA HOUSING.</p>
-    <button type="button" class="primary" id="waFallbackCopyBtn" style="width:100%">📋 Copy Order Message</button>
-    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Close</button>
   </div>
 </div>
 
@@ -405,81 +443,11 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </div>
 
-<div class="modal" id="invoiceModal">
-  <div class="modal-head">
-    <div><h2 style="margin:0">Invoice</h2></div>
-    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
-  </div>
-  <div class="modal-body" style="text-align:center">
-    <div id="invoiceCanvasWrap" style="max-width:360px;margin:0 auto"></div>
-    <p id="invoiceHint" class="notice hidden" style="margin-top:12px"></p>
-    <button type="button" class="primary hidden" id="invoiceDownloadBtn" style="width:100%;margin-top:14px">⬇ Download Invoice (JPG)</button>
-    <p class="notice" style="margin-top:14px;font-size:12.5px">Unable to download your invoice? Contact BIJAYA HOUSING Administration at <b>8114832749</b> and they can send it to you directly.</p>
-  </div>
-</div>
-
-<div class="modal" id="photoCropModal">
-  <div class="modal-head">
-    <div><h2 style="margin:0">Adjust Your Photo</h2></div>
-    <button type="button" class="iconbtn" onclick="cancelPhotoCrop()">×</button>
-  </div>
-  <div class="modal-body" style="text-align:center">
-    <div id="cropStage" class="crop-stage">
-      <img id="cropImage" class="crop-image" alt="">
-      <div class="crop-frame"></div>
-    </div>
-    <div style="margin-top:16px;display:flex;align-items:center;gap:10px">
-      <span style="font-size:18px">\ud83d\udd0d</span>
-      <input type="range" id="cropZoomSlider" min="100" max="300" value="100" oninput="onCropZoomChange(this.value)" style="flex:1">
-    </div>
-    <p class="notice" style="margin-top:8px">Drag the photo to position it, use the slider to zoom.</p>
-    <button type="button" class="primary" style="width:100%;margin-top:14px" onclick="confirmPhotoCrop()">Use This Photo</button>
-    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="cancelPhotoCrop()">Cancel</button>
-  </div>
-</div>
-
-<div class="modal" id="customerDetailModal">
-  <div class="modal-head">
-    <div><h2 style="margin:0" id="customerDetailTitle">Customer</h2><div style="font-size:12px;color:var(--muted)" id="customerDetailId"></div></div>
-    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
-  </div>
-  <div class="modal-body">
-    <div class="field"><label>Full Name</label><input id="cdName"></div>
-    <div class="field"><label>Type</label><select id="cdType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
-    <div class="field"><label>Phone</label><input id="cdPhone" inputmode="numeric"></div>
-    <div class="field"><label>Address</label><input id="cdAddress"></div>
-    <div class="field"><label>Pincode</label><input id="cdPin" inputmode="numeric"></div>
-    <button type="button" class="primary" style="width:100%;margin-top:10px" onclick="saveCustomerDetailEdit()">Save Changes</button>
-
-    <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
-      <a class="outline" id="cdCallBtn" href="tel:" style="flex:1;min-width:100px;text-align:center;text-decoration:none;display:block;padding:10px;box-sizing:border-box">☎ Call</a>
-      <button type="button" class="outline" style="flex:1;min-width:100px" onclick="viewCustomerIdCardAdmin(__customerDetailId)">🪪 View ID</button>
-      <button type="button" class="outline" style="flex:1;min-width:100px" onclick="adminResetPasswordFor(__customerDetailId)">🔑 Reset Password</button>
-    </div>
-
-    <h3 style="margin-top:24px;margin-bottom:8px">Order History</h3>
-    <div id="customerDetailOrders"></div>
-  </div>
-</div>
-
-<div class="modal" id="idCardModal">
-  <div class="modal-head">
-    <div><h2 style="margin:0">Customer ID Card</h2></div>
-    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
-  </div>
-  <div class="modal-body" style="text-align:center">
-    <div id="idCardCanvasWrap" style="max-width:320px;margin:0 auto"></div>
-    <p id="idCardHint" class="notice hidden" style="margin-top:12px"></p>
-    <button type="button" class="primary hidden" id="idCardDownloadBtn" style="width:100%;margin-top:14px">⬇ Download ID Card (JPG)</button>
-    <p class="notice" style="margin-top:14px;font-size:12.5px">Unable to download your ID card? Contact BIJAYA HOUSING Administration at <b>8114832749</b> and they can send it to you directly.</p>
-  </div>
-</div>
-
 <div class="modal" id="productModal">
   <div class="modal-head"><h2 id="productModalTitle" style="margin:0">Add Product</h2><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
     <div class="formgrid">
-      <div class="field"><label>Product ID / Product Code *</label><input id="pId" placeholder="Example: TILE 001"><div class="notice">Existing product code. Spaces are allowed.</div></div>
+      <div class="field"><label>Product ID / Product Code *</label><input id="pId" placeholder="Example: TILE 001"></div>
       <div class="field"><label>Product Name *</label><input id="pName"></div>
       <div class="field"><label>Category *</label><input id="pCategory" placeholder="e.g. Tiles"></div>
       <div class="field"><label>Subcategory</label><input id="pSubcategory" placeholder="Optional, e.g. Wall Tiles"></div>
@@ -495,7 +463,7 @@ html,body{max-width:100%;overflow-x:hidden}
 </div>
 
 <div class="modal" id="profileModal">
-  <div class="modal-head"><div><h2 style="margin:0">My Profile</h2><div style="font-size:12px;color:var(--muted)">Your saved customer details</div></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-head"><div><h2 style="margin:0">My Profile</h2></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
     <div id="profileLoggedOut" class="hidden">
       <div class="checkout-summary"><b>You're not logged in.</b><br><span class="notice">Log in or create a profile to save your details for faster checkout.</span></div>
@@ -511,6 +479,10 @@ html,body{max-width:100%;overflow-x:hidden}
           <div class="customer-id-badge" style="margin-top:6px">ID: <span id="profileCustomerId">—</span></div>
         </div>
       </div>
+      <div id="paymentsSection" class="hidden" style="margin-top:14px">
+        <h3 style="margin:0 0 10px">Payments</h3>
+        <div id="customerPayments"></div>
+      </div>
       <input type="file" id="profilePhotoInput" onchange="handleProfilePhotoSelected(this.files[0])" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;z-index:-1">
       <label for="profilePhotoInput" class="outline" style="display:block;width:100%;margin-top:10px;text-align:center;cursor:pointer;box-sizing:border-box">📷 Change Photo</label>
       <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="viewMyIdCard()">🪪 View ID Card</button>
@@ -521,9 +493,15 @@ html,body{max-width:100%;overflow-x:hidden}
         <div class="field"><label>Pincode</label><input id="profilePinInput" inputmode="numeric"></div>
       </div>
       <button type="button" class="primary" style="width:100%;margin-top:14px" onclick="saveCustomerProfile()">Save Profile</button>
+      <div id="tempPwNotice" class="account-note hidden" style="margin-top:14px">You are using a temporary password. Please change it below.</div>
+      <details class="pw-box" id="pwBox"><summary>Change Password</summary>
+        <div class="field"><label>Current Password</label><input id="pwOld" type="password" autocomplete="current-password"></div>
+        <div class="field"><label>New Password</label><input id="pwNew" type="password" autocomplete="new-password" placeholder="At least 6 characters"></div>
+        <button type="button" class="primary" id="pwBtn" style="width:100%;margin-top:12px" onclick="changeMyPassword()">Update Password</button>
+      </details>
       <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="customerLogout()">Logout</button>
       <div class="profile-orders" style="margin-top:22px">
-        <div class="section-head" style="margin-bottom:10px"><div><div class="eyebrow">ORDER HISTORY</div><h3 style="margin:4px 0">My Orders</h3></div></div>
+        <h3 style="margin:0 0 10px">My Orders</h3>
         <div id="customerOrders"></div>
       </div>
     </div>
@@ -561,7 +539,140 @@ html,body{max-width:100%;overflow-x:hidden}
   </div>
 </div>
 
-<div class="modal" id="customerAccessModal">
+<div class="modal sheet" id="customerDetailModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0" id="cdTitle">Customer</h2><div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap"><span class="customer-id-badge" id="cdIdBadge"></span><span class="status" id="cdStatus"></span></div></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="cd-actions">
+      <a class="outline" id="cdCallBtn" href="tel:">☎ Call</a>
+      <button type="button" class="outline" onclick="viewCustomerIdCardAdmin(cdId)">🪪 ID Card</button>
+      <button type="button" class="outline" onclick="manageCustomerAccess(cdId)">🔒 Access</button>
+      <button type="button" class="outline" onclick="openResetPassword(cdId)">🔑 Reset Password</button>
+      <button type="button" class="primary hidden" id="cdApproveBtn" onclick="approveCustomer(cdId)">✔ Approve</button>
+      <button type="button" class="outline hidden" id="cdBlockBtn" onclick="setCustomerStatus(cdId,this.dataset.next)">Block</button>
+    </div>
+    <div class="subtabs">
+      <button type="button" class="subtab active" data-pane="details" onclick="cdTabSwitch('details')">Details</button>
+      <button type="button" class="subtab" data-pane="payments" onclick="cdTabSwitch('payments')">Payments <span id="cdPayCount"></span></button>
+      <button type="button" class="subtab" data-pane="orders" onclick="cdTabSwitch('orders')">Orders <span id="cdOrderCount"></span></button>
+    </div>
+
+    <div id="cdPaneDetails">
+      <div class="formgrid">
+        <div class="field"><label>Full Name</label><input id="cdName"></div>
+        <div class="field"><label>Type</label><select id="cdType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
+        <div class="field"><label>Phone</label><input id="cdPhone" inputmode="numeric"></div>
+        <div class="field"><label>Pincode</label><input id="cdPin" inputmode="numeric"></div>
+        <div class="field full"><label>Address</label><textarea id="cdAddress" style="min-height:70px"></textarea></div>
+      </div>
+      <button type="button" class="primary" id="cdSaveBtn" style="width:100%;margin-top:14px" onclick="saveCustomerDetailEdit()">Save Changes</button>
+      <div class="info-grid" id="cdInfo"></div>
+    </div>
+
+    <div id="cdPanePayments" class="hidden">
+      <button type="button" class="primary" id="cdRequestBtn" style="width:100%;margin-bottom:14px" onclick="openPaymentForm(cdId)">+ Request Payment</button>
+      <div id="cdPaymentsList"></div>
+    </div>
+
+    <div id="cdPaneOrders" class="hidden"><div id="customerDetailOrders"></div></div>
+  </div>
+</div>
+
+<div class="modal" id="adminCustomerModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Create Customer</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="formgrid">
+      <div class="field"><label>Full Name *</label><input id="adminCustName" placeholder="Customer name"></div>
+      <div class="field"><label>Customer Type *</label><select id="adminCustType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
+      <div class="field"><label>Phone Number *</label><input id="adminCustPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
+      <div class="field"><label>Pincode *</label><input id="adminCustPin" inputmode="numeric" placeholder="6-digit pincode"></div>
+      <div class="field full"><label>Address *</label><textarea id="adminCustAddress" placeholder="Address"></textarea></div>
+    </div>
+    <button type="button" class="primary" id="adminCreateBtn" style="width:100%;margin-top:16px" onclick="adminCreateCustomer()">Create Active Account</button>
+  </div>
+</div>
+
+<div class="modal over sm" id="paymentFormModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0" id="pfTitle">New Payment Request</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="field">
+      <label>Customer *</label>
+      <div id="pfChosen" class="chosen hidden"></div>
+      <div id="pfPicker"><input id="pfSearch" placeholder="Search name, phone or ID" autocomplete="off" oninput="renderPfResults()"><div id="pfResults" class="pick-list"></div></div>
+    </div>
+    <div class="field" style="margin-top:12px"><label>Amount (₹) *</label><input id="pfAmount" type="number" inputmode="decimal" min="1" step="0.01" placeholder="0.00"></div>
+    <div class="field" style="margin-top:12px"><label>UPI ID *</label><input id="pfUpi" placeholder="name@bank" autocapitalize="off" autocomplete="off" spellcheck="false"></div>
+    <div class="field" style="margin-top:12px"><label>Note</label><input id="pfNote" maxlength="100" placeholder="e.g. Cement bill balance"></div>
+    <button type="button" class="primary" id="pfSaveBtn" style="width:100%;margin-top:16px" onclick="savePaymentForm()">Send Request</button>
+  </div>
+</div>
+
+<div class="modal over sm" id="resetPasswordModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Reset Password</h2><div class="muted" id="rpWho"></div></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="field"><label>New password</label><input id="rpPassword" autocomplete="off" placeholder="Leave blank to auto-generate"></div>
+    <p class="notice" style="margin-top:10px">The customer is signed out on other devices and must use this password to log in.</p>
+    <button type="button" class="primary" id="rpBtn" style="width:100%;margin-top:12px" onclick="confirmResetPassword()">Reset Password</button>
+  </div>
+</div>
+
+<div class="modal over sm" id="credentialModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Login Details</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="cred-row">Customer ID<code id="credId"></code></div>
+    <div class="cred-row">Temporary Password<code id="credPw"></code></div>
+    <p class="notice" style="margin-top:12px">Share these with the customer. The password is stored securely and cannot be viewed again — reset it to get a new one.</p>
+    <button type="button" class="primary" style="width:100%;margin-top:12px" onclick="copyCredentials()">Copy Details</button>
+  </div>
+</div>
+
+<div class="modal over sm" id="payRequestModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Payment Request</h2><div class="muted">BIJAYA HOUSING</div></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    <div class="pay-amount" id="prAmount">₹0</div>
+    <div class="notice" id="prNote" style="margin-bottom:16px;font-size:14px"></div>
+    <button type="button" class="primary" id="prPayBtn" style="width:100%">Pay Now</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Later</button>
+    <p class="notice" style="margin-top:12px">Pay anytime from your Profile.</p>
+  </div>
+</div>
+
+<div class="modal over sm" id="payAssistModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0" id="paTitle">Complete Payment</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="checkout-summary">
+      <div class="checkout-line"><span>Amount</span><b id="paAmount"></b></div>
+      <div class="checkout-line"><span>UPI ID</span><b id="paUpi" style="word-break:break-all;text-align:right"></b></div>
+      <div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="outline" style="flex:1" onclick="copyPayUpi()">Copy UPI ID</button><button type="button" class="outline" style="flex:1" onclick="copyPayAmount()">Copy Amount</button></div>
+    </div>
+    <button type="button" class="primary" style="width:100%" onclick="startUpiPayment(payAssistId)">Open UPI App</button>
+    <div class="field" style="margin-top:16px"><label>UTR / Transaction ID (optional)</label><input id="paUtr" placeholder="From your UPI app" autocomplete="off"></div>
+    <button type="button" class="primary pay-done" id="paDoneBtn" style="width:100%;margin-top:10px" onclick="confirmMyPayment()">✓ I've Paid</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Not yet</button>
+  </div>
+</div>
+
+<div class="modal over" id="customerAccessModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Manage Product Access</h2><div id="accessCustomerTitle" class="notice" style="margin-top:4px"></div></div>
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
@@ -582,35 +693,90 @@ html,body{max-width:100%;overflow-x:hidden}
     <div id="productAccessBox" style="margin-top:14px" class="hidden">
       <div class="field"><label>Allowed Products</label><div style="display:flex;gap:7px;margin-bottom:8px"><button type="button" class="outline" onclick="toggleAccessChecks('#accessProductsList',true)">Select All</button><button type="button" class="outline" onclick="toggleAccessChecks('#accessProductsList',false)">Clear All</button></div><div class="access-list" id="accessProductsList"></div></div>
     </div>
-    <div class="account-note" style="margin-top:14px">The customer will see only the selected categories/products after the app refreshes or the customer logs in again. Access is enforced by Google Apps Script.</div>
+    
     <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="saveCustomerAccess()">Save Product Access</button>
   </div>
 </div>
 
-<div class="modal" id="adminCustomerModal">
+<div class="modal over" id="orderSuccessModal">
   <div class="modal-head">
-    <div><h2 style="margin:0">Create Customer</h2><div style="font-size:12px;color:var(--muted)">Admin account creation</div></div>
+    <div><h2 style="margin:0">Order Submitted Successfully</h2></div>
+    <button type="button" class="iconbtn" onclick="closeOrderSuccess()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="checkout-summary" style="text-align:center">
+      <div style="font-size:42px;margin-bottom:8px">✓</div>
+      <h3 style="margin:0 0 8px">Thank you for your order.</h3>
+      <p class="notice" style="font-size:14px">Your order is saved. Tap below to send it on WhatsApp.</p>
+    </div>
+    <button type="button" class="primary" id="sendOrderWhatsAppBtn" style="width:100%;margin-top:10px" onclick="sendPendingOrderToWhatsApp()">↗ Send Order to WhatsApp</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeOrderSuccess()">View My Orders</button>
+  </div>
+</div>
+
+<div class="modal over" id="waFallbackModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Couldn't Open WhatsApp</h2></div>
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
   </div>
   <div class="modal-body">
-    <div class="formgrid">
-      <div class="field"><label>Full Name *</label><input id="adminCustName" placeholder="Customer name"></div>
-      <div class="field"><label>Customer Type *</label><select id="adminCustType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
-      <div class="field"><label>Phone Number *</label><input id="adminCustPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
-      <div class="field full"><label>Address *</label><textarea id="adminCustAddress" placeholder="Address"></textarea></div>
-      <div class="field"><label>Pincode *</label><input id="adminCustPin" inputmode="numeric" placeholder="6-digit pincode"></div>
+    <p class="notice" style="font-size:14px">Your phone didn't open the WhatsApp app automatically. Tap "Copy Order Message" below, then open WhatsApp yourself and paste it into a chat with BIJAYA HOUSING.</p>
+    <button type="button" class="primary" id="waFallbackCopyBtn" style="width:100%">📋 Copy Order Message</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<div class="modal over" id="idCardModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Customer ID Card</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    <div id="idCardCanvasWrap" style="max-width:320px;margin:0 auto"></div>
+    <p id="idCardHint" class="notice hidden" style="margin-top:12px"></p>
+    <button type="button" class="primary hidden" id="idCardDownloadBtn" style="width:100%;margin-top:14px">⬇ Download ID Card (JPG)</button>
+    <p class="notice" style="margin-top:14px;font-size:12.5px">Unable to download your ID card? Contact BIJAYA HOUSING Administration at <b>8114832749</b> and they can send it to you directly.</p>
+  </div>
+</div>
+
+<div class="modal over" id="invoiceModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Invoice</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    <div id="invoiceCanvasWrap" style="max-width:360px;margin:0 auto"></div>
+    <p id="invoiceHint" class="notice hidden" style="margin-top:12px"></p>
+    <button type="button" class="primary hidden" id="invoiceDownloadBtn" style="width:100%;margin-top:14px">⬇ Download Invoice (JPG)</button>
+    <p class="notice" style="margin-top:14px;font-size:12.5px">Unable to download your invoice? Contact BIJAYA HOUSING Administration at <b>8114832749</b> and they can send it to you directly.</p>
+  </div>
+</div>
+
+<div class="modal over" id="photoCropModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Adjust Your Photo</h2></div>
+    <button type="button" class="iconbtn" onclick="cancelPhotoCrop()">×</button>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    <div id="cropStage" class="crop-stage">
+      <img id="cropImage" class="crop-image" alt="">
+      <div class="crop-frame"></div>
     </div>
-    <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="adminCreateCustomer()">Create Active Account</button>
-    <div id="adminCustomerCredentialBox"></div>
+    <div style="margin-top:16px;display:flex;align-items:center;gap:10px">
+      <span style="font-size:18px">\ud83d\udd0d</span>
+      <input type="range" id="cropZoomSlider" min="100" max="300" value="100" oninput="onCropZoomChange(this.value)" style="flex:1">
+    </div>
+    <p class="notice" style="margin-top:8px">Drag the photo to position it, use the slider to zoom.</p>
+    <button type="button" class="primary" style="width:100%;margin-top:14px" onclick="confirmPhotoCrop()">Use This Photo</button>
+    <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="cancelPhotoCrop()">Cancel</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-/* BIJAYA HOUSING — LIVE GOOGLE SHEETS CONNECTION */
-const DEFAULT_API_URL="https://script.google.com/macros/s/AKfycbwXpRGn-_VTG7qTbGp-I-rNDmm_XBzvqgPIH3eB_OsNsq7OtD7R3KZnsXGMyWvJj8e4/exec";
-let API_URL=localStorage.getItem("bijaya_api_url")||DEFAULT_API_URL;
+
+const API_URL="https://script.google.com/macros/s/AKfycbwXpRGn-_VTG7qTbGp-I-rNDmm_XBzvqgPIH3eB_OsNsq7OtD7R3KZnsXGMyWvJj8e4/exec";
 const WHATSAPP_NUMBER="918114832749";
 const GITHUB_IMAGE_BASE="https://satyajeetmeher91.github.io/bijayahousing/images/";
 const DEFAULT_IMAGE="data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><rect width="800" height="600" fill="#eef1f5"/><text x="400" y="285" text-anchor="middle" font-family="Arial,sans-serif" font-size="34" font-weight="700" fill="#667085">IMAGE NOT AVAILABLE</text><text x="400" y="335" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#98a2b3">BIJAYA HOUSING</text></svg>`);
@@ -625,15 +791,6 @@ const money=n=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",ma
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 function saveLocal(){localStorage.setItem("shop_cart",JSON.stringify(cart));localStorage.setItem("shop_orders",JSON.stringify(orders));}
 
-// MISSING-FUNCTION FIX: updateCart() was called from six places (adding to
-// cart, changing quantity, checkout, logout, and page init) but was never
-// defined anywhere in the file. Calling an undefined function throws, and
-// since three of those call sites run BEFORE the product-loading code on
-// the same line of execution - most importantly inside init() itself,
-// which every page load runs - that crash silently stopped init() partway
-// through, so loadProductsFromApi()/loadCustomerOrders() never even ran.
-// That is why an already-logged-in customer reopening the app saw an
-// empty catalogue: the loading call was never reached, not merely slow.
 function updateCart(){
   const badge=$("cartBadge");
   if(badge)badge.textContent=String(cart.reduce((a,x)=>a+(Number(x.qty)||0),0));
@@ -662,34 +819,12 @@ function updateCart(){
   if(totalEl)totalEl.textContent=money(cart.reduce((a,x)=>a+(Number(x.price)||0)*(Number(x.qty)||0),0));
 }
 
-// Safely pass product/order IDs through inline onclick handlers.
 function safeProductArg(value){return encodeURIComponent(String(value ?? "")).replace(/'/g,"%27");}
 function decodeProductArg(value){try{return decodeURIComponent(String(value ?? ""));}catch(e){return String(value ?? "");}}
-function toast(msg){const t=$("toast");if(!t)return;t.textContent=msg;t.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),2400)}
+function toast(msg,ms=2400){const t=$("toast");if(!t)return;t.textContent=msg;t.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove("show"),ms)}
 function customer(){try{return JSON.parse(localStorage.getItem("bijaya_customer")||"null")}catch(e){return null}}
 function getCustomer(){return customer();}
 
-/*
- * SESSION-EXPIRY HANDLING
- *
- * The backend's customer session token is only valid for 6 hours (a hard
- * platform limit of Apps Script's CacheService). Previously, once that
- * token lapsed, the app kept showing the customer as "logged in" (the
- * saved profile in localStorage never expires) while every API call
- * silently failed with "Customer session expired" / "Customer login
- * required." - and if a cached copy of the product list existed, that
- * error was swallowed entirely and stale data shown instead, so the
- * customer never found out they needed to log in again. That mismatch is
- * why products/orders would appear to randomly stop working.
- *
- * Fix: apiGet/apiPost now recognise that specific error. If the saved
- * customer has a deviceToken (issued at login), they silently ask the
- * backend for a fresh session and retry the request once - the customer
- * never notices. If that is not possible (old saved login from before
- * this update, or the account was blocked/removed), the stale login is
- * cleared and the customer is returned to the login screen with a clear
- * explanation instead of a confusing empty product list.
- */
 function isSessionError(message){
   const m=String(message||"").toLowerCase();
   return m.includes("session expired")||m.includes("login required");
@@ -710,6 +845,7 @@ async function refreshCustomerSessionSilently(){
         updated.name=d.customer.name||updated.name;
         updated.phone=d.customer.phone||updated.phone;
         updated.address=d.customer.address||updated.address;
+        updated.passwordType=d.customer.passwordType||"";
         updated.pin=d.customer.pin||updated.pin;
         updated.accessType=d.customer.accessType||updated.accessType;
         updated.allowedCategories=d.customer.allowedCategories||updated.allowedCategories;
@@ -734,8 +870,6 @@ async function apiGet(action,_retried){
   const params=new URLSearchParams({action,t:String(Date.now())});
   const c=customer();
   const adminToken=sessionStorage.getItem("admin_token");
-  // Never send a customer token together with an admin catalog request.
-  // Otherwise the backend may return the customer-restricted catalog.
   if(adminToken){
     params.set("adminToken",adminToken);
   }else if(c?.token){
@@ -754,49 +888,6 @@ async function apiGet(action,_retried){
   }
   return d;
 }
-async function apiPost(data,_retried){
-  const payload={...data};
-  const adminActions=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword"];
-  const customerActions=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto"];
-  // Photo actions are non-critical and often run in the background (e.g.
-  // while a profile screen is simply open). If their session has expired
-  // and a silent refresh doesn't succeed, fail quietly rather than forcing
-  // a full logout - the customer may be in the middle of something else
-  // entirely, and losing their session because a background photo fetch
-  // failed is a worse experience than just not showing a photo.
-  const backgroundActions=["getCustomerPhoto"];
-
-  if(adminActions.includes(payload.action)){
-    const token=sessionStorage.getItem("admin_token");
-    if(!token)throw Error("Admin session required");
-    payload.adminToken=token;
-  }
-  if(customerActions.includes(payload.action) && !payload.customerToken){
-    const c=customer();
-    if(c?.token)payload.customerToken=c.token;
-  }
-
-  const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-  if(!r.ok)throw Error("HTTP "+r.status);
-  const d=await r.json();
-  if(d.ok===false){
-    const c=customer();
-    if(customerActions.includes(payload.action) && c?.token && isSessionError(d.error) && !_retried){
-      if(await refreshCustomerSessionSilently()){
-        const freshCustomer=customer();
-        return apiPost({...data,customerToken:freshCustomer?.token},true);
-      }
-      if(!backgroundActions.includes(payload.action)){
-        forceCustomerLogout("Your session expired. Please log in again.");
-      }
-    }
-    throw Error(d.error||"Request failed");
-  }
-  return d;
-}
-
-
-/* CUSTOMER ACCOUNT SYSTEM */
 function updateCustomerAccess(){
   const logged=!!customer();
   $("customerGate")?.classList.toggle("hidden",logged);
@@ -869,6 +960,7 @@ async function customerLogin(){
       pin:c.pin||"",
       status:c.status||"Active",
       type:c.type||"Customer",
+      passwordType:c.passwordType||"",
       accessType:c.accessType||d.access?.accessType||"ALL",
       allowedCategories:c.allowedCategories||d.access?.allowedCategories||"",
       allowedProducts:c.allowedProducts||d.access?.allowedProducts||"",
@@ -879,6 +971,7 @@ async function customerLogin(){
     localStorage.setItem("bijaya_customer",JSON.stringify(saved));
     closeModal();
     updateCustomerAccess();
+    startPaymentWatcher();
     await loadProductsFromApi(true);
     await loadCustomerOrders();
     toast("Login successful");
@@ -906,6 +999,9 @@ async function openCustomerProfile(){
     const box=$("customerOrders");
     if(box)box.innerHTML='<div class="empty"><h3>Loading your orders…</h3><p>Checking your saved orders.</p></div>';
     loadCustomerPhoto(c);
+    $("tempPwNotice")?.classList.toggle("hidden",c.passwordType!=="Temporary");
+    renderMyPayments();
+    refreshMyPayments();
   }
 
   $("profileModal").classList.add("show");
@@ -974,16 +1070,6 @@ async function handleProfilePhotoSelected(file){
   openPhotoCropModal(file);
 }
 
-/* =========================
-   PHOTO CROP TOOL
-
-   A simple pan + zoom cropper: the frame stays fixed (matching the
-   circular avatar shape) and the person drags/zooms the photo behind it,
-   the same interaction pattern most apps use for profile photos. The
-   image is clamped so it always fully covers the frame - no empty
-   corners. On confirm, the exact visible region is redrawn onto an
-   output canvas at a higher fixed resolution for the actual upload.
-========================= */
 let __cropState=null;
 
 function openPhotoCropModal(file){
@@ -1162,14 +1248,6 @@ async function loadCustomerPhoto(c){
   }
 }
 
-/* =========================
-   CUSTOMER ID CARD
-
-   Rendered entirely on an in-memory <canvas> (no server round trip, no
-   external image-generation library) and exported as a JPG. The photo is
-   drawn from a base64 string (never a cross-origin URL) specifically so
-   canvas.toDataURL() never fails with a "tainted canvas" security error.
-========================= */
 function roundRectPath(ctx,x,y,w,h,r){
   ctx.beginPath();
   ctx.moveTo(x+r,y);
@@ -1188,9 +1266,6 @@ function drawCurvedIdText(ctx,text,cx,cy,radius,startAngleDeg,arcDegrees,flip){
   const startAngle=(startAngleDeg*Math.PI)/180;
   const totalAngle=(arcDegrees*Math.PI)/180;
   const chars=text.split("");
-  // Bottom-arc (flipped) text must be traversed in the opposite angular
-  // direction as well as rotated 180 - otherwise flipping each glyph alone
-  // still reads back-to-front overall.
   const step=(flip?-1:1)*totalAngle/(chars.length-1||1);
   let angle=startAngle-(flip?-1:1)*totalAngle/2;
   chars.forEach(ch=>{
@@ -1379,12 +1454,6 @@ async function showIdCardFor(data){
   $("modalBackdrop")?.classList.add("show");
   document.body.style.overflow="hidden";
 
-  // IMPORTANT: everything below is wrapped in try/catch. Previously, any
-  // failure here (a bad photo, a canvas error, anything) left the modal
-  // stuck on "Generating ID card..." forever with no visible explanation -
-  // which is exactly what "customer can't see their ID card at all" looks
-  // like from the outside. Now the person always sees either the card or
-  // a clear, specific error instead of a silent hang.
   let canvas,dataUrl;
   try{
     canvas=await renderIdCardCanvas(data);
@@ -1408,11 +1477,6 @@ async function showIdCardFor(data){
   const filename=`ID-${String(data.customerId||"card").replace(/[^A-Za-z0-9-]/g,"")}.jpg`;
 
   if(isAndroidRuntime()){
-    // A programmatic <a download> click has been unreliable (and has
-    // crashed the app) inside the WebView-wrapped APK on some devices,
-    // since it depends on the wrapper implementing native download
-    // handling. Long-pressing an <img> to save it is a built-in Android
-    // gesture that always works, with no dependency on the wrapper app.
     if(hintEl){
       hintEl.textContent="Touch and hold the image above, then choose \"Download image\" to save it to your phone.";
       hintEl.classList.remove("hidden");
@@ -1465,6 +1529,7 @@ async function customerLogout(){
     if(c?.token)await apiPost({action:"logoutCustomer",customerToken:c.token,customerId:c.customerId||c.id});
   }catch(e){}
   localStorage.removeItem("bijaya_customer");
+  stopPaymentWatcher();myPayments=[];updatePayBadge();
   orders=[];
   cart=[];
   saveLocal();
@@ -1474,7 +1539,6 @@ async function customerLogout(){
   toast("Logged out");
 }
 
-/* PRODUCTS / CATALOG LOADING */
 function normalizeAccessValue(v){return String(v??"").trim().toLowerCase();}
 function normalizeProduct(p){
   const sizes=Array.isArray(p?.sizes)?p.sizes.map(s=>({
@@ -1518,9 +1582,6 @@ function readProductCache(isAdmin=false){
     const data=JSON.parse(raw);
     if(!data||!Array.isArray(data.products))return null;
 
-    // Customer cache is only trusted when it belongs to the customer's
-    // current access rules. This prevents an old restricted/empty catalogue
-    // from appearing after admin changes access.
     if(!isAdmin){
       const c=customer();
       const ca=data.access;
@@ -1570,13 +1631,11 @@ async function loadProductsFromApi(force=false,isAdmin=false){
     const CACHE_CHECK_MS=10*60*1000;
     const cacheFresh=cached && (Date.now()-Number(cached.savedAt||0)<CACHE_CHECK_MS);
 
-    // Immediate UI: cached catalogue is shown without waiting for Google Apps Script.
     if(cached && !force){
       catalogVersion=String(cached.version||"");
       applyLoadedProducts(cached.products,cached.access,adminMode);
       if(status)status.textContent=`● Cached • ${products.length} product${products.length===1?"":"s"}`;
       if(cacheFresh){
-        // Let the user browse immediately. Check freshness in the background only.
         setTimeout(()=>refreshProductCatalogueInBackground(adminMode),1200);
         return products;
       }
@@ -1640,14 +1699,10 @@ async function reloadProducts(){
   finally{if(btn){btn.disabled=false;btn.textContent="↻ Reload Products";}}
 }
 
-/* PRODUCTS */
 function renderCategories(){
   const isAdmin=appView==="admin";
   const uniqueCats=[...new Set(products.filter(p=>p.active!==false).map(p=>String(p.category||"").trim()).filter(Boolean))];
   const sortedCats=[...uniqueCats].sort((a,b)=>a.localeCompare(b));
-  // Admin still gets "All" to manage the whole catalog. Customers only ever
-  // see the categories their account is actually allowed to browse - no
-  // "All" chip - listed alphabetically instead of sheet/insertion order.
   const cats=isAdmin?["All",...sortedCats]:sortedCats;
 
   const normalizedCurrent=normalizeAccessValue(category);
@@ -1658,9 +1713,6 @@ function renderCategories(){
   const box=$("categories");
   if(box){
     if(!isAdmin && cats.length<=1){
-      // Exactly one allowed category (or none) - nothing to switch between,
-      // so skip the category bar entirely and just show that category's
-      // products directly.
       box.classList.add("hidden");
       box.innerHTML="";
     }else{
@@ -1705,9 +1757,6 @@ function githubImageCandidates(imageId, directUrl=""){
     if(/^https?:\/\//i.test(raw)){
       out.push(raw);
     }else{
-      // Product sheet Image ID is normally the GitHub filename, e.g. IMG001.webp.
-      // Never try case variants or many extensions: GitHub is case-sensitive and
-      // multiple failed requests were making the catalogue unnecessarily slow.
       if(/\.(webp|jpg|jpeg|png)$/i.test(raw)){
         out.push(GITHUB_IMAGE_BASE+encodeURIComponent(raw));
       }else{
@@ -1755,7 +1804,6 @@ function scheduleProductImages(){
       entries.forEach(e=>{if(e.isIntersecting){loadProductImage(e.target);productImageObserver.unobserve(e.target);}});
     },{rootMargin:'900px 0px'});
     imgs.forEach(img=>productImageObserver.observe(img));
-    // Start visible images immediately after cards paint. Do not wait for scrolling.
     requestAnimationFrame(()=>imgs.slice(0,12).forEach(loadProductImage));
   }else{
     requestAnimationFrame(()=>imgs.forEach(loadProductImage));
@@ -1867,7 +1915,6 @@ function addViewedProductToCart(){
 
 function closeProductView(){
   $("productViewModal")?.classList.remove("show");
-  // Keep backdrop if another modal is open; otherwise remove it.
   const anyOpen=["checkoutModal","productModal","profileModal","customerLoginModal"].some(id=>$(id)?.classList.contains("show"));
   if(!anyOpen)$("modalBackdrop")?.classList.remove("show");
   document.body.style.overflow="";
@@ -1910,9 +1957,7 @@ function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.fi
 function openCart(){if(!customer()){showCustomerLogin("login");return}$("drawerBackdrop").classList.add("show");$("cartDrawer").classList.add("show")}
 function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer").classList.remove("show")}
 
-/* CHECKOUT + WHATSAPP */
 function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=c.address||"";$("custPincode").value=c.pin||"";closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-function closeModal(){["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal","priceEditModal","invoiceModal","customerDetailModal"].forEach(id=>$(id)?.classList.remove("show"));$("modalBackdrop")?.classList.remove("show");document.body.style.overflow=""}
 function validateCheckout(){const name=$("custName").value.trim(),phone=$("custPhone").value.replace(/\D/g,""),address=$("custAddress").value.trim(),pin=$("custPincode").value.replace(/\D/g,"");if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid name, phone, address and pincode");return null}return{name,phone,address,pin,note:$("custNote").value.trim()}}
 async function placeOrder(){
   const c=validateCheckout();
@@ -1943,8 +1988,6 @@ async function placeOrder(){
     await loadCustomerOrders();
     window.pendingWhatsAppOrder=order;
     showOrderSuccess();
-    // Try to launch WhatsApp automatically. The popup button remains as a reliable fallback
-    // because Android WebViews can block navigation after an async request.
     setTimeout(()=>tryOpenWhatsApp(order),450);
   }catch(error){
     toast("Order could not be saved: "+error.message);
@@ -2047,30 +2090,11 @@ function tryOpenWhatsApp(o){
   if(!o||!o.id){toast("Order details are unavailable");return;}
   const webUrl=whatsappWebUrl(o);
   if(!isAndroidRuntime()){
-    // iOS / desktop browsers understand https://wa.me links natively and
-    // are not affected by the embedded-WebView issue described below.
     const w=window.open(webUrl,"_blank","noopener,noreferrer");
     if(!w)window.location.href=webUrl;
     return;
   }
 
-  // ANDROID, INSIDE THE APK's WEBVIEW:
-  // A plain https://wa.me (or api.whatsapp.com) link commonly fails here
-  // with net::ERR_BLOCKED_BY_RESPONSE - WhatsApp's own redirect service
-  // frequently refuses to serve wa.me when the request comes from an
-  // embedded WebView rather than a real browser or a native Android
-  // intent, and that failure replaces this whole page with Chromium's
-  // "Web page not available" screen with no way back. So on Android we
-  // deliberately NEVER navigate this WebView to wa.me directly. Instead:
-  //   1) try intent:// (the scheme most WebView-wrapper apps already
-  //      know how to hand off to Android's app launcher),
-  //   2) try the raw whatsapp:// deep link as a second, different
-  //      attempt (some WebViews resolve this even without intent://
-  //      handling),
-  //   3) if neither visibly handed off, show an in-app "copy your
-  //      order" fallback instead of ever risking that broken-looking
-  //      error page - this always works, regardless of what the
-  //      specific APK-building tool does or doesn't support.
   let handedOff=false;
   const onHide=()=>{handedOff=true;};
   document.addEventListener("visibilitychange",onHide,{once:true});
@@ -2096,12 +2120,7 @@ function showOrderSuccess(){
   document.body.style.overflow="hidden";
 }
 function closeOrderSuccess(){
-  $("orderSuccessModal")?.classList.remove("show");
-  const anyOpen=["checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal"].some(id=>$(id)?.classList.contains("show"));
-  if(!anyOpen)$(
-    "modalBackdrop"
-  )?.classList.remove("show");
-  document.body.style.overflow="";
+  hideModal("orderSuccessModal");
   renderCustomerOrders();
 }
 function sendPendingOrderToWhatsApp(){
@@ -2256,7 +2275,6 @@ async function renderInvoiceCanvas(o){
   const addrLines=wrapCanvasText(ctx,`${o.customer?.address||""} - ${o.customer?.pin||""}`,W-80);
   addrLines.forEach((l,i)=>ctx.fillText(l,40,y+40+i*18));
 
-  // Table
   let tableY=tableTop;
   ctx.fillStyle=NAVY;
   ctx.fillRect(30,tableY,W-60,tableHeaderH);
@@ -2286,7 +2304,6 @@ async function renderInvoiceCanvas(o){
     tableY+=rowH;
   });
 
-  // Total block
   y=tableY+30;
   const priceChanged=o.originalTotal!=null && Number(o.originalTotal)!==Number(o.total);
   if(priceChanged){
@@ -2372,45 +2389,380 @@ async function showInvoiceFor(o){
   }
 }
 
-/* ADMIN */
-let appView="customer";
-let navigationLock=false;
+/* ===== Shared helpers ===== */
+const PAY_STATUSES=["Pending","Verifying","Paid","Failed","Cancelled"];
+const PAYEE_NAME="BIJAYA HOUSING";
+const UPI_RE=/^[a-zA-Z0-9._\-]{2,64}@[a-zA-Z][a-zA-Z0-9.\-]{1,63}$/;
+const arg=v=>`decodeProductArg('${safeProductArg(v)}')`;
+const digits=v=>String(v||"").replace(/\D/g,"");
+const fmtDT=v=>{const d=new Date(v);return v&&!isNaN(d)?d.toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"—"};
+const fmtD=v=>{const d=new Date(v);return v&&!isNaN(d)?d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"—"};
+const isDue=p=>p.status==="Pending"||p.status==="Failed";
+const stCls=s=>"st-"+String(s||"pending").toLowerCase();
+
+function openModal(id){$(id)?.classList.add("show");$("modalBackdrop")?.classList.add("show");document.body.style.overflow="hidden";}
+function hideModal(id){
+  $(id)?.classList.remove("show");
+  if(!document.querySelector(".modal.show")){$("modalBackdrop")?.classList.remove("show");document.body.style.overflow="";}
+}
+function closeModal(){
+  const open=[...document.querySelectorAll(".modal.show")];
+  const over=open.filter(m=>m.classList.contains("over"));
+  const top=(over.length?over:open).pop();
+  if(top){hideModal(top.id);if(top.id==="payRequestModal")payPopupClosed();}
+  else{$("modalBackdrop")?.classList.remove("show");document.body.style.overflow="";}
+  setTimeout(()=>{if(typeof maybeShowPayPopup==="function")maybeShowPayPopup();},500);
+}
+async function busy(btn,fn){
+  if(btn&&btn.disabled)return;
+  if(btn)btn.disabled=true;
+  try{return await fn();}finally{if(btn)btn.disabled=false;}
+}
+async function copyText(text,okMsg){
+  const ok=await copyOrderTextToClipboard(String(text));
+  toast(ok?okMsg:"Could not copy. Please select and copy manually.");
+}
+
+/* ===== API ===== */
+async function postJson(payload,timeout){
+  const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),timeout);
+  try{
+    const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload),signal:ctl.signal});
+    if(!r.ok)throw Error("HTTP "+r.status);
+    try{return await r.json();}catch(e){throw Error("Server is busy. Please try again.");}
+  }catch(e){
+    if(e.name==="AbortError")throw Error("Request timed out. Check your connection.");
+    if(e instanceof TypeError)throw Error("No internet connection.");
+    throw e;
+  }finally{clearTimeout(timer);}
+}
+const ADMIN_ACTIONS=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword","adminCreatePayment","adminGetPayments","adminUpdatePayment","adminRemindPayment"];
+const CUSTOMER_ACTIONS=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto","changeCustomerPassword","getMyPayments","customerPaymentEvent"];
+const BACKGROUND_ACTIONS=["getCustomerPhoto","getMyPayments"];
+async function apiPost(data,_retried){
+  const payload={...data};
+  if(ADMIN_ACTIONS.includes(payload.action)){
+    const token=sessionStorage.getItem("admin_token");
+    if(!token)throw Error("Admin session required");
+    payload.adminToken=token;
+  }
+  if(CUSTOMER_ACTIONS.includes(payload.action)&&!payload.customerToken){
+    const c=customer();
+    if(c?.token)payload.customerToken=c.token;
+  }
+  const d=await postJson(payload,payload.action==="uploadCustomerPhoto"?90000:45000);
+  if(d.ok===false){
+    if(ADMIN_ACTIONS.includes(payload.action)&&/unauthorized admin/i.test(d.error||"")){
+      sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_user");
+      stopAdminWatcher();
+      if(appView==="admin")setAppView("admin",false);
+      toast("Admin session expired. Please login again.");
+      throw Error("Admin session expired");
+    }
+    const c=customer();
+    if(CUSTOMER_ACTIONS.includes(payload.action)&&c?.token&&isSessionError(d.error)&&!_retried){
+      if(await refreshCustomerSessionSilently())return apiPost({...data,customerToken:customer()?.token},true);
+      if(!BACKGROUND_ACTIONS.includes(payload.action))forceCustomerLogout("Your session expired. Please log in again.");
+    }
+    throw Error(d.error||"Request failed");
+  }
+  return d;
+}
+
+/* ===== CUSTOMER PAYMENTS ===== */
+let myPayments=[],payPollTimer=null,payFetching=false,payPopupCurrent=null,payAwait=null,payAssistId="";
+const LS_SEEN="bijaya_pay_seen",LS_DISMISS="bijaya_pay_dismissed";
+const readLS=k=>{try{return JSON.parse(localStorage.getItem(k)||"{}")||{}}catch(e){return {}}};
+const writeLS=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const dismissKey=p=>String(p.remindedOn||p.date||"");
+
+function startPaymentWatcher(){
+  if(payPollTimer||!customer()?.token)return;
+  refreshMyPayments();
+  payPollTimer=setInterval(()=>{if(document.visibilityState==="visible"&&appView==="customer")refreshMyPayments();},45000);
+}
+function stopPaymentWatcher(){clearInterval(payPollTimer);payPollTimer=null;}
+
+async function refreshMyPayments(){
+  if(payFetching||!customer()?.token||appView==="admin")return;
+  payFetching=true;
+  try{
+    const d=await apiPost({action:"getMyPayments"});
+    handlePaymentsUpdate(d.payments||[]);
+  }catch(e){/* background refresh: stay quiet */}
+  finally{payFetching=false;}
+}
+
+function handlePaymentsUpdate(list){
+  const seen=readLS(LS_SEEN),changes=[];
+  list.forEach(p=>{
+    const prev=seen[p.id];
+    if(prev&&prev!==p.status)changes.push(p);
+    seen[p.id]=p.status;
+  });
+  writeLS(LS_SEEN,seen);
+  myPayments=list;
+  updatePayBadge();
+  renderMyPayments();
+  changes.forEach(notifyPaymentChange);
+  maybeShowPayPopup();
+}
+
+function notifyPaymentChange(p){
+  const a=money(p.amount);
+  const msg={
+    Paid:`✅ Payment of ${a} confirmed. Thank you!`,
+    Failed:`Payment of ${a} was marked failed. Please pay again.`,
+    Cancelled:`Payment request of ${a} was cancelled.`,
+    Verifying:`Payment of ${a} is being verified.`,
+    Pending:`Payment of ${a} is pending.`
+  }[p.status];
+  if(msg)toast(msg,6000);
+}
+
+function updatePayBadge(){
+  const n=myPayments.filter(isDue).length,b=$("profileBadge");
+  if(b){b.textContent=n;b.classList.toggle("hidden",!n);}
+}
+
+function maybeShowPayPopup(){
+  if(payPopupCurrent||appView==="admin"||!customer())return;
+  if(document.querySelector(".modal.show")||$("cartDrawer")?.classList.contains("show"))return;
+  const dismissed=readLS(LS_DISMISS);
+  const p=myPayments.find(x=>isDue(x)&&dismissed[x.id]!==dismissKey(x));
+  if(!p)return;
+  payPopupCurrent=p.id;
+  $("prAmount").textContent=money(p.amount);
+  $("prNote").textContent=p.note||"Payment request from BIJAYA HOUSING";
+  $("prPayBtn").onclick=()=>{markPopupDismissed(p);payPopupCurrent=null;hideModal("payRequestModal");startUpiPayment(p.id);};
+  openModal("payRequestModal");
+}
+function markPopupDismissed(p){const d=readLS(LS_DISMISS);d[p.id]=dismissKey(p);writeLS(LS_DISMISS,d);}
+function payPopupClosed(){
+  const p=myPayments.find(x=>x.id===payPopupCurrent);
+  payPopupCurrent=null;
+  if(p)markPopupDismissed(p);
+}
+
+function renderMyPayments(){
+  const box=$("customerPayments");
+  if(!box)return;
+  const rank={Pending:0,Failed:0,Verifying:1,Paid:2,Cancelled:3};
+  const list=[...myPayments].sort((a,b)=>(rank[a.status]-rank[b.status])||(new Date(b.date)-new Date(a.date)));
+  $("paymentsSection")?.classList.toggle("hidden",!list.length);
+  box.innerHTML=list.map(p=>{
+    const info=p.status==="Verifying"?`Waiting for BIJAYA HOUSING to confirm${p.utr?" • UTR "+esc(p.utr):""}`
+      :p.status==="Paid"?`Paid on ${fmtDT(p.paidOn)}`
+      :p.status==="Failed"?"Marked failed — please pay again"
+      :p.status==="Cancelled"?"Cancelled":"";
+    return `<div class="pay-card">
+      <div class="between"><strong style="font-size:20px">${money(p.amount)}</strong><span class="status ${stCls(p.status)}">${esc(p.status)}</span></div>
+      ${p.note?`<div>${esc(p.note)}</div>`:""}
+      <div class="cart-meta">${esc(p.id)} • ${fmtDT(p.date)}</div>
+      ${info?`<div class="cart-meta">${info}</div>`:""}
+      ${isDue(p)?`<div class="row-actions"><button type="button" class="primary" onclick="startUpiPayment(${arg(p.id)})">Pay Now</button><button type="button" class="outline" onclick="openPayAssist(${arg(p.id)},false)">I've Paid</button></div>`:""}
+    </div>`;
+  }).join("");
+}
+
+/* --- UPI launch (same hand-off strategy as the WhatsApp button, for the APK's WebView) --- */
+function upiQuery(p){
+  const note=((p.note||PAYEE_NAME).slice(0,28)+" "+p.id).trim();
+  const enc=v=>encodeURIComponent(v).replace(/%40/g,"@");
+  return `pa=${enc(p.upiId)}&pn=${enc(PAYEE_NAME)}&am=${Number(p.amount).toFixed(2)}&cu=INR&tn=${enc(note)}`;
+}
+function startUpiPayment(id){
+  const p=myPayments.find(x=>x.id===id);
+  if(!p||!isDue(p)){toast("This payment is no longer due");return;}
+  hideModal("payAssistModal");
+  apiPost({action:"customerPaymentEvent",paymentId:id,event:"payClicked"}).catch(()=>{});
+  const q=upiQuery(p);
+  payAwait={id,t:Date.now(),handed:false};
+  const mark=()=>{if(payAwait)payAwait.handed=true;};
+  document.addEventListener("visibilitychange",mark,{once:true});
+  window.addEventListener("pagehide",mark,{once:true});
+  try{window.location.href=isAndroidRuntime()?`intent://pay?${q}#Intent;scheme=upi;end`:`upi://pay?${q}`;}catch(e){}
+  setTimeout(()=>{
+    if(!payAwait||payAwait.id!==id)return;
+    if(!payAwait.handed&&!document.hidden){try{window.location.href=`upi://pay?${q}`;}catch(e){}}
+    setTimeout(()=>{
+      document.removeEventListener("visibilitychange",mark);
+      window.removeEventListener("pagehide",mark);
+      if(payAwait&&payAwait.id===id&&!payAwait.handed&&!document.hidden){payAwait=null;openPayAssist(id,false);}
+    },900);
+  },800);
+}
+function onAppResume(){
+  if(customer()&&appView==="customer")refreshMyPayments();
+  if(payAwait&&payAwait.handed&&Date.now()-payAwait.t>2000){
+    const id=payAwait.id;payAwait=null;openPayAssist(id,true);
+  }
+}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")onAppResume();});
+window.addEventListener("focus",onAppResume);
+
+function openPayAssist(id,returned){
+  const p=myPayments.find(x=>x.id===id);
+  if(!p||!isDue(p))return;
+  payAssistId=id;
+  $("paTitle").textContent=returned?"Did you complete the payment?":"Complete Payment";
+  $("paAmount").textContent=money(p.amount);
+  $("paUpi").textContent=p.upiId;
+  $("paUtr").value="";
+  hideModal("payRequestModal");
+  openModal("payAssistModal");
+}
+const copyPayUpi=()=>{const p=myPayments.find(x=>x.id===payAssistId);if(p)copyText(p.upiId,"UPI ID copied");};
+const copyPayAmount=()=>{const p=myPayments.find(x=>x.id===payAssistId);if(p)copyText(Number(p.amount).toFixed(2),"Amount copied");};
+
+async function confirmMyPayment(){
+  const utr=$("paUtr").value.trim();
+  if(utr&&!/^[A-Za-z0-9]{6,30}$/.test(utr)){toast("UTR should be 6–30 letters or digits");return;}
+  await busy($("paDoneBtn"),async()=>{
+    try{
+      const d=await apiPost({action:"customerPaymentEvent",paymentId:payAssistId,event:"markPaid",utr});
+      const i=myPayments.findIndex(x=>x.id===d.payment.id);
+      if(i>=0)myPayments[i]=d.payment;
+      const seen=readLS(LS_SEEN);seen[d.payment.id]=d.payment.status;writeLS(LS_SEEN,seen);
+      hideModal("payAssistModal");
+      updatePayBadge();renderMyPayments();
+      toast("Thanks! BIJAYA HOUSING will confirm your payment shortly.",5000);
+    }catch(e){toast(e.message);refreshMyPayments();}
+  });
+}
+
+/* --- Change password --- */
+async function changeMyPassword(){
+  const oldPassword=$("pwOld").value,newPassword=$("pwNew").value;
+  if(!oldPassword||newPassword.length<6){toast("Enter your current password and a new one (min 6 characters)");return;}
+  await busy($("pwBtn"),async()=>{
+    try{
+      await apiPost({action:"changeCustomerPassword",oldPassword,newPassword});
+      const c=customer();
+      if(c){c.passwordType="Updated";localStorage.setItem("bijaya_customer",JSON.stringify(c));}
+      $("pwOld").value="";$("pwNew").value="";
+      $("tempPwNotice")?.classList.add("hidden");
+      $("pwBox").open=false;
+      toast("Password updated");
+    }catch(e){toast(e.message);}
+  });
+}
+
+/* ===== ADMIN ===== */
+let appView="customer",navigationLock=false;
+let adminCustomers=[],adminPayments=[],adminPayPrev=null,adminTimer=null,adminPayLoading=false;
+const ADMIN_TABS=["dashboard","products","orders","customers","payments"];
+
 function closeAllOverlays(){
   ["drawerBackdrop","modalBackdrop"].forEach(id=>$(id)?.classList.remove("show"));
-  ["cartDrawer","checkoutModal","productModal","profileModal","customerLoginModal","productViewModal","adminCustomerModal","customerAccessModal","orderSuccessModal","waFallbackModal","idCardModal","photoCropModal","priceEditModal","invoiceModal","customerDetailModal"].forEach(id=>$(id)?.classList.remove("show"));
+  $("cartDrawer")?.classList.remove("show");
+  document.querySelectorAll(".modal.show").forEach(m=>m.classList.remove("show"));
   document.body.style.overflow="";
 }
 function setAppView(view,push=true){
   if(navigationLock)return;
   appView=view==="admin"?"admin":"customer";
+  document.body.classList.toggle("admin-mode",appView==="admin");
   $("customerView")?.classList.toggle("hidden",appView!=="customer");
   $("adminView")?.classList.toggle("show",appView==="admin");
-  $("customerSearch")?.classList.toggle("hidden",appView!=="customer" || !customer());
+  $("customerSearch")?.classList.toggle("hidden",appView!=="customer"||!customer());
+  const logged=!!sessionStorage.getItem("admin_token");
   if(appView==="admin"){
-    const logged=!!sessionStorage.getItem("admin_token");
     $("adminLoginView")?.classList.toggle("hidden",logged);
     $("adminPanel")?.classList.toggle("hidden",!logged);
+    if(logged)startAdminWatcher();
+    stopPaymentWatcher();
+  }else{
+    stopAdminWatcher();
+    if(customer())startPaymentWatcher();
   }
   updateCustomerAccess();
   window.scrollTo(0,0);
-  if(push && history.pushState) history.pushState({view:appView},"",appView==="admin"?"#admin":"#store");
+  if(push&&history.pushState)history.pushState({view:appView},"",appView==="admin"?"#admin":"#store");
 }
 function showLogin(){closeAllOverlays();setAppView("admin",true);}
 function showCustomer(){closeAllOverlays();setAppView("customer",true);}
 function goBackToStore(){closeAllOverlays();setAppView("customer",true);}
 window.addEventListener("popstate",()=>{setAppView(location.hash==="#admin"?"admin":"customer",false);});
-async function adminLogin(){const username=$("adminUser").value.trim(),password=$("adminPass").value;if(!username||!password){toast("Enter username and password");return}try{const d=await apiPost({action:"loginAdmin",username,password});if(!d.adminToken)throw Error("Admin session token missing");sessionStorage.setItem("admin_token",d.adminToken);sessionStorage.setItem("admin_logged","1");sessionStorage.setItem("admin_user",JSON.stringify(d.admin||{}));$("adminLoginView").classList.add("hidden");$("adminPanel").classList.remove("hidden");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");await loadProductsFromApi(false,true);await Promise.all([loadAdminOrders(),loadAdminCustomers()]);toast("Admin login successful")}catch(e){toast("Invalid admin login")}}
-async function adminLogout(){const token=sessionStorage.getItem("admin_token");try{if(token)await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"logoutAdmin",adminToken:token})})}catch(e){}sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_logged");sessionStorage.removeItem("admin_user");$("adminNavButton")?.classList.add("hidden");$("mobileAdminFab")?.classList.add("hidden");showCustomer();toast("Admin logged out")}
-function adminTab(tab,btn){document.querySelectorAll(".admin-tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");["dashboard","products","orders","customers","data"].forEach(x=>$("admin"+x[0].toUpperCase()+x.slice(1)+"Tab")?.classList.toggle("hidden",x!==tab));if(tab==="orders")loadAdminOrders();if(tab==="customers")loadAdminCustomers()}
-function renderAdmin(){
-  if($("statProducts"))$("statProducts").textContent=products.length;
-  if($("statOrders"))$("statOrders").textContent=orders.length;
-  if($("statCart"))$("statCart").textContent=cart.reduce((a,x)=>a+x.qty,0);
-  if($("statCategories"))$("statCategories").textContent=new Set(products.map(p=>p.category).filter(Boolean)).size;
-  if($("adminProductsBody"))$("adminProductsBody").innerHTML=products.map(p=>`<tr><td><b>${esc(p.name)}</b><br><span class="cart-meta">${esc(p.id)}</span></td><td>${esc(p.category)}</td><td>${esc(p.subcategory||"—")}</td><td>${esc(p.imageId||"—")}</td><td>${p.sizes?.length?p.sizes.map(s=>`${esc(s.name)} ${money(s.price)}`).join("<br>"):money(p.price)}</td><td>${p.sizes?.length?p.sizes.reduce((a,s)=>a+Number(s.stock||0),0):p.stock}</td><td>${p.active!==false?"Yes":"No"}</td><td><button type="button" class="outline" onclick="editProduct(decodeProductArg('${safeProductArg(p.id)}'))">Edit</button></td></tr>`).join("");
-  renderAdminOrders();
+
+function startAdminWatcher(){
+  if(adminTimer)return;
+  try{$("adminWho").textContent=JSON.parse(sessionStorage.getItem("admin_user")||"{}").name||"";}catch(e){}
+  adminTimer=setInterval(()=>{if(document.visibilityState==="visible"&&appView==="admin")loadAdminPayments(true);},60000);
+}
+function stopAdminWatcher(){clearInterval(adminTimer);adminTimer=null;}
+
+async function adminLogin(){
+  const username=$("adminUser").value.trim(),password=$("adminPass").value;
+  if(!username||!password){toast("Enter username and password");return;}
+  await busy($("adminLoginBtn"),async()=>{
+    try{
+      const d=await apiPost({action:"loginAdmin",username,password});
+      if(!d.adminToken)throw Error("Admin session token missing");
+      sessionStorage.setItem("admin_token",d.adminToken);
+      sessionStorage.setItem("admin_user",JSON.stringify(d.admin||{}));
+      $("adminPass").value="";
+      $("adminLoginView").classList.add("hidden");
+      $("adminPanel").classList.remove("hidden");
+      startAdminWatcher();
+      await loadProductsFromApi(false,true);
+      await Promise.all([loadAdminOrders(),loadAdminCustomers(),loadAdminPayments(true)]);
+      toast("Admin login successful");
+    }catch(e){toast(/invalid/i.test(e.message)?"Invalid admin login":"Login failed: "+e.message);}
+  });
+}
+async function adminLogout(){
+  const token=sessionStorage.getItem("admin_token");
+  try{if(token)await postJson({action:"logoutAdmin",adminToken:token},8000);}catch(e){}
+  sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_user");
+  adminCustomers=[];adminPayments=[];adminPayPrev=null;
+  stopAdminWatcher();
+  showCustomer();
+  toast("Admin logged out");
 }
 
+function adminTab(tab){
+  document.querySelectorAll(".admin-tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
+  ADMIN_TABS.forEach(x=>$("admin"+x[0].toUpperCase()+x.slice(1)+"Tab")?.classList.toggle("hidden",x!==tab));
+  if(tab==="orders")loadAdminOrders();
+  if(tab==="customers")loadAdminCustomers();
+  if(tab==="payments")loadAdminPayments();
+}
+function goAdminTab(tab,filter){
+  adminTab(tab);
+  if(!filter)return;
+  if(tab==="orders"){orderStatusFilter=filter;$("orderStatusFilter").value=filter;renderAdminOrders();}
+  if(tab==="payments"){$("payAdminFilter").value=filter;renderAdminPayments();}
+  if(tab==="customers"){$("custStatusFilter").value=filter;renderAdminCustomers();}
+}
+
+/* --- Dashboard + products --- */
+function renderAdminStats(){
+  const due=adminPayments.filter(isDue),verifying=adminPayments.filter(p=>p.status==="Verifying");
+  const dueAmt=due.reduce((a,p)=>a+p.amount,0);
+  const newOrders=orders.filter(o=>orderStatus(o).toLowerCase()==="new").length;
+  const pendingCust=adminCustomers.filter(c=>String(c.status).toLowerCase()==="pending").length;
+  const cards=[
+    ["Products",products.length,"products",null,""],
+    ["Customers",adminCustomers.length,"customers",null,""],
+    ["New Orders",newOrders,"orders","New",""],
+    ["Pending Approvals",pendingCust,"customers","Pending",""],
+    ["Payments Due",money(dueAmt),"payments","Due",`${due.length} request${due.length===1?"":"s"}`],
+    ["To Verify",verifying.length,"payments","Verifying",""]
+  ];
+  const box=$("adminStats");
+  if(box)box.innerHTML=cards.map(([label,val,tab,filter,sub])=>`<button type="button" class="stat" onclick="goAdminTab('${tab}',${filter?`'${filter}'`:"null"})"><small>${label}</small><strong>${esc(val)}</strong>${sub?`<small>${sub}</small>`:""}</button>`).join("");
+  const b=$("payTabBadge");
+  if(b){b.textContent=verifying.length;b.classList.toggle("hidden",!verifying.length);}
+}
+function renderAdmin(){
+  const body=$("adminProductsBody");
+  if(body)body.innerHTML=products.map(p=>`<tr><td data-label="Product"><b>${esc(p.name)}</b><br><span class="cart-meta">${esc(p.id)}</span></td><td data-label="Category">${esc(p.category)}</td><td data-label="Subcategory">${esc(p.subcategory||"—")}</td><td data-label="Image ID">${esc(p.imageId||"—")}</td><td data-label="Sizes / Price">${p.sizes?.length?p.sizes.map(s=>`${esc(s.name)} ${money(s.price)}`).join("<br>"):money(p.price)}</td><td data-label="Stock">${p.sizes?.length?p.sizes.reduce((a,s)=>a+Number(s.stock||0),0):p.stock}</td><td data-label="Active">${p.active!==false?"Yes":"No"}</td><td data-label="Action"><button type="button" class="outline" onclick="editProduct(${arg(p.id)})">Edit</button></td></tr>`).join("");
+  renderAdminOrders();
+  renderAdminStats();
+}
+
+/* --- Orders --- */
 function orderStatus(o){return String(o.status||"New").trim()||"New";}
 function orderSortRank(status){const s=status.toLowerCase();if(s==="completed")return 90;if(s==="cancelled"||s==="canceled")return 100;if(s==="new")return 10;if(s==="confirmed")return 20;if(s==="processing")return 30;if(s==="ready")return 40;return 50;}
 function setOrderStatusFilter(value){orderStatusFilter=value||"All";renderAdminOrders();}
@@ -2424,12 +2776,370 @@ function renderAdminOrders(){
   const statusOptions=["New","Confirmed","Processing","Ready","Completed","Cancelled"];
   body.innerHTML=list.length?list.map(o=>{
     const items=o.items||[];
-    const itemHtml=items.length?items.map(i=>`<div style="margin-bottom:5px"><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` <span class="cart-meta">(${esc(i.size)})</span>`:""} × ${Number(i.qty)||0} @ ${money(i.price)}</div>`).join(""):`<span class="cart-meta">No item details available</span>`;
-    const priceChanged=o.originalTotal!=null && Number(o.originalTotal)!==Number(o.total);
+    const itemHtml=items.length?items.map(i=>`<div style="margin-bottom:5px"><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` <span class="cart-meta">(${esc(i.size)})</span>`:""} × ${Number(i.qty)||0} @ ${money(i.price)}</div>`).join(""):`<span class="cart-meta">No item details</span>`;
+    const priceChanged=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
     const amountHtml=priceChanged?`<span class="cart-meta" style="text-decoration:line-through">${money(o.originalTotal)}</span><br><b>${money(o.total)}</b>`:`<b>${money(o.total)}</b>`;
-    const currentStatus=orderStatus(o);
-    return `<tr><td><b>${esc(o.id)}</b><br><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></td><td><b>${esc(o.customer?.name||"")}</b><br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span></td><td>${itemHtml}</td><td>${amountHtml}</td><td><select class="order-status-select" onchange="adminChangeOrderStatus('${esc(o.id)}',this.value)">${statusOptions.map(s=>`<option value="${s}" ${currentStatus===s?"selected":""}>${s}</option>`).join("")}</select></td><td class="action-cell"><button type="button" class="outline" onclick="openPriceEditModal('${esc(o.id)}')">\u270f\ufe0f Edit Prices</button><button type="button" class="outline" onclick="generateInvoiceById('${esc(o.id)}')">\ud83e\uddfe Generate Invoice</button></td></tr>`;
-  }).join(""):`<tr><td colspan="6"><div class="empty"><h3>No matching orders</h3><p>Try another status filter.</p></div></td></tr>`;
+    const cur=orderStatus(o),cid=o.customer?.id;
+    const nameHtml=cid?`<button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(cid)})"><b>${esc(o.customer?.name||cid)}</b></button>`:`<b>${esc(o.customer?.name||"")}</b>`;
+    return `<tr><td data-label="Order"><b>${esc(o.id)}</b><br><span class="cart-meta">${fmtDT(o.date)}</span></td><td data-label="Customer">${nameHtml}<br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span></td><td data-label="Items" class="stack">${itemHtml}</td><td data-label="Amount">${amountHtml}</td><td data-label="Status"><select class="order-status-select" onchange="adminChangeOrderStatus(${arg(o.id)},this.value)">${statusOptions.map(s=>`<option value="${s}" ${cur===s?"selected":""}>${s}</option>`).join("")}</select></td><td data-label="Action" class="action-cell"><div class="row-actions"><button type="button" class="outline" onclick="openPriceEditModal(${arg(o.id)})">✏️ Prices</button><button type="button" class="outline" onclick="generateInvoiceById(${arg(o.id)})">🧾 Invoice</button></div></td></tr>`;
+  }).join(""):`<tr><td colspan="6" class="full"><div class="empty"><h3>No matching orders</h3></div></td></tr>`;
+}
+
+/* --- Customers --- */
+async function loadAdminCustomers(manual){
+  if(!sessionStorage.getItem("admin_token"))return;
+  try{
+    const d=await apiPost({action:"getCustomers"});
+    adminCustomers=d.customers||[];
+    renderAdminCustomers();
+    renderAdminStats();
+    refreshCustomerDetail();
+    if(manual===true)toast("Customers refreshed");
+  }catch(e){if(e.message!=="Admin session expired")toast("Could not load customers: "+e.message);}
+}
+function customerStatusClass(status){
+  const s=String(status||"Pending").toLowerCase();
+  return s==="active"?"status-active":s==="blocked"?"status-blocked":"status-pending";
+}
+function renderAdminCustomers(){
+  const body=$("adminCustomersBody");if(!body)return;
+  const q=($("custSearch")?.value||"").trim().toLowerCase(),f=$("custStatusFilter")?.value||"All";
+  const list=adminCustomers.filter(c=>(f==="All"||String(c.status||"Pending").toLowerCase()===f.toLowerCase())&&(!q||[c.name,c.phone,c.id,c.type].join(" ").toLowerCase().includes(q)));
+  body.innerHTML=list.length?list.map(c=>{
+    const st=String(c.status||"Pending").toLowerCase();
+    const acts=[];
+    if(st==="pending")acts.push(`<button type="button" class="primary" onclick="approveCustomer(${arg(c.id)})">Approve</button>`);
+    if(st==="active")acts.push(`<button type="button" class="outline" onclick="openPaymentForm(${arg(c.id)})">💳 Request</button>`);
+    acts.push(`<button type="button" class="outline" onclick="openCustomerDetailModal(${arg(c.id)})">Manage</button>`);
+    return `<tr>
+      <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(c.id)})"><b>${esc(c.name)}</b></button><br><span class="cart-meta">${esc(c.type||"Customer")}</span></td>
+      <td data-label="Phone">${esc(c.phone||"")}</td>
+      <td data-label="Customer ID"><span class="customer-id-badge">${esc(c.id||"—")}</span></td>
+      <td data-label="Status"><span class="status ${customerStatusClass(c.status)}">${esc(c.status||"Pending")}</span></td>
+      <td data-label="Registered">${fmtD(c.dateRegistered)}</td>
+      <td data-label="Action"><div class="row-actions">${acts.join("")}</div></td>
+    </tr>`;
+  }).join(""):`<tr><td colspan="6" class="full"><div class="empty"><h3>No customers found</h3></div></td></tr>`;
+}
+
+/* --- Customer hub (click a customer's name) --- */
+let cdId=null;
+function openCustomerDetailModal(id){
+  const c=adminCustomers.find(x=>x.id===id);
+  if(!c){toast("Customer not found");return;}
+  cdId=id;
+  $("cdName").value=c.name||"";
+  $("cdType").value=c.type||"Customer";
+  $("cdPhone").value=c.phone||"";
+  $("cdAddress").value=c.address||"";
+  $("cdPin").value=c.pin||"";
+  fillCustomerDetail(c);
+  cdTabSwitch("details");
+  openModal("customerDetailModal");
+}
+function refreshCustomerDetail(){
+  if(!$("customerDetailModal")?.classList.contains("show"))return;
+  const c=adminCustomers.find(x=>x.id===cdId);
+  if(c)fillCustomerDetail(c);
+}
+function fillCustomerDetail(c){
+  const st=String(c.status||"Pending"),s=st.toLowerCase();
+  $("cdTitle").textContent=c.name||"Customer";
+  $("cdIdBadge").textContent=c.id;
+  $("cdStatus").className="status "+customerStatusClass(st);
+  $("cdStatus").textContent=st;
+  $("cdCallBtn").href="tel:"+digits(c.phone);
+  $("cdApproveBtn").classList.toggle("hidden",s!=="pending");
+  $("cdBlockBtn").classList.toggle("hidden",s==="pending");
+  $("cdBlockBtn").textContent=s==="blocked"?"✔ Unblock":"⛔ Block";
+  $("cdBlockBtn").dataset.next=s==="blocked"?"Active":"Blocked";
+  $("cdRequestBtn").classList.toggle("hidden",s!=="active");
+  const access=String(c.accessType||"ALL").toUpperCase();
+  const accessLabel=access==="CATEGORY"?"Categories: "+(c.allowedCategories||"—"):access==="PRODUCT"?"Selected products":"All products";
+  const pw=c.passwordType?`${c.passwordType}${c.passwordUpdatedOn?" • "+fmtD(c.passwordUpdatedOn):""}`:"—";
+  $("cdInfo").innerHTML=[["Registered",fmtD(c.dateRegistered)],["Last login",fmtDT(c.lastLogin)],["Password",pw],["Product access",accessLabel]].map(([k,v])=>`<div><b>${k}</b>${esc(v)}</div>`).join("");
+  renderCdPayments();
+  renderCustomerDetailOrders(c);
+}
+function cdTabSwitch(pane){
+  document.querySelectorAll("#customerDetailModal .subtab").forEach(b=>b.classList.toggle("active",b.dataset.pane===pane));
+  ["details","payments","orders"].forEach(p=>$("cdPane"+p[0].toUpperCase()+p.slice(1))?.classList.toggle("hidden",p!==pane));
+}
+function customerOrdersFor(c){
+  const cid=String(c.id||"").trim().toUpperCase(),phone=digits(c.phone).slice(-10);
+  return orders.filter(o=>{
+    const oid=String(o.customer?.id||"").trim().toUpperCase(),op=digits(o.customer?.phone).slice(-10);
+    return (cid&&oid===cid)||(!oid&&phone&&op===phone);
+  });
+}
+function renderCustomerDetailOrders(c){
+  const box=$("customerDetailOrders");if(!box)return;
+  const mine=customerOrdersFor(c);
+  $("cdOrderCount").textContent=mine.length?`(${mine.length})`:"";
+  box.innerHTML=mine.length?mine.map(o=>{
+    const changed=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
+    const amt=changed?`<span class="cart-meta" style="text-decoration:line-through">${money(o.originalTotal)}</span> <b>${money(o.total)}</b>`:`<b>${money(o.total)}</b>`;
+    return `<div class="order-card"><div class="between"><b>${esc(o.id)}</b><span class="cart-meta">${fmtDT(o.date)}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div>${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0}</div>`).join("")}</div><div class="between">${amt}<span class="status">${esc(o.status||"New")}</span></div></div>`;
+  }).join(""):`<div class="empty"><h3>No orders yet</h3></div>`;
+}
+async function saveCustomerDetailEdit(){
+  if(!cdId)return;
+  const customer={name:$("cdName").value.trim(),type:$("cdType").value,phone:digits($("cdPhone").value),address:$("cdAddress").value.trim(),pin:digits($("cdPin").value)};
+  if(!customer.name||customer.phone.length!==10||!customer.address||customer.pin.length!==6){toast("Enter a valid name, 10-digit phone, address and 6-digit pincode");return;}
+  await busy($("cdSaveBtn"),async()=>{
+    try{
+      await apiPost({action:"adminUpdateCustomerDetails",customerId:cdId,customer});
+      await loadAdminCustomers();
+      toast("Customer details updated");
+    }catch(e){toast("Could not save: "+e.message);}
+  });
+}
+async function approveCustomer(id){
+  if(!confirm("Approve this customer and generate login credentials?"))return;
+  try{
+    const d=await apiPost({action:"adminApproveCustomer",customerId:id});
+    showGeneratedCredentials(d);
+    await loadAdminCustomers();
+  }catch(e){toast("Approval failed: "+e.message);}
+}
+async function setCustomerStatus(id,status){
+  if(!confirm(`${status==="Blocked"?"Block":"Unblock"} this customer?`))return;
+  try{
+    await apiPost({action:"adminSetCustomerStatus",customerId:id,status});
+    await loadAdminCustomers();
+    toast(`Customer ${status.toLowerCase()}`);
+  }catch(e){toast("Could not change status: "+e.message);}
+}
+
+/* --- Password reset + credentials --- */
+let rpId=null;
+function openResetPassword(id){
+  const c=adminCustomers.find(x=>x.id===id);
+  if(!c)return;
+  rpId=id;
+  $("rpWho").textContent=`${c.name} • ${c.id}`;
+  $("rpPassword").value="";
+  openModal("resetPasswordModal");
+}
+async function confirmResetPassword(){
+  const pw=$("rpPassword").value;
+  if(pw&&(pw.length<6||pw.length>40)){toast("Password must be 6 to 40 characters");return;}
+  await busy($("rpBtn"),async()=>{
+    try{
+      const d=await apiPost({action:"adminResetCustomerPassword",customerId:rpId,newPassword:pw});
+      hideModal("resetPasswordModal");
+      showGeneratedCredentials({customerId:rpId,temporaryPassword:d.temporaryPassword});
+      loadAdminCustomers();
+    }catch(e){toast("Could not reset password: "+e.message);}
+  });
+}
+function showGeneratedCredentials(d){
+  window.__cred=d;
+  $("credId").textContent=d.customerId||"";
+  $("credPw").textContent=d.temporaryPassword||"";
+  openModal("credentialModal");
+}
+function copyCredentials(){
+  const d=window.__cred||{};
+  copyText(`BIJAYA HOUSING login\nCustomer ID: ${d.customerId}\nPassword: ${d.temporaryPassword}\nPlease change your password after logging in.`,"Login details copied");
+}
+function openAdminCustomerForm(){
+  ["adminCustName","adminCustPhone","adminCustAddress","adminCustPin"].forEach(id=>$(id).value="");
+  $("adminCustType").value="Customer";
+  openModal("adminCustomerModal");
+}
+async function adminCreateCustomer(){
+  const name=$("adminCustName").value.trim(),phone=digits($("adminCustPhone").value),type=$("adminCustType").value,address=$("adminCustAddress").value.trim(),pin=digits($("adminCustPin").value);
+  if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid customer details");return;}
+  await busy($("adminCreateBtn"),async()=>{
+    try{
+      const d=await apiPost({action:"adminCreateCustomer",customer:{name,type,phone,address,pin}});
+      hideModal("adminCustomerModal");
+      showGeneratedCredentials(d);
+      await loadAdminCustomers();
+    }catch(e){toast("Could not create customer: "+e.message);}
+  });
+}
+
+/* --- Product access --- */
+let accessCustomerId="";
+async function manageCustomerAccess(id){
+  accessCustomerId=id;
+  const c=adminCustomers.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));
+  if(!c)return;
+  $("accessCustomerTitle").textContent=`${c.name} • ${c.type||"Customer"} • ${c.id}`;
+  $("accessType").value=c.accessType||"ALL";
+  renderAccessChoices(c);
+  openModal("customerAccessModal");
+  updateAccessBoxes();
+}
+function updateAccessBoxes(){
+  const t=$("accessType").value;
+  $("categoryAccessBox").classList.toggle("hidden",t!=="CATEGORY");
+  $("productAccessBox").classList.toggle("hidden",t!=="PRODUCT");
+}
+function toggleAccessChecks(selector,checked){document.querySelectorAll(selector+" input[type=checkbox]").forEach(cb=>{cb.checked=checked;});}
+function renderAccessChoices(c){
+  const cats=[...new Set(products.map(p=>p.category).filter(Boolean))].sort();
+  const allowedCats=String(c.allowedCategories||"").split(",").map(x=>x.trim()).filter(Boolean);
+  const allowedProducts=String(c.allowedProducts||"").split(",").map(x=>x.trim()).filter(Boolean);
+  $("accessCategoriesList").innerHTML=cats.length?cats.map(x=>`<label class="access-check"><input type="checkbox" value="${esc(x)}" ${allowedCats.includes(x)?"checked":""}> <span>${esc(x)}</span></label>`).join(""):`<div class="notice">No categories found.</div>`;
+  $("accessProductsList").innerHTML=products.length?products.map(p=>`<label class="access-check"><input type="checkbox" value="${esc(p.id)}" ${allowedProducts.includes(p.id)?"checked":""}> <span><b>${esc(p.id)}</b> — ${esc(p.name)} <small>(${esc(p.category)})</small></span></label>`).join(""):`<div class="notice">No products found.</div>`;
+}
+async function saveCustomerAccess(){
+  const type=$("accessType").value;
+  const categories=[...document.querySelectorAll("#accessCategoriesList input:checked")].map(x=>x.value);
+  const productIds=[...document.querySelectorAll("#accessProductsList input:checked")].map(x=>x.value);
+  if(type==="CATEGORY"&&!categories.length){toast("Select at least one category");return;}
+  if(type==="PRODUCT"&&!productIds.length){toast("Select at least one product");return;}
+  try{
+    await apiPost({action:"adminSetCustomerAccess",customerId:accessCustomerId,accessType:type,allowedCategories:categories.join(","),allowedProducts:productIds.join(",")});
+    await loadAdminCustomers();
+    hideModal("customerAccessModal");
+    toast("Product access saved");
+  }catch(e){toast("Could not save access: "+e.message);}
+}
+
+/* --- Payments (admin) --- */
+async function loadAdminPayments(silent,manual){
+  if(!sessionStorage.getItem("admin_token")||adminPayLoading)return;
+  adminPayLoading=true;
+  try{
+    const d=await apiPost({action:"adminGetPayments"});
+    const list=d.payments||[];
+    if(adminPayPrev){
+      const fresh=list.filter(p=>p.status==="Verifying"&&adminPayPrev[p.id]!=="Verifying");
+      if(fresh.length)toast(fresh.length===1?`💳 ${fresh[0].customerName} reported paying ${money(fresh[0].amount)}`:`💳 ${fresh.length} payments to verify`,6000);
+    }
+    adminPayPrev={};list.forEach(p=>{adminPayPrev[p.id]=p.status;});
+    adminPayments=list;
+    refreshPaymentViews();
+    if(manual)toast("Payments refreshed");
+  }catch(e){if(!silent&&e.message!=="Admin session expired")toast("Could not load payments: "+e.message);}
+  finally{adminPayLoading=false;}
+}
+function refreshPaymentViews(){
+  renderAdminPayments();
+  renderAdminStats();
+  if($("customerDetailModal")?.classList.contains("show"))renderCdPayments();
+}
+function mergeAdminPayment(p){
+  const i=adminPayments.findIndex(x=>x.id===p.id);
+  if(i>=0)adminPayments[i]=p;else adminPayments.unshift(p);
+  if(adminPayPrev)adminPayPrev[p.id]=p.status;
+}
+function payStatusSelect(p){
+  return `<select class="order-status-select ${stCls(p.status)}" onchange="adminSetPaymentStatus(${arg(p.id)},this.value)">${PAY_STATUSES.map(s=>`<option value="${s}" ${p.status===s?"selected":""}>${s}</option>`).join("")}</select>`;
+}
+function payActions(p){
+  return `<button type="button" class="outline" onclick="adminEditPayment(${arg(p.id)})">Edit</button>${isDue(p)?`<button type="button" class="outline" onclick="adminRemindPayment(${arg(p.id)})">🔔 Remind</button>`:""}`;
+}
+function payDetails(p){
+  return [p.note?esc(p.note):"",`<span class="cart-meta">UPI: ${esc(p.upiId)}</span>`,p.utr?`<span class="cart-meta">UTR: ${esc(p.utr)}</span>`:"",p.customerPaidOn?`<span class="cart-meta">Customer reported paid: ${fmtDT(p.customerPaidOn)}</span>`:"",p.paidOn?`<span class="cart-meta">Confirmed: ${fmtDT(p.paidOn)}</span>`:""].filter(Boolean).join("<br>");
+}
+function renderAdminPayments(){
+  const body=$("adminPaymentsBody");if(!body)return;
+  const q=($("payAdminSearch")?.value||"").trim().toLowerCase(),f=$("payAdminFilter")?.value||"All";
+  const sum={};PAY_STATUSES.forEach(s=>{sum[s]={n:0,amt:0};});
+  adminPayments.forEach(p=>{const s=sum[p.status];if(s){s.n++;s.amt+=p.amount;}});
+  $("paySummaryBar").innerHTML=PAY_STATUSES.map(s=>`<span class="order-summary-pill">${s}<strong>${sum[s].n}</strong> <span class="cart-meta">${money(sum[s].amt)}</span></span>`).join("");
+  const rank={Verifying:0,Pending:1,Failed:2,Paid:3,Cancelled:4};
+  const list=adminPayments.filter(p=>(f==="All"||(f==="Due"?isDue(p):p.status===f))&&(!q||[p.id,p.customerName,p.customerId,p.phone,p.note,p.utr].join(" ").toLowerCase().includes(q)))
+    .sort((a,b)=>(rank[a.status]-rank[b.status])||(new Date(b.date)-new Date(a.date)));
+  body.innerHTML=list.length?list.map(p=>`<tr>
+    <td data-label="Request"><b>${esc(p.id)}</b><br><span class="cart-meta">${fmtDT(p.date)}</span></td>
+    <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(p.customerId)})"><b>${esc(p.customerName)}</b></button><br><span class="cart-meta">${esc(p.phone)}</span></td>
+    <td data-label="Amount"><b>${money(p.amount)}</b></td>
+    <td data-label="Details" class="stack">${payDetails(p)}</td>
+    <td data-label="Status">${payStatusSelect(p)}</td>
+    <td data-label="Action"><div class="row-actions">${payActions(p)}</div></td>
+  </tr>`).join(""):`<tr><td colspan="6" class="full"><div class="empty"><h3>No payment requests</h3></div></td></tr>`;
+}
+function renderCdPayments(){
+  const box=$("cdPaymentsList");if(!box)return;
+  const mine=adminPayments.filter(p=>p.customerId===cdId);
+  $("cdPayCount").textContent=mine.length?`(${mine.length})`:"";
+  box.innerHTML=mine.length?mine.map(p=>`<div class="pay-card">
+    <div class="between"><strong style="font-size:18px">${money(p.amount)}</strong>${payStatusSelect(p)}</div>
+    <div class="cart-meta">${esc(p.id)} • ${fmtDT(p.date)}</div>
+    <div>${payDetails(p)}</div>
+    <div class="row-actions">${payActions(p)}</div>
+  </div>`).join(""):`<div class="empty"><h3>No payment requests</h3></div>`;
+}
+async function adminSetPaymentStatus(id,status){
+  const p=adminPayments.find(x=>x.id===id);
+  if(!p||p.status===status)return;
+  try{
+    const d=await apiPost({action:"adminUpdatePayment",paymentId:id,status});
+    mergeAdminPayment(d.payment);
+    toast(`${id} marked ${status}`);
+  }catch(e){toast("Could not update: "+e.message);}
+  finally{refreshPaymentViews();}
+}
+async function adminRemindPayment(id){
+  try{
+    const d=await apiPost({action:"adminRemindPayment",paymentId:id});
+    mergeAdminPayment(d.payment);
+    toast("Reminder sent — it pops up again in the customer's app");
+  }catch(e){toast(e.message);}
+  finally{refreshPaymentViews();}
+}
+
+let pf={mode:"create",customerId:"",paymentId:""};
+function openPaymentForm(customerId){
+  pf={mode:"create",customerId:"",paymentId:""};
+  $("pfTitle").textContent="New Payment Request";
+  $("pfSaveBtn").textContent="Send Request";
+  $("pfAmount").value="";$("pfNote").value="";$("pfSearch").value="";
+  $("pfUpi").value=localStorage.getItem("bijaya_last_upi")||"";
+  setPfCustomer(customerId||"");
+  openModal("paymentFormModal");
+  if(!adminCustomers.length)loadAdminCustomers().then(()=>{if(!pf.customerId)renderPfResults();});
+}
+function adminEditPayment(id){
+  const p=adminPayments.find(x=>x.id===id);
+  if(!p)return;
+  pf={mode:"edit",customerId:p.customerId,paymentId:id};
+  $("pfTitle").textContent="Edit Payment Request";
+  $("pfSaveBtn").textContent="Save Changes";
+  $("pfAmount").value=p.amount;$("pfNote").value=p.note||"";$("pfUpi").value=p.upiId||"";
+  setPfCustomer(p.customerId,p.customerName);
+  openModal("paymentFormModal");
+}
+function setPfCustomer(id,fallbackName){
+  pf.customerId=id;
+  const c=adminCustomers.find(x=>x.id===id);
+  $("pfChosen").classList.toggle("hidden",!id);
+  $("pfPicker").classList.toggle("hidden",!!id);
+  $("pfChosen").innerHTML=id?`<span>${esc(c?c.name:fallbackName||id)} <span class="cart-meta">${esc(id)}</span></span>${pf.mode==="create"?`<button type="button" class="link-button" onclick="setPfCustomer('')">Change</button>`:""}`:"";
+  if(!id)renderPfResults();
+}
+function renderPfResults(){
+  const q=$("pfSearch").value.trim().toLowerCase();
+  const list=adminCustomers.filter(c=>String(c.status).toLowerCase()==="active"&&(!q||[c.name,c.phone,c.id].join(" ").toLowerCase().includes(q))).sort((a,b)=>String(a.name).localeCompare(String(b.name))).slice(0,8);
+  $("pfResults").innerHTML=list.length?list.map(c=>`<button type="button" class="pick-item" onclick="setPfCustomer(${arg(c.id)})"><b>${esc(c.name)}</b> <span class="cart-meta">${esc(c.phone)} • ${esc(c.id)}</span></button>`).join(""):`<div class="cart-meta">No active customers found</div>`;
+}
+async function savePaymentForm(){
+  const amount=Math.round(Number($("pfAmount").value)*100)/100,upiId=$("pfUpi").value.trim(),note=$("pfNote").value.trim();
+  if(!pf.customerId){toast("Select a customer");return;}
+  if(!(amount>=1&&amount<=100000)){toast("Enter an amount between ₹1 and ₹1,00,000");return;}
+  if(!UPI_RE.test(upiId)){toast("Enter a valid UPI ID, e.g. name@bank");return;}
+  await busy($("pfSaveBtn"),async()=>{
+    try{
+      if(pf.mode==="edit"){
+        const d=await apiPost({action:"adminUpdatePayment",paymentId:pf.paymentId,amount,upiId,note});
+        mergeAdminPayment(d.payment);
+        toast("Payment request updated");
+      }else{
+        const d=await apiPost({action:"adminCreatePayment",customerId:pf.customerId,amount,upiId,note});
+        mergeAdminPayment(d.payment);
+        toast(`Request of ${money(amount)} sent to ${d.payment.customerName}`);
+      }
+      localStorage.setItem("bijaya_last_upi",upiId);
+      hideModal("paymentFormModal");
+      refreshPaymentViews();
+    }catch(e){toast(e.message);}
+  });
 }
 
 async function adminChangeOrderStatus(orderId,status){
@@ -2499,254 +3209,6 @@ async function savePriceEdit(){
 
 function generateInvoiceById(id){const o=orders.find(x=>String(x.id)===String(id));if(!o){toast("Order not found");return;}generateInvoice(o);}
 
-/* ADMIN CUSTOMER MANAGEMENT */
-let adminCustomers=[];
-
-async function loadAdminCustomers(){
-  if(!sessionStorage.getItem("admin_token"))return;
-  try{
-    const d=await apiPost({action:"getCustomers"});
-    adminCustomers=d.customers||[];
-    renderAdminCustomers();
-  }catch(e){
-    toast("Could not load customers: "+e.message);
-  }
-}
-
-function customerStatusClass(status){
-  const s=String(status||"Pending").toLowerCase();
-  if(s==="active")return "status-active";
-  if(s==="blocked")return "status-blocked";
-  return "status-pending";
-}
-
-function renderAdminCustomers(){
-  const body=$("adminCustomersBody"); if(!body)return;
-  const list=adminCustomers;
-  body.innerHTML=list.length?list.map(c=>{
-    const st=(c.status||"Pending").toLowerCase();
-    const cls=st==="active"?"status-active":st==="blocked"?"status-blocked":"status-pending";
-    const access=c.accessType||"ALL";
-    const telHref="tel:"+String(c.phone||"").replace(/\D/g,"");
-    const callBtn=`<a class="outline" href="${telHref}" style="display:inline-block;text-decoration:none;text-align:center">\u260e Call</a>`;
-    const action=st==="pending"
-      ? `<button type="button" class="primary" onclick="approveCustomer('${esc(c.id)}')">Approve</button>
-         ${callBtn}
-         <button type="button" class="outline" onclick="viewCustomerIdCardAdmin('${esc(c.id)}')">View ID</button>`
-      : `<button type="button" class="outline" onclick="manageCustomerAccess('${esc(c.id)}')">Access</button>
-         ${callBtn}
-         <button type="button" class="outline" onclick="viewCustomerIdCardAdmin('${esc(c.id)}')">View ID</button>
-         <button type="button" class="outline" onclick="setCustomerStatus('${esc(c.id)}','${st==="blocked"?"Active":"Blocked"}')">${st==="blocked"?"Unblock":"Block"}</button>`;
-    return `<tr>
-      <td><button type="button" class="link-button" onclick="openCustomerDetailModal('${esc(c.id)}')"><b>${esc(c.name)}</b></button></td>
-      <td>${esc(c.type||"Customer")}</td>
-      <td>${esc(c.phone||"")}</td>
-      <td><span class="customer-id-badge">${esc(c.id||"Pending")}</span></td>
-      <td><span class="status ${cls}">${esc(c.status||"Pending")}</span></td>
-      <td>${esc(access)}</td>
-      <td>${c.dateRegistered?new Date(c.dateRegistered).toLocaleDateString("en-IN"):"—"}</td>
-      <td><div class="customer-row-actions">${action}</div></td>
-    </tr>`;
-  }).join(""):`<tr><td colspan="8"><div class="empty"><h3>No customers found</h3><p>New registrations will appear here.</p></div></td></tr>`;
-}
-
-let __customerDetailId=null;
-
-function openCustomerDetailModal(id){
-  const c=adminCustomers.find(x=>x.id===id);
-  if(!c){toast("Customer not found");return;}
-  __customerDetailId=id;
-  if($("customerDetailTitle"))$("customerDetailTitle").textContent=c.name||"Customer";
-  if($("customerDetailId"))$("customerDetailId").textContent=c.id||"";
-  if($("cdName"))$("cdName").value=c.name||"";
-  if($("cdType"))$("cdType").value=c.type||"Customer";
-  if($("cdPhone"))$("cdPhone").value=c.phone||"";
-  if($("cdAddress"))$("cdAddress").value=c.address||"";
-  if($("cdPin"))$("cdPin").value=c.pin||"";
-  if($("cdCallBtn"))$("cdCallBtn").href="tel:"+String(c.phone||"").replace(/\D/g,"");
-  renderCustomerDetailOrders(c);
-  $("customerDetailModal")?.classList.add("show");
-  $("modalBackdrop")?.classList.add("show");
-  document.body.style.overflow="hidden";
-}
-
-function renderCustomerDetailOrders(c){
-  const box=$("customerDetailOrders");
-  if(!box)return;
-  const customerId=String(c.id||"").trim().toUpperCase();
-  const phone=String(c.phone||"").replace(/\D/g,"").slice(-10);
-  const mine=orders.filter(o=>{
-    const oid=String(o.customer?.id||"").trim().toUpperCase();
-    const op=String(o.customer?.phone||"").replace(/\D/g,"").slice(-10);
-    return (customerId&&oid===customerId)||(!oid&&phone&&op===phone);
-  });
-  box.innerHTML=mine.length?mine.map(o=>{
-    const priceChanged=o.originalTotal!=null && Number(o.originalTotal)!==Number(o.total);
-    const amountHtml=priceChanged?`<span class="cart-meta" style="text-decoration:line-through">${money(o.originalTotal)}</span> <b>${money(o.total)}</b>`:`<b>${money(o.total)}</b>`;
-    return `<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div>${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty)||0}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">${amountHtml}<span class="status">${esc(o.status||"New")}</span></div></div>`;
-  }).join(""):`<div class="empty"><h3>No orders yet</h3><p>This customer hasn't placed any orders.</p></div>`;
-}
-
-async function saveCustomerDetailEdit(){
-  if(!__customerDetailId)return;
-  const customer={
-    name:$("cdName").value.trim(),
-    type:$("cdType").value,
-    phone:$("cdPhone").value.replace(/\D/g,""),
-    address:$("cdAddress").value.trim(),
-    pin:$("cdPin").value.replace(/\D/g,"")
-  };
-  if(!customer.name||customer.phone.length!==10||!customer.address||customer.pin.length!==6){
-    toast("Enter a valid name, 10-digit phone, address and 6-digit pincode");return;
-  }
-  try{
-    await apiPost({action:"adminUpdateCustomerDetails",customerId:__customerDetailId,customer});
-    await loadAdminCustomers();
-    toast("Customer details updated");
-    closeModal();
-  }catch(e){
-    toast("Could not save: "+e.message);
-  }
-}
-
-async function adminResetPasswordFor(id){
-  if(!id)return;
-  if(!confirm("Reset this customer's password? They will need the new password to log in, and any other device they're logged into will be signed out."))return;
-  try{
-    const d=await apiPost({action:"adminResetCustomerPassword",customerId:id});
-    closeModal();
-    showGeneratedCredentials({customerId:id,temporaryPassword:d.temporaryPassword});
-  }catch(e){
-    toast("Could not reset password: "+e.message);
-  }
-}
-
-async function approveCustomer(id){
-  if(!confirm("Approve this customer and generate new login credentials?"))return;
-  try{
-    const d=await apiPost({action:"adminApproveCustomer",customerId:id});
-    showGeneratedCredentials(d);
-    await loadAdminCustomers();
-    toast("Customer approved");
-  }catch(e){
-    toast("Approval failed: "+e.message);
-  }
-}
-
-async function setCustomerStatus(id,status){
-  const action=status==="Blocked"?"Block":"Unblock";
-  if(!confirm(`${action} this customer?`))return;
-  try{
-    await apiPost({action:"adminSetCustomerStatus",customerId:id,status});
-    await loadAdminCustomers();
-    toast(`Customer ${status.toLowerCase()}`);
-  }catch(e){
-    toast("Could not change status: "+e.message);
-  }
-}
-
-function showGeneratedCredentials(d){
-  const box=$("adminCustomerCredentialBox");
-  if(!box)return;
-  box.innerHTML=`<div class="credential-box">
-    <b>Give these credentials to the customer</b>
-    <div style="margin-top:10px">Customer ID<br><code>${esc(d.customerId||"")}</code></div>
-    <div style="margin-top:10px">Temporary Password<br><code>${esc(d.temporaryPassword||"")}</code></div>
-    <div class="notice" style="margin-top:10px">The password is stored as a secure hash. Keep this information safe.</div>
-  </div>`;
-  $("adminCustomerModal").classList.add("show");
-  $("modalBackdrop").classList.add("show");
-}
-
-function openAdminCustomerForm(){
-  $("adminCustName").value="";
-  $("adminCustType").value="Customer";
-  $("adminCustPhone").value="";
-  $("adminCustAddress").value="";
-  $("adminCustPin").value="";
-  $("adminCustomerCredentialBox").innerHTML="";
-  $("adminCustomerModal").classList.add("show");
-  $("modalBackdrop").classList.add("show");
-}
-
-async function adminCreateCustomer(){
-  const name=$("adminCustName").value.trim();
-  const phone=$("adminCustPhone").value.replace(/\D/g,"");
-  const type=$("adminCustType").value;
-  const address=$("adminCustAddress").value.trim();
-  const pin=$("adminCustPin").value.replace(/\D/g,"");
-
-  if(!name||phone.length!==10||!address||pin.length!==6){
-    toast("Enter valid customer details");
-    return;
-  }
-
-  try{
-    const d=await apiPost({action:"adminCreateCustomer",customer:{name,type,phone,address,pin}});
-    showGeneratedCredentials(d);
-    await loadAdminCustomers();
-    toast("Customer account created");
-  }catch(e){
-    toast("Could not create customer: "+e.message);
-  }
-}
-
-/* CUSTOMER PRODUCT ACCESS */
-let accessCustomerId="";
-async function manageCustomerAccess(id){
-  accessCustomerId=id;
-  const c=adminCustomers.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));
-  if(!c)return;
-  $("accessCustomerTitle").textContent=`${c.name} • ${c.type||"Customer"} • ${c.id}`;
-  $("accessType").value=c.accessType||"ALL";
-  await renderAccessChoices(c);
-  $("customerAccessModal").classList.add("show"); $("modalBackdrop").classList.add("show");
-  updateAccessBoxes();
-}
-function updateAccessBoxes(){
-  const t=$("accessType").value;
-  $("categoryAccessBox").classList.toggle("hidden",t!=="CATEGORY");
-  $("productAccessBox").classList.toggle("hidden",t!=="PRODUCT");
-}
-function toggleAccessChecks(selector,checked){
-  document.querySelectorAll(selector+" input[type=checkbox]").forEach(cb=>{cb.checked=checked;});
-}
-async function renderAccessChoices(c){
-  const cats=[...new Set(products.map(p=>p.category).filter(Boolean))].sort();
-  const allowedCats=String(c.allowedCategories||"").split(",").map(x=>x.trim()).filter(Boolean);
-  const allowedProducts=String(c.allowedProducts||"").split(",").map(x=>x.trim()).filter(Boolean);
-  $("accessCategoriesList").innerHTML=cats.length?cats.map(x=>`<label class="access-check"><input type="checkbox" value="${esc(x)}" ${allowedCats.includes(x)?"checked":""}> <span>${esc(x)}</span></label>`).join(""):`<div class="notice">No categories found.</div>`;
-  $("accessProductsList").innerHTML=products.length?products.map(p=>`<label class="access-check"><input type="checkbox" value="${esc(p.id)}" ${allowedProducts.includes(p.id)?"checked":""}> <span><b>${esc(p.id)}</b> — ${esc(p.name)} <small>(${esc(p.category)})</small></span></label>`).join(""):`<div class="notice">No products found.</div>`;
-}
-async function saveCustomerAccess(){
-  const type=$("accessType").value;
-  const categories=[...document.querySelectorAll("#accessCategoriesList input:checked")].map(x=>x.value);
-  const productIds=[...document.querySelectorAll("#accessProductsList input:checked")].map(x=>x.value);
-  if(type==="CATEGORY" && !categories.length){toast("Select at least one category");return}
-  if(type==="PRODUCT" && !productIds.length){toast("Select at least one product");return}
-  try{
-    const result=await apiPost({action:"adminSetCustomerAccess",customerId:accessCustomerId,accessType:type,allowedCategories:categories.join(","),allowedProducts:productIds.join(",")});
-    if(!result || result.ok===false)throw Error(result?.error||"Unknown server error");
-    await loadAdminCustomers();
-    closeModal();
-    toast("Customer product access saved");
-  }catch(e){
-    console.error("Customer access save error:",e);
-    toast("Could not save access: "+e.message);
-  }
-}
-function saveApi(){
-  const input=$("apiUrl");
-  const value=String(input?.value||"").trim();
-  if(!/^https:\/\/script\.google\.com\/macros\/s\/[^\s]+\/exec(?:\?.*)?$/i.test(value)){
-    toast("Enter a valid Apps Script /exec URL");
-    return;
-  }
-  API_URL=value;
-  localStorage.setItem("bijaya_api_url",API_URL);
-  if($("apiStatus"))$("apiStatus").textContent="● URL saved — testing connection…";
-  loadProductsFromApi(true);
-}
 function openProductForm(){editingId=null;$("productModalTitle").textContent="Add Product";["pId","pName","pCategory","pSubcategory","pDescription","pImageId","pPrice","pSizes"].forEach(id=>$(id).value="");$("pStock").value=0;$("pActive").value="true";$("productModal").classList.add("show");$("modalBackdrop").classList.add("show")}
 function editProduct(id){const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));if(!p)return;editingId=p.id;$("productModalTitle").textContent="Edit Product";$("pId").value=p.id||"";$("pName").value=p.name||"";$("pCategory").value=p.category||"";$("pSubcategory").value=p.subcategory||"";$("pDescription").value=p.description||"";$("pImageId").value=p.imageId||"";$("pPrice").value=p.price||0;$("pSizes").value=(p.sizes||[]).map(s=>`${s.name}:${s.price}:${s.stock}`).join(", ");$("pStock").value=p.stock||0;$("pActive").value=String(p.active!==false);$("productModal").classList.add("show");$("modalBackdrop").classList.add("show")}
 async function saveProduct(){
@@ -2774,23 +3236,11 @@ async function loadAdminOrders(){
 }
 
 if($("searchInput"))$("searchInput").addEventListener("input",()=>{if(customer())renderProducts();});if($("accessType"))$("accessType").addEventListener("change",updateAccessBoxes);
-/* =========================
-   UPDATE CHECKER
 
-   The APK's WebView loads this page from a live GitHub Pages URL, but
-   once loaded, a long-running session keeps running the JS it already
-   has in memory - it won't notice a new commit on its own. This
-   periodically re-fetches the same URL fresh and compares a hash of the
-   raw HTML against what was loaded at the start of this session. If they
-   differ, a commit has landed since this session started, so a small
-   banner offers a one-tap reload (which re-fetches everything fresh).
-========================= */
 const __canonicalAppUrl=location.origin+location.pathname;
 let __appBaselineHash=null;
 
 function computeSimpleHash(text){
-  // Not cryptographic - just a fast, dependency-free change detector, so
-  // this works on every WebView without relying on crypto.subtle support.
   let hash=0;
   for(let i=0;i<text.length;i++){
     hash=(hash*31+text.charCodeAt(i))|0;
@@ -2809,8 +3259,6 @@ async function checkForAppUpdate(){
       $("updateBanner")?.classList.remove("hidden");
     }
   }catch(e){
-    // Offline, or the request was blocked - this is a non-critical
-    // background check, so fail silently rather than bothering anyone.
   }
 }
 
@@ -2821,16 +3269,13 @@ setInterval(checkForAppUpdate,5*60*1000);
 
 async function init(){
   closeAllOverlays();
-  if($("apiUrl"))$("apiUrl").value=API_URL;
   updateCustomerAccess();
   updateCart();
   checkForAppUpdate();
-
   try{
-    const adminLogged=!!sessionStorage.getItem("admin_token");
-    if(adminLogged){
+    if(sessionStorage.getItem("admin_token")){
       setAppView("admin",false);
-      await Promise.all([loadProductsFromApi(false,true),loadAdminOrders(),loadAdminCustomers()]);
+      await Promise.all([loadProductsFromApi(false,true),loadAdminOrders(),loadAdminCustomers(),loadAdminPayments(true)]);
     }else if(customer()){
       setAppView("customer",false);
       await Promise.all([loadProductsFromApi(false),loadCustomerOrders()]);
@@ -2838,21 +3283,14 @@ async function init(){
       setAppView("customer",false);
     }
   }finally{
-    // Always hide the loading screen, even if something above failed -
-    // a stuck full-screen loading screen would be worse than showing the
-    // (possibly incomplete) app underneath.
     $("appLoadingScreen")?.classList.add("hidden");
   }
 }
 
 window.addEventListener("pageshow",()=>{
-  // If the browser restores the page from back/forward cache, repair the visible view.
   setAppView(location.hash==="#admin" && sessionStorage.getItem("admin_token")?"admin":"customer",false);
 });
 
-// Safety net: no matter what happens in init() (a slow network, an
-// unexpected error, anything), never let the loading screen stay stuck
-// forever and block the whole app from being usable.
 setTimeout(()=>{$("appLoadingScreen")?.classList.add("hidden");},15000);
 init();
 document.addEventListener("keydown",e=>{
