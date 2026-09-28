@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<title>BIJAYA HOUSING</title>
+<title>BIJAYA HOUSING — Online Store</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://script.google.com">
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -20,7 +24,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .outline{border:1px solid #cbd5e1;background:#fff;color:var(--text);padding:10px 15px;border-radius:12px;font-weight:700;transition:.18s transform,.18s box-shadow,.18s background}.outline:hover{box-shadow:0 8px 20px rgba(15,23,42,.09);transform:translateY(-1px)}.outline:active,.primary:active,.iconbtn:active{transform:scale(.96)}
 .primary{border:1px solid var(--primary);background:var(--primary);color:#fff;padding:11px 17px;border-radius:12px;font-weight:800;transition:.18s transform,.18s box-shadow}.primary:hover{box-shadow:0 9px 22px rgba(15,23,42,.18);transform:translateY(-1px)}
 .iconbtn{border:1px solid var(--line);background:#fff;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;font-size:19px;transition:.18s transform}.cartbtn{position:relative}.badge{position:absolute;right:-5px;top:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--accent);color:#fff;font-size:11px;display:grid;place-items:center;font-weight:800}
-.container{max-width:1280px;margin:auto;padding:28px 22px 60px}
+.container{max-width:1280px;margin:auto;padding:28px 22px 60px}.hero{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:28px;padding:48px;color:#fff;display:grid;grid-template-columns:1.3fr .7fr;gap:30px;align-items:center;box-shadow:var(--shadow);margin-bottom:28px}.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.02;margin:0 0 16px}.hero p{color:#cbd5e1;max-width:650px;font-size:17px;line-height:1.7;margin:0 0 25px}.hero-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:25px}.hero-card .big{font-size:40px;font-weight:900}.hero-card small{color:#cbd5e1}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:28px 0 15px}.section-head h2{margin:0;font-size:24px}.categories{display:flex;gap:10px;overflow:auto;padding:2px 1px 10px} .subcategories{display:flex;gap:8px;overflow:auto;padding:0 1px 12px;margin-top:-3px}.subcategories .chip{font-size:12px;padding:8px 12px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 15px;white-space:nowrap;font-weight:700;color:#475569;transition:.18s}.chip.active,.chip:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(15,23,42,.04);transition:.2s;display:flex;flex-direction:column}.product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.product-img{aspect-ratio:1/1;background:#eef2f7;overflow:hidden;position:relative}.product-img::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,#eef2f7 25%,#f8fafc 37%,#eef2f7 63%);background-size:400% 100%;animation:imgSkeleton 1.2s ease infinite}.product-img img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;opacity:0;transition:opacity .18s ease}.product-img img.img-ready{opacity:1}.product-img.img-loaded::before{display:none}@keyframes imgSkeleton{0%{background-position:100% 0}100%{background-position:-100% 0}}.product-body{padding:16px}.product-cat{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.product h3{font-size:17px;margin:7px 0}.desc{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}.price{font-size:20px;font-weight:900;margin:12px 0}.size-row{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.size{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:800}.size.selected{border-color:var(--accent);background:#eff6ff;color:var(--accent)}.addrow{display:flex;gap:8px}.addrow .primary{flex:1}
 .empty{padding:50px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cbd5e1;border-radius:18px;grid-column:1/-1}
@@ -32,8 +36,8 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .footer{max-width:1280px;margin:auto;padding:25px 22px 45px;color:var(--muted);font-size:13px;text-align:center}
 .hidden{display:none!important}
 @keyframes pop{from{opacity:0;transform:translate(-50%,-43%) scale(.98)}to{opacity:1;transform:translate(-50%,-47%) scale(1)}}
-@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.search{width:280px}.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:720px){.nav{height:64px;padding:0 14px;gap:9px}.brand span:last-child{display:inline}.search{width:auto;flex:1}.search input{padding-left:37px}.nav .outline{display:none}.container{padding:18px 14px 45px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product{border-radius:16px}.product-body{padding:12px}.product h3{font-size:15px}.desc{font-size:12px}.price{font-size:17px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.modal{max-height:94dvh}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:23px}.admin-toolbar{align-items:flex-start}}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr}.search{width:280px}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){.nav{height:64px;padding:0 14px;gap:9px}.brand span:last-child{display:inline}.search{width:auto;flex:1}.search input{padding-left:37px}.nav .outline{display:none}.container{padding:18px 14px 45px}.hero{padding:30px 22px;border-radius:22px}.hero-card{display:none}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product{border-radius:16px}.product-body{padding:12px}.product h3{font-size:15px}.desc{font-size:12px}.price{font-size:17px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.modal{max-height:94dvh}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:23px}.admin-toolbar{align-items:flex-start}}
 @media(max-width:430px){.grid{grid-template-columns:1fr 1fr}.product-img{aspect-ratio:1/1}.addrow .primary{padding:9px 10px;font-size:12px}.iconbtn{width:40px;height:40px}}
 
 .callbtn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
@@ -84,6 +88,7 @@ html,body{max-width:100%;overflow-x:hidden}
   .profilebtn{font-size:12px;padding:9px 10px}
   .adminnavbtn{font-size:12px;padding:9px 10px}
   .container{width:100%;box-sizing:border-box}
+  .hero{grid-template-columns:1fr}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .modal{width:calc(100vw - 20px);max-width:none}
   .formgrid{grid-template-columns:1fr!important}
@@ -247,9 +252,77 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   .pay-amount{font-size:40px}
 }
 .drawer:not(.show){box-shadow:none}
-.rtable td.stack{display:block;text-align:left}
+
 @media(max-width:720px){.nav-spacer{display:none}}
 @media(max-width:820px){.rtable td.stack::before{display:block;margin-bottom:4px}}
+
+/* ===== Downloads + meeting registration ===== */
+.dl-row{display:flex;gap:10px;margin-top:14px}
+.dl-row>*{flex:1}
+.meet{max-width:1280px;margin:0 auto;padding:0 22px 46px}
+.meet-card{display:flex;align-items:center;gap:22px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px 24px;box-shadow:var(--shadow);max-width:600px;margin:0 auto}
+.meet-card svg{flex:0 0 auto;border-radius:12px;border:1px solid var(--line)}
+.meet-card h3{margin:0 0 6px;font-size:18px}
+.meet-card p{margin:0 0 12px;color:var(--muted);font-size:14px}
+.meet-card a{display:inline-block;text-decoration:none;padding:12px 22px;border-radius:14px;background:var(--primary);color:#fff;font-weight:800}
+@media(max-width:520px){.meet-card{flex-direction:column;text-align:center;padding:20px}}
+
+.dl-fallback{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--muted)}
+.dl-fallback span{flex:1 1 100%}
+.dl-fallback button{flex:1;padding:9px 12px}
+
+/* ===== v7 ===== */
+body.lang-alt{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans Devanagari","Noto Sans Oriya","Nirmala UI",sans-serif}
+.langsel{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 8px;font-weight:800;font-size:13px;color:var(--text)}
+body.admin-mode .langsel{display:none}
+.net-banner{position:fixed;left:12px;right:12px;bottom:12px;z-index:250;background:#fef3c7;color:#92400e;border:1px solid #fcd34d;border-radius:14px;padding:11px 14px;font-size:13px;font-weight:700;text-align:center;box-shadow:var(--shadow)}
+.sync-label{color:var(--muted);font-size:12px;margin-right:8px}
+.section-head .sync-wrap{display:flex;align-items:center;gap:6px}
+.stock-slot{min-height:20px}
+.stock-badge{display:inline-block;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:99px}
+.stock-badge.out{background:#fef2f2;color:#b91c1c}
+.stock-badge.low{background:#fff7ed;color:#c2410c}
+.more-wrap{grid-column:1/-1;text-align:center;padding:10px 0}
+.choice{display:flex;gap:10px;flex-wrap:wrap}
+.choice label{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-weight:700;font-size:14px;background:#fff;flex:1 1 150px;cursor:pointer}
+.choice input{width:auto;margin:0}
+.pay-balance{display:flex;justify-content:space-between;align-items:center;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:14px;padding:12px 14px;margin-bottom:10px;font-weight:700}
+.pay-balance strong{font-size:20px}
+.status.st-partial,.order-status-select.st-partial{background:#fefce8;color:#a16207}
+.track{margin-top:8px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:#fff}
+.track summary{font-weight:800;cursor:pointer;font-size:13.5px}
+.tl{list-style:none;margin:12px 0 4px;padding:0}
+.tl li{display:flex;gap:12px;position:relative;padding-bottom:14px}
+.tl li:last-child{padding-bottom:2px}
+.tl li::before{content:"";position:absolute;left:6px;top:14px;bottom:-2px;width:2px;background:var(--line)}
+.tl li:last-child::before{display:none}
+.tl .dot{flex:0 0 14px;height:14px;border-radius:50%;background:#cbd5e1;margin-top:3px;position:relative;z-index:1}
+.tl li.done .dot{background:#16a34a}
+.tl li.done::before{background:#86efac}
+.tl li.now .dot{background:#2563eb;box-shadow:0 0 0 4px #dbeafe}
+.tl li.cancel .dot{background:#dc2626}
+.tl li.todo b{color:var(--muted);font-weight:600}
+.tl b{display:block;font-size:14px}
+.tl small{color:var(--muted);font-size:12px}
+.order-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.order-actions>*{flex:1 1 140px}
+/* admin */
+.rtable td.chk{width:38px}
+.rtable td.chk input{width:18px;height:18px}
+@media(max-width:820px){.rtable td.chk{display:block;width:auto;text-align:left;padding-bottom:0}.rtable td.chk::before{content:none}}
+.bulkbar{background:#eff6ff;border:1px solid #bfdbfe;border-radius:14px;padding:10px 14px;margin-top:12px;align-items:center}
+.bulkbar b{margin-right:auto}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:16px}
+.dash-grid h3{margin:0 0 10px}
+.log-row{display:flex;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--surface2);flex-wrap:wrap}
+.log-row:first-child{border-top:0}
+.rec-row{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.rec-row input{width:18px;height:18px;margin-top:3px}
+.rep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:8px}
+.chart-wrap{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;overflow-x:auto}
+#adminReportsTab h4{margin:18px 0 8px}
+@media(max-width:820px){.rtable td.stack{display:block;text-align:left}.rtable td.stack::before{display:block;margin-bottom:4px}}
+@media(max-width:720px){.toolbar>button{flex:1 1 45%;padding-left:8px;padding-right:8px}.langsel{padding:9px 4px;max-width:64px}}
 </style>
 </head>
 <body>
@@ -272,12 +345,14 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
     <div class="brand"><div class="brand-mark">BH</div><span id="brandName">BIJAYA HOUSING</span></div>
     <div class="nav-spacer"></div>
     <div class="search" id="customerSearch"><span>⌕</span><input id="searchInput" placeholder="Search products..."></div>
+    <select id="langSelect" class="langsel no-i18n" aria-label="Language" title="Language / भाषा / ଭାଷା" onchange="setLang(this.value)"><option value="en">EN</option><option value="hi">हिं</option><option value="or">ଓଡ଼ି</option></select>
     <a class="outline callbtn" href="tel:8114832749">☎ Raj Kishor</a>
     <button type="button" class="outline profilebtn" onclick="openCustomerProfile()">👤 Profile<span class="badge hidden" id="profileBadge">0</span></button>
     <button type="button" class="outline adminnavbtn" id="adminNavButton" onclick="showLogin()">Admin</button>
     <button type="button" class="iconbtn cartbtn" onclick="openCart()">🛒<span class="badge" id="cartBadge">0</span></button>
   </div>
 </header>
+<div id="netBanner" class="net-banner hidden" role="status"></div>
 
 <main class="container" id="customerView">
   
@@ -293,6 +368,15 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
 </section>
 
   <div id="customerContent" class="hidden">
+  <section class="hero">
+    <div>
+      <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
+      <h1>Shop smarter.<br>Choose what you need.</h1>
+      <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
+      <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
+    </div>
+    <div class="hero-card"><small>Order support</small><div class="big">WhatsApp</div><small>Fast order confirmation through 8114832749</small></div>
+  </section>
   <section class="contact-strip">
     <div><strong>BIJAYA HOUSING</strong><span>Agalpur</span></div>
     <div class="contact-actions">
@@ -301,7 +385,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
       <a class="primary" target="_blank" href="https://wa.me/918114832749">WhatsApp</a>
     </div>
   </section>
-  <div class="section-head"><h2>Categories</h2><button type="button" class="outline" id="reloadProductsBtn" onclick="reloadProducts()">↻ Reload Products</button></div>
+  <div class="section-head"><h2>Categories</h2><span class="sync-wrap"><span class="sync-label" id="syncLabel"></span><button type="button" class="outline" id="reloadProductsBtn" onclick="reloadProducts()">↻ Reload Products</button></span></div>
   <div class="categories" id="categories"></div>
   <div class="subcategories hidden" id="subcategories"></div>
   <section id="productsSection">
@@ -322,7 +406,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   <div id="adminPanel" class="hidden">
     <div class="admin-head">
       <div><h2>Admin Dashboard</h2><div class="muted" id="adminWho"></div></div>
-      <div class="head-actions" style="display:flex;gap:8px"><button type="button" class="outline" onclick="goBackToStore()">Store</button><button type="button" class="outline" onclick="adminLogout()">Logout</button></div>
+      <div class="head-actions" style="display:flex;gap:8px"><button type="button" class="outline" onclick="openAdminPw()">🔑 Password</button><button type="button" class="outline" onclick="goBackToStore()">Store</button><button type="button" class="outline" onclick="adminLogout()">Logout</button></div>
     </div>
     <div class="admin-nav" style="margin-top:18px">
       <button type="button" class="admin-tab active" data-tab="dashboard" onclick="adminTab('dashboard')">Dashboard</button>
@@ -330,9 +414,14 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
       <button type="button" class="admin-tab" data-tab="orders" onclick="adminTab('orders')">Orders</button>
       <button type="button" class="admin-tab" data-tab="customers" onclick="adminTab('customers')">Customers</button>
       <button type="button" class="admin-tab" data-tab="payments" onclick="adminTab('payments')">Payments<span class="tab-badge hidden" id="payTabBadge">0</span></button>
+      <button type="button" class="admin-tab" data-tab="reports" onclick="adminTab('reports')">Reports</button>
     </div>
 
-    <div id="adminDashboardTab"><div class="stats" id="adminStats"></div></div>
+    <div id="adminDashboardTab"><div class="stats" id="adminStats"></div>
+      <div class="dash-grid">
+        <div class="panel"><h3>Recent admin logins</h3><div id="loginLog"></div></div>
+        <div class="panel"><h3>Backup</h3><p class="muted" id="backupInfo"></p><button type="button" class="primary" id="backupBtn" onclick="backupNow()">Back up now</button><p class="muted" style="margin-top:10px">Copies the whole Google Sheet into a private Drive folder. For automatic weekly backups, run <b>installTriggers</b> once in Apps Script.</p></div>
+      </div></div>
 
     <div id="adminProductsTab" class="hidden"><div class="panel">
       <div class="toolbar"><h3 class="grow" style="margin:0">Product Catalog</h3><button type="button" class="primary" onclick="openProductForm()">+ Add Product</button><button type="button" class="outline" onclick="loadProductsFromApi(true,true)">↻ Reload</button></div>
@@ -343,7 +432,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
       <div class="toolbar orders-toolbar">
         <h3 class="grow" style="margin:0">Orders</h3>
         <div class="field"><select id="orderStatusFilter" onchange="setOrderStatusFilter(this.value)">
-          <option value="All">All Orders</option><option value="New">New</option><option value="Confirmed">Confirmed</option><option value="Processing">Processing</option><option value="Ready">Ready</option><option value="Completed">Completed</option><option value="Cancelled">Cancelled</option>
+          <option value="All">All Orders</option><option value="New">New</option><option value="Confirmed">Confirmed</option><option value="Processing">Processing</option><option value="Ready">Ready</option><option value="Out for Delivery">Out for Delivery</option><option value="Completed">Completed</option><option value="Cancelled">Cancelled</option>
         </select></div>
       </div>
       <div class="order-summary-bar" id="orderSummaryBar"></div>
@@ -353,25 +442,42 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
     <div id="adminCustomersTab" class="hidden"><div class="panel">
       <div class="toolbar"><h3 class="grow" style="margin:0">Customers</h3><button type="button" class="primary" onclick="openAdminCustomerForm()">+ Create Customer</button><button type="button" class="outline" onclick="loadAdminCustomers(true)">↻ Refresh</button></div>
       <div class="toolbar">
-        <div class="field grow"><input id="custSearch" placeholder="Search name, phone or ID" oninput="renderAdminCustomers()"></div>
         <div class="field"><select id="custStatusFilter" onchange="renderAdminCustomers()"><option value="All">All statuses</option><option value="Pending">Pending</option><option value="Active">Active</option><option value="Blocked">Blocked</option></select></div>
       </div>
-      <div class="tablewrap" style="margin-top:12px"><table class="table rtable"><thead><tr><th>Customer</th><th>Phone</th><th>Customer ID</th><th>Status</th><th>Registered</th><th>Action</th></tr></thead><tbody id="adminCustomersBody"></tbody></table></div>
+      <div class="toolbar bulkbar hidden" id="custBulkBar"><b id="custBulkCount"></b><button type="button" class="outline" onclick="selectAllPendingCust(true)">Select all pending</button><button type="button" class="outline" onclick="selectAllPendingCust(false)">Clear</button><button type="button" class="primary" id="custApproveBtn" onclick="approveSelected()">Approve selected</button></div>
+      <div class="tablewrap" style="margin-top:12px"><table class="table rtable"><thead><tr><th></th><th>Customer</th><th>Phone</th><th>Customer ID</th><th>Status</th><th>Due</th><th>Registered</th><th>Action</th></tr></thead><tbody id="adminCustomersBody"></tbody></table></div>
     </div></div>
 
     <div id="adminPaymentsTab" class="hidden"><div class="panel">
-      <div class="toolbar"><h3 class="grow" style="margin:0">Payment Requests</h3><button type="button" class="primary" onclick="openPaymentForm()">+ New Request</button><button type="button" class="outline" onclick="loadAdminPayments(false,true)">↻ Refresh</button></div>
+      <div class="toolbar"><h3 class="grow" style="margin:0">Payment Requests</h3><button type="button" class="primary" onclick="openPaymentForm()">+ New Request</button><button type="button" class="outline" onclick="openReconcile()">🏦 Match bank statement</button><button type="button" class="outline" onclick="remindOverdue()">🔔 Remind overdue</button><button type="button" class="outline" onclick="loadAdminPayments(false,true)">↻ Refresh</button></div>
       <div class="toolbar">
-        <div class="field grow"><input id="payAdminSearch" placeholder="Search customer, request ID, note or UTR" oninput="renderAdminPayments()"></div>
-        <div class="field"><select id="payAdminFilter" onchange="renderAdminPayments()"><option value="All">All statuses</option><option value="Due">Due (Pending + Failed)</option><option value="Pending">Pending</option><option value="Verifying">Verifying</option><option value="Paid">Paid</option><option value="Failed">Failed</option><option value="Cancelled">Cancelled</option></select></div>
+        <div class="field"><select id="payAdminFilter" onchange="renderAdminPayments()"><option value="All">All statuses</option><option value="Due">Due (open requests)</option><option value="Overdue">Overdue (7+ days)</option><option value="Partial">Partial</option><option value="Pending">Pending</option><option value="Verifying">Verifying</option><option value="Paid">Paid</option><option value="Failed">Failed</option><option value="Cancelled">Cancelled</option></select></div>
       </div>
       <div class="order-summary-bar" id="paySummaryBar"></div>
-      <div class="tablewrap"><table class="table rtable"><thead><tr><th>Request</th><th>Customer</th><th>Amount</th><th>Details</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminPaymentsBody"></tbody></table></div>
+      <div class="toolbar bulkbar hidden" id="payBulkBar"><b id="payBulkCount"></b><button type="button" class="primary" onclick="bulkPay('status','Paid')">Mark Paid</button><button type="button" class="outline" onclick="bulkPay('remind')">🔔 Remind</button><button type="button" class="outline" onclick="bulkPay('status','Cancelled')">Cancel requests</button><button type="button" class="outline" onclick="clearPaySel()">Clear</button></div>
+      <div class="tablewrap"><table class="table rtable"><thead><tr><th></th><th>Request</th><th>Customer</th><th>Amount</th><th>Details</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminPaymentsBody"></tbody></table></div>
+    </div></div>
+
+    <div id="adminReportsTab" class="hidden"><div class="panel">
+      <div class="toolbar"><h3 class="grow" style="margin:0">Reports</h3>
+        <div class="field"><select id="repRange" onchange="renderReports()"><option value="today">Today</option><option value="7d">Last 7 days</option><option value="30d">Last 30 days</option><option value="month" selected>This month</option><option value="lastmonth">Last month</option><option value="year">This year</option><option value="all">All time</option><option value="custom">Custom range</option></select></div>
+        <div class="field hidden" id="repCustom" style="display:flex;gap:8px"><input type="date" id="repFrom" onchange="renderReports()"><input type="date" id="repTo" onchange="renderReports()"></div>
+      </div>
+      <div class="stats" id="repStats" style="margin-top:14px"></div>
+      <h4>Sales chart</h4><div id="repChart" class="chart-wrap"></div>
+      <div class="rep-grid">
+        <div><h4>Top products</h4><div class="tablewrap"><table class="table rtable"><thead><tr><th>Product</th><th>Qty</th><th>Sales</th></tr></thead><tbody id="repProducts"></tbody></table></div></div>
+        <div><h4>Top customers</h4><div class="tablewrap"><table class="table rtable"><thead><tr><th>Customer</th><th>Orders</th><th>Spent</th></tr></thead><tbody id="repCustomers"></tbody></table></div></div>
+      </div>
+      <h4>Export to Excel (CSV)</h4>
+      <div class="toolbar"><button type="button" class="outline" onclick="exportOrdersCsv()">Orders (this period)</button><button type="button" class="outline" onclick="exportProductsCsv()">Product sales (this period)</button><button type="button" class="outline" onclick="exportCustomersCsv()">Customers</button><button type="button" class="outline" onclick="exportPaymentsCsv()">Payments</button></div>
+      <div class="dl-fallback hidden" id="repFb"><span>Download didn't start?</span><button type="button" class="outline" onclick="openDlInBrowser()">Open in browser</button><button type="button" class="outline" onclick="copyDlLink()">Copy link</button></div>
     </div></div>
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.48</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.50</footer>
+<section class="meet"><div class="meet-card"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" width="148" height="148" role="img" aria-label="QR code: register for meetings" shape-rendering="crispEdges"><rect width="37" height="37" fill="#fff"/><path fill="#0f172a" d="M4 4h7v1h-7zM12 4h1v1h-1zM14 4h5v1h-5zM20 4h1v1h-1zM23 4h1v1h-1zM26 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM17 5h3v1h-3zM21 5h1v1h-1zM23 5h1v1h-1zM26 5h1v1h-1zM32 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM14 6h1v1h-1zM18 6h1v1h-1zM21 6h1v1h-1zM23 6h2v1h-2zM26 6h1v1h-1zM28 6h3v1h-3zM32 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM12 7h1v1h-1zM14 7h2v1h-2zM20 7h3v1h-3zM24 7h1v1h-1zM26 7h1v1h-1zM28 7h3v1h-3zM32 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM12 8h3v1h-3zM16 8h1v1h-1zM22 8h1v1h-1zM26 8h1v1h-1zM28 8h3v1h-3zM32 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h2v1h-2zM15 9h1v1h-1zM20 9h2v1h-2zM23 9h2v1h-2zM26 9h1v1h-1zM32 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h7v1h-7zM12 11h4v1h-4zM17 11h1v1h-1zM21 11h1v1h-1zM24 11h1v1h-1zM4 12h1v1h-1zM8 12h1v1h-1zM10 12h3v1h-3zM14 12h4v1h-4zM20 12h1v1h-1zM23 12h1v1h-1zM25 12h5v1h-5zM32 12h1v1h-1zM5 13h2v1h-2zM11 13h1v1h-1zM14 13h1v1h-1zM17 13h3v1h-3zM22 13h2v1h-2zM25 13h8v1h-8zM4 14h1v1h-1zM8 14h1v1h-1zM10 14h3v1h-3zM16 14h1v1h-1zM19 14h1v1h-1zM22 14h1v1h-1zM25 14h2v1h-2zM32 14h1v1h-1zM4 15h1v1h-1zM8 15h2v1h-2zM11 15h1v1h-1zM14 15h3v1h-3zM18 15h2v1h-2zM21 15h1v1h-1zM23 15h2v1h-2zM28 15h2v1h-2zM31 15h2v1h-2zM5 16h9v1h-9zM15 16h4v1h-4zM20 16h1v1h-1zM24 16h1v1h-1zM31 16h1v1h-1zM4 17h1v1h-1zM7 17h1v1h-1zM11 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM22 17h1v1h-1zM26 17h7v1h-7zM6 18h6v1h-6zM13 18h1v1h-1zM17 18h4v1h-4zM27 18h4v1h-4zM32 18h1v1h-1zM8 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h1v1h-1zM23 19h1v1h-1zM25 19h1v1h-1zM27 19h1v1h-1zM31 19h2v1h-2zM4 20h1v1h-1zM10 20h6v1h-6zM17 20h1v1h-1zM20 20h1v1h-1zM23 20h1v1h-1zM25 20h1v1h-1zM27 20h1v1h-1zM31 20h1v1h-1zM4 21h1v1h-1zM6 21h2v1h-2zM12 21h2v1h-2zM17 21h4v1h-4zM24 21h1v1h-1zM26 21h4v1h-4zM31 21h2v1h-2zM9 22h4v1h-4zM14 22h3v1h-3zM19 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM26 22h1v1h-1zM28 22h1v1h-1zM30 22h1v1h-1zM32 22h1v1h-1zM7 23h1v1h-1zM9 23h1v1h-1zM11 23h1v1h-1zM13 23h2v1h-2zM16 23h1v1h-1zM18 23h1v1h-1zM20 23h5v1h-5zM28 23h1v1h-1zM31 23h2v1h-2zM4 24h5v1h-5zM10 24h1v1h-1zM12 24h2v1h-2zM16 24h3v1h-3zM20 24h1v1h-1zM24 24h6v1h-6zM32 24h1v1h-1zM12 25h1v1h-1zM14 25h1v1h-1zM16 25h1v1h-1zM19 25h1v1h-1zM23 25h2v1h-2zM28 25h1v1h-1zM32 25h1v1h-1zM4 26h7v1h-7zM12 26h1v1h-1zM17 26h3v1h-3zM22 26h3v1h-3zM26 26h1v1h-1zM28 26h3v1h-3zM32 26h1v1h-1zM4 27h1v1h-1zM10 27h1v1h-1zM13 27h1v1h-1zM17 27h1v1h-1zM21 27h1v1h-1zM24 27h1v1h-1zM28 27h1v1h-1zM4 28h1v1h-1zM6 28h3v1h-3zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h4v1h-4zM21 28h1v1h-1zM23 28h7v1h-7zM4 29h1v1h-1zM6 29h3v1h-3zM10 29h1v1h-1zM13 29h1v1h-1zM15 29h1v1h-1zM17 29h2v1h-2zM20 29h1v1h-1zM24 29h2v1h-2zM32 29h1v1h-1zM4 30h1v1h-1zM6 30h3v1h-3zM10 30h1v1h-1zM17 30h1v1h-1zM19 30h5v1h-5zM25 30h1v1h-1zM29 30h4v1h-4zM4 31h1v1h-1zM10 31h1v1h-1zM13 31h4v1h-4zM18 31h2v1h-2zM21 31h1v1h-1zM24 31h1v1h-1zM27 31h3v1h-3zM31 31h2v1h-2zM4 32h7v1h-7zM12 32h1v1h-1zM14 32h1v1h-1zM16 32h3v1h-3zM21 32h1v1h-1zM24 32h1v1h-1zM27 32h3v1h-3zM31 32h1v1h-1z"/></svg><div><h3>Meetings &amp; Registration</h3><p>Scan the QR code or tap the button to register.</p><a href="https://forms.gle/2nTwVFFBWVtdG3tU7" target="_blank" rel="noopener">Click me</a></div></div></section>
 </div>
 
 <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeCart()"></div>
@@ -421,6 +527,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
       <div class="field"><label>Phone Number *</label><input id="custPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
       <div class="field full"><label>Address *</label><textarea id="custAddress" placeholder="House / street / village / town"></textarea></div>
       <div class="field"><label>Pincode *</label><input id="custPincode" inputmode="numeric" placeholder="6-digit pincode"></div>
+      <div class="field full"><label>Delivery method</label><div class="choice"><label><input type="radio" name="dlvMethod" value="Pickup" checked> <span>Pickup from shop</span></label><label><input type="radio" name="dlvMethod" value="Delivery"> <span>Home delivery</span></label></div><div class="cart-meta" style="margin-top:6px">Delivery charge, if any, is confirmed by BIJAYA HOUSING.</div></div>
       <div class="field"><label>Order Note</label><input id="custNote" placeholder="Optional"></div>
     </div>
     <p class="notice" style="margin-top:15px">Your order is saved, then opens in WhatsApp.</p>
@@ -428,7 +535,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   </div>
 </div>
 
-<div class="modal" id="priceEditModal">
+<div class="modal no-i18n" id="priceEditModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Edit Order Prices</h2><div style="font-size:12px;color:var(--muted)" id="priceEditOrderId"></div></div>
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
@@ -443,7 +550,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   </div>
 </div>
 
-<div class="modal" id="productModal">
+<div class="modal no-i18n" id="productModal">
   <div class="modal-head"><h2 id="productModalTitle" style="margin:0">Add Product</h2><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
     <div class="formgrid">
@@ -481,6 +588,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
       </div>
       <div id="paymentsSection" class="hidden" style="margin-top:14px">
         <h3 style="margin:0 0 10px">Payments</h3>
+        <div id="payBalance" class="pay-balance hidden"></div>
         <div id="customerPayments"></div>
       </div>
       <input type="file" id="profilePhotoInput" onchange="handleProfilePhotoSelected(this.files[0])" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;z-index:-1">
@@ -534,12 +642,12 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
       <div class="field" style="margin-top:12px"><label>Address *</label><textarea id="signupAddress" placeholder="House / street / village / town"></textarea></div>
       <div class="field" style="margin-top:12px"><label>Pincode *</label><input id="signupPin" inputmode="numeric" placeholder="6-digit pincode"></div>
       <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="customerSignup()">Submit Registration</button>
-      <div class="account-note" style="margin-top:14px">Your registration will be <b>Pending</b> until BIJAYA HOUSING approves it. Save the Customer ID shown after you submit — after approval, call <b>8114832749</b> to receive your password.</div>
+      <div class="account-note" style="margin-top:14px">Your registration will remain Pending until BIJAYA HOUSING approves it. Save the Customer ID shown after you submit. After approval, call <b>8114832749</b> to receive your password.</div>
     </div>
   </div>
 </div>
 
-<div class="modal sheet" id="customerDetailModal">
+<div class="modal sheet no-i18n" id="customerDetailModal">
   <div class="modal-head">
     <div><h2 style="margin:0" id="cdTitle">Customer</h2><div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap"><span class="customer-id-badge" id="cdIdBadge"></span><span class="status" id="cdStatus"></span></div></div>
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
@@ -580,7 +688,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   </div>
 </div>
 
-<div class="modal" id="adminCustomerModal">
+<div class="modal no-i18n" id="adminCustomerModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Create Customer</h2></div>
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
@@ -597,7 +705,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   </div>
 </div>
 
-<div class="modal over sm" id="paymentFormModal">
+<div class="modal over sm no-i18n" id="paymentFormModal">
   <div class="modal-head">
     <div><h2 style="margin:0" id="pfTitle">New Payment Request</h2></div>
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
@@ -606,7 +714,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
     <div class="field">
       <label>Customer *</label>
       <div id="pfChosen" class="chosen hidden"></div>
-      <div id="pfPicker"><input id="pfSearch" placeholder="Search name, phone or ID" autocomplete="off" oninput="renderPfResults()"><div id="pfResults" class="pick-list"></div></div>
+      <div id="pfPicker"><select id="pfCustomer"></select></div>
     </div>
     <div class="field" style="margin-top:12px"><label>Amount (₹) *</label><input id="pfAmount" type="number" inputmode="decimal" min="1" step="0.01" placeholder="0.00"></div>
     <div class="field" style="margin-top:12px"><label>UPI ID *</label><input id="pfUpi" placeholder="name@bank" autocapitalize="off" autocomplete="off" spellcheck="false"></div>
@@ -615,7 +723,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   </div>
 </div>
 
-<div class="modal over sm" id="resetPasswordModal">
+<div class="modal over sm no-i18n" id="resetPasswordModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Reset Password</h2><div class="muted" id="rpWho"></div></div>
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
@@ -627,7 +735,7 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   </div>
 </div>
 
-<div class="modal over sm" id="credentialModal">
+<div class="modal over sm no-i18n" id="credentialModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Login Details</h2></div>
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
@@ -666,13 +774,14 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
       <div style="display:flex;gap:8px;margin-top:8px"><button type="button" class="outline" style="flex:1" onclick="copyPayUpi()">Copy UPI ID</button><button type="button" class="outline" style="flex:1" onclick="copyPayAmount()">Copy Amount</button></div>
     </div>
     <button type="button" class="primary" style="width:100%" onclick="startUpiPayment(payAssistId)">Open UPI App</button>
-    <div class="field" style="margin-top:16px"><label>UTR / Transaction ID (optional)</label><input id="paUtr" placeholder="From your UPI app" autocomplete="off"></div>
+    <div class="field" style="margin-top:16px"><label>Amount you paid (₹)</label><input id="paPart" type="number" inputmode="decimal" min="1" step="0.01"></div>
+    <div class="field" style="margin-top:12px"><label>UTR / Transaction ID (optional)</label><input id="paUtr" placeholder="From your UPI app" autocomplete="off"></div>
     <button type="button" class="primary pay-done" id="paDoneBtn" style="width:100%;margin-top:10px" onclick="confirmMyPayment()">✓ I've Paid</button>
     <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="closeModal()">Not yet</button>
   </div>
 </div>
 
-<div class="modal over" id="customerAccessModal">
+<div class="modal over no-i18n" id="customerAccessModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Manage Product Access</h2><div id="accessCustomerTitle" class="notice" style="margin-top:4px"></div></div>
     <button type="button" class="iconbtn" onclick="closeModal()">×</button>
@@ -734,7 +843,8 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   <div class="modal-body" style="text-align:center">
     <div id="idCardCanvasWrap" style="max-width:320px;margin:0 auto"></div>
     <p id="idCardHint" class="notice hidden" style="margin-top:12px"></p>
-    <button type="button" class="primary hidden" id="idCardDownloadBtn" style="width:100%;margin-top:14px">⬇ Download ID Card (JPG)</button>
+    <div class="dl-row hidden" id="idCardDl"><button type="button" class="primary" id="idCardJpgBtn">⬇ Download JPG</button></div>
+<div class="dl-fallback hidden" id="idCardFb"><span>Download didn't start?</span><button type="button" class="outline" onclick="openDlInBrowser()">Open in browser</button><button type="button" class="outline" onclick="copyDlLink()">Copy link</button></div>
     <p class="notice" style="margin-top:14px;font-size:12.5px">Unable to download your ID card? Contact BIJAYA HOUSING Administration at <b>8114832749</b> and they can send it to you directly.</p>
   </div>
 </div>
@@ -747,7 +857,8 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   <div class="modal-body" style="text-align:center">
     <div id="invoiceCanvasWrap" style="max-width:360px;margin:0 auto"></div>
     <p id="invoiceHint" class="notice hidden" style="margin-top:12px"></p>
-    <button type="button" class="primary hidden" id="invoiceDownloadBtn" style="width:100%;margin-top:14px">⬇ Download Invoice (JPG)</button>
+    <div class="dl-row hidden" id="invoiceDl"><button type="button" class="primary" id="invoiceJpgBtn">⬇ Download JPG</button><button type="button" class="outline" id="invoicePdfBtn">⬇ Download PDF</button></div>
+<div class="dl-fallback hidden" id="invoiceFb"><span>Download didn't start?</span><button type="button" class="outline" onclick="openDlInBrowser()">Open in browser</button><button type="button" class="outline" onclick="copyDlLink()">Copy link</button></div>
     <p class="notice" style="margin-top:14px;font-size:12.5px">Unable to download your invoice? Contact BIJAYA HOUSING Administration at <b>8114832749</b> and they can send it to you directly.</p>
   </div>
 </div>
@@ -769,6 +880,69 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
     <p class="notice" style="margin-top:8px">Drag the photo to position it, use the slider to zoom.</p>
     <button type="button" class="primary" style="width:100%;margin-top:14px" onclick="confirmPhotoCrop()">Use This Photo</button>
     <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="cancelPhotoCrop()">Cancel</button>
+  </div>
+</div>
+
+<div class="modal over" id="receiptModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0">Payment Receipt</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body" style="text-align:center">
+    <div id="receiptCanvasWrap" style="max-width:360px;margin:0 auto"></div>
+    <p id="receiptHint" class="notice hidden" style="margin-top:12px"></p>
+    <div class="dl-row hidden" id="receiptDl"><button type="button" class="primary" id="receiptJpgBtn">⬇ Download JPG</button><button type="button" class="outline" id="receiptPdfBtn">⬇ Download PDF</button></div>
+<div class="dl-fallback hidden" id="receiptFb"><span>Download didn't start?</span><button type="button" class="outline" onclick="openDlInBrowser()">Open in browser</button><button type="button" class="outline" onclick="copyDlLink()">Copy link</button></div>
+    <p class="notice" style="margin-top:14px;font-size:12.5px">Unable to download your receipt? Contact BIJAYA HOUSING Administration at <b>8114832749</b> and they can send it to you directly.</p>
+  </div>
+</div>
+
+
+<div class="modal over sm no-i18n" id="adminPwModal">
+  <div class="modal-head"><div><h2 style="margin:0">Change Admin Password</h2></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Current password</label><input id="apCurrent" type="password" autocomplete="current-password"></div>
+    <div class="field" style="margin-top:12px"><label>New password</label><input id="apNew" type="password" autocomplete="new-password" placeholder="At least 8 characters"></div>
+    <button type="button" class="primary" id="apBtn" style="width:100%;margin-top:16px" onclick="saveAdminPw()">Update Password</button>
+  </div>
+</div>
+
+<div class="modal over sm no-i18n" id="deliveryModal">
+  <div class="modal-head"><div><h2 style="margin:0">Delivery Details</h2><div class="muted" id="dvWho"></div></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Method</label><select id="dvMethod"><option value="Pickup">Pickup from shop</option><option value="Delivery">Home delivery</option></select></div>
+    <div class="field" style="margin-top:12px"><label>Delivery charge (₹)</label><input id="dvCharge" type="number" inputmode="decimal" min="0" step="1" placeholder="0"></div>
+    <div class="field" style="margin-top:12px"><label>Expected delivery date</label><input id="dvDate" type="date"></div>
+    <button type="button" class="primary" id="dvBtn" style="width:100%;margin-top:16px" onclick="saveDelivery()">Save</button>
+  </div>
+</div>
+
+<div class="modal over sm no-i18n" id="recordPayModal">
+  <div class="modal-head"><div><h2 style="margin:0">Record Payment</h2><div class="muted" id="rcWho"></div></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <p class="notice" id="rcInfo"></p>
+    <div class="field" style="margin-top:12px"><label>Amount received (₹)</label><input id="rcAmount" type="number" inputmode="decimal" min="1" step="0.01"></div>
+    <button type="button" class="primary" id="rcBtn" style="width:100%;margin-top:16px" onclick="saveRecordPay()">Record</button>
+  </div>
+</div>
+
+<div class="modal over no-i18n" id="reconcileModal">
+  <div class="modal-head"><div><h2 style="margin:0">Match Bank Statement</h2><div class="muted">Finds each customer's UTR in your statement</div></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <div class="field"><label>Statement file (CSV / TXT)</label><input type="file" accept=".csv,.txt,text/csv,text/plain" onchange="readStatementFile(this)"></div>
+    <div class="field" style="margin-top:12px"><label>…or paste statement text</label><textarea id="recText" style="min-height:110px" placeholder="Paste rows from your bank statement"></textarea></div>
+    <button type="button" class="outline" style="width:100%;margin-top:12px" onclick="reconcileFind()">Find matches</button>
+    <div id="recResults" style="margin-top:14px"></div>
+    <button type="button" class="primary hidden" id="recApplyBtn" style="width:100%;margin-top:12px" onclick="applyReconcile()">Record ticked payments</button>
+  </div>
+</div>
+
+<div class="modal over no-i18n" id="bulkCredModal">
+  <div class="modal-head"><div><h2 style="margin:0">Login Details</h2><div class="muted">Customer ID / Temporary password</div></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
+  <div class="modal-body">
+    <div id="bulkCredList"></div>
+    <p class="notice" style="margin-top:12px">Passwords are stored securely and cannot be viewed again. Copy them now.</p>
+    <button type="button" class="primary" style="width:100%;margin-top:12px" onclick="copyBulkCred()">Copy All</button>
   </div>
 </div>
 
@@ -839,8 +1013,8 @@ async function refreshCustomerSessionSilently(){
     try{
       const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"refreshCustomerSession",customerId,deviceToken:c.deviceToken})});
       const d=await r.json();
-      if(!d.ok||!d.customerToken)return false;
-      const updated={...c,token:d.customerToken};
+      if(!d.ok||!d.customerToken)return /login required|blocked|not approved|not found/i.test(d.error||"")?false:null;
+      const updated={...c,token:d.customerToken,tokenAt:Date.now()};
       if(d.customer){
         updated.name=d.customer.name||updated.name;
         updated.phone=d.customer.phone||updated.phone;
@@ -853,7 +1027,7 @@ async function refreshCustomerSessionSilently(){
       }
       localStorage.setItem("bijaya_customer",JSON.stringify(updated));
       return true;
-    }catch(e){return false;}
+    }catch(e){return null;}
   })();
   const result=await _sessionRefreshPromise;
   _sessionRefreshPromise=null;
@@ -880,8 +1054,11 @@ async function apiGet(action,_retried){
   if(!r.ok)throw Error("HTTP "+r.status);
   const d=await r.json();
   if(d.ok===false){
+    if(adminToken&&/login required|unauthorized/i.test(d.error||"")){adminSessionExpired();throw Error("Admin session expired");}
     if(!adminToken && c?.token && isSessionError(d.error) && !_retried){
-      if(await refreshCustomerSessionSilently())return apiGet(action,true);
+      const renewed=await refreshCustomerSessionSilently();
+      if(renewed===true)return apiGet(action,true);
+      if(renewed===null)throw Error("No internet connection. Please try again.");
       forceCustomerLogout("Your session expired. Please log in again.");
     }
     throw Error(d.error||"Request failed");
@@ -961,6 +1138,7 @@ async function customerLogin(){
       status:c.status||"Active",
       type:c.type||"Customer",
       passwordType:c.passwordType||"",
+      tokenAt:Date.now(),
       accessType:c.accessType||d.access?.accessType||"ALL",
       allowedCategories:c.allowedCategories||d.access?.allowedCategories||"",
       allowedProducts:c.allowedProducts||d.access?.allowedProducts||"",
@@ -1442,62 +1620,6 @@ async function renderIdCardCanvas(data){
   return canvas;
 }
 
-async function showIdCardFor(data){
-  const wrap=$("idCardCanvasWrap");
-  const hintEl=$("idCardHint");
-  const downloadBtn=$("idCardDownloadBtn");
-
-  if(wrap)wrap.innerHTML='<div class="notice">Generating ID card\u2026</div>';
-  if(hintEl)hintEl.classList.add("hidden");
-  if(downloadBtn){downloadBtn.classList.add("hidden");downloadBtn.onclick=null;}
-  $("idCardModal")?.classList.add("show");
-  $("modalBackdrop")?.classList.add("show");
-  document.body.style.overflow="hidden";
-
-  let canvas,dataUrl;
-  try{
-    canvas=await renderIdCardCanvas(data);
-    dataUrl=canvas.toDataURL("image/jpeg",0.92);
-  }catch(e){
-    if(wrap)wrap.innerHTML=`<div class="notice" style="color:var(--danger)">Could not generate the ID card (${esc(e && e.message || "unknown error")}). Please close this and try again.</div>`;
-    return;
-  }
-
-  if(wrap){
-    wrap.innerHTML="";
-    const img=document.createElement("img");
-    img.src=dataUrl;
-    img.alt="Customer ID card";
-    img.style.width="100%";
-    img.style.borderRadius="18px";
-    img.style.boxShadow="0 10px 30px rgba(15,23,42,.18)";
-    wrap.appendChild(img);
-  }
-
-  const filename=`ID-${String(data.customerId||"card").replace(/[^A-Za-z0-9-]/g,"")}.jpg`;
-
-  if(isAndroidRuntime()){
-    if(hintEl){
-      hintEl.textContent="Touch and hold the image above, then choose \"Download image\" to save it to your phone.";
-      hintEl.classList.remove("hidden");
-    }
-  }else if(downloadBtn){
-    downloadBtn.classList.remove("hidden");
-    downloadBtn.onclick=()=>{
-      try{
-        const a=document.createElement("a");
-        a.href=dataUrl;
-        a.download=filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      }catch(e){
-        toast("Could not start the download. Try right-clicking the image and choosing Save Image instead.");
-      }
-    };
-  }
-}
-
 async function viewMyIdCard(){
   const c=customer();
   if(!c)return;
@@ -1526,7 +1648,7 @@ async function viewCustomerIdCardAdmin(id){
 async function customerLogout(){
   const c=customer();
   try{
-    if(c?.token)await apiPost({action:"logoutCustomer",customerToken:c.token,customerId:c.customerId||c.id});
+    if(c?.token)await apiPost({action:"logoutCustomer",customerToken:c.token,customerId:c.customerId||c.id,deviceToken:c.deviceToken});
   }catch(e){}
   localStorage.removeItem("bijaya_customer");
   stopPaymentWatcher();myPayments=[];updatePayBadge();
@@ -1618,6 +1740,7 @@ function applyLoadedProducts(list,access,isAdmin=false){
   renderCategories();
   renderProducts();
   renderAdmin();
+  if(typeof updateSyncLabel==="function")updateSyncLabel();
 }
 async function getCatalogVersionFromApi(){
   try{const d=await apiGet("catalogVersion");return String(d.catalogVersion||"");}catch(e){return "";}
@@ -1675,7 +1798,7 @@ async function refreshProductCatalogueInBackground(isAdmin=false){
     const d=await apiGet("products");
     const serverVersion=String(d.catalogVersion||"");
     if(serverVersion && serverVersion===String(cached.version||""))return;
-    if(Array.isArray(d.products)){
+    if(Array.isArray(d.products)&&(d.products.length||isAdmin)){
       catalogVersion=serverVersion;
       applyLoadedProducts(d.products,d.access,isAdmin);
       writeProductCache({version:catalogVersion,products:d.products,access:d.access},isAdmin);
@@ -1735,18 +1858,7 @@ function renderSubcategories(){
 }
 function setCategory(c){category=String(c||"All").trim()||"All";window.selectedSubcategory="All";renderCategories();renderProducts();}
 function setSubcategory(s){window.selectedSubcategory=String(s||"All").trim()||"All";renderSubcategories();renderProducts();}
-function renderProducts(){
-  const q=$("searchInput")?.value.trim().toLowerCase()||"";
-  const selectedSub=window.selectedSubcategory||"All";
-  const list=products.filter(p=>p.active!==false
-    &&(category==="All"||normalizeAccessValue(p.category)===normalizeAccessValue(category))
-    &&(category==="All"||selectedSub==="All"||normalizeAccessValue(p.subcategory)===normalizeAccessValue(selectedSub))
-    &&(!q||`${p.name} ${p.category} ${p.subcategory||""} ${p.description}`.toLowerCase().includes(q)));
-  $("productTitle").textContent=category==="All"?"All Products":(selectedSub!=="All"?`${category} • ${selectedSub}`:category);
-  $("productCount").textContent=`${list.length} item${list.length!==1?"s":""}`;
-  $("productGrid").innerHTML=list.length?list.map(productCard).join(""):`<div class="empty"><h3>No products found</h3><p>No active products are available in this selection.</p></div>`;
-  scheduleProductImages();
-}
+
 
 function githubImageCandidates(imageId, directUrl=""){
   const raw=String(imageId||"").trim();
@@ -1813,7 +1925,7 @@ function scheduleProductImages(){
 function githubImageUrl(imageId){return githubImageCandidates(imageId)[0]||""}
 
 function productDomKey(id){return "p_"+String(id||"").trim().replace(/[^a-zA-Z0-9_-]/g,"_");}
-function productCard(p){const first=p.sizes?.[0],price=first?first.price:p.price;const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);const dk=productDomKey(p.id);return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView(decodeProductArg('${safeProductArg(p.id)}'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView(decodeProductArg('${safeProductArg(p.id)}'))}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize(decodeProductArg('${safeProductArg(p.id)}'),decodeProductArg('${safeProductArg(s.name)}'),this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" onclick="event.stopPropagation();addToCart(decodeProductArg('${safeProductArg(p.id)}'))">Add to Cart</button></div></div></article>`}
+
 let viewedProductId=null;
 let viewedProductSize="";
 let viewedProductQty=1;
@@ -1928,6 +2040,7 @@ function selectSize(id,size,btn){
   const s=p?.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(size));
   const priceEl=$("price-"+productDomKey(id));
   if(priceEl&&s)priceEl.textContent=money(Number(s.price)||0);
+  refreshCardStock(id,size);
 }
 
 function getSelectedSize(id){
@@ -1970,6 +2083,7 @@ async function placeOrder(){
     customer:{...c,id:customer()?.customerId||customer()?.id||""},
     items:cart.map(x=>({...x,code:x.id,name:products.find(p=>normalizeAccessValue(p.id)===normalizeAccessValue(x.id))?.name||"Product",price:Number(x.price)||0,qty:Number(x.qty)||0})),
     total,
+    deliveryMethod:selectedDeliveryMethod(),
     status:"New"
   };
   const button=document.querySelector("#checkoutModal .primary");
@@ -1978,6 +2092,7 @@ async function placeOrder(){
     const loggedCustomer=customer();
     const result=await apiPost({action:"saveOrder",order,customerToken:loggedCustomer?.token});
     if(result.orderId)order.id=result.orderId;
+    if(Array.isArray(result.items)){order.items=result.items.map(i=>({id:i.code,code:i.code,name:i.name,size:i.size,qty:i.quantity,price:i.price}));order.total=Number(result.total)||order.total;}
     orders.unshift(order);
     saveLocal();
     cart=[];
@@ -1990,7 +2105,8 @@ async function placeOrder(){
     showOrderSuccess();
     setTimeout(()=>tryOpenWhatsApp(order),450);
   }catch(error){
-    toast("Order could not be saved: "+error.message);
+    toast("Order could not be saved: "+error.message,5000);
+    if(/left of|out of stock|not available/i.test(error.message)){loadProductsFromApi(true).catch(()=>{});}
   }finally{
     if(button)button.disabled=false;
   }
@@ -2040,7 +2156,9 @@ function buildOrderWhatsAppMessage(o){
     }),
     "",
     "━━━━━━━━━━━━━━━━━━━━",
-    `💰 *GRAND TOTAL: ${money(o?.total||0)}*`,
+    `🚚 *Delivery:* ${o?.deliveryMethod==="Delivery"?"Home delivery":"Pickup from shop"}`,
+    ...(Number(o?.deliveryCharge)>0?[`*Delivery charge:* ${money(o.deliveryCharge)}`]:[]),
+    `💰 *GRAND TOTAL: ${money((Number(o?.total)||0)+(Number(o?.deliveryCharge)||0))}*`,
     "━━━━━━━━━━━━━━━━━━━━",
     "**I'm completely aware of price differentiation in the final invoice.",
     "***I have no objection to the final price change.",
@@ -2162,47 +2280,9 @@ async function loadCustomerOrders(showError=false){
   }
 }
 
-function normalizeServerOrder(o){
-  return {
-    id:o.id||"",
-    date:o.date||new Date().toISOString(),
-    customer:o.customer||{},
-    items:(o.items||[]).map(i=>({
-      id:i.code||i.id||"",
-      code:i.code||i.id||"",
-      name:i.name||"Product",
-      size:i.size||"",
-      qty:Number(i.quantity??i.qty??0),
-      price:Number(i.price||0)
-    })),
-    total:Number(o.total||0),
-    originalTotal:o.originalTotal!=null?Number(o.originalTotal):Number(o.total||0),
-    status:o.status||"New"
-  };
-}
 
-function renderCustomerOrders(){
-  const c=getCustomer(),box=$("customerOrders");
-  if(!box)return;
-  if(!c){box.innerHTML="";return;}
-  const customerId=String(c.customerId||c.id||"").trim().toUpperCase();
-  const phone=String(c.phone||"").replace(/\D/g,"").slice(-10);
-  const mine=orders.filter(o=>{
-    const oid=String(o.customer?.id||o.customer?.customerId||"").trim().toUpperCase();
-    const op=String(o.customer?.phone||"").replace(/\D/g,"").slice(-10);
-    return (customerId&&oid===customerId)||(!oid&&phone&&op===phone);
-  });
-  box.innerHTML=mine.length?mine.map(o=>{
-    const status=String(o.status||"New");
-    const statusLower=status.toLowerCase();
-    const canDownloadInvoice=statusLower!=="new" && statusLower!=="cancelled" && statusLower!=="canceled";
-    const priceChanged=o.originalTotal!=null && Number(o.originalTotal)!==Number(o.total);
-    const amountHtml=priceChanged
-      ?`<span class="cart-meta" style="text-decoration:line-through">${money(o.originalTotal)}</span> <strong>${money(o.total)}</strong> <span class="cart-meta">(revised)</span>`
-      :`<strong>${money(o.total)}</strong>`;
-    return `<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty!=null?i.qty:i.quantity)||0} × ${money(i.price)}</div>`).join("")}</div><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">${amountHtml}<span class="status">${esc(status)}</span></div><button type="button" class="outline" style="width:100%;margin-top:4px" onclick="resendOrderById(decodeProductArg('${safeProductArg(o.id)}'))">↗ Resend Order to WhatsApp</button>${canDownloadInvoice?`<button type="button" class="outline" style="width:100%;margin-top:8px" onclick="downloadInvoiceById(decodeProductArg('${safeProductArg(o.id)}'))">\ud83e\uddfe Download Invoice</button>`:`<p class="cart-meta" style="margin-top:8px;text-align:center">Invoice available once your order is confirmed</p>`}</div>`;
-  }).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
-}
+
+
 
 function downloadInvoiceById(id){
   const o=orders.find(x=>String(x.id)===String(id));
@@ -2223,7 +2303,7 @@ async function renderInvoiceCanvas(o){
   const tableHeaderH=32;
   const tableTop=headerH+topBlockH+20;
   const tableH=tableHeaderH+Math.max(1,items.length)*rowH;
-  const totalBlockH=100;
+  const charge=Number(o.deliveryCharge)||0;const totalBlockH=100+(charge>0?52:0);
   const footerH=60;
   const H=tableTop+tableH+totalBlockH+footerH+30;
 
@@ -2313,6 +2393,7 @@ async function renderInvoiceCanvas(o){
     ctx.fillText(`Original Amount: ${money(o.originalTotal)}`,W-40,y);
     y+=26;
   }
+  if(charge>0){ctx.textAlign="right";ctx.fillStyle=MUTED;ctx.font="500 14px Arial";ctx.fillText(`Items Total: ${money(o.total)}`,W-40,y);y+=22;ctx.fillText(`Delivery Charge: ${money(charge)}`,W-40,y);y+=26;}
   ctx.fillStyle=NAVY;
   roundRectPath(ctx,W-260,y-6,220,50,12);
   ctx.fill();
@@ -2322,7 +2403,7 @@ async function renderInvoiceCanvas(o){
   ctx.fillText(priceChanged?"REVISED TOTAL":"GRAND TOTAL",W-52,y+12);
   ctx.fillStyle="#ffffff";
   ctx.font="900 22px Arial";
-  ctx.fillText(money(o.total),W-52,y+37);
+  ctx.fillText(money((Number(o.total)||0)+charge),W-52,y+37);
 
   y+=70;
   ctx.textAlign="center";
@@ -2333,71 +2414,15 @@ async function renderInvoiceCanvas(o){
   return canvas;
 }
 
-async function showInvoiceFor(o){
-  const wrap=$("invoiceCanvasWrap");
-  const hintEl=$("invoiceHint");
-  const downloadBtn=$("invoiceDownloadBtn");
-
-  if(wrap)wrap.innerHTML='<div class="notice">Generating invoice\u2026</div>';
-  if(hintEl)hintEl.classList.add("hidden");
-  if(downloadBtn){downloadBtn.classList.add("hidden");downloadBtn.onclick=null;}
-  $("invoiceModal")?.classList.add("show");
-  $("modalBackdrop")?.classList.add("show");
-  document.body.style.overflow="hidden";
-
-  let canvas,dataUrl;
-  try{
-    canvas=await renderInvoiceCanvas(o);
-    dataUrl=canvas.toDataURL("image/jpeg",0.92);
-  }catch(e){
-    if(wrap)wrap.innerHTML=`<div class="notice" style="color:var(--danger)">Could not generate the invoice (${esc(e && e.message || "unknown error")}). Please close this and try again.</div>`;
-    return;
-  }
-
-  if(wrap){
-    wrap.innerHTML="";
-    const img=document.createElement("img");
-    img.src=dataUrl;
-    img.alt="Invoice";
-    img.style.width="100%";
-    img.style.borderRadius="14px";
-    img.style.boxShadow="0 10px 30px rgba(15,23,42,.18)";
-    wrap.appendChild(img);
-  }
-
-  const filename=`Invoice-${String(o.id||"order").replace(/[^A-Za-z0-9-]/g,"")}.jpg`;
-
-  if(isAndroidRuntime()){
-    if(hintEl){
-      hintEl.textContent="Touch and hold the invoice above, then choose \"Download image\" to save it to your phone.";
-      hintEl.classList.remove("hidden");
-    }
-  }else if(downloadBtn){
-    downloadBtn.classList.remove("hidden");
-    downloadBtn.onclick=()=>{
-      try{
-        const a=document.createElement("a");
-        a.href=dataUrl;
-        a.download=filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      }catch(e){
-        toast("Could not start the download. Try right-clicking the image and choosing Save Image instead.");
-      }
-    };
-  }
-}
-
 /* ===== Shared helpers ===== */
-const PAY_STATUSES=["Pending","Verifying","Paid","Failed","Cancelled"];
+
 const PAYEE_NAME="BIJAYA HOUSING";
 const UPI_RE=/^[a-zA-Z0-9._\-]{2,64}@[a-zA-Z][a-zA-Z0-9.\-]{1,63}$/;
 const arg=v=>`decodeProductArg('${safeProductArg(v)}')`;
 const digits=v=>String(v||"").replace(/\D/g,"");
 const fmtDT=v=>{const d=new Date(v);return v&&!isNaN(d)?d.toLocaleString("en-IN",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"—"};
 const fmtD=v=>{const d=new Date(v);return v&&!isNaN(d)?d.toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}):"—"};
-const isDue=p=>p.status==="Pending"||p.status==="Failed";
+
 const stCls=s=>"st-"+String(s||"pending").toLowerCase();
 
 function openModal(id){$(id)?.classList.add("show");$("modalBackdrop")?.classList.add("show");document.body.style.overflow="hidden";}
@@ -2436,9 +2461,15 @@ async function postJson(payload,timeout){
     throw e;
   }finally{clearTimeout(timer);}
 }
-const ADMIN_ACTIONS=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword","adminCreatePayment","adminGetPayments","adminUpdatePayment","adminRemindPayment"];
-const CUSTOMER_ACTIONS=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto","changeCustomerPassword","getMyPayments","customerPaymentEvent"];
+
+const CUSTOMER_ACTIONS=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto","changeCustomerPassword","getMyPayments","customerPaymentEvent","createDownloadLink"];
 const BACKGROUND_ACTIONS=["getCustomerPhoto","getMyPayments"];
+function adminSessionExpired(){
+  sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_user");
+  stopAdminWatcher();
+  if(appView==="admin")setAppView("admin",false);
+  toast("Admin session expired. Please login again.");
+}
 async function apiPost(data,_retried){
   const payload={...data};
   if(ADMIN_ACTIONS.includes(payload.action)){
@@ -2450,23 +2481,163 @@ async function apiPost(data,_retried){
     const c=customer();
     if(c?.token)payload.customerToken=c.token;
   }
-  const d=await postJson(payload,payload.action==="uploadCustomerPhoto"?90000:45000);
+  const d=await postJson(payload,["uploadCustomerPhoto","createDownloadLink"].includes(payload.action)?90000:45000);
   if(d.ok===false){
     if(ADMIN_ACTIONS.includes(payload.action)&&/unauthorized admin/i.test(d.error||"")){
-      sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_user");
-      stopAdminWatcher();
-      if(appView==="admin")setAppView("admin",false);
-      toast("Admin session expired. Please login again.");
+      adminSessionExpired();
       throw Error("Admin session expired");
     }
     const c=customer();
     if(CUSTOMER_ACTIONS.includes(payload.action)&&c?.token&&isSessionError(d.error)&&!_retried){
-      if(await refreshCustomerSessionSilently())return apiPost({...data,customerToken:customer()?.token},true);
+      const renewed=await refreshCustomerSessionSilently();
+      if(renewed===true)return apiPost({...data,customerToken:customer()?.token},true);
+      if(renewed===null)throw Error("No internet connection. Please try again.");
       if(!BACKGROUND_ACTIONS.includes(payload.action))forceCustomerLogout("Your session expired. Please log in again.");
     }
     throw Error(d.error||"Request failed");
   }
   return d;
+}
+
+/* ===== Downloads: ID card + invoice (JPG, and PDF for invoices) ===== */
+function dataUrlToBlob(dataUrl){
+  const [head,b64]=dataUrl.split(",");
+  const bin=atob(b64),arr=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+  return new Blob([arr],{type:/data:([^;]+)/.exec(head)[1]});
+}
+
+// One-page PDF that wraps the JPEG as-is (no library needed).
+function jpegToPdfBlob(dataUrl,w,h){
+  const jpg=dataUrlToBlobBytes(dataUrl);
+  let pw=595.28,ph=pw*h/w;
+  if(ph>14400){pw=pw*14400/ph;ph=14400;}
+  const enc=new TextEncoder(),parts=[],offsets=[];
+  let len=0;
+  const push=b=>{const u=typeof b==="string"?enc.encode(b):b;parts.push(u);len+=u.length;};
+  const obj=(n,fn)=>{offsets[n]=len;push(`${n} 0 obj\n`);fn();push("\nendobj\n");};
+  push("%PDF-1.4\n");
+  obj(1,()=>push("<< /Type /Catalog /Pages 2 0 R >>"));
+  obj(2,()=>push("<< /Type /Pages /Kids [3 0 R] /Count 1 >>"));
+  obj(3,()=>push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw.toFixed(2)} ${ph.toFixed(2)}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`));
+  obj(4,()=>{push(`<< /Type /XObject /Subtype /Image /Width ${w} /Height ${h} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.length} >>\nstream\n`);push(jpg);push("\nendstream");});
+  const content=`q ${pw.toFixed(2)} 0 0 ${ph.toFixed(2)} 0 0 cm /Im0 Do Q`;
+  obj(5,()=>push(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`));
+  const xref=len;
+  push("xref\n0 6\n0000000000 65535 f \n"+[1,2,3,4,5].map(n=>String(offsets[n]).padStart(10,"0")+" 00000 n \n").join(""));
+  push(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);
+  return new Blob(parts,{type:"application/pdf"});
+}
+function dataUrlToBlobBytes(dataUrl){
+  const bin=atob(dataUrl.split(",")[1]),arr=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);
+  return arr;
+}
+
+function blobToBase64(blob){
+  return new Promise((resolve,reject)=>{
+    const r=new FileReader();
+    r.onload=()=>resolve(String(r.result).split(",")[1]||"");
+    r.onerror=()=>reject(new Error("Could not read the file"));
+    r.readAsDataURL(blob);
+  });
+}
+function anchorDownload(blob,filename){
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=filename;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+
+// 1) phone share sheet  2) Android app / WebView: normal https link made by the server  3) desktop: direct save
+async function saveFile(blob,filename,fbId){
+  const ua=navigator.userAgent||"";
+  const android=/Android/i.test(ua),handheld=android||/iPhone|iPad|iPod/i.test(ua);
+  if(handheld){
+    try{
+      const file=new File([blob],filename,{type:blob.type});
+      if(navigator.canShare&&navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:filename});
+        return;
+      }
+    }catch(e){
+      if(e&&e.name==="AbortError")return;
+    }
+  }
+  if(android)return saveViaServerLink(blob,filename,fbId);
+  try{
+    anchorDownload(blob,filename);
+    toast("Saving "+filename+"…");
+  }catch(e){
+    toast("Could not start the download. Touch and hold the image to save it instead.",4000);
+  }
+}
+
+async function saveViaServerLink(blob,filename,fbId){
+  toast("Preparing "+filename+"…",8000);
+  try{
+    const req={action:"createDownloadLink",filename,data:await blobToBase64(blob)};
+    const adminToken=sessionStorage.getItem("admin_token");
+    if(adminToken&&appView==="admin")req.adminToken=adminToken;
+    const d=await apiPost(req);
+    window.__lastDl=d.url;
+    if(fbId)$(fbId)?.classList.remove("hidden");
+    toast("Downloading "+filename+"…",4000);
+    window.location.href=d.url;
+  }catch(e){
+    try{anchorDownload(blob,filename);toast("Saving "+filename+"…");}
+    catch(e2){toast("Could not prepare the download: "+e.message,5000);}
+  }
+}
+function openDlInBrowser(){
+  const u=window.__lastDl;
+  if(!u)return;
+  window.location.href="intent://"+u.replace(/^https?:\/\//,"")+"#Intent;scheme=https;end";
+  setTimeout(()=>{if(!document.hidden){try{window.open(u,"_blank");}catch(e){}}},900);
+}
+function copyDlLink(){
+  if(window.__lastDl)copyText(window.__lastDl,"Link copied. Paste it in Chrome to download.");
+}
+
+async function showDownloadable(c){
+  const wrap=$(c.wrapId),hint=$(c.hintId),row=$(c.rowId);
+  if(wrap)wrap.innerHTML=`<div class="notice">Generating ${c.label}\u2026</div>`;
+  hint?.classList.add("hidden");
+  row?.classList.add("hidden");
+  $(c.fbId)?.classList.add("hidden");
+  openModal(c.modal);
+  let canvas,dataUrl;
+  try{
+    canvas=await c.render();
+    dataUrl=canvas.toDataURL("image/jpeg",0.92);
+  }catch(e){
+    if(wrap)wrap.innerHTML=`<div class="notice" style="color:var(--danger)">Could not generate the ${c.label} (${esc(e&&e.message||"unknown error")}). Please close this and try again.</div>`;
+    return;
+  }
+  if(wrap){
+    wrap.innerHTML="";
+    const img=document.createElement("img");
+    img.src=dataUrl;img.alt=c.label;
+    img.style.cssText=`width:100%;border-radius:${c.radius}px;box-shadow:0 10px 30px rgba(15,23,42,.18)`;
+    wrap.appendChild(img);
+  }
+  $(c.jpgId).onclick=()=>saveFile(dataUrlToBlob(dataUrl),c.base+".jpg",c.fbId);
+  if(c.pdfId)$(c.pdfId).onclick=()=>saveFile(jpegToPdfBlob(dataUrl,canvas.width,canvas.height),c.base+".pdf",c.fbId);
+  row?.classList.remove("hidden");
+  if(hint&&isAndroidRuntime()){
+    hint.textContent=`Tip: you can also touch and hold the ${c.label} above and choose "Download image".`;
+    hint.classList.remove("hidden");
+  }
+}
+
+function showIdCardFor(data){
+  return showDownloadable({modal:"idCardModal",wrapId:"idCardCanvasWrap",hintId:"idCardHint",rowId:"idCardDl",fbId:"idCardFb",jpgId:"idCardJpgBtn",label:"ID card",radius:18,
+    base:`ID-${String(data.customerId||"card").replace(/[^A-Za-z0-9-]/g,"")}`,render:()=>renderIdCardCanvas(data)});
+}
+function showInvoiceFor(o){
+  return showDownloadable({modal:"invoiceModal",wrapId:"invoiceCanvasWrap",hintId:"invoiceHint",rowId:"invoiceDl",fbId:"invoiceFb",jpgId:"invoiceJpgBtn",pdfId:"invoicePdfBtn",label:"invoice",radius:14,
+    base:`Invoice-${String(o.id||"order").replace(/[^A-Za-z0-9-]/g,"")}`,render:()=>renderInvoiceCanvas(o)});
 }
 
 /* ===== CUSTOMER PAYMENTS ===== */
@@ -2515,6 +2686,7 @@ function notifyPaymentChange(p){
     Failed:`Payment of ${a} was marked failed. Please pay again.`,
     Cancelled:`Payment request of ${a} was cancelled.`,
     Verifying:`Payment of ${a} is being verified.`,
+    Partial:`Received ${money(p.paidAmount)}. ${money(p.remaining)} is still due.`,
     Pending:`Payment of ${a} is pending.`
   }[p.status];
   if(msg)toast(msg,6000);
@@ -2532,7 +2704,7 @@ function maybeShowPayPopup(){
   const p=myPayments.find(x=>isDue(x)&&dismissed[x.id]!==dismissKey(x));
   if(!p)return;
   payPopupCurrent=p.id;
-  $("prAmount").textContent=money(p.amount);
+  $("prAmount").textContent=money(payable(p));
   $("prNote").textContent=p.note||"Payment request from BIJAYA HOUSING";
   $("prPayBtn").onclick=()=>{markPopupDismissed(p);payPopupCurrent=null;hideModal("payRequestModal");startUpiPayment(p.id);};
   openModal("payRequestModal");
@@ -2544,32 +2716,13 @@ function payPopupClosed(){
   if(p)markPopupDismissed(p);
 }
 
-function renderMyPayments(){
-  const box=$("customerPayments");
-  if(!box)return;
-  const rank={Pending:0,Failed:0,Verifying:1,Paid:2,Cancelled:3};
-  const list=[...myPayments].sort((a,b)=>(rank[a.status]-rank[b.status])||(new Date(b.date)-new Date(a.date)));
-  $("paymentsSection")?.classList.toggle("hidden",!list.length);
-  box.innerHTML=list.map(p=>{
-    const info=p.status==="Verifying"?`Waiting for BIJAYA HOUSING to confirm${p.utr?" • UTR "+esc(p.utr):""}`
-      :p.status==="Paid"?`Paid on ${fmtDT(p.paidOn)}`
-      :p.status==="Failed"?"Marked failed — please pay again"
-      :p.status==="Cancelled"?"Cancelled":"";
-    return `<div class="pay-card">
-      <div class="between"><strong style="font-size:20px">${money(p.amount)}</strong><span class="status ${stCls(p.status)}">${esc(p.status)}</span></div>
-      ${p.note?`<div>${esc(p.note)}</div>`:""}
-      <div class="cart-meta">${esc(p.id)} • ${fmtDT(p.date)}</div>
-      ${info?`<div class="cart-meta">${info}</div>`:""}
-      ${isDue(p)?`<div class="row-actions"><button type="button" class="primary" onclick="startUpiPayment(${arg(p.id)})">Pay Now</button><button type="button" class="outline" onclick="openPayAssist(${arg(p.id)},false)">I've Paid</button></div>`:""}
-    </div>`;
-  }).join("");
-}
+
 
 /* --- UPI launch (same hand-off strategy as the WhatsApp button, for the APK's WebView) --- */
 function upiQuery(p){
   const note=((p.note||PAYEE_NAME).slice(0,28)+" "+p.id).trim();
   const enc=v=>encodeURIComponent(v).replace(/%40/g,"@");
-  return `pa=${enc(p.upiId)}&pn=${enc(PAYEE_NAME)}&am=${Number(p.amount).toFixed(2)}&cu=INR&tn=${enc(note)}`;
+  return `pa=${enc(p.upiId)}&pn=${enc(PAYEE_NAME)}&am=${Number(payable(p)).toFixed(2)}&cu=INR&tn=${enc(note)}`;
 }
 function startUpiPayment(id){
   const p=myPayments.find(x=>x.id===id);
@@ -2592,8 +2745,19 @@ function startUpiPayment(id){
     },900);
   },800);
 }
+let lastCatalogCheck=Date.now();
 function onAppResume(){
-  if(customer()&&appView==="customer")refreshMyPayments();
+  const c=customer();
+  if(c&&appView==="customer"){
+    refreshMyPayments();
+    // renew the login quietly before it lapses, and never leave the shop empty
+    if(c.deviceToken&&Date.now()-Number(c.tokenAt||0)>4*3600*1000)refreshCustomerSessionSilently();
+    if(!products.length)loadProductsFromApi(false).catch(()=>{});
+    else{
+      if(!$("productGrid")?.children.length)renderProducts();
+      if(Date.now()-lastCatalogCheck>10*60*1000){lastCatalogCheck=Date.now();refreshProductCatalogueInBackground(false);}
+    }
+  }
   if(payAwait&&payAwait.handed&&Date.now()-payAwait.t>2000){
     const id=payAwait.id;payAwait=null;openPayAssist(id,true);
   }
@@ -2606,30 +2770,17 @@ function openPayAssist(id,returned){
   if(!p||!isDue(p))return;
   payAssistId=id;
   $("paTitle").textContent=returned?"Did you complete the payment?":"Complete Payment";
-  $("paAmount").textContent=money(p.amount);
+  $("paAmount").textContent=money(payable(p));
+  $("paPart").value=payable(p);
   $("paUpi").textContent=p.upiId;
   $("paUtr").value="";
   hideModal("payRequestModal");
   openModal("payAssistModal");
 }
 const copyPayUpi=()=>{const p=myPayments.find(x=>x.id===payAssistId);if(p)copyText(p.upiId,"UPI ID copied");};
-const copyPayAmount=()=>{const p=myPayments.find(x=>x.id===payAssistId);if(p)copyText(Number(p.amount).toFixed(2),"Amount copied");};
 
-async function confirmMyPayment(){
-  const utr=$("paUtr").value.trim();
-  if(utr&&!/^[A-Za-z0-9]{6,30}$/.test(utr)){toast("UTR should be 6–30 letters or digits");return;}
-  await busy($("paDoneBtn"),async()=>{
-    try{
-      const d=await apiPost({action:"customerPaymentEvent",paymentId:payAssistId,event:"markPaid",utr});
-      const i=myPayments.findIndex(x=>x.id===d.payment.id);
-      if(i>=0)myPayments[i]=d.payment;
-      const seen=readLS(LS_SEEN);seen[d.payment.id]=d.payment.status;writeLS(LS_SEEN,seen);
-      hideModal("payAssistModal");
-      updatePayBadge();renderMyPayments();
-      toast("Thanks! BIJAYA HOUSING will confirm your payment shortly.",5000);
-    }catch(e){toast(e.message);refreshMyPayments();}
-  });
-}
+
+
 
 /* --- Change password --- */
 async function changeMyPassword(){
@@ -2651,7 +2802,7 @@ async function changeMyPassword(){
 /* ===== ADMIN ===== */
 let appView="customer",navigationLock=false;
 let adminCustomers=[],adminPayments=[],adminPayPrev=null,adminTimer=null,adminPayLoading=false;
-const ADMIN_TABS=["dashboard","products","orders","customers","payments"];
+
 
 function closeAllOverlays(){
   ["drawerBackdrop","modalBackdrop"].forEach(id=>$(id)?.classList.remove("show"));
@@ -2677,6 +2828,7 @@ function setAppView(view,push=true){
     if(customer())startPaymentWatcher();
   }
   updateCustomerAccess();
+  if(typeof updateNetBanner==="function")updateNetBanner();
   window.scrollTo(0,0);
   if(push&&history.pushState)history.pushState({view:appView},"",appView==="admin"?"#admin":"#store");
 }
@@ -2687,7 +2839,8 @@ window.addEventListener("popstate",()=>{setAppView(location.hash==="#admin"?"adm
 
 function startAdminWatcher(){
   if(adminTimer)return;
-  try{$("adminWho").textContent=JSON.parse(sessionStorage.getItem("admin_user")||"{}").name||"";}catch(e){}
+  try{const u=JSON.parse(sessionStorage.getItem("admin_user")||"{}");$("adminWho").textContent=(u.name||"")+(u.lastLogin?" • Last login: "+fmtDT(u.lastLogin):"");}catch(e){}
+  loadDashboardExtras();
   adminTimer=setInterval(()=>{if(document.visibilityState==="visible"&&appView==="admin")loadAdminPayments(true);},60000);
 }
 function stopAdminWatcher(){clearInterval(adminTimer);adminTimer=null;}
@@ -2721,13 +2874,7 @@ async function adminLogout(){
   toast("Admin logged out");
 }
 
-function adminTab(tab){
-  document.querySelectorAll(".admin-tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
-  ADMIN_TABS.forEach(x=>$("admin"+x[0].toUpperCase()+x.slice(1)+"Tab")?.classList.toggle("hidden",x!==tab));
-  if(tab==="orders")loadAdminOrders();
-  if(tab==="customers")loadAdminCustomers();
-  if(tab==="payments")loadAdminPayments();
-}
+
 function goAdminTab(tab,filter){
   adminTab(tab);
   if(!filter)return;
@@ -2739,7 +2886,7 @@ function goAdminTab(tab,filter){
 /* --- Dashboard + products --- */
 function renderAdminStats(){
   const due=adminPayments.filter(isDue),verifying=adminPayments.filter(p=>p.status==="Verifying");
-  const dueAmt=due.reduce((a,p)=>a+p.amount,0);
+  const dueAmt=due.reduce((a,p)=>a+payable(p),0);
   const newOrders=orders.filter(o=>orderStatus(o).toLowerCase()==="new").length;
   const pendingCust=adminCustomers.filter(c=>String(c.status).toLowerCase()==="pending").length;
   const cards=[
@@ -2768,20 +2915,20 @@ function orderSortRank(status){const s=status.toLowerCase();if(s==="completed")r
 function setOrderStatusFilter(value){orderStatusFilter=value||"All";renderAdminOrders();}
 function renderAdminOrders(){
   const body=$("ordersBody");if(!body)return;
-  const counts={New:0,Confirmed:0,Processing:0,Ready:0,Completed:0,Cancelled:0};
+  const counts={New:0,Confirmed:0,Processing:0,Ready:0,"Out for Delivery":0,Completed:0,Cancelled:0};
   orders.forEach(o=>{const s=orderStatus(o),key=s.toLowerCase()==="canceled"?"Cancelled":s;if(counts[key]!==undefined)counts[key]++;});
   if($("orderSummaryBar"))$("orderSummaryBar").innerHTML=Object.entries(counts).map(([k,v])=>`<span class="order-summary-pill">${k}<strong>${v}</strong></span>`).join("");
   let list=orders.filter(o=>orderStatusFilter==="All"||orderStatus(o).toLowerCase()===orderStatusFilter.toLowerCase()||(orderStatusFilter==="Cancelled"&&["cancelled","canceled"].includes(orderStatus(o).toLowerCase())));
   list=[...list].sort((a,b)=>{const r=orderSortRank(orderStatus(a))-orderSortRank(orderStatus(b));return r||new Date(b.date)-new Date(a.date);});
-  const statusOptions=["New","Confirmed","Processing","Ready","Completed","Cancelled"];
+  const statusOptions=["New","Confirmed","Processing","Ready","Out for Delivery","Completed","Cancelled"];
   body.innerHTML=list.length?list.map(o=>{
     const items=o.items||[];
     const itemHtml=items.length?items.map(i=>`<div style="margin-bottom:5px"><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` <span class="cart-meta">(${esc(i.size)})</span>`:""} × ${Number(i.qty)||0} @ ${money(i.price)}</div>`).join(""):`<span class="cart-meta">No item details</span>`;
     const priceChanged=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
     const amountHtml=priceChanged?`<span class="cart-meta" style="text-decoration:line-through">${money(o.originalTotal)}</span><br><b>${money(o.total)}</b>`:`<b>${money(o.total)}</b>`;
-    const cur=orderStatus(o),cid=o.customer?.id;
+    const cur=orderStatus(o),cid=o.customer?.id,charge=Number(o.deliveryCharge)||0;
     const nameHtml=cid?`<button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(cid)})"><b>${esc(o.customer?.name||cid)}</b></button>`:`<b>${esc(o.customer?.name||"")}</b>`;
-    return `<tr><td data-label="Order"><b>${esc(o.id)}</b><br><span class="cart-meta">${fmtDT(o.date)}</span></td><td data-label="Customer">${nameHtml}<br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span></td><td data-label="Items" class="stack">${itemHtml}</td><td data-label="Amount">${amountHtml}</td><td data-label="Status"><select class="order-status-select" onchange="adminChangeOrderStatus(${arg(o.id)},this.value)">${statusOptions.map(s=>`<option value="${s}" ${cur===s?"selected":""}>${s}</option>`).join("")}</select></td><td data-label="Action" class="action-cell"><div class="row-actions"><button type="button" class="outline" onclick="openPriceEditModal(${arg(o.id)})">✏️ Prices</button><button type="button" class="outline" onclick="generateInvoiceById(${arg(o.id)})">🧾 Invoice</button></div></td></tr>`;
+    return `<tr><td data-label="Order"><b>${esc(o.id)}</b><br><span class="cart-meta">${fmtDT(o.date)}</span></td><td data-label="Customer">${nameHtml}<br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span><br><span class="cart-meta">${o.deliveryMethod==="Delivery"?"🚚 Delivery":"🏬 Pickup"}${o.expectedDelivery?" • "+fmtD(o.expectedDelivery):""}</span></td><td data-label="Items" class="stack">${itemHtml}</td><td data-label="Amount">${amountHtml}${charge?`<br><span class="cart-meta">+ ${money(charge)} delivery</span>`:""}</td><td data-label="Status"><select class="order-status-select" onchange="adminChangeOrderStatus(${arg(o.id)},this.value)">${statusOptions.map(s=>`<option value="${s}" ${cur===s?"selected":""}>${s}</option>`).join("")}</select></td><td data-label="Action" class="action-cell"><div class="row-actions"><button type="button" class="outline" onclick="openDeliveryModal(${arg(o.id)})">🚚 Delivery</button><button type="button" class="outline" onclick="openPriceEditModal(${arg(o.id)})">✏️ Prices</button><button type="button" class="outline" onclick="generateInvoiceById(${arg(o.id)})">🧾 Invoice</button></div></td></tr>`;
   }).join(""):`<tr><td colspan="6" class="full"><div class="empty"><h3>No matching orders</h3></div></td></tr>`;
 }
 
@@ -2801,26 +2948,7 @@ function customerStatusClass(status){
   const s=String(status||"Pending").toLowerCase();
   return s==="active"?"status-active":s==="blocked"?"status-blocked":"status-pending";
 }
-function renderAdminCustomers(){
-  const body=$("adminCustomersBody");if(!body)return;
-  const q=($("custSearch")?.value||"").trim().toLowerCase(),f=$("custStatusFilter")?.value||"All";
-  const list=adminCustomers.filter(c=>(f==="All"||String(c.status||"Pending").toLowerCase()===f.toLowerCase())&&(!q||[c.name,c.phone,c.id,c.type].join(" ").toLowerCase().includes(q)));
-  body.innerHTML=list.length?list.map(c=>{
-    const st=String(c.status||"Pending").toLowerCase();
-    const acts=[];
-    if(st==="pending")acts.push(`<button type="button" class="primary" onclick="approveCustomer(${arg(c.id)})">Approve</button>`);
-    if(st==="active")acts.push(`<button type="button" class="outline" onclick="openPaymentForm(${arg(c.id)})">💳 Request</button>`);
-    acts.push(`<button type="button" class="outline" onclick="openCustomerDetailModal(${arg(c.id)})">Manage</button>`);
-    return `<tr>
-      <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(c.id)})"><b>${esc(c.name)}</b></button><br><span class="cart-meta">${esc(c.type||"Customer")}</span></td>
-      <td data-label="Phone">${esc(c.phone||"")}</td>
-      <td data-label="Customer ID"><span class="customer-id-badge">${esc(c.id||"—")}</span></td>
-      <td data-label="Status"><span class="status ${customerStatusClass(c.status)}">${esc(c.status||"Pending")}</span></td>
-      <td data-label="Registered">${fmtD(c.dateRegistered)}</td>
-      <td data-label="Action"><div class="row-actions">${acts.join("")}</div></td>
-    </tr>`;
-  }).join(""):`<tr><td colspan="6" class="full"><div class="empty"><h3>No customers found</h3></div></td></tr>`;
-}
+
 
 /* --- Customer hub (click a customer's name) --- */
 let cdId=null;
@@ -3028,33 +3156,10 @@ function mergeAdminPayment(p){
   if(i>=0)adminPayments[i]=p;else adminPayments.unshift(p);
   if(adminPayPrev)adminPayPrev[p.id]=p.status;
 }
-function payStatusSelect(p){
-  return `<select class="order-status-select ${stCls(p.status)}" onchange="adminSetPaymentStatus(${arg(p.id)},this.value)">${PAY_STATUSES.map(s=>`<option value="${s}" ${p.status===s?"selected":""}>${s}</option>`).join("")}</select>`;
-}
-function payActions(p){
-  return `<button type="button" class="outline" onclick="adminEditPayment(${arg(p.id)})">Edit</button>${isDue(p)?`<button type="button" class="outline" onclick="adminRemindPayment(${arg(p.id)})">🔔 Remind</button>`:""}`;
-}
-function payDetails(p){
-  return [p.note?esc(p.note):"",`<span class="cart-meta">UPI: ${esc(p.upiId)}</span>`,p.utr?`<span class="cart-meta">UTR: ${esc(p.utr)}</span>`:"",p.customerPaidOn?`<span class="cart-meta">Customer reported paid: ${fmtDT(p.customerPaidOn)}</span>`:"",p.paidOn?`<span class="cart-meta">Confirmed: ${fmtDT(p.paidOn)}</span>`:""].filter(Boolean).join("<br>");
-}
-function renderAdminPayments(){
-  const body=$("adminPaymentsBody");if(!body)return;
-  const q=($("payAdminSearch")?.value||"").trim().toLowerCase(),f=$("payAdminFilter")?.value||"All";
-  const sum={};PAY_STATUSES.forEach(s=>{sum[s]={n:0,amt:0};});
-  adminPayments.forEach(p=>{const s=sum[p.status];if(s){s.n++;s.amt+=p.amount;}});
-  $("paySummaryBar").innerHTML=PAY_STATUSES.map(s=>`<span class="order-summary-pill">${s}<strong>${sum[s].n}</strong> <span class="cart-meta">${money(sum[s].amt)}</span></span>`).join("");
-  const rank={Verifying:0,Pending:1,Failed:2,Paid:3,Cancelled:4};
-  const list=adminPayments.filter(p=>(f==="All"||(f==="Due"?isDue(p):p.status===f))&&(!q||[p.id,p.customerName,p.customerId,p.phone,p.note,p.utr].join(" ").toLowerCase().includes(q)))
-    .sort((a,b)=>(rank[a.status]-rank[b.status])||(new Date(b.date)-new Date(a.date)));
-  body.innerHTML=list.length?list.map(p=>`<tr>
-    <td data-label="Request"><b>${esc(p.id)}</b><br><span class="cart-meta">${fmtDT(p.date)}</span></td>
-    <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(p.customerId)})"><b>${esc(p.customerName)}</b></button><br><span class="cart-meta">${esc(p.phone)}</span></td>
-    <td data-label="Amount"><b>${money(p.amount)}</b></td>
-    <td data-label="Details" class="stack">${payDetails(p)}</td>
-    <td data-label="Status">${payStatusSelect(p)}</td>
-    <td data-label="Action"><div class="row-actions">${payActions(p)}</div></td>
-  </tr>`).join(""):`<tr><td colspan="6" class="full"><div class="empty"><h3>No payment requests</h3></div></td></tr>`;
-}
+
+
+
+
 function renderCdPayments(){
   const box=$("cdPaymentsList");if(!box)return;
   const mine=adminPayments.filter(p=>p.customerId===cdId);
@@ -3086,15 +3191,22 @@ async function adminRemindPayment(id){
 }
 
 let pf={mode:"create",customerId:"",paymentId:""};
+function fillPfSelect(selected){
+  const list=adminCustomers.filter(c=>String(c.status).toLowerCase()==="active").sort((a,b)=>String(a.name).localeCompare(String(b.name)));
+  $("pfCustomer").innerHTML='<option value="">Select customer…</option>'+list.map(c=>`<option value="${esc(c.id)}">${esc(c.name)} — ${esc(c.phone)}</option>`).join("");
+  $("pfCustomer").value=selected||"";
+}
 function openPaymentForm(customerId){
   pf={mode:"create",customerId:"",paymentId:""};
   $("pfTitle").textContent="New Payment Request";
   $("pfSaveBtn").textContent="Send Request";
-  $("pfAmount").value="";$("pfNote").value="";$("pfSearch").value="";
+  $("pfAmount").value="";$("pfNote").value="";
   $("pfUpi").value=localStorage.getItem("bijaya_last_upi")||"";
-  setPfCustomer(customerId||"");
+  $("pfChosen").classList.add("hidden");
+  $("pfPicker").classList.remove("hidden");
+  fillPfSelect(customerId);
   openModal("paymentFormModal");
-  if(!adminCustomers.length)loadAdminCustomers().then(()=>{if(!pf.customerId)renderPfResults();});
+  if(!adminCustomers.length)loadAdminCustomers().then(()=>fillPfSelect(customerId));
 }
 function adminEditPayment(id){
   const p=adminPayments.find(x=>x.id===id);
@@ -3103,25 +3215,15 @@ function adminEditPayment(id){
   $("pfTitle").textContent="Edit Payment Request";
   $("pfSaveBtn").textContent="Save Changes";
   $("pfAmount").value=p.amount;$("pfNote").value=p.note||"";$("pfUpi").value=p.upiId||"";
-  setPfCustomer(p.customerId,p.customerName);
+  $("pfPicker").classList.add("hidden");
+  $("pfChosen").classList.remove("hidden");
+  $("pfChosen").innerHTML=`<span>${esc(p.customerName)} <span class="cart-meta">${esc(p.customerId)}</span></span>`;
   openModal("paymentFormModal");
-}
-function setPfCustomer(id,fallbackName){
-  pf.customerId=id;
-  const c=adminCustomers.find(x=>x.id===id);
-  $("pfChosen").classList.toggle("hidden",!id);
-  $("pfPicker").classList.toggle("hidden",!!id);
-  $("pfChosen").innerHTML=id?`<span>${esc(c?c.name:fallbackName||id)} <span class="cart-meta">${esc(id)}</span></span>${pf.mode==="create"?`<button type="button" class="link-button" onclick="setPfCustomer('')">Change</button>`:""}`:"";
-  if(!id)renderPfResults();
-}
-function renderPfResults(){
-  const q=$("pfSearch").value.trim().toLowerCase();
-  const list=adminCustomers.filter(c=>String(c.status).toLowerCase()==="active"&&(!q||[c.name,c.phone,c.id].join(" ").toLowerCase().includes(q))).sort((a,b)=>String(a.name).localeCompare(String(b.name))).slice(0,8);
-  $("pfResults").innerHTML=list.length?list.map(c=>`<button type="button" class="pick-item" onclick="setPfCustomer(${arg(c.id)})"><b>${esc(c.name)}</b> <span class="cart-meta">${esc(c.phone)} • ${esc(c.id)}</span></button>`).join(""):`<div class="cart-meta">No active customers found</div>`;
 }
 async function savePaymentForm(){
   const amount=Math.round(Number($("pfAmount").value)*100)/100,upiId=$("pfUpi").value.trim(),note=$("pfNote").value.trim();
-  if(!pf.customerId){toast("Select a customer");return;}
+  const customerId=pf.mode==="edit"?pf.customerId:$("pfCustomer").value;
+  if(!customerId){toast("Select a customer");return;}
   if(!(amount>=1&&amount<=100000)){toast("Enter an amount between ₹1 and ₹1,00,000");return;}
   if(!UPI_RE.test(upiId)){toast("Enter a valid UPI ID, e.g. name@bank");return;}
   await busy($("pfSaveBtn"),async()=>{
@@ -3131,7 +3233,7 @@ async function savePaymentForm(){
         mergeAdminPayment(d.payment);
         toast("Payment request updated");
       }else{
-        const d=await apiPost({action:"adminCreatePayment",customerId:pf.customerId,amount,upiId,note});
+        const d=await apiPost({action:"adminCreatePayment",customerId,amount,upiId,note});
         mergeAdminPayment(d.payment);
         toast(`Request of ${money(amount)} sent to ${d.payment.customerName}`);
       }
@@ -3149,6 +3251,8 @@ async function adminChangeOrderStatus(orderId,status){
     if(o)o.status=status;
     renderAdminOrders();
     toast("Order status updated");
+    loadProductsFromApi(true,true).catch(()=>{});
+    loadAdminOrders();
   }catch(e){
     toast("Could not update status: "+e.message);
     renderAdminOrders();
@@ -3267,8 +3371,845 @@ document.addEventListener("visibilitychange",()=>{
 });
 setInterval(checkForAppUpdate,5*60*1000);
 
+/* ===== Languages: English / हिन्दी / ଓଡ଼ିଆ (customer screens) ===== */
+const LANGS={en:"English",hi:"हिन्दी",or:"ଓଡ଼ିଆ"};
+let LANG=(()=>{try{const v=localStorage.getItem("bijaya_lang");return LANGS[v]?v:"en";}catch(e){return "en";}})();
+
+const I18N={hi:{
+"Loading your shop…":"आपकी दुकान लोड हो रही है…","A new version of the app is available.":"ऐप का नया संस्करण उपलब्ध है।","Reload":"रीलोड करें","Search products...":"उत्पाद खोजें...",
+"👤 Profile":"👤 प्रोफ़ाइल","Admin":"एडमिन","Welcome to BIJAYA HOUSING":"BIJAYA HOUSING में आपका स्वागत है",
+"Create your customer account first. After admin approval, call BIJAYA HOUSING to receive your Customer ID and Password.":"पहले अपना ग्राहक खाता बनाएँ। एडमिन की मंज़ूरी के बाद अपना ग्राहक आईडी और पासवर्ड पाने के लिए BIJAYA HOUSING को कॉल करें।",
+"Customer Login / Sign Up":"ग्राहक लॉगिन / साइन अप","WELCOME TO BIJAYA HOUSING.":"BIJAYA HOUSING में आपका स्वागत है।","Shop smarter.":"समझदारी से खरीदें।","Choose what you need.":"जो चाहिए वही चुनें।",
+"Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.":"श्रेणी के अनुसार उत्पाद देखें, सही साइज़ चुनें, मात्रा तय करें और अपना ऑर्डर सीधे WhatsApp से भेजें।",
+"Explore Products →":"उत्पाद देखें →","Order support":"ऑर्डर सहायता","Fast order confirmation through 8114832749":"8114832749 के ज़रिए तुरंत ऑर्डर कन्फ़र्मेशन",
+"Categories":"श्रेणियाँ","↻ Reload Products":"↻ उत्पाद रीलोड करें","↻ Reloading…":"↻ रीलोड हो रहा है…","All Products":"सभी उत्पाद",
+"Meetings & Registration":"बैठकें और पंजीकरण","Scan the QR code or tap the button to register.":"पंजीकरण के लिए QR कोड स्कैन करें या बटन दबाएँ।","Click me":"यहाँ क्लिक करें",
+"Your Cart":"आपकी कार्ट","Total":"कुल","Proceed to Checkout →":"चेकआउट करें →","Product Details":"उत्पाद विवरण","Select Size":"साइज़ चुनें","Quantity":"मात्रा","Close":"बंद करें",
+"Add to Cart":"कार्ट में जोड़ें","Out of Stock":"स्टॉक में नहीं है","Out of stock":"स्टॉक में नहीं है","Checkout":"चेकआउट",
+"Full Name *":"पूरा नाम *","Your name":"आपका नाम","Phone Number *":"फ़ोन नंबर *","10-digit mobile number":"10 अंकों का मोबाइल नंबर","Address *":"पता *","House / street / village / town":"मकान / गली / गाँव / शहर",
+"Pincode *":"पिनकोड *","6-digit pincode":"6 अंकों का पिनकोड","Order Note":"ऑर्डर नोट","Optional":"वैकल्पिक","Delivery method":"डिलीवरी का तरीका","Pickup from shop":"दुकान से ले जाऊँगा","Home delivery":"घर पर डिलीवरी",
+"Delivery charge, if any, is confirmed by BIJAYA HOUSING.":"डिलीवरी शुल्क, यदि कोई हो, BIJAYA HOUSING द्वारा बताया जाएगा।",
+"Your order is saved, then opens in WhatsApp.":"आपका ऑर्डर सेव होता है, फिर WhatsApp में खुलता है।","Place Order & Open WhatsApp":"ऑर्डर दें और WhatsApp खोलें",
+"My Profile":"मेरी प्रोफ़ाइल","Payments":"भुगतान","Total due":"कुल बकाया","📷 Change Photo":"📷 फ़ोटो बदलें","🪪 View ID Card":"🪪 आईडी कार्ड देखें",
+"Full Name":"पूरा नाम","Phone Number":"फ़ोन नंबर","Address":"पता","Pincode":"पिनकोड","Save Profile":"प्रोफ़ाइल सेव करें",
+"You are using a temporary password. Please change it below.":"आप अस्थायी पासवर्ड इस्तेमाल कर रहे हैं। कृपया नीचे इसे बदलें।","Change Password":"पासवर्ड बदलें","Current Password":"वर्तमान पासवर्ड","New Password":"नया पासवर्ड",
+"At least 6 characters":"कम से कम 6 अक्षर","Update Password":"पासवर्ड अपडेट करें","Logout":"लॉगआउट","My Orders":"मेरे ऑर्डर",
+"Customer Account":"ग्राहक खाता","Login with your Customer ID and Password":"अपने ग्राहक आईडी और पासवर्ड से लॉगिन करें","Login":"लॉगिन","Sign Up":"साइन अप","Customer ID *":"ग्राहक आईडी *","Password *":"पासवर्ड *","Your password":"आपका पासवर्ड",
+"If you are registered but do not have your Customer ID and Password, please call":"यदि आप पंजीकृत हैं पर आपके पास ग्राहक आईडी और पासवर्ड नहीं है, तो कृपया कॉल करें","or":"या",
+"Your full name":"आपका पूरा नाम","What are you? *":"आप कौन हैं? *","Customer":"ग्राहक","Plumber":"प्लंबर","Electrician":"इलेक्ट्रीशियन","Painter":"पेंटर","Raj Mistri":"राज मिस्त्री","Tile Mistri":"टाइल मिस्त्री","Dealer":"डीलर",
+"Mobile Number *":"मोबाइल नंबर *","Submit Registration":"पंजीकरण जमा करें",
+"Your registration will remain Pending until BIJAYA HOUSING approves it. Save the Customer ID shown after you submit. After approval, call":"BIJAYA HOUSING की मंज़ूरी तक आपका पंजीकरण लंबित रहेगा। जमा करने के बाद दिखने वाला ग्राहक आईडी सुरक्षित रखें। मंज़ूरी के बाद कॉल करें",
+"to receive your password.":"पासवर्ड पाने के लिए।",
+"Payment Request":"भुगतान अनुरोध","Pay Now":"अभी भुगतान करें","Later":"बाद में","Pay anytime from your Profile.":"आप कभी भी अपनी प्रोफ़ाइल से भुगतान कर सकते हैं।","Complete Payment":"भुगतान पूरा करें","Did you complete the payment?":"क्या आपने भुगतान पूरा किया?",
+"Amount":"राशि","UPI ID":"UPI आईडी","Copy UPI ID":"UPI आईडी कॉपी करें","Copy Amount":"राशि कॉपी करें","Open UPI App":"UPI ऐप खोलें","Amount you paid (₹)":"आपने कितना भुगतान किया (₹)","UTR / Transaction ID (optional)":"UTR / ट्रांज़ैक्शन आईडी (वैकल्पिक)","From your UPI app":"आपके UPI ऐप से",
+"✓ I've Paid":"✓ मैंने भुगतान कर दिया","I've Paid":"मैंने भुगतान कर दिया","Not yet":"अभी नहीं","🧾 Receipt":"🧾 रसीद",
+"Pending":"लंबित","Partial":"आंशिक","Verifying":"जाँच जारी","Paid":"भुगतान हुआ","Failed":"विफल","Cancelled":"रद्द","Marked failed — please pay again":"विफल दर्ज हुआ — कृपया फिर से भुगतान करें",
+"New":"नया","Confirmed":"पुष्टि हुई","Processing":"प्रक्रिया में","Ready":"तैयार","Out for Delivery":"डिलीवरी के लिए निकला","Completed":"पूर्ण","Delivered":"डिलीवर हुआ","Picked up":"ले लिया गया",
+"Order Submitted Successfully":"ऑर्डर सफलतापूर्वक जमा हुआ","Thank you for your order.":"आपके ऑर्डर के लिए धन्यवाद।","Your order is saved. Tap below to send it on WhatsApp.":"आपका ऑर्डर सेव हो गया है। WhatsApp पर भेजने के लिए नीचे दबाएँ।",
+"↗ Send Order to WhatsApp":"↗ ऑर्डर WhatsApp पर भेजें","↗ Resend Order to WhatsApp":"↗ ऑर्डर फिर से WhatsApp पर भेजें","View My Orders":"मेरे ऑर्डर देखें","📋 Copy Order Message":"📋 ऑर्डर संदेश कॉपी करें",
+"🚚 Home delivery":"🚚 घर पर डिलीवरी","🏬 Pickup from shop":"🏬 दुकान से पिकअप","📦 Track order":"📦 ऑर्डर ट्रैक करें","🔁 Reorder":"🔁 दोबारा ऑर्डर करें","🧾 Download Invoice":"🧾 इनवॉइस डाउनलोड करें",
+"No previous orders":"कोई पिछला ऑर्डर नहीं","Your orders will appear here after checkout.":"चेकआउट के बाद आपके ऑर्डर यहाँ दिखेंगे।","Invoice available once your order is confirmed":"ऑर्डर की पुष्टि होने पर इनवॉइस उपलब्ध होगा",
+"Customer ID Card":"ग्राहक आईडी कार्ड","Invoice":"इनवॉइस","Payment Receipt":"भुगतान रसीद","⬇ Download JPG":"⬇ JPG डाउनलोड करें","⬇ Download PDF":"⬇ PDF डाउनलोड करें","Download didn't start?":"डाउनलोड शुरू नहीं हुआ?","Open in browser":"ब्राउज़र में खोलें","Copy link":"लिंक कॉपी करें",
+"Adjust Your Photo":"अपनी फ़ोटो ठीक करें","Use This Photo":"यह फ़ोटो इस्तेमाल करें","Cancel":"रद्द करें","Show more":"और दिखाएँ",
+"Added to cart":"कार्ट में जोड़ा गया","Your cart is empty":"आपकी कार्ट खाली है","This item is out of stock":"यह वस्तु स्टॉक में नहीं है","Maximum available stock reached":"उपलब्ध अधिकतम स्टॉक हो गया","Login successful":"लॉगिन सफल",
+"Items added to your cart":"वस्तुएँ आपकी कार्ट में जोड़ दी गईं","These items are not available right now":"ये वस्तुएँ अभी उपलब्ध नहीं हैं","Password updated":"पासवर्ड अपडेट हो गया",
+"You're offline. Showing saved products. Orders and payments need internet.":"आप ऑफ़लाइन हैं। सेव किए गए उत्पाद दिख रहे हैं। ऑर्डर और भुगतान के लिए इंटरनेट चाहिए।","Having trouble reaching the server. Showing saved data.":"सर्वर से संपर्क नहीं हो पा रहा। सेव किया गया डेटा दिख रहा है।","Updated just now":"अभी अपडेट हुआ",
+"No internet connection. Please try again.":"इंटरनेट कनेक्शन नहीं है। कृपया फिर से कोशिश करें।"
+},or:{
+"Loading your shop…":"ଆପଣଙ୍କ ଦୋକାନ ଲୋଡ୍ ହେଉଛି…","A new version of the app is available.":"ଆପ୍‌ର ନୂଆ ସଂସ୍କରଣ ଉପଲବ୍ଧ।","Reload":"ପୁନଃ ଲୋଡ୍ କରନ୍ତୁ","Search products...":"ଉତ୍ପାଦ ଖୋଜନ୍ତୁ...",
+"👤 Profile":"👤 ପ୍ରୋଫାଇଲ୍","Admin":"ଆଡମିନ୍","Welcome to BIJAYA HOUSING":"BIJAYA HOUSING କୁ ସ୍ୱାଗତ",
+"Create your customer account first. After admin approval, call BIJAYA HOUSING to receive your Customer ID and Password.":"ପ୍ରଥମେ ଆପଣଙ୍କ ଗ୍ରାହକ ଖାତା ତିଆରି କରନ୍ତୁ। ଆଡମିନ୍ ଅନୁମୋଦନ ପରେ ଆପଣଙ୍କ ଗ୍ରାହକ ଆଇଡି ଓ ପାସୱାର୍ଡ ପାଇବାକୁ BIJAYA HOUSING କୁ କଲ୍ କରନ୍ତୁ।",
+"Customer Login / Sign Up":"ଗ୍ରାହକ ଲଗଇନ୍ / ସାଇନ୍ ଅପ୍","WELCOME TO BIJAYA HOUSING.":"BIJAYA HOUSING କୁ ସ୍ୱାଗତ।","Shop smarter.":"ବୁଦ୍ଧିମାନ ଭାବରେ କିଣନ୍ତୁ।","Choose what you need.":"ଯାହା ଦରକାର ତାହା ବାଛନ୍ତୁ।",
+"Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.":"ବର୍ଗ ଅନୁସାରେ ଉତ୍ପାଦ ଦେଖନ୍ତୁ, ସଠିକ୍ ସାଇଜ୍ ବାଛନ୍ତୁ, ପରିମାଣ ଠିକ୍ କରନ୍ତୁ ଏବଂ ଆପଣଙ୍କ ଅର୍ଡର ସିଧାସଳଖ WhatsApp ମାଧ୍ୟମରେ ପଠାନ୍ତୁ।",
+"Explore Products →":"ଉତ୍ପାଦ ଦେଖନ୍ତୁ →","Order support":"ଅର୍ଡର ସହାୟତା","Fast order confirmation through 8114832749":"8114832749 ମାଧ୍ୟମରେ ଶୀଘ୍ର ଅର୍ଡର ନିଶ୍ଚିତକରଣ",
+"Categories":"ବର୍ଗଗୁଡ଼ିକ","↻ Reload Products":"↻ ଉତ୍ପାଦ ପୁନଃ ଲୋଡ୍ କରନ୍ତୁ","↻ Reloading…":"↻ ପୁନଃ ଲୋଡ୍ ହେଉଛି…","All Products":"ସମସ୍ତ ଉତ୍ପାଦ",
+"Meetings & Registration":"ବୈଠକ ଓ ପଞ୍ଜୀକରଣ","Scan the QR code or tap the button to register.":"ପଞ୍ଜୀକରଣ ପାଇଁ QR କୋଡ୍ ସ୍କାନ୍ କରନ୍ତୁ କିମ୍ବା ବଟନ୍ ଦବାନ୍ତୁ।","Click me":"ଏଠାରେ କ୍ଲିକ୍ କରନ୍ତୁ",
+"Your Cart":"ଆପଣଙ୍କ କାର୍ଟ","Total":"ମୋଟ","Proceed to Checkout →":"ଚେକଆଉଟ୍ କରନ୍ତୁ →","Product Details":"ଉତ୍ପାଦ ବିବରଣୀ","Select Size":"ସାଇଜ୍ ବାଛନ୍ତୁ","Quantity":"ପରିମାଣ","Close":"ବନ୍ଦ କରନ୍ତୁ",
+"Add to Cart":"କାର୍ଟରେ ଯୋଡ଼ନ୍ତୁ","Out of Stock":"ଷ୍ଟକ୍‌ରେ ନାହିଁ","Out of stock":"ଷ୍ଟକ୍‌ରେ ନାହିଁ","Checkout":"ଚେକଆଉଟ୍",
+"Full Name *":"ପୂରା ନାମ *","Your name":"ଆପଣଙ୍କ ନାମ","Phone Number *":"ଫୋନ୍ ନମ୍ବର *","10-digit mobile number":"10 ଅଙ୍କର ମୋବାଇଲ୍ ନମ୍ବର","Address *":"ଠିକଣା *","House / street / village / town":"ଘର / ରାସ୍ତା / ଗାଁ / ସହର",
+"Pincode *":"ପିନ୍‌କୋଡ୍ *","6-digit pincode":"6 ଅଙ୍କର ପିନ୍‌କୋଡ୍","Order Note":"ଅର୍ଡର ନୋଟ୍","Optional":"ଐଚ୍ଛିକ","Delivery method":"ଡେଲିଭରି ପ୍ରକାର","Pickup from shop":"ଦୋକାନରୁ ନେବି","Home delivery":"ଘରକୁ ଡେଲିଭରି",
+"Delivery charge, if any, is confirmed by BIJAYA HOUSING.":"ଡେଲିଭରି ଶୁଳ୍କ, ଯଦି ଥାଏ, BIJAYA HOUSING ଜଣାଇବେ।",
+"Your order is saved, then opens in WhatsApp.":"ଆପଣଙ୍କ ଅର୍ଡର ସେଭ୍ ହୁଏ, ତା'ପରେ WhatsApp ରେ ଖୋଲେ।","Place Order & Open WhatsApp":"ଅର୍ଡର ଦିଅନ୍ତୁ ଓ WhatsApp ଖୋଲନ୍ତୁ",
+"My Profile":"ମୋ ପ୍ରୋଫାଇଲ୍","Payments":"ପେମେଣ୍ଟ","Total due":"ମୋଟ ବାକି","📷 Change Photo":"📷 ଫଟୋ ବଦଳାନ୍ତୁ","🪪 View ID Card":"🪪 ଆଇଡି କାର୍ଡ ଦେଖନ୍ତୁ",
+"Full Name":"ପୂରା ନାମ","Phone Number":"ଫୋନ୍ ନମ୍ବର","Address":"ଠିକଣା","Pincode":"ପିନ୍‌କୋଡ୍","Save Profile":"ପ୍ରୋଫାଇଲ୍ ସେଭ୍ କରନ୍ତୁ",
+"You are using a temporary password. Please change it below.":"ଆପଣ ଅସ୍ଥାୟୀ ପାସୱାର୍ଡ ବ୍ୟବହାର କରୁଛନ୍ତି। ଦୟାକରି ତଳେ ଏହାକୁ ବଦଳାନ୍ତୁ।","Change Password":"ପାସୱାର୍ଡ ବଦଳାନ୍ତୁ","Current Password":"ବର୍ତ୍ତମାନର ପାସୱାର୍ଡ","New Password":"ନୂଆ ପାସୱାର୍ଡ",
+"At least 6 characters":"କମ୍‌ରେ କମ୍ 6 ଅକ୍ଷର","Update Password":"ପାସୱାର୍ଡ ଅପଡେଟ୍ କରନ୍ତୁ","Logout":"ଲଗଆଉଟ୍","My Orders":"ମୋ ଅର୍ଡରଗୁଡ଼ିକ",
+"Customer Account":"ଗ୍ରାହକ ଖାତା","Login with your Customer ID and Password":"ଆପଣଙ୍କ ଗ୍ରାହକ ଆଇଡି ଓ ପାସୱାର୍ଡ ସହ ଲଗଇନ୍ କରନ୍ତୁ","Login":"ଲଗଇନ୍","Sign Up":"ସାଇନ୍ ଅପ୍","Customer ID *":"ଗ୍ରାହକ ଆଇଡି *","Password *":"ପାସୱାର୍ଡ *","Your password":"ଆପଣଙ୍କ ପାସୱାର୍ଡ",
+"If you are registered but do not have your Customer ID and Password, please call":"ଯଦି ଆପଣ ପଞ୍ଜୀକୃତ କିନ୍ତୁ ଗ୍ରାହକ ଆଇଡି ଓ ପାସୱାର୍ଡ ନାହିଁ, ଦୟାକରି କଲ୍ କରନ୍ତୁ","or":"କିମ୍ବା",
+"Your full name":"ଆପଣଙ୍କ ପୂରା ନାମ","What are you? *":"ଆପଣ କିଏ? *","Customer":"ଗ୍ରାହକ","Plumber":"ପ୍ଲମ୍ବର","Electrician":"ଇଲେକ୍ଟ୍ରିସିଆନ୍","Painter":"ପେଣ୍ଟର","Raj Mistri":"ରାଜ ମିସ୍ତ୍ରୀ","Tile Mistri":"ଟାଇଲ୍ ମିସ୍ତ୍ରୀ","Dealer":"ଡିଲର୍",
+"Mobile Number *":"ମୋବାଇଲ୍ ନମ୍ବର *","Submit Registration":"ପଞ୍ଜୀକରଣ ଦାଖଲ କରନ୍ତୁ",
+"Your registration will remain Pending until BIJAYA HOUSING approves it. Save the Customer ID shown after you submit. After approval, call":"BIJAYA HOUSING ଅନୁମୋଦନ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କ ପଞ୍ଜୀକରଣ ବାକି ରହିବ। ଦାଖଲ ପରେ ଦେଖାଯାଉଥିବା ଗ୍ରାହକ ଆଇଡି ସାଇତି ରଖନ୍ତୁ। ଅନୁମୋଦନ ପରେ କଲ୍ କରନ୍ତୁ",
+"to receive your password.":"ପାସୱାର୍ଡ ପାଇବା ପାଇଁ।",
+"Payment Request":"ପେମେଣ୍ଟ ଅନୁରୋଧ","Pay Now":"ବର୍ତ୍ତମାନ ଦିଅନ୍ତୁ","Later":"ପରେ","Pay anytime from your Profile.":"ଆପଣ ଯେକୌଣସି ସମୟରେ ପ୍ରୋଫାଇଲରୁ ଦେଇପାରିବେ।","Complete Payment":"ପେମେଣ୍ଟ ସମ୍ପୂର୍ଣ୍ଣ କରନ୍ତୁ","Did you complete the payment?":"ଆପଣ ପେମେଣ୍ଟ ସମ୍ପୂର୍ଣ୍ଣ କରିଛନ୍ତି କି?",
+"Amount":"ପରିମାଣ","UPI ID":"UPI ଆଇଡି","Copy UPI ID":"UPI ଆଇଡି କପି କରନ୍ତୁ","Copy Amount":"ପରିମାଣ କପି କରନ୍ତୁ","Open UPI App":"UPI ଆପ୍ ଖୋଲନ୍ତୁ","Amount you paid (₹)":"ଆପଣ କେତେ ଦେଇଛନ୍ତି (₹)","UTR / Transaction ID (optional)":"UTR / ଟ୍ରାଞ୍ଜାକସନ୍ ଆଇଡି (ଐଚ୍ଛିକ)","From your UPI app":"ଆପଣଙ୍କ UPI ଆପ୍‌ରୁ",
+"✓ I've Paid":"✓ ମୁଁ ଦେଇସାରିଛି","I've Paid":"ମୁଁ ଦେଇସାରିଛି","Not yet":"ଏପର୍ଯ୍ୟନ୍ତ ନୁହେଁ","🧾 Receipt":"🧾 ରସିଦ",
+"Pending":"ବାକି","Partial":"ଆଂଶିକ","Verifying":"ଯାଞ୍ଚ ହେଉଛି","Paid":"ପରିଶୋଧିତ","Failed":"ବିଫଳ","Cancelled":"ବାତିଲ୍","Marked failed — please pay again":"ବିଫଳ ଭାବେ ଚିହ୍ନିତ — ଦୟାକରି ପୁଣି ଦିଅନ୍ତୁ",
+"New":"ନୂଆ","Confirmed":"ନିଶ୍ଚିତ","Processing":"ପ୍ରକ୍ରିୟାରେ","Ready":"ପ୍ରସ୍ତୁତ","Out for Delivery":"ଡେଲିଭରି ପାଇଁ ବାହାରିଛି","Completed":"ସମ୍ପୂର୍ଣ୍ଣ","Delivered":"ଡେଲିଭର୍ ହୋଇଛି","Picked up":"ନିଆଯାଇଛି",
+"Order Submitted Successfully":"ଅର୍ଡର ସଫଳତାର ସହ ଦାଖଲ ହୋଇଛି","Thank you for your order.":"ଆପଣଙ୍କ ଅର୍ଡର ପାଇଁ ଧନ୍ୟବାଦ।","Your order is saved. Tap below to send it on WhatsApp.":"ଆପଣଙ୍କ ଅର୍ଡର ସେଭ୍ ହୋଇଛି। WhatsApp ରେ ପଠାଇବାକୁ ତଳେ ଦବାନ୍ତୁ।",
+"↗ Send Order to WhatsApp":"↗ ଅର୍ଡର WhatsApp ରେ ପଠାନ୍ତୁ","↗ Resend Order to WhatsApp":"↗ ଅର୍ଡର ପୁଣି WhatsApp ରେ ପଠାନ୍ତୁ","View My Orders":"ମୋ ଅର୍ଡର ଦେଖନ୍ତୁ","📋 Copy Order Message":"📋 ଅର୍ଡର ମେସେଜ୍ କପି କରନ୍ତୁ",
+"🚚 Home delivery":"🚚 ଘରକୁ ଡେଲିଭରି","🏬 Pickup from shop":"🏬 ଦୋକାନରୁ ପିକଅପ୍","📦 Track order":"📦 ଅର୍ଡର ଟ୍ରାକ୍ କରନ୍ତୁ","🔁 Reorder":"🔁 ପୁଣି ଅର୍ଡର କରନ୍ତୁ","🧾 Download Invoice":"🧾 ଇନଭଏସ୍ ଡାଉନଲୋଡ୍ କରନ୍ତୁ",
+"No previous orders":"କୌଣସି ପୂର୍ବ ଅର୍ଡର ନାହିଁ","Your orders will appear here after checkout.":"ଚେକଆଉଟ୍ ପରେ ଆପଣଙ୍କ ଅର୍ଡର ଏଠାରେ ଦେଖାଯିବ।","Invoice available once your order is confirmed":"ଅର୍ଡର ନିଶ୍ଚିତ ହେଲେ ଇନଭଏସ୍ ମିଳିବ",
+"Customer ID Card":"ଗ୍ରାହକ ଆଇଡି କାର୍ଡ","Invoice":"ଇନଭଏସ୍","Payment Receipt":"ପେମେଣ୍ଟ ରସିଦ","⬇ Download JPG":"⬇ JPG ଡାଉନଲୋଡ୍ କରନ୍ତୁ","⬇ Download PDF":"⬇ PDF ଡାଉନଲୋଡ୍ କରନ୍ତୁ","Download didn't start?":"ଡାଉନଲୋଡ୍ ଆରମ୍ଭ ହେଲାନି?","Open in browser":"ବ୍ରାଉଜରରେ ଖୋଲନ୍ତୁ","Copy link":"ଲିଙ୍କ୍ କପି କରନ୍ତୁ",
+"Adjust Your Photo":"ଆପଣଙ୍କ ଫଟୋ ଠିକ୍ କରନ୍ତୁ","Use This Photo":"ଏହି ଫଟୋ ବ୍ୟବହାର କରନ୍ତୁ","Cancel":"ବାତିଲ୍ କରନ୍ତୁ","Show more":"ଅଧିକ ଦେଖନ୍ତୁ",
+"Added to cart":"କାର୍ଟରେ ଯୋଡ଼ାଗଲା","Your cart is empty":"ଆପଣଙ୍କ କାର୍ଟ ଖାଲି ଅଛି","This item is out of stock":"ଏହି ଜିନିଷ ଷ୍ଟକ୍‌ରେ ନାହିଁ","Maximum available stock reached":"ଉପଲବ୍ଧ ସର୍ବାଧିକ ଷ୍ଟକ୍ ପହଞ୍ଚିଲା","Login successful":"ଲଗଇନ୍ ସଫଳ",
+"Items added to your cart":"ଜିନିଷଗୁଡ଼ିକ ଆପଣଙ୍କ କାର୍ଟରେ ଯୋଡ଼ାଗଲା","These items are not available right now":"ଏହି ଜିନିଷଗୁଡ଼ିକ ବର୍ତ୍ତମାନ ଉପଲବ୍ଧ ନାହିଁ","Password updated":"ପାସୱାର୍ଡ ଅପଡେଟ୍ ହୋଇଛି",
+"You're offline. Showing saved products. Orders and payments need internet.":"ଆପଣ ଅଫଲାଇନ୍ ଅଛନ୍ତି। ସେଭ୍ ହୋଇଥିବା ଉତ୍ପାଦ ଦେଖାଯାଉଛି। ଅର୍ଡର ଓ ପେମେଣ୍ଟ ପାଇଁ ଇଣ୍ଟରନେଟ୍ ଦରକାର।","Having trouble reaching the server. Showing saved data.":"ସର୍ଭରକୁ ପହଞ୍ଚିବାରେ ଅସୁବିଧା। ସେଭ୍ ହୋଇଥିବା ତଥ୍ୟ ଦେଖାଯାଉଛି।","Updated just now":"ଏବେ ଅପଡେଟ୍ ହୋଇଛି",
+"No internet connection. Please try again.":"ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ନାହିଁ। ଦୟାକରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।"
+}};
+
+// text with numbers/dates inside
+const RX={
+hi:[[/^Only (\d+) left$/,m=>`केवल ${m[1]} बचे`],[/^(\d+) available$/,m=>`${m[1]} उपलब्ध`],[/^Show more \((\d+)\)$/,m=>`और दिखाएँ (${m[1]})`],[/^(\d+) items?$/,m=>`${m[1]} वस्तुएँ`],
+  [/^Expected delivery: (.+)$/,m=>`अनुमानित डिलीवरी: ${m[1]}`],[/^Delivery charge: (.+)$/,m=>`डिलीवरी शुल्क: ${m[1]}`],[/^Paid (.+) of (.+)$/,m=>`${m[2]} में से ${m[1]} चुकाया`],
+  [/^Paid on (.+)$/,m=>`भुगतान की तारीख: ${m[1]}`],[/^Updated (\d+) min ago$/,m=>`${m[1]} मिनट पहले अपडेट हुआ`],[/^Updated (\d+) hr ago$/,m=>`${m[1]} घंटे पहले अपडेट हुआ`],[/^Updated (\d+) d ago$/,m=>`${m[1]} दिन पहले अपडेट हुआ`],
+  [/^Waiting for BIJAYA HOUSING to confirm(.*)$/,m=>`BIJAYA HOUSING की पुष्टि का इंतज़ार${m[1]}`],[/^Type: (.+)$/,m=>`प्रकार: ${m[1]}`],[/^Status: (.+)$/,m=>`स्थिति: ${m[1]}`]],
+or:[[/^Only (\d+) left$/,m=>`ମାତ୍ର ${m[1]}ଟି ବାକି`],[/^(\d+) available$/,m=>`${m[1]} ଉପଲବ୍ଧ`],[/^Show more \((\d+)\)$/,m=>`ଅଧିକ ଦେଖନ୍ତୁ (${m[1]})`],[/^(\d+) items?$/,m=>`${m[1]} ଟି ଜିନିଷ`],
+  [/^Expected delivery: (.+)$/,m=>`ଆନୁମାନିକ ଡେଲିଭରି: ${m[1]}`],[/^Delivery charge: (.+)$/,m=>`ଡେଲିଭରି ଶୁଳ୍କ: ${m[1]}`],[/^Paid (.+) of (.+)$/,m=>`${m[2]} ମଧ୍ୟରୁ ${m[1]} ଦିଆଯାଇଛି`],
+  [/^Paid on (.+)$/,m=>`ପେମେଣ୍ଟ ତାରିଖ: ${m[1]}`],[/^Updated (\d+) min ago$/,m=>`${m[1]} ମିନିଟ୍ ପୂର୍ବେ ଅପଡେଟ୍ ହୋଇଛି`],[/^Updated (\d+) hr ago$/,m=>`${m[1]} ଘଣ୍ଟା ପୂର୍ବେ ଅପଡେଟ୍ ହୋଇଛି`],[/^Updated (\d+) d ago$/,m=>`${m[1]} ଦିନ ପୂର୍ବେ ଅପଡେଟ୍ ହୋଇଛି`],
+  [/^Waiting for BIJAYA HOUSING to confirm(.*)$/,m=>`BIJAYA HOUSING ଙ୍କ ନିଶ୍ଚିତକରଣ ପାଇଁ ଅପେକ୍ଷା${m[1]}`],[/^Type: (.+)$/,m=>`ପ୍ରକାର: ${m[1]}`],[/^Status: (.+)$/,m=>`ସ୍ଥିତି: ${m[1]}`]]
+};
+
+function trText(en){
+  if(LANG==="en")return en;
+  const k=en.trim();
+  if(!k)return en;
+  const d=I18N[LANG];
+  if(Object.prototype.hasOwnProperty.call(d,k))return en.replace(k,()=>d[k]);
+  for(const [re,fn] of RX[LANG]){const m=k.match(re);if(m)return en.replace(k,()=>fn(m));}
+  return en;
+}
+const I18N_SKIP="#adminView,.no-i18n,script,style,textarea";
+function i18nWalk(root){
+  if(!root||root.nodeType===8)return;
+  if(root.nodeType===3){i18nText(root);return;}
+  if(root.nodeType!==1||root.closest?.(I18N_SKIP))return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement&&!n.parentElement.closest(I18N_SKIP)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT});
+  let n;while((n=w.nextNode()))i18nText(n);
+  root.querySelectorAll("[placeholder]").forEach(el=>{
+    if(el.closest(I18N_SKIP))return;
+    if(el.__enph===undefined)el.__enph=el.getAttribute("placeholder");
+    el.setAttribute("placeholder",trText(el.__enph));
+  });
+}
+function i18nText(n){
+  if(n.__en===undefined||(n.__out!==undefined&&n.nodeValue!==n.__out))n.__en=n.nodeValue;
+  const out=trText(n.__en);
+  n.__out=out;
+  if(n.nodeValue!==out)n.nodeValue=out;
+}
+let i18nQueue=new Set(),i18nTimer=0;
+const i18nObserver=new MutationObserver(list=>{
+  if(LANG==="en")return;
+  list.forEach(m=>m.addedNodes.forEach(n=>i18nQueue.add(n)));
+  if(!i18nTimer)i18nTimer=setTimeout(()=>{i18nTimer=0;const q=[...i18nQueue];i18nQueue=new Set();q.forEach(i18nWalk);},30);
+});
+i18nObserver.observe(document.body,{childList:true,subtree:true});
+function applyLang(){
+  document.documentElement.lang=LANG==="en"?"en":LANG==="hi"?"hi":"or";
+  document.body.classList.toggle("lang-alt",LANG!=="en");
+  i18nWalk(document.body);
+  const sel=$("langSelect");
+  if(sel)sel.value=LANG;
+}
+function setLang(l){
+  if(!LANGS[l])return;
+  LANG=l;
+  try{localStorage.setItem("bijaya_lang",l);}catch(e){}
+  applyLang();
+  if(typeof renderProducts==="function"&&appView==="customer")renderProducts();
+  if(typeof renderMyPayments==="function")renderMyPayments();
+}
+
+/* ===== v7: shop, orders, payments (customer) ===== */
+
+/* --- connection status + "updated x ago" --- */
+let apiFailStreak=0;
+window.__lastSync=0;
+(function(){
+  const nativeFetch=window.fetch.bind(window);
+  window.fetch=async function(url,opts){
+    const isApi=String(url).indexOf(API_URL)===0;
+    try{
+      const r=await nativeFetch(url,opts);
+      if(isApi&&r.ok){apiFailStreak=0;window.__lastSync=Date.now();updateNetBanner();updateSyncLabel();}
+      return r;
+    }catch(e){
+      if(isApi){apiFailStreak++;updateNetBanner();}
+      throw e;
+    }
+  };
+})();
+function updateNetBanner(){
+  const b=$("netBanner");
+  if(!b)return;
+  let msg="";
+  if(!navigator.onLine)msg="You're offline. Showing saved products. Orders and payments need internet.";
+  else if(apiFailStreak>=2)msg="Having trouble reaching the server. Showing saved data.";
+  b.textContent=msg;
+  b.classList.toggle("hidden",!msg||appView==="admin");
+}
+function timeAgoText(ms){
+  const m=Math.floor((Date.now()-ms)/60000);
+  if(m<1)return "Updated just now";
+  if(m<60)return `Updated ${m} min ago`;
+  const h=Math.floor(m/60);
+  return h<24?`Updated ${h} hr ago`:`Updated ${Math.floor(h/24)} d ago`;
+}
+function updateSyncLabel(){
+  const el=$("syncLabel");
+  if(!el)return;
+  let at=window.__lastSync;
+  if(!at){try{at=Number(JSON.parse(localStorage.getItem(productCacheKey(false))||"{}").savedAt)||0;}catch(e){}}
+  el.textContent=at?timeAgoText(at):"";
+}
+window.addEventListener("online",()=>{updateNetBanner();if(customer()&&appView==="customer"){refreshMyPayments();refreshProductCatalogueInBackground(false);}});
+window.addEventListener("offline",updateNetBanner);
+setInterval(updateSyncLabel,30000);
+
+/* --- product cards: stock badge, paging --- */
+const PAGE_SIZE=24;
+let productLimit=PAGE_SIZE,lastListSig="";
+function cardStock(p,sizeName){
+  const s=p.sizes?.length?p.sizes.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(sizeName)):null;
+  return Number(s?s.stock:p.stock)||0;
+}
+function stockBadgeHtml(n){
+  return n<=0?`<span class="stock-badge out">Out of stock</span>`:(n<=5?`<span class="stock-badge low">Only ${n} left</span>`:"");
+}
+function refreshCardStock(id,size){
+  const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));
+  if(!p)return;
+  const dk=productDomKey(id),n=cardStock(p,size);
+  const slot=$("stock-"+dk),btn=$("add-"+dk);
+  if(slot)slot.innerHTML=stockBadgeHtml(n);
+  if(btn){btn.disabled=n<=0;btn.textContent=n<=0?"Out of Stock":"Add to Cart";}
+}
+function productCard(p){
+  const first=p.sizes?.[0],price=first?first.price:p.price;
+  const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);
+  const dk=productDomKey(p.id),stock=cardStock(p,first?first.name:"");
+  const pid=`decodeProductArg('${safeProductArg(p.id)}')`;
+  return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView(${pid})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView(${pid})}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" width="300" height="300" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div><div class="stock-slot" id="stock-${dk}">${stockBadgeHtml(stock)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize(decodeProductArg('${safeProductArg(p.id)}'),decodeProductArg('${safeProductArg(s.name)}'),this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" id="add-${dk}" ${stock<=0?"disabled":""} onclick="event.stopPropagation();addToCart(${pid})">${stock<=0?"Out of Stock":"Add to Cart"}</button></div></div></article>`;
+}
+function renderProducts(){
+  const q=$("searchInput")?.value.trim().toLowerCase()||"";
+  const selectedSub=window.selectedSubcategory||"All";
+  const list=products.filter(p=>p.active!==false
+    &&(category==="All"||normalizeAccessValue(p.category)===normalizeAccessValue(category))
+    &&(category==="All"||selectedSub==="All"||normalizeAccessValue(p.subcategory)===normalizeAccessValue(selectedSub))
+    &&(!q||`${p.name} ${p.category} ${p.subcategory||""} ${p.description}`.toLowerCase().includes(q)));
+  const sig=category+"|"+selectedSub+"|"+q;
+  if(sig!==lastListSig){lastListSig=sig;productLimit=PAGE_SIZE;}
+  $("productTitle").textContent=category==="All"?"All Products":(selectedSub!=="All"?`${category} • ${selectedSub}`:category);
+  $("productCount").textContent=`${list.length} item${list.length!==1?"s":""}`;
+  const shown=list.slice(0,productLimit);
+  $("productGrid").innerHTML=list.length
+    ?shown.map(productCard).join("")+(list.length>shown.length?`<div class="more-wrap"><button type="button" class="outline" onclick="showMoreProducts()">Show more (${list.length-shown.length})</button></div>`:"")
+    :`<div class="empty"><h3>No products found</h3><p>No active products are available in this selection.</p></div>`;
+  scheduleProductImages();
+}
+function showMoreProducts(){productLimit+=PAGE_SIZE;renderProducts();}
+
+/* --- checkout: delivery choice, server-confirmed prices --- */
+function selectedDeliveryMethod(){
+  return document.querySelector('input[name="dlvMethod"]:checked')?.value==="Delivery"?"Delivery":"Pickup";
+}
+
+/* --- orders: tracking, delivery info, reorder --- */
+const FLOW_PICKUP=["New","Confirmed","Processing","Ready","Completed"];
+const FLOW_DELIVERY=["New","Confirmed","Processing","Ready","Out for Delivery","Completed"];
+function orderStatusLabel(status,method){
+  if(status==="Completed")return method==="Delivery"?"Delivered":"Picked up";
+  return status;
+}
+function orderTimelineHtml(o){
+  const method=o.deliveryMethod==="Delivery"?"Delivery":"Pickup";
+  const status=String(o.status||"New");
+  const cancelled=/^cancel/i.test(status);
+  const hist=o.statusHistory||[];
+  const at={};
+  hist.forEach(h=>{at[h.status]=h.at;});
+  if(!at.New)at.New=o.date;
+  let steps;
+  if(cancelled){
+    const done=[];
+    hist.forEach(h=>{if(h.status!=="Cancelled"&&!done.includes(h.status))done.push(h.status);});
+    if(!done.length)done.push("New");
+    steps=[...done.map(s=>({s,state:"done"})),{s:"Cancelled",state:"cancel"}];
+  }else{
+    const flow=method==="Delivery"?FLOW_DELIVERY:FLOW_PICKUP;
+    const cur=Math.max(0,flow.indexOf(status));
+    steps=flow.map((s,i)=>({s,state:i<cur?"done":i===cur?"now":"todo"}));
+    if(status==="Completed")steps.forEach(x=>{x.state="done";});
+  }
+  return `<ol class="tl">${steps.map(x=>`<li class="${x.state}"><span class="dot"></span><div><b>${esc(orderStatusLabel(x.s,method))}</b>${at[x.s]&&x.state!=="todo"?`<small>${fmtDT(at[x.s])}</small>`:""}</div></li>`).join("")}</ol>`
+    +(o.expectedDelivery&&!cancelled&&status!=="Completed"?`<div class="cart-meta">Expected delivery: ${fmtD(o.expectedDelivery)}</div>`:"");
+}
+function normalizeServerOrder(o){
+  return {
+    id:o.id||"",
+    date:o.date||new Date().toISOString(),
+    customer:o.customer||{},
+    items:(o.items||[]).map(i=>({
+      id:i.code||i.id||"",
+      code:i.code||i.id||"",
+      name:i.name||"Product",
+      size:i.size||"",
+      qty:Number(i.quantity??i.qty??0),
+      price:Number(i.price||0)
+    })),
+    total:Number(o.total||0),
+    originalTotal:o.originalTotal!=null?Number(o.originalTotal):Number(o.total||0),
+    status:o.status||"New",
+    deliveryMethod:o.deliveryMethod==="Delivery"?"Delivery":"Pickup",
+    deliveryCharge:Number(o.deliveryCharge)||0,
+    expectedDelivery:o.expectedDelivery||"",
+    statusHistory:Array.isArray(o.statusHistory)?o.statusHistory:[]
+  };
+}
+function renderCustomerOrders(){
+  const c=getCustomer(),box=$("customerOrders");
+  if(!box)return;
+  if(!c){box.innerHTML="";return;}
+  const customerId=String(c.customerId||c.id||"").trim().toUpperCase();
+  const phone=String(c.phone||"").replace(/\D/g,"").slice(-10);
+  const mine=orders.filter(o=>{
+    const oid=String(o.customer?.id||o.customer?.customerId||"").trim().toUpperCase();
+    const op=String(o.customer?.phone||"").replace(/\D/g,"").slice(-10);
+    return (customerId&&oid===customerId)||(!oid&&phone&&op===phone);
+  });
+  box.innerHTML=mine.length?mine.map(o=>{
+    const status=String(o.status||"New"),sl=status.toLowerCase();
+    const canInvoice=sl!=="new"&&sl!=="cancelled"&&sl!=="canceled";
+    const charge=Number(o.deliveryCharge)||0,grand=(Number(o.total)||0)+charge;
+    const priceChanged=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
+    const amountHtml=priceChanged
+      ?`<span class="cart-meta" style="text-decoration:line-through">${money((Number(o.originalTotal)||0)+charge)}</span> <strong>${money(grand)}</strong> <span class="cart-meta">(revised)</span>`
+      :`<strong>${money(grand)}</strong>`;
+    const oid=arg(o.id);
+    return `<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty!=null?i.qty:i.quantity)||0} × ${money(i.price)}</div>`).join("")}</div>${charge>0?`<div class="cart-meta">Delivery charge: ${money(charge)}</div>`:""}<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">${amountHtml}<span class="status">${esc(orderStatusLabel(status,o.deliveryMethod))}</span></div><div class="cart-meta">${o.deliveryMethod==="Delivery"?"🚚 Home delivery":"🏬 Pickup from shop"}</div><details class="track"><summary>📦 Track order</summary>${orderTimelineHtml(o)}</details><div class="order-actions"><button type="button" class="outline" onclick="reorderById(${oid})">🔁 Reorder</button><button type="button" class="outline" onclick="resendOrderById(${oid})">↗ Resend Order to WhatsApp</button></div>${canInvoice?`<button type="button" class="outline" style="width:100%;margin-top:8px" onclick="downloadInvoiceById(${oid})">🧾 Download Invoice</button>`:`<p class="cart-meta" style="margin-top:8px;text-align:center">Invoice available once your order is confirmed</p>`}</div>`;
+  }).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
+}
+function reorderById(id){
+  const o=orders.find(x=>String(x.id)===String(id));
+  if(!o){toast("Order not found. Please refresh your orders.");return;}
+  let added=0;const skipped=[];
+  (o.items||[]).forEach(it=>{
+    const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(it.code||it.id));
+    if(!p||p.active===false){skipped.push(it.name);return;}
+    const s=p.sizes?.length?p.sizes.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(it.size)):null;
+    if(p.sizes?.length&&!s){skipped.push(it.name);return;}
+    const stock=Number(s?s.stock:p.stock)||0,price=s?s.price:p.price,size=s?s.name:"";
+    const key=p.id+"|"+size,ex=cart.find(i=>i.key===key),have=ex?ex.qty:0;
+    const want=Math.min(Number(it.qty)||1,stock-have);
+    if(want<=0){skipped.push(it.name);return;}
+    if(ex)ex.qty+=want;else cart.push({key,id:p.id,size,price,qty:want});
+    added++;
+  });
+  saveLocal();updateCart();
+  if(!added){toast("These items are not available right now");return;}
+  closeModal();openCart();
+  toast(skipped.length?`Added ${added} item${added>1?"s":""}. Unavailable: ${skipped.join(", ")}`:"Items added to your cart",skipped.length?5000:2400);
+}
+
+/* --- payments: partial amounts --- */
+const PAY_STATUSES=["Pending","Partial","Verifying","Paid","Failed","Cancelled"];
+const isDue=p=>p.status==="Pending"||p.status==="Failed"||p.status==="Partial";
+const payable=p=>Math.max(0,Number(p.remaining!=null?p.remaining:p.amount)||0);
+function myBalance(){
+  return myPayments.filter(p=>["Pending","Failed","Partial","Verifying"].includes(p.status)).reduce((a,p)=>a+payable(p),0);
+}
+function renderMyPayments(){
+  const box=$("customerPayments");
+  if(!box)return;
+  const rank={Pending:0,Failed:0,Partial:0,Verifying:1,Paid:2,Cancelled:3};
+  const list=[...myPayments].sort((a,b)=>(rank[a.status]-rank[b.status])||(new Date(b.date)-new Date(a.date)));
+  $("paymentsSection")?.classList.toggle("hidden",!list.length);
+  const bal=myBalance();
+  const balEl=$("payBalance");
+  if(balEl){balEl.classList.toggle("hidden",bal<=0);balEl.innerHTML=`<span>Total due</span><strong>${money(bal)}</strong>`;}
+  box.innerHTML=list.map(p=>{
+    const partial=p.paidAmount>0&&p.status!=="Paid";
+    const info=p.status==="Verifying"?`Waiting for BIJAYA HOUSING to confirm${p.reportedAmount?" "+money(p.reportedAmount):""}${p.utr?" • UTR "+esc(p.utr):""}`
+      :p.status==="Paid"?`Paid on ${fmtDT(p.paidOn)}`
+      :p.status==="Failed"?"Marked failed — please pay again"
+      :p.status==="Cancelled"?"Cancelled":"";
+    return `<div class="pay-card">
+      <div class="between"><strong style="font-size:20px">${money(partial?payable(p):p.amount)}</strong><span class="status ${stCls(p.status)}">${esc(p.status)}</span></div>
+      ${partial?`<div class="cart-meta">Paid ${money(p.paidAmount)} of ${money(p.amount)}</div>`:""}
+      ${p.note?`<div>${esc(p.note)}</div>`:""}
+      <div class="cart-meta">${esc(p.id)} • ${fmtDT(p.date)}</div>
+      ${info?`<div class="cart-meta">${info}</div>`:""}
+      ${isDue(p)?`<div class="row-actions"><button type="button" class="primary" onclick="startUpiPayment(${arg(p.id)})">Pay Now</button><button type="button" class="outline" onclick="openPayAssist(${arg(p.id)},false)">I've Paid</button></div>`:""}
+      ${p.paidAmount>0?`<div class="row-actions"><button type="button" class="outline" onclick="showMyReceipt(${arg(p.id)})">🧾 Receipt</button></div>`:""}
+    </div>`;
+  }).join("");
+}
+async function confirmMyPayment(){
+  const utr=$("paUtr").value.trim();
+  const p=myPayments.find(x=>x.id===payAssistId);
+  const amount=Math.round(Number($("paPart").value)*100)/100;
+  if(utr&&!/^[A-Za-z0-9]{6,30}$/.test(utr)){toast("UTR should be 6–30 letters or digits");return;}
+  if(!p||!(amount>=1)||amount>payable(p)+0.001){toast("Enter the amount you paid (up to "+money(p?payable(p):0)+")");return;}
+  await busy($("paDoneBtn"),async()=>{
+    try{
+      const d=await apiPost({action:"customerPaymentEvent",paymentId:payAssistId,event:"markPaid",utr,amount});
+      const i=myPayments.findIndex(x=>x.id===d.payment.id);
+      if(i>=0)myPayments[i]=d.payment;
+      const seen=readLS(LS_SEEN);seen[d.payment.id]=d.payment.status;writeLS(LS_SEEN,seen);
+      hideModal("payAssistModal");
+      updatePayBadge();renderMyPayments();
+      toast("Thanks! BIJAYA HOUSING will confirm your payment shortly.",5000);
+    }catch(e){toast(e.message);refreshMyPayments();}
+  });
+}
+
+/* --- receipts (customer + admin) --- */
+async function renderReceiptCanvas(p,cust){
+  const W=640,H=640,NAVY="#0f172a",MUTED="#64748b",LINE="#e2e8f0";
+  const canvas=document.createElement("canvas");canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext("2d");
+  ctx.fillStyle="#fff";roundRectPath(ctx,0,0,W,H,20);ctx.fill();
+  ctx.save();roundRectPath(ctx,0,0,W,H,20);ctx.clip();
+  const g=ctx.createLinearGradient(0,0,W,120);g.addColorStop(0,NAVY);g.addColorStop(1,"#1e293b");
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,120);
+  ctx.textAlign="center";ctx.fillStyle="#fff";ctx.font="900 28px Arial";ctx.fillText("BIJAYA HOUSING",W/2,48);
+  ctx.font="500 13px Arial";ctx.fillStyle="#cbd5e1";ctx.fillText("Agalpur, Balangir, Odisha  /  8114832749 / 9078523132",W/2,72);
+  ctx.font="800 13px Arial";ctx.fillStyle="#60a5fa";ctx.fillText("• PAYMENT RECEIPT •",W/2,100);
+  const full=p.status==="Paid";
+  let y=160;
+  ctx.textAlign="left";ctx.fillStyle=MUTED;ctx.font="600 12px Arial";ctx.fillText("RECEIPT NO.",40,y);ctx.fillText("DATE",W-200,y);
+  ctx.fillStyle=NAVY;ctx.font="800 16px Arial";ctx.fillText(p.id,40,y+22);
+  ctx.fillText(fmtD(full&&p.paidOn?p.paidOn:p.updatedOn||p.date),W-200,y+22);
+  y+=64;
+  ctx.fillStyle=MUTED;ctx.font="600 12px Arial";ctx.fillText("RECEIVED FROM",40,y);
+  ctx.fillStyle=NAVY;ctx.font="800 17px Arial";ctx.fillText(String(cust?.name||"-"),40,y+24);
+  ctx.fillStyle=MUTED;ctx.font="500 13px Arial";
+  ctx.fillText(`Customer ID: ${cust?.customerId||cust?.id||"-"}${cust?.phone?"   Phone: "+cust.phone:""}`,40,y+44);
+  y+=84;
+  ctx.strokeStyle=LINE;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(W-40,y);ctx.stroke();
+  const rows=[["Payment for",p.note||"Payment request"],["Requested amount",money(p.amount)],["Paid to (UPI)",p.upiId||"-"]];
+  if(p.utr)rows.push(["UTR / Ref No.",p.utr]);
+  if(!full)rows.push(["Balance due",money(payable(p))]);
+  y+=28;
+  rows.forEach(([k,v])=>{
+    ctx.textAlign="left";ctx.fillStyle=MUTED;ctx.font="500 14px Arial";ctx.fillText(k,40,y);
+    ctx.textAlign="right";ctx.fillStyle=NAVY;ctx.font="700 14px Arial";
+    let t=String(v);while(ctx.measureText(t).width>360&&t.length>4)t=t.slice(0,-1);
+    ctx.fillText(t===String(v)?t:t+"\u2026",W-40,y);y+=28;
+  });
+  y+=14;
+  ctx.fillStyle=full?"#15803d":"#c2410c";roundRectPath(ctx,40,y,W-80,78,14);ctx.fill();
+  ctx.textAlign="left";ctx.fillStyle="rgba(255,255,255,.85)";ctx.font="700 12px Arial";
+  ctx.fillText(full?"AMOUNT RECEIVED — PAID IN FULL":"AMOUNT RECEIVED — PART PAYMENT",58,y+26);
+  ctx.fillStyle="#fff";ctx.font="900 34px Arial";ctx.fillText(money(p.paidAmount),58,y+62);
+  ctx.textAlign="center";ctx.fillStyle=MUTED;ctx.font="500 12px Arial";
+  ctx.fillText("Thank you for your payment. This is a computer-generated receipt.",W/2,H-28);
+  ctx.restore();
+  return canvas;
+}
+function showReceiptFor(p,cust){
+  if(!p||!(p.paidAmount>0)){toast("No payment received yet");return Promise.resolve();}
+  return showDownloadable({modal:"receiptModal",wrapId:"receiptCanvasWrap",hintId:"receiptHint",rowId:"receiptDl",fbId:"receiptFb",jpgId:"receiptJpgBtn",pdfId:"receiptPdfBtn",label:"receipt",radius:14,
+    base:`Receipt-${String(p.id).replace(/[^A-Za-z0-9-]/g,"")}`,render:()=>renderReceiptCanvas(p,cust)});
+}
+function showMyReceipt(id){
+  const p=myPayments.find(x=>x.id===id),c=customer();
+  showReceiptFor(p,{name:c?.name,customerId:c?.customerId||c?.id,phone:c?.phone});
+}
+
+/* ===== v7 ADMIN ===== */
+const APP_LINK="https://satyajeetmeher91.github.io/bijayahousing/";
+const ADMIN_TABS=["dashboard","products","orders","customers","payments","reports"];
+const ADMIN_ACTIONS=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword","adminCreatePayment","adminGetPayments","adminUpdatePayment","adminRemindPayment","adminRecordPayment","adminBulkPayments","adminUpdateOrderDelivery","adminChangePassword","adminGetLoginLog","adminBackupNow","adminGetBackupInfo"];
+const selPay=new Set(),selCust=new Set();
+const isOverdue=p=>isDue(p)&&Date.now()-new Date(p.date).getTime()>7*864e5;
+const csvCell=v=>{let s=String(v==null?"":v);if(/^[=+\-@]/.test(s))s="'"+s;return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
+function customerDue(id){
+  return adminPayments.filter(p=>p.customerId===id&&["Pending","Partial","Failed","Verifying"].includes(p.status)).reduce((a,p)=>a+payable(p),0);
+}
+
+/* --- tabs --- */
+function adminTab(tab){
+  document.querySelectorAll(".admin-tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
+  ADMIN_TABS.forEach(x=>$("admin"+x[0].toUpperCase()+x.slice(1)+"Tab")?.classList.toggle("hidden",x!==tab));
+  if(tab==="orders")loadAdminOrders();
+  if(tab==="customers")loadAdminCustomers();
+  if(tab==="payments")loadAdminPayments();
+  if(tab==="dashboard")loadDashboardExtras();
+  if(tab==="reports")renderReports();
+}
+
+/* --- dashboard: login log + backup --- */
+async function loadDashboardExtras(){
+  if(!sessionStorage.getItem("admin_token"))return;
+  try{
+    const [log,info]=await Promise.all([apiPost({action:"adminGetLoginLog"}),apiPost({action:"adminGetBackupInfo"})]);
+    $("loginLog").innerHTML=(log.log||[]).slice(0,8).map(e=>`<div class="log-row"><span class="status ${e.result==="Success"?"status-active":e.result==="Password Changed"?"":"status-blocked"}">${esc(e.result)}</span><span>${esc(e.username)}</span><span class="cart-meta">${fmtDT(e.time)}</span></div>`).join("")||`<div class="cart-meta">No entries yet</div>`;
+    $("backupInfo").textContent=info.lastBackup?`Last backup: ${fmtDT(info.lastBackup)} (newest ${info.keep} copies are kept)`:"No backup yet.";
+  }catch(e){if(e.message!=="Admin session expired")console.error(e);}
+}
+async function backupNow(){
+  await busy($("backupBtn"),async()=>{
+    try{
+      toast("Backing up… this can take a few seconds",6000);
+      const d=await apiPost({action:"adminBackupNow"});
+      toast("Backup saved: "+d.name,5000);
+      loadDashboardExtras();
+    }catch(e){toast("Backup failed: "+e.message,5000);}
+  });
+}
+
+/* --- admin password --- */
+function openAdminPw(){$("apCurrent").value="";$("apNew").value="";openModal("adminPwModal");}
+async function saveAdminPw(){
+  const currentPassword=$("apCurrent").value,newPassword=$("apNew").value;
+  if(!currentPassword||newPassword.length<8){toast("Enter your current password and a new one (min 8 characters)");return;}
+  await busy($("apBtn"),async()=>{
+    try{await apiPost({action:"adminChangePassword",currentPassword,newPassword});hideModal("adminPwModal");toast("Admin password updated");loadDashboardExtras();}
+    catch(e){toast(e.message);}
+  });
+}
+
+/* --- orders: delivery details --- */
+let deliveryOrderId="";
+function openDeliveryModal(id){
+  const o=orders.find(x=>String(x.id)===String(id));
+  if(!o)return;
+  deliveryOrderId=id;
+  $("dvWho").textContent=`${o.id} • ${o.customer?.name||""}`;
+  $("dvMethod").value=o.deliveryMethod==="Delivery"?"Delivery":"Pickup";
+  $("dvCharge").value=Number(o.deliveryCharge)||0;
+  $("dvDate").value=o.expectedDelivery||"";
+  openModal("deliveryModal");
+}
+async function saveDelivery(){
+  const deliveryCharge=Number($("dvCharge").value||0),expectedDelivery=$("dvDate").value,deliveryMethod=$("dvMethod").value;
+  if(!(deliveryCharge>=0&&deliveryCharge<=100000)){toast("Enter a delivery charge between ₹0 and ₹1,00,000");return;}
+  await busy($("dvBtn"),async()=>{
+    try{
+      const d=await apiPost({action:"adminUpdateOrderDelivery",orderId:deliveryOrderId,deliveryCharge,expectedDelivery,deliveryMethod});
+      const o=orders.find(x=>String(x.id)===String(deliveryOrderId));
+      if(o){o.deliveryCharge=d.deliveryCharge;o.expectedDelivery=d.expectedDelivery;if(d.deliveryMethod)o.deliveryMethod=d.deliveryMethod;}
+      hideModal("deliveryModal");renderAdminOrders();toast("Delivery details saved");
+    }catch(e){toast(e.message);}
+  });
+}
+
+/* --- customers: due column + bulk approve --- */
+function renderAdminCustomers(){
+  const body=$("adminCustomersBody");if(!body)return;
+  const f=$("custStatusFilter")?.value||"All";
+  const list=adminCustomers.filter(c=>f==="All"||String(c.status||"Pending").toLowerCase()===f.toLowerCase());
+  [...selCust].forEach(id=>{if(!list.some(c=>c.id===id))selCust.delete(id);});
+  body.innerHTML=list.length?list.map(c=>{
+    const st=String(c.status||"Pending").toLowerCase(),due=customerDue(c.id);
+    const acts=[];
+    if(st==="pending")acts.push(`<button type="button" class="primary" onclick="approveCustomer(${arg(c.id)})">Approve</button>`);
+    if(st==="active")acts.push(`<button type="button" class="outline" onclick="openPaymentForm(${arg(c.id)})">💳 Request</button>`);
+    acts.push(`<button type="button" class="outline" onclick="openCustomerDetailModal(${arg(c.id)})">Manage</button>`);
+    return `<tr>
+      <td data-label="Select" class="chk"><input type="checkbox" ${selCust.has(c.id)?"checked":""} ${st==="pending"?"":"disabled"} onchange="toggleCustSel(${arg(c.id)},this.checked)" aria-label="Select customer"></td>
+      <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(c.id)})"><b>${esc(c.name)}</b></button><br><span class="cart-meta">${esc(c.type||"Customer")}</span></td>
+      <td data-label="Phone">${esc(c.phone||"")}</td>
+      <td data-label="Customer ID"><span class="customer-id-badge">${esc(c.id||"—")}</span></td>
+      <td data-label="Status"><span class="status ${customerStatusClass(c.status)}">${esc(c.status||"Pending")}</span></td>
+      <td data-label="Due">${due>0?`<b style="color:var(--danger)">${money(due)}</b>`:`<span class="cart-meta">—</span>`}</td>
+      <td data-label="Registered">${fmtD(c.dateRegistered)}</td>
+      <td data-label="Action"><div class="row-actions">${acts.join("")}</div></td>
+    </tr>`;
+  }).join(""):`<tr><td colspan="8" class="full"><div class="empty"><h3>No customers found</h3></div></td></tr>`;
+  updateCustBulk();
+}
+function toggleCustSel(id,on){on?selCust.add(id):selCust.delete(id);updateCustBulk();}
+function selectAllPendingCust(on){
+  adminCustomers.filter(c=>String(c.status).toLowerCase()==="pending").forEach(c=>on?selCust.add(c.id):selCust.delete(c.id));
+  renderAdminCustomers();
+}
+function updateCustBulk(){
+  const n=selCust.size,bar=$("custBulkBar");
+  if(!bar)return;
+  const pending=adminCustomers.filter(c=>String(c.status).toLowerCase()==="pending").length;
+  bar.classList.toggle("hidden",!pending);
+  $("custBulkCount").textContent=n?`${n} selected`:`${pending} waiting for approval`;
+  $("custApproveBtn").disabled=!n;
+}
+async function approveSelected(){
+  const ids=[...selCust];
+  if(!ids.length)return;
+  if(!confirm(`Approve ${ids.length} customer${ids.length>1?"s":""} and generate login credentials?`))return;
+  const results=[],failed=[];
+  await busy($("custApproveBtn"),async()=>{
+    for(const id of ids){
+      const c=adminCustomers.find(x=>x.id===id);
+      try{
+        const d=await apiPost({action:"adminApproveCustomer",customerId:id});
+        results.push({name:c?.name||"",id:d.customerId||id,password:d.temporaryPassword||"",phone:c?.phone||""});
+        selCust.delete(id);
+      }catch(e){failed.push((c?.name||id)+": "+e.message);}
+    }
+  });
+  await loadAdminCustomers();
+  if(results.length){
+    window.__bulkCred=results;
+    $("bulkCredList").innerHTML=results.map(r=>`<div class="cred-row"><b>${esc(r.name)}</b> <span class="cart-meta">${esc(r.phone)}</span><code>${esc(r.id)} &nbsp;/&nbsp; ${esc(r.password)}</code></div>`).join("")+(failed.length?`<p class="notice">Not approved: ${esc(failed.join("; "))}</p>`:"");
+    openModal("bulkCredModal");
+  }else if(failed.length)toast(failed[0],5000);
+}
+function copyBulkCred(){
+  const rows=window.__bulkCred||[];
+  copyText(rows.map(r=>`${r.name} (${r.phone})\nCustomer ID: ${r.id}\nPassword: ${r.password}`).join("\n\n")+"\n\nPlease change your password after logging in.","All login details copied");
+}
+
+/* --- payments: rows, bulk, record, reconcile, reminders --- */
+function payStatusSelect(p){
+  return `<select class="order-status-select ${stCls(p.status)}" onchange="adminSetPaymentStatus(${arg(p.id)},this.value)">${PAY_STATUSES.map(s=>`<option value="${s}" ${p.status===s?"selected":""} ${s==="Partial"&&p.status!=="Partial"?"disabled":""}>${s}</option>`).join("")}</select>`;
+}
+function payActions(p){
+  return `${p.status!=="Cancelled"&&p.status!=="Paid"?`<button type="button" class="primary" onclick="openRecordPay(${arg(p.id)})">💰 Record</button>`:""}<button type="button" class="outline" onclick="adminEditPayment(${arg(p.id)})">Edit</button>${isDue(p)?`<button type="button" class="outline" onclick="adminRemindPayment(${arg(p.id)})">🔔 Remind</button><button type="button" class="outline" onclick="waRemindPayment(${arg(p.id)})">WhatsApp</button>`:""}${p.paidAmount>0?`<button type="button" class="outline" onclick="showAdminReceipt(${arg(p.id)})">🧾 Receipt</button>`:""}`;
+}
+function payDetails(p){
+  return [p.note?esc(p.note):"",`<span class="cart-meta">UPI: ${esc(p.upiId)}</span>`,
+    p.paidAmount>0&&p.status!=="Paid"?`<span class="cart-meta">Received ${money(p.paidAmount)} • Remaining ${money(p.remaining)}</span>`:"",
+    p.reportedAmount>0&&p.status==="Verifying"?`<span class="cart-meta">Customer says paid: ${money(p.reportedAmount)}</span>`:"",
+    p.utr?`<span class="cart-meta">UTR: ${esc(p.utr)}</span>`:"",
+    p.customerPaidOn?`<span class="cart-meta">Customer reported paid: ${fmtDT(p.customerPaidOn)}</span>`:"",
+    p.paidOn?`<span class="cart-meta">Confirmed: ${fmtDT(p.paidOn)}</span>`:""].filter(Boolean).join("<br>");
+}
+function renderAdminPayments(){
+  const body=$("adminPaymentsBody");if(!body)return;
+  const f=$("payAdminFilter")?.value||"All";
+  const sum={};PAY_STATUSES.forEach(s=>{sum[s]={n:0,amt:0};});
+  adminPayments.forEach(p=>{const s=sum[p.status];if(s){s.n++;s.amt+=p.amount;}});
+  $("paySummaryBar").innerHTML=PAY_STATUSES.map(s=>`<span class="order-summary-pill">${s}<strong>${sum[s].n}</strong> <span class="cart-meta">${money(sum[s].amt)}</span></span>`).join("");
+  const rank={Verifying:0,Pending:1,Partial:1,Failed:2,Paid:3,Cancelled:4};
+  const match=p=>f==="All"||(f==="Due"?isDue(p):f==="Overdue"?isOverdue(p):p.status===f);
+  const list=adminPayments.filter(match).sort((a,b)=>(rank[a.status]-rank[b.status])||(new Date(b.date)-new Date(a.date)));
+  [...selPay].forEach(id=>{if(!adminPayments.some(p=>p.id===id))selPay.delete(id);});
+  body.innerHTML=list.length?list.map(p=>`<tr>
+    <td data-label="Select" class="chk"><input type="checkbox" ${selPay.has(p.id)?"checked":""} onchange="togglePaySel(${arg(p.id)},this.checked)" aria-label="Select request"></td>
+    <td data-label="Request"><b>${esc(p.id)}</b><br><span class="cart-meta">${fmtDT(p.date)}</span>${isOverdue(p)?`<br><span class="status st-failed">Overdue</span>`:""}</td>
+    <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(p.customerId)})"><b>${esc(p.customerName)}</b></button><br><span class="cart-meta">${esc(p.phone)}</span></td>
+    <td data-label="Amount"><b>${money(p.amount)}</b>${p.paidAmount>0&&p.status!=="Paid"?`<br><span class="cart-meta">Due ${money(p.remaining)}</span>`:""}</td>
+    <td data-label="Details" class="stack">${payDetails(p)}</td>
+    <td data-label="Status">${payStatusSelect(p)}</td>
+    <td data-label="Action"><div class="row-actions">${payActions(p)}</div></td>
+  </tr>`).join(""):`<tr><td colspan="7" class="full"><div class="empty"><h3>No payment requests</h3></div></td></tr>`;
+  updatePayBulk();
+}
+function togglePaySel(id,on){on?selPay.add(id):selPay.delete(id);updatePayBulk();}
+function clearPaySel(){selPay.clear();renderAdminPayments();}
+function updatePayBulk(){
+  const bar=$("payBulkBar");
+  if(!bar)return;
+  bar.classList.toggle("hidden",!selPay.size);
+  $("payBulkCount").textContent=`${selPay.size} selected`;
+}
+async function bulkPay(op,status){
+  const ids=[...selPay];
+  if(!ids.length)return;
+  if(op==="status"&&!confirm(`Mark ${ids.length} request${ids.length>1?"s":""} as ${status}?`))return;
+  try{
+    const d=await apiPost({action:"adminBulkPayments",ids,op,status});
+    (d.payments||[]).forEach(mergeAdminPayment);
+    selPay.clear();refreshPaymentViews();
+    toast(`${d.payments.length} updated${d.skipped.length?`, ${d.skipped.length} skipped`:""}`,4000);
+  }catch(e){toast(e.message);}
+}
+async function remindOverdue(){
+  const ids=adminPayments.filter(isOverdue).map(p=>p.id);
+  if(!ids.length){toast("No overdue requests (older than 7 days)");return;}
+  if(!confirm(`Send an in-app reminder for ${ids.length} overdue request${ids.length>1?"s":""}?`))return;
+  try{
+    const d=await apiPost({action:"adminBulkPayments",ids,op:"remind"});
+    (d.payments||[]).forEach(mergeAdminPayment);refreshPaymentViews();
+    toast(`Reminder sent for ${d.payments.length} request${d.payments.length===1?"":"s"}. It pops up in each customer's app.`,5000);
+  }catch(e){toast(e.message);}
+}
+function openWhatsAppTo(phone,text){
+  const num="91"+digits(phone).slice(-10),enc=encodeURIComponent(text),web=`https://wa.me/${num}?text=${enc}`;
+  if(!isAndroidRuntime()){const w=window.open(web,"_blank","noopener,noreferrer");if(!w)window.location.href=web;return;}
+  let handed=false;
+  const onHide=()=>{handed=true;};
+  document.addEventListener("visibilitychange",onHide,{once:true});
+  window.addEventListener("pagehide",onHide,{once:true});
+  try{window.location.href=`intent://send?phone=${num}&text=${enc}#Intent;scheme=whatsapp;package=com.whatsapp;end`;}catch(e){}
+  setTimeout(()=>{
+    if(handed||document.hidden)return;
+    try{window.location.href=`whatsapp://send?phone=${num}&text=${enc}`;}catch(e){}
+    setTimeout(()=>{
+      document.removeEventListener("visibilitychange",onHide);
+      window.removeEventListener("pagehide",onHide);
+      if(handed||document.hidden)return;
+      copyText(text,"WhatsApp did not open. Message copied, paste it in WhatsApp.");
+    },700);
+  },700);
+}
+function waRemindPayment(id){
+  const p=adminPayments.find(x=>x.id===id);
+  if(!p)return;
+  openWhatsAppTo(p.phone,`Hello ${p.customerName}, this is BIJAYA HOUSING. ${money(payable(p))} is pending (${p.id}${p.note?" – "+p.note:""}). You can pay from the app: ${APP_LINK}`);
+}
+let recordPayId="";
+function openRecordPay(id){
+  const p=adminPayments.find(x=>x.id===id);
+  if(!p)return;
+  recordPayId=id;
+  $("rcWho").textContent=`${p.customerName} • ${p.id}`;
+  $("rcInfo").innerHTML=`Requested ${money(p.amount)} • Received ${money(p.paidAmount)} • <b>Remaining ${money(p.remaining)}</b>${p.reportedAmount>0?`<br>Customer says they paid ${money(p.reportedAmount)}${p.utr?" (UTR "+esc(p.utr)+")":""}`:""}`;
+  $("rcAmount").value=p.reportedAmount>0?Math.min(p.reportedAmount,p.remaining):p.remaining;
+  openModal("recordPayModal");
+}
+async function saveRecordPay(){
+  const received=Math.round(Number($("rcAmount").value)*100)/100;
+  if(!(received>=1)){toast("Enter the amount received");return;}
+  await busy($("rcBtn"),async()=>{
+    try{
+      const d=await apiPost({action:"adminRecordPayment",paymentId:recordPayId,received});
+      mergeAdminPayment(d.payment);hideModal("recordPayModal");refreshPaymentViews();
+      toast(d.payment.status==="Paid"?"Fully paid ✓":`Recorded. ${money(d.payment.remaining)} still due`);
+    }catch(e){toast(e.message);}
+  });
+}
+function showAdminReceipt(id){
+  const p=adminPayments.find(x=>x.id===id);
+  if(!p)return;
+  const c=adminCustomers.find(x=>x.id===p.customerId);
+  showReceiptFor(p,{name:p.customerName,customerId:p.customerId,phone:p.phone||c?.phone});
+}
+
+/* bank statement matching */
+let recMatches=[];
+function openReconcile(){
+  $("recText").value="";$("recResults").innerHTML="";$("recApplyBtn").classList.add("hidden");recMatches=[];
+  openModal("reconcileModal");
+}
+function readStatementFile(input){
+  const f=input.files&&input.files[0];
+  if(!f)return;
+  if(f.size>3*1024*1024){toast("File is too large (max 3 MB)");return;}
+  const r=new FileReader();
+  r.onload=()=>{$("recText").value=String(r.result||"");reconcileFind();};
+  r.readAsText(f);
+}
+function reconcileFind(){
+  const text=$("recText").value||"",lines=text.split(/\r?\n/);
+  if(!text.trim()){toast("Choose a statement file or paste its text first");return;}
+  recMatches=[];
+  adminPayments.filter(p=>["Verifying","Pending","Partial","Failed"].includes(p.status)&&p.utr).forEach(p=>{
+    const key=p.utr.toLowerCase();
+    const line=lines.find(l=>l.toLowerCase().includes(key));
+    if(!line)return;
+    const want=p.reportedAmount||payable(p);
+    const nums=(line.match(/\d[\d,]*\.?\d*/g)||[]).map(n=>Number(n.replace(/,/g,""))).filter(isFinite);
+    recMatches.push({p,line:line.trim().slice(0,150),amountOk:nums.some(n=>Math.abs(n-want)<0.01),want});
+  });
+  const un=adminPayments.filter(p=>p.status==="Verifying"&&!recMatches.some(m=>m.p.id===p.id));
+  $("recResults").innerHTML=(recMatches.length?`<h4>Found in statement (${recMatches.length})</h4>`+recMatches.map((m,i)=>`<label class="rec-row"><input type="checkbox" data-i="${i}" ${m.amountOk?"checked":""}><span><b>${esc(m.p.customerName)}</b> • ${esc(m.p.id)} • ${money(m.want)}<br><span class="cart-meta">${esc(m.line)}</span><br>${m.amountOk?`<span class="status status-active">Amount matches</span>`:`<span class="status st-partial">Check the amount</span>`}</span></label>`).join(""):`<div class="notice">No UTR from your requests was found in this statement.</div>`)
+    +(un.length?`<h4>Still unmatched (${un.length})</h4>`+un.map(p=>`<div class="rec-row"><span><b>${esc(p.customerName)}</b> • ${esc(p.id)} • ${money(p.reportedAmount||p.remaining)}<br><span class="cart-meta">${p.utr?"UTR "+esc(p.utr):"No UTR given"}</span></span></div>`).join(""):"");
+  $("recApplyBtn").classList.toggle("hidden",!recMatches.length);
+}
+async function applyReconcile(){
+  const ids=[...document.querySelectorAll("#recResults input[type=checkbox]:checked")].map(x=>recMatches[Number(x.dataset.i)].p.id);
+  if(!ids.length){toast("Tick at least one match");return;}
+  await busy($("recApplyBtn"),async()=>{
+    try{
+      const d=await apiPost({action:"adminBulkPayments",ids,op:"recordReported"});
+      (d.payments||[]).forEach(mergeAdminPayment);hideModal("reconcileModal");refreshPaymentViews();
+      toast(`${d.payments.length} payment${d.payments.length===1?"":"s"} recorded from the statement`,5000);
+    }catch(e){toast(e.message);}
+  });
+}
+
+/* --- reports --- */
+function repRange(){
+  const v=$("repRange")?.value||"month",n=new Date(),d0=new Date(n.getFullYear(),n.getMonth(),n.getDate()),day=864e5;
+  $("repCustom")?.classList.toggle("hidden",v!=="custom");
+  if(v==="today")return [d0,new Date(d0.getTime()+day)];
+  if(v==="7d")return [new Date(d0.getTime()-6*day),new Date(d0.getTime()+day)];
+  if(v==="30d")return [new Date(d0.getTime()-29*day),new Date(d0.getTime()+day)];
+  if(v==="month")return [new Date(n.getFullYear(),n.getMonth(),1),new Date(n.getFullYear(),n.getMonth()+1,1)];
+  if(v==="lastmonth")return [new Date(n.getFullYear(),n.getMonth()-1,1),new Date(n.getFullYear(),n.getMonth(),1)];
+  if(v==="year")return [new Date(n.getFullYear(),0,1),new Date(n.getFullYear()+1,0,1)];
+  if(v==="custom"){
+    const a=$("repFrom").value?new Date($("repFrom").value+"T00:00:00"):new Date(0);
+    const b=$("repTo").value?new Date(new Date($("repTo").value+"T00:00:00").getTime()+day):new Date(8.64e15);
+    return [a,b];
+  }
+  return [new Date(0),new Date(8.64e15)];
+}
+function repOrders(){
+  const [a,b]=repRange();
+  return orders.filter(o=>!/^cancel/i.test(String(o.status))&&new Date(o.date)>=a&&new Date(o.date)<b);
+}
+const orderGrand=o=>(Number(o.total)||0)+(Number(o.deliveryCharge)||0);
+function renderReports(){
+  if(!$("repStats"))return;
+  const [a,b]=repRange(),list=repOrders();
+  const sales=list.reduce((s,o)=>s+orderGrand(o),0),count=list.length;
+  const pays=adminPayments.filter(p=>p.status!=="Cancelled"&&new Date(p.date)>=a&&new Date(p.date)<b);
+  const requested=pays.reduce((s,p)=>s+p.amount,0),collected=pays.reduce((s,p)=>s+p.paidAmount,0);
+  const outstandingAll=adminPayments.filter(p=>["Pending","Partial","Failed","Verifying"].includes(p.status)).reduce((s,p)=>s+payable(p),0);
+  const card=(l,v,s)=>`<div class="stat"><small>${l}</small><strong>${v}</strong>${s?`<small>${s}</small>`:""}</div>`;
+  $("repStats").innerHTML=card("Sales",money(sales),`${count} order${count===1?"":"s"}`)+card("Average order",money(count?sales/count:0),"")+card("Payments requested",money(requested),"")+card("Payments collected",money(collected),"")+card("Outstanding (all time)",money(outstandingAll),"");
+  /* chart */
+  const times=list.map(o=>new Date(o.date).getTime());
+  const spanDays=times.length?(Math.max(...times)-Math.min(...times))/864e5:0;
+  const monthly=spanDays>62,buckets=new Map();
+  list.forEach(o=>{
+    const d=new Date(o.date),k=monthly?`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`:`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+    buckets.set(k,(buckets.get(k)||0)+orderGrand(o));
+  });
+  const keys=[...buckets.keys()].sort(),max=Math.max(1,...buckets.values());
+  const bw=Math.max(6,Math.min(46,Math.floor(560/Math.max(1,keys.length))-4));
+  $("repChart").innerHTML=keys.length?`<svg viewBox="0 0 600 200" role="img" aria-label="Sales chart" style="width:100%;max-width:760px;height:auto;display:block;margin:0 auto">${keys.map((k,i)=>{const h=Math.round(buckets.get(k)/max*140),x=20+i*(bw+4);return `<g><rect x="${x}" y="${160-h}" width="${bw}" height="${h}" rx="3" fill="#0f172a"><title>${k}: ${money(buckets.get(k))}</title></rect>${keys.length<=16?`<text x="${x+bw/2}" y="178" font-size="9" text-anchor="middle" fill="#64748b">${k.slice(monthly?2:5)}</text>`:""}</g>`;}).join("")}<text x="20" y="14" font-size="11" fill="#64748b">Highest: ${money(max)} (${monthly?"per month":"per day"})</text></svg>`:`<div class="empty"><h3>No sales in this period</h3></div>`;
+  /* top products / customers */
+  const prod=new Map(),cust=new Map();
+  list.forEach(o=>{
+    (o.items||[]).forEach(i=>{const k=`${i.name||"Product"}${i.size?" ("+i.size+")":""}`,r=prod.get(k)||{q:0,v:0};r.q+=Number(i.qty!=null?i.qty:i.quantity)||0;r.v+=(Number(i.price)||0)*(Number(i.qty!=null?i.qty:i.quantity)||0);prod.set(k,r);});
+    const ck=o.customer?.id||o.customer?.name||"-",r=cust.get(ck)||{name:o.customer?.name||ck,n:0,v:0};r.n++;r.v+=orderGrand(o);cust.set(ck,r);
+  });
+  const top=(m,n)=>[...m.entries()].sort((x,y)=>y[1].v-x[1].v).slice(0,n);
+  $("repProducts").innerHTML=top(prod,10).map(([k,r])=>`<tr><td data-label="Product">${esc(k)}</td><td data-label="Qty">${r.q}</td><td data-label="Sales"><b>${money(r.v)}</b></td></tr>`).join("")||`<tr><td colspan="3" class="full"><div class="cart-meta">No data</div></td></tr>`;
+  $("repCustomers").innerHTML=top(cust,10).map(([k,r])=>`<tr><td data-label="Customer">${esc(r.name)}</td><td data-label="Orders">${r.n}</td><td data-label="Spent"><b>${money(r.v)}</b></td></tr>`).join("")||`<tr><td colspan="3" class="full"><div class="cart-meta">No data</div></td></tr>`;
+}
+function downloadCsv(name,rows){
+  const csv="\ufeff"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
+  $("repFb")?.classList.add("hidden");
+  saveFile(new Blob([csv],{type:"text/csv;charset=utf-8"}),name,"repFb");
+}
+const stamp=()=>new Date().toISOString().slice(0,10);
+function exportOrdersCsv(){
+  const rows=[["Order ID","Date","Customer ID","Customer","Phone","Address","Pincode","Items","Items total","Delivery method","Delivery charge","Grand total","Status","Expected delivery"]];
+  repOrders().forEach(o=>rows.push([o.id,fmtDT(o.date),o.customer?.id||"",o.customer?.name||"",o.customer?.phone||"",o.customer?.address||"",o.customer?.pin||"",(o.items||[]).map(i=>`${i.name}${i.size?" ("+i.size+")":""} x${i.qty}`).join("; "),o.total,o.deliveryMethod||"",o.deliveryCharge||0,orderGrand(o),o.status,o.expectedDelivery||""]));
+  downloadCsv(`Bijaya-Orders-${stamp()}.csv`,rows);
+}
+function exportProductsCsv(){
+  const m=new Map();
+  repOrders().forEach(o=>(o.items||[]).forEach(i=>{const k=`${i.code||i.id||""}|${i.name}|${i.size||""}`,r=m.get(k)||{code:i.code||i.id||"",name:i.name,size:i.size||"",q:0,v:0};const q=Number(i.qty!=null?i.qty:i.quantity)||0;r.q+=q;r.v+=(Number(i.price)||0)*q;m.set(k,r);}));
+  const rows=[["Product code","Product","Size","Quantity sold","Sales"]];
+  [...m.values()].sort((a,b)=>b.v-a.v).forEach(r=>rows.push([r.code,r.name,r.size,r.q,r.v]));
+  downloadCsv(`Bijaya-Product-Sales-${stamp()}.csv`,rows);
+}
+function exportCustomersCsv(){
+  const rows=[["Customer ID","Name","Type","Phone","Address","Pincode","Status","Registered","Amount due"]];
+  adminCustomers.forEach(c=>rows.push([c.id,c.name,c.type,c.phone,c.address,c.pin,c.status,fmtD(c.dateRegistered),customerDue(c.id)]));
+  downloadCsv(`Bijaya-Customers-${stamp()}.csv`,rows);
+}
+function exportPaymentsCsv(){
+  const rows=[["Payment ID","Date","Customer ID","Customer","Phone","Amount","Received","Remaining","Status","UPI ID","UTR","Note","Paid on"]];
+  adminPayments.forEach(p=>rows.push([p.id,fmtDT(p.date),p.customerId,p.customerName,p.phone,p.amount,p.paidAmount,p.remaining,p.status,p.upiId,p.utr,p.note,p.paidOn?fmtDT(p.paidOn):""]));
+  downloadCsv(`Bijaya-Payments-${stamp()}.csv`,rows);
+}
+
+if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost")){
+  window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{});});
+}
+
 async function init(){
   closeAllOverlays();
+  applyLang();
+  updateNetBanner();
   updateCustomerAccess();
   updateCart();
   checkForAppUpdate();
@@ -3300,6 +4241,8 @@ document.addEventListener("keydown",e=>{
   }
 });
 
+
+const copyPayAmount=()=>{const p=myPayments.find(x=>x.id===payAssistId);if(p)copyText(Number(payable(p)).toFixed(2),"Amount copied");};
 </script>
 
 </body>
