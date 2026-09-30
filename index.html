@@ -29,12 +29,20 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.product{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(15,23,42,.04);transition:.2s;display:flex;flex-direction:column}.product:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.product-img{aspect-ratio:1/1;background:#eef2f7;overflow:hidden;position:relative}.product-img::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,#eef2f7 25%,#f8fafc 37%,#eef2f7 63%);background-size:400% 100%;animation:imgSkeleton 1.2s ease infinite}.product-img img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:1;opacity:0;transition:opacity .18s ease}.product-img img.img-ready{opacity:1}.product-img.img-loaded::before{display:none}@keyframes imgSkeleton{0%{background-position:100% 0}100%{background-position:-100% 0}}.product-body{padding:16px}.product-cat{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}.product h3{font-size:17px;margin:7px 0}.desc{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}.price{font-size:20px;font-weight:900;margin:12px 0}.size-row{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.size{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 10px;font-size:12px;font-weight:800}.size.selected{border-color:var(--accent);background:#eff6ff;color:var(--accent)}.addrow{display:flex;gap:8px}.addrow .primary{flex:1}
 .empty{padding:50px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed #cbd5e1;border-radius:18px;grid-column:1/-1}
 .drawer-backdrop,.modal-backdrop{position:fixed;inset:0;background:rgba(2,6,23,.48);z-index:90;display:none;pointer-events:none}.drawer-backdrop.show,.modal-backdrop.show{pointer-events:auto}.drawer-backdrop.show,.modal-backdrop.show{display:block}.drawer{position:fixed;z-index:100;right:0;top:0;height:100dvh;width:min(470px,100%);background:#fff;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column;box-shadow:-20px 0 50px rgba(0,0,0,.15)}.drawer.show{transform:translateX(0)}.drawer-head{padding:20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.drawer-body{padding:18px;overflow:auto;flex:1}.cart-item{display:grid;grid-template-columns:70px 1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.cart-item img{width:70px;height:70px;border-radius:12px;object-fit:cover;background:#f1f5f9}.cart-item h4{margin:0 0 5px}.cart-meta{font-size:12px;color:var(--muted)}.qty{display:flex;align-items:center;gap:8px;margin-top:9px}.qty button{border:1px solid var(--line);background:#fff;width:28px;height:28px;border-radius:8px}.cart-qty-input{width:58px;height:30px;padding:3px 5px}.drawer-foot{padding:18px;border-top:1px solid var(--line)}.totalrow{display:flex;justify-content:space-between;font-size:19px;font-weight:900;margin-bottom:14px}
-.modal{position:fixed;z-index:110;left:50%;top:50%;transform:translate(-50%,-47%);width:min(900px,calc(100% - 28px));max-height:90dvh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.22);display:none}.modal.show{display:block;animation:pop .18s ease}.modal-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-body{padding:22px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:800}.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}textarea{min-height:90px;resize:vertical}.checkout-summary{background:var(--surface2);padding:16px;border-radius:15px;margin-bottom:18px}.checkout-line{display:flex;justify-content:space-between;padding:5px 0;font-size:14px}.notice{font-size:12px;color:var(--muted);line-height:1.5}
+.modal{position:fixed;z-index:110;left:50%;top:50%;transform:translate(-50%,-47%);width:min(900px,calc(100% - 28px));max-height:90dvh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.22);display:none}.modal.show{display:block;animation:pop .18s ease}.modal-head{padding:20px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-body{padding:22px}
+/* Full-page views (customer detail, etc.) - not a floating pop-up: covers the
+   whole screen like a new page would, at every viewport width. */
+.modal.sheet{width:100%;height:100dvh;max-height:100dvh;left:0;top:0;transform:none;border-radius:0}
+.modal.sheet.show{animation:productMobileIn .2s ease}
+.modal.sheet .modal-head{border-radius:0;padding:16px 16px 16px 8px}
+.modal.sheet .back-btn{border:none;background:none;font-size:22px;line-height:1;padding:8px 10px;cursor:pointer;color:var(--ink)}
+.modal.sheet .modal-body{padding:18px 20px 90px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;font-weight:800}.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:12px;padding:12px 13px;outline:none;background:#fff}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.1)}textarea{min-height:90px;resize:vertical}.checkout-summary{background:var(--surface2);padding:16px;border-radius:15px;margin-bottom:18px}.checkout-line{display:flex;justify-content:space-between;padding:5px 0;font-size:14px}.notice{font-size:12px;color:var(--muted);line-height:1.5}
 .admin-layout{display:none}.admin-layout.show{display:block}.admin-nav{display:flex;gap:8px;overflow:auto;margin-bottom:18px}.admin-tab{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:11px;font-weight:800;white-space:nowrap}.admin-tab.active{background:var(--primary);color:#fff}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:28px;margin-top:6px}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:18px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:760px}.table th,.table td{text-align:left;padding:12px;border-bottom:1px solid var(--line);font-size:13px}.table th{color:var(--muted);font-size:12px;text-transform:uppercase}.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-weight:800;font-size:11px}
 .login-card{max-width:430px;margin:70px auto;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow)}.login-card h2{margin-top:0}.login-card .field{margin-bottom:13px}.admin-toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
 .toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,20px);background:#0f172a;color:#fff;padding:12px 17px;border-radius:12px;z-index:300;opacity:0;pointer-events:none;transition:.2s;font-weight:700;font-size:13px}.toast.show{opacity:1;transform:translate(-50%,0)}
 .footer{max-width:1280px;margin:auto;padding:25px 22px 45px;color:var(--muted);font-size:13px;text-align:center}
 .hidden{display:none!important}
+.grow{flex:1}
 @keyframes pop{from{opacity:0;transform:translate(-50%,-43%) scale(.98)}to{opacity:1;transform:translate(-50%,-47%) scale(1)}}
 @media(max-width:1050px){.grid{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr}.search{width:280px}.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:720px){.nav{height:64px;padding:0 14px;gap:9px}.brand span:last-child{display:inline}.search{width:auto;flex:1}.search input{padding-left:37px}.nav .outline{display:none}.container{padding:18px 14px 45px}.hero{padding:30px 22px;border-radius:22px}.hero-card{display:none}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.product{border-radius:16px}.product-body{padding:12px}.product h3{font-size:15px}.desc{font-size:12px}.price{font-size:17px}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.modal{max-height:94dvh}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:23px}.admin-toolbar{align-items:flex-start}}
@@ -246,9 +254,6 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
   .toolbar>.primary,.toolbar>.outline{flex:1 1 auto}
   .panel{padding:14px;border-radius:16px}
   .info-grid{grid-template-columns:1fr 1fr}
-  .modal.sheet{width:100%;height:100dvh;max-height:100dvh;left:0;top:0;transform:none;border-radius:0}
-  .modal.sheet.show{animation:productMobileIn .2s ease}
-  .modal.sheet .modal-head{border-radius:0}
   .pay-amount{font-size:40px}
 }
 .drawer:not(.show){box-shadow:none}
@@ -415,6 +420,7 @@ body.admin-mode .langsel{display:none}
       <button type="button" class="admin-tab" data-tab="customers" onclick="adminTab('customers')">Customers</button>
       <button type="button" class="admin-tab" data-tab="payments" onclick="adminTab('payments')">Payments<span class="tab-badge hidden" id="payTabBadge">0</span></button>
       <button type="button" class="admin-tab" data-tab="reports" onclick="adminTab('reports')">Reports</button>
+      <button type="button" class="admin-tab super-admin-only hidden" data-tab="team" onclick="adminTab('team')">Team</button>
     </div>
 
     <div id="adminDashboardTab"><div class="stats" id="adminStats"></div>
@@ -471,12 +477,19 @@ body.admin-mode .langsel{display:none}
       </div>
       <h4>Export to Excel (CSV)</h4>
       <div class="toolbar"><button type="button" class="outline" onclick="exportOrdersCsv()">Orders (this period)</button><button type="button" class="outline" onclick="exportProductsCsv()">Product sales (this period)</button><button type="button" class="outline" onclick="exportCustomersCsv()">Customers</button><button type="button" class="outline" onclick="exportPaymentsCsv()">Payments</button></div>
+    </div></div>
+
+    <div id="adminTeamTab" class="hidden"><div class="panel">
+      <div class="toolbar"><h3 class="grow" style="margin:0">Team &amp; Admin Access</h3><button type="button" class="primary" onclick="openTeamForm()">+ Add Team Member</button></div>
+      <p class="notice">A Super Admin can do everything. A Sub Admin is limited to Orders, Payments, Customers (view only), stock-in and low-stock — no product prices, settings, reports, backups or team changes.</p>
+      <div class="tablewrap"><table class="table"><thead><tr><th>Username</th><th>Name</th><th>Role</th><th>Status</th><th>Password</th><th></th></tr></thead><tbody id="teamRows"></tbody></table></div>
+    </div></div>
       <div class="dl-fallback hidden" id="repFb"><span>Download didn't start?</span><button type="button" class="outline" onclick="openDlInBrowser()">Open in browser</button><button type="button" class="outline" onclick="copyDlLink()">Copy link</button></div>
     </div></div>
   </div>
 </main>
 
-<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 1.0.50</footer>
+<footer class="footer">ALL RIGHTS RESERVED • BIJAYA HOUSING • POWERED BY SATYAJEET • VERSION 2.0.0</footer>
 <section class="meet"><div class="meet-card"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" width="148" height="148" role="img" aria-label="QR code: register for meetings" shape-rendering="crispEdges"><rect width="37" height="37" fill="#fff"/><path fill="#0f172a" d="M4 4h7v1h-7zM12 4h1v1h-1zM14 4h5v1h-5zM20 4h1v1h-1zM23 4h1v1h-1zM26 4h7v1h-7zM4 5h1v1h-1zM10 5h1v1h-1zM17 5h3v1h-3zM21 5h1v1h-1zM23 5h1v1h-1zM26 5h1v1h-1zM32 5h1v1h-1zM4 6h1v1h-1zM6 6h3v1h-3zM10 6h1v1h-1zM14 6h1v1h-1zM18 6h1v1h-1zM21 6h1v1h-1zM23 6h2v1h-2zM26 6h1v1h-1zM28 6h3v1h-3zM32 6h1v1h-1zM4 7h1v1h-1zM6 7h3v1h-3zM10 7h1v1h-1zM12 7h1v1h-1zM14 7h2v1h-2zM20 7h3v1h-3zM24 7h1v1h-1zM26 7h1v1h-1zM28 7h3v1h-3zM32 7h1v1h-1zM4 8h1v1h-1zM6 8h3v1h-3zM10 8h1v1h-1zM12 8h3v1h-3zM16 8h1v1h-1zM22 8h1v1h-1zM26 8h1v1h-1zM28 8h3v1h-3zM32 8h1v1h-1zM4 9h1v1h-1zM10 9h1v1h-1zM12 9h2v1h-2zM15 9h1v1h-1zM20 9h2v1h-2zM23 9h2v1h-2zM26 9h1v1h-1zM32 9h1v1h-1zM4 10h7v1h-7zM12 10h1v1h-1zM14 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM24 10h1v1h-1zM26 10h7v1h-7zM12 11h4v1h-4zM17 11h1v1h-1zM21 11h1v1h-1zM24 11h1v1h-1zM4 12h1v1h-1zM8 12h1v1h-1zM10 12h3v1h-3zM14 12h4v1h-4zM20 12h1v1h-1zM23 12h1v1h-1zM25 12h5v1h-5zM32 12h1v1h-1zM5 13h2v1h-2zM11 13h1v1h-1zM14 13h1v1h-1zM17 13h3v1h-3zM22 13h2v1h-2zM25 13h8v1h-8zM4 14h1v1h-1zM8 14h1v1h-1zM10 14h3v1h-3zM16 14h1v1h-1zM19 14h1v1h-1zM22 14h1v1h-1zM25 14h2v1h-2zM32 14h1v1h-1zM4 15h1v1h-1zM8 15h2v1h-2zM11 15h1v1h-1zM14 15h3v1h-3zM18 15h2v1h-2zM21 15h1v1h-1zM23 15h2v1h-2zM28 15h2v1h-2zM31 15h2v1h-2zM5 16h9v1h-9zM15 16h4v1h-4zM20 16h1v1h-1zM24 16h1v1h-1zM31 16h1v1h-1zM4 17h1v1h-1zM7 17h1v1h-1zM11 17h1v1h-1zM16 17h1v1h-1zM20 17h1v1h-1zM22 17h1v1h-1zM26 17h7v1h-7zM6 18h6v1h-6zM13 18h1v1h-1zM17 18h4v1h-4zM27 18h4v1h-4zM32 18h1v1h-1zM8 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM17 19h1v1h-1zM19 19h1v1h-1zM21 19h1v1h-1zM23 19h1v1h-1zM25 19h1v1h-1zM27 19h1v1h-1zM31 19h2v1h-2zM4 20h1v1h-1zM10 20h6v1h-6zM17 20h1v1h-1zM20 20h1v1h-1zM23 20h1v1h-1zM25 20h1v1h-1zM27 20h1v1h-1zM31 20h1v1h-1zM4 21h1v1h-1zM6 21h2v1h-2zM12 21h2v1h-2zM17 21h4v1h-4zM24 21h1v1h-1zM26 21h4v1h-4zM31 21h2v1h-2zM9 22h4v1h-4zM14 22h3v1h-3zM19 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM26 22h1v1h-1zM28 22h1v1h-1zM30 22h1v1h-1zM32 22h1v1h-1zM7 23h1v1h-1zM9 23h1v1h-1zM11 23h1v1h-1zM13 23h2v1h-2zM16 23h1v1h-1zM18 23h1v1h-1zM20 23h5v1h-5zM28 23h1v1h-1zM31 23h2v1h-2zM4 24h5v1h-5zM10 24h1v1h-1zM12 24h2v1h-2zM16 24h3v1h-3zM20 24h1v1h-1zM24 24h6v1h-6zM32 24h1v1h-1zM12 25h1v1h-1zM14 25h1v1h-1zM16 25h1v1h-1zM19 25h1v1h-1zM23 25h2v1h-2zM28 25h1v1h-1zM32 25h1v1h-1zM4 26h7v1h-7zM12 26h1v1h-1zM17 26h3v1h-3zM22 26h3v1h-3zM26 26h1v1h-1zM28 26h3v1h-3zM32 26h1v1h-1zM4 27h1v1h-1zM10 27h1v1h-1zM13 27h1v1h-1zM17 27h1v1h-1zM21 27h1v1h-1zM24 27h1v1h-1zM28 27h1v1h-1zM4 28h1v1h-1zM6 28h3v1h-3zM10 28h1v1h-1zM12 28h1v1h-1zM14 28h4v1h-4zM21 28h1v1h-1zM23 28h7v1h-7zM4 29h1v1h-1zM6 29h3v1h-3zM10 29h1v1h-1zM13 29h1v1h-1zM15 29h1v1h-1zM17 29h2v1h-2zM20 29h1v1h-1zM24 29h2v1h-2zM32 29h1v1h-1zM4 30h1v1h-1zM6 30h3v1h-3zM10 30h1v1h-1zM17 30h1v1h-1zM19 30h5v1h-5zM25 30h1v1h-1zM29 30h4v1h-4zM4 31h1v1h-1zM10 31h1v1h-1zM13 31h4v1h-4zM18 31h2v1h-2zM21 31h1v1h-1zM24 31h1v1h-1zM27 31h3v1h-3zM31 31h2v1h-2zM4 32h7v1h-7zM12 32h1v1h-1zM14 32h1v1h-1zM16 32h3v1h-3zM21 32h1v1h-1zM24 32h1v1h-1zM27 32h3v1h-3zM31 32h1v1h-1z"/></svg><div><h3>Meetings &amp; Registration</h3><p>Scan the QR code or tap the button to register.</p><a href="https://forms.gle/2nTwVFFBWVtdG3tU7" target="_blank" rel="noopener">Click me</a></div></div></section>
 </div>
 
@@ -594,13 +607,22 @@ body.admin-mode .langsel{display:none}
       <input type="file" id="profilePhotoInput" onchange="handleProfilePhotoSelected(this.files[0])" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;z-index:-1">
       <label for="profilePhotoInput" class="outline" style="display:block;width:100%;margin-top:10px;text-align:center;cursor:pointer;box-sizing:border-box">📷 Change Photo</label>
       <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="viewMyIdCard()">🪪 View ID Card</button>
-      <div class="formgrid" style="margin-top:16px">
-        <div class="field"><label>Full Name</label><input id="profileNameInput"></div>
-        <div class="field"><label>Phone Number</label><input id="profilePhoneInput" readonly></div>
-        <div class="field full"><label>Address</label><textarea id="profileAddressInput"></textarea></div>
-        <div class="field"><label>Pincode</label><input id="profilePinInput" inputmode="numeric"></div>
+      <div id="profileViewBox" style="margin-top:16px">
+        <div class="info-grid" id="profileViewInfo"></div>
+        <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="profileStartEdit()">✎ Edit Profile</button>
       </div>
-      <button type="button" class="primary" style="width:100%;margin-top:14px" onclick="saveCustomerProfile()">Save Profile</button>
+      <div id="profileEditBox" class="hidden" style="margin-top:16px">
+        <div class="formgrid">
+          <div class="field"><label>Full Name</label><input id="profileNameInput"></div>
+          <div class="field"><label>Phone Number</label><input id="profilePhoneInput" readonly></div>
+          <div class="field full"><label>Address</label><textarea id="profileAddressInput"></textarea></div>
+          <div class="field"><label>Pincode</label><input id="profilePinInput" inputmode="numeric"></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button type="button" class="primary" style="flex:1" onclick="saveCustomerProfile()">Save Profile</button>
+          <button type="button" class="outline" style="flex:1" onclick="profileCancelEdit()">Cancel</button>
+        </div>
+      </div>
       <div id="tempPwNotice" class="account-note hidden" style="margin-top:14px">You are using a temporary password. Please change it below.</div>
       <details class="pw-box" id="pwBox"><summary>Change Password</summary>
         <div class="field"><label>Current Password</label><input id="pwOld" type="password" autocomplete="current-password"></div>
@@ -649,8 +671,8 @@ body.admin-mode .langsel{display:none}
 
 <div class="modal sheet no-i18n" id="customerDetailModal">
   <div class="modal-head">
-    <div><h2 style="margin:0" id="cdTitle">Customer</h2><div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap"><span class="customer-id-badge" id="cdIdBadge"></span><span class="status" id="cdStatus"></span></div></div>
-    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+    <button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">←</button>
+    <div class="grow"><h2 style="margin:0" id="cdTitle">Customer</h2><div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap"><span class="customer-id-badge" id="cdIdBadge"></span><span class="status" id="cdStatus"></span></div></div>
   </div>
   <div class="modal-body">
     <div class="cd-actions">
@@ -668,14 +690,23 @@ body.admin-mode .langsel{display:none}
     </div>
 
     <div id="cdPaneDetails">
-      <div class="formgrid">
-        <div class="field"><label>Full Name</label><input id="cdName"></div>
-        <div class="field"><label>Type</label><select id="cdType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
-        <div class="field"><label>Phone</label><input id="cdPhone" inputmode="numeric"></div>
-        <div class="field"><label>Pincode</label><input id="cdPin" inputmode="numeric"></div>
-        <div class="field full"><label>Address</label><textarea id="cdAddress" style="min-height:70px"></textarea></div>
+      <div id="cdViewBox">
+        <div class="info-grid" id="cdViewInfo"></div>
+        <button type="button" class="outline" style="width:100%;margin-top:14px" onclick="cdStartEdit()">✎ Edit Profile</button>
       </div>
-      <button type="button" class="primary" id="cdSaveBtn" style="width:100%;margin-top:14px" onclick="saveCustomerDetailEdit()">Save Changes</button>
+      <div id="cdEditBox" class="hidden">
+        <div class="formgrid">
+          <div class="field"><label>Full Name</label><input id="cdName"></div>
+          <div class="field"><label>Type</label><select id="cdType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
+          <div class="field"><label>Phone</label><input id="cdPhone" inputmode="numeric"></div>
+          <div class="field"><label>Pincode</label><input id="cdPin" inputmode="numeric"></div>
+          <div class="field full"><label>Address</label><textarea id="cdAddress" style="min-height:70px"></textarea></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <button type="button" class="primary" id="cdSaveBtn" style="flex:1" onclick="saveCustomerDetailEdit()">Save Changes</button>
+          <button type="button" class="outline" style="flex:1" onclick="cdCancelEdit()">Cancel</button>
+        </div>
+      </div>
       <div class="info-grid" id="cdInfo"></div>
     </div>
 
@@ -702,6 +733,21 @@ body.admin-mode .langsel{display:none}
       <div class="field full"><label>Address *</label><textarea id="adminCustAddress" placeholder="Address"></textarea></div>
     </div>
     <button type="button" class="primary" id="adminCreateBtn" style="width:100%;margin-top:16px" onclick="adminCreateCustomer()">Create Active Account</button>
+  </div>
+</div>
+
+<div class="modal over sm no-i18n" id="teamFormModal">
+  <div class="modal-head">
+    <div><h2 style="margin:0" id="tfTitle">Add Team Member</h2></div>
+    <button type="button" class="iconbtn" onclick="closeModal()">×</button>
+  </div>
+  <div class="modal-body">
+    <div class="field"><label>Username *</label><input id="tfUsername" autocomplete="off" placeholder="e.g. counter1"></div>
+    <div class="field" style="margin-top:12px"><label>Name *</label><input id="tfName" placeholder="Staff name"></div>
+    <div class="field" style="margin-top:12px"><label>Role *</label><select id="tfLevel"><option value="staff">Sub Admin (limited access)</option><option value="super">Super Admin (full access)</option></select></div>
+    <div class="field" style="margin-top:12px"><label><input type="checkbox" id="tfActive" checked style="width:auto;margin-right:6px"> Active</label></div>
+    <div class="field" style="margin-top:12px"><label id="tfPwLabel">Password *</label><input id="tfPassword" autocomplete="off" placeholder="8 to 64 characters"></div>
+    <button type="button" class="primary" id="tfSaveBtn" style="width:100%;margin-top:16px" onclick="saveTeamMember()">Save</button>
   </div>
 </div>
 
@@ -743,7 +789,7 @@ body.admin-mode .langsel{display:none}
   <div class="modal-body">
     <div class="cred-row">Customer ID<code id="credId"></code></div>
     <div class="cred-row">Temporary Password<code id="credPw"></code></div>
-    <p class="notice" style="margin-top:12px">Share these with the customer. The password is stored securely and cannot be viewed again — reset it to get a new one.</p>
+    <p class="notice" style="margin-top:12px">Share these with the customer. You (Super Admin) can view this password again anytime from the customer's profile.</p>
     <button type="button" class="primary" style="width:100%;margin-top:12px" onclick="copyCredentials()">Copy Details</button>
   </div>
 </div>
@@ -1170,10 +1216,8 @@ async function openCustomerProfile(){
     $("profilePhone").textContent=c.phone||"";
     $("profileType").textContent="Type: "+(c.type||"Customer");
     $("profileCustomerId").textContent=c.customerId||c.id||"—";
-    $("profileNameInput").value=c.name||"";
-    $("profilePhoneInput").value=c.phone||"";
-    $("profileAddressInput").value=c.address||"";
-    $("profilePinInput").value=c.pin||"";
+    $("profileViewInfo").innerHTML=[["Full Name",c.name||"—"],["Phone Number",c.phone||"—"],["Pincode",c.pin||"—"],["Address",c.address||"—"]].map(([k,v])=>`<div><b>${k}</b>${esc(v)}</div>`).join("");
+    profileCancelEdit();
     const box=$("customerOrders");
     if(box)box.innerHTML='<div class="empty"><h3>Loading your orders…</h3><p>Checking your saved orders.</p></div>';
     loadCustomerPhoto(c);
@@ -1188,6 +1232,19 @@ async function openCustomerProfile(){
   if(c) await loadCustomerOrders(true);
 }
 
+function profileStartEdit(){
+  const c=customer();if(!c)return;
+  $("profileNameInput").value=c.name||"";
+  $("profilePhoneInput").value=c.phone||"";
+  $("profileAddressInput").value=c.address||"";
+  $("profilePinInput").value=c.pin||"";
+  $("profileViewBox").classList.add("hidden");
+  $("profileEditBox").classList.remove("hidden");
+}
+function profileCancelEdit(){
+  $("profileEditBox").classList.add("hidden");
+  $("profileViewBox").classList.remove("hidden");
+}
 async function saveCustomerProfile(){
   const c=customer();
   if(!c)return;
@@ -2837,9 +2894,16 @@ function showCustomer(){closeAllOverlays();setAppView("customer",true);}
 function goBackToStore(){closeAllOverlays();setAppView("customer",true);}
 window.addEventListener("popstate",()=>{setAppView(location.hash==="#admin"?"admin":"customer",false);});
 
+function currentAdminUser(){try{return JSON.parse(sessionStorage.getItem("admin_user")||"{}");}catch(e){return {};}}
+function isSuperAdminUI(){return !/sub|staff|limited|helper|employee|counter/i.test(String(currentAdminUser().role||""));}
+function applyAdminRoleUI(){
+  const superAdmin=isSuperAdminUI();
+  document.querySelectorAll(".super-admin-only").forEach(el=>el.classList.toggle("hidden",!superAdmin));
+}
 function startAdminWatcher(){
   if(adminTimer)return;
-  try{const u=JSON.parse(sessionStorage.getItem("admin_user")||"{}");$("adminWho").textContent=(u.name||"")+(u.lastLogin?" • Last login: "+fmtDT(u.lastLogin):"");}catch(e){}
+  try{const u=currentAdminUser();$("adminWho").textContent=(u.name||"")+(u.lastLogin?" • Last login: "+fmtDT(u.lastLogin):"");}catch(e){}
+  applyAdminRoleUI();
   loadDashboardExtras();
   adminTimer=setInterval(()=>{if(document.visibilityState==="visible"&&appView==="admin")loadAdminPayments(true);},60000);
 }
@@ -2956,12 +3020,8 @@ function openCustomerDetailModal(id){
   const c=adminCustomers.find(x=>x.id===id);
   if(!c){toast("Customer not found");return;}
   cdId=id;
-  $("cdName").value=c.name||"";
-  $("cdType").value=c.type||"Customer";
-  $("cdPhone").value=c.phone||"";
-  $("cdAddress").value=c.address||"";
-  $("cdPin").value=c.pin||"";
   fillCustomerDetail(c);
+  cdCancelEdit();
   cdTabSwitch("details");
   openModal("customerDetailModal");
 }
@@ -2969,6 +3029,20 @@ function refreshCustomerDetail(){
   if(!$("customerDetailModal")?.classList.contains("show"))return;
   const c=adminCustomers.find(x=>x.id===cdId);
   if(c)fillCustomerDetail(c);
+}
+function cdStartEdit(){
+  const c=adminCustomers.find(x=>x.id===cdId);if(!c)return;
+  $("cdName").value=c.name||"";
+  $("cdType").value=c.type||"Customer";
+  $("cdPhone").value=c.phone||"";
+  $("cdAddress").value=c.address||"";
+  $("cdPin").value=c.pin||"";
+  $("cdViewBox").classList.add("hidden");
+  $("cdEditBox").classList.remove("hidden");
+}
+function cdCancelEdit(){
+  $("cdEditBox").classList.add("hidden");
+  $("cdViewBox").classList.remove("hidden");
 }
 function fillCustomerDetail(c){
   const st=String(c.status||"Pending"),s=st.toLowerCase();
@@ -2982,10 +3056,13 @@ function fillCustomerDetail(c){
   $("cdBlockBtn").textContent=s==="blocked"?"✔ Unblock":"⛔ Block";
   $("cdBlockBtn").dataset.next=s==="blocked"?"Active":"Blocked";
   $("cdRequestBtn").classList.toggle("hidden",s!=="active");
+  $("cdViewInfo").innerHTML=[["Full Name",c.name||"—"],["Type",c.type||"Customer"],["Phone",c.phone||"—"],["Pincode",c.pin||"—"],["Address",c.address||"—"]].map(([k,v])=>`<div><b>${k}</b>${esc(v)}</div>`).join("");
   const access=String(c.accessType||"ALL").toUpperCase();
   const accessLabel=access==="CATEGORY"?"Categories: "+(c.allowedCategories||"—"):access==="PRODUCT"?"Selected products":"All products";
-  const pw=c.passwordType?`${c.passwordType}${c.passwordUpdatedOn?" • "+fmtD(c.passwordUpdatedOn):""}`:"—";
-  $("cdInfo").innerHTML=[["Registered",fmtD(c.dateRegistered)],["Last login",fmtDT(c.lastLogin)],["Password",pw],["Product access",accessLabel]].map(([k,v])=>`<div><b>${k}</b>${esc(v)}</div>`).join("");
+  const pwBase=c.passwordType?`${c.passwordType}${c.passwordUpdatedOn?" • "+fmtD(c.passwordUpdatedOn):""}`:"—";
+  const pwId="cdpw_"+String(c.id||"").replace(/[^a-zA-Z0-9]/g,"");
+  const pw=isSuperAdminUI()&&c.passwordVisible?`${esc(pwBase)} <button type="button" class="iconbtn" title="Show/Hide password" onclick="toggleTeamPasswordVisibility('${pwId}')">👁</button><br><span id="${pwId}" class="cart-meta" data-pw="${esc(c.passwordVisible)}">••••••••</span>`:esc(pwBase);
+  $("cdInfo").innerHTML=[["Registered",fmtD(c.dateRegistered)],["Last login",fmtDT(c.lastLogin)],["Password",pw],["Product access",esc(accessLabel)]].map(([k,v])=>`<div><b>${k}</b>${v}</div>`).join("");
   renderCdPayments();
   renderCustomerDetailOrders(c);
 }
@@ -3018,6 +3095,8 @@ async function saveCustomerDetailEdit(){
     try{
       await apiPost({action:"adminUpdateCustomerDetails",customerId:cdId,customer});
       await loadAdminCustomers();
+      refreshCustomerDetail();
+      cdCancelEdit();
       toast("Customer details updated");
     }catch(e){toast("Could not save: "+e.message);}
   });
@@ -3327,7 +3406,7 @@ async function saveProduct(){
 async function loadAdminOrders(){
   if(!sessionStorage.getItem("admin_token"))return;
   try{
-    const d=await apiPost({action:"getOrders"});
+    const d=await apiPost({action:"getOrders",limit:500});
     orders=(d.orders||[]).map(o=>{
       if(o.customer&&Array.isArray(o.items))return normalizeServerOrder(o);
       let items=[];
@@ -3820,7 +3899,7 @@ function showMyReceipt(id){
 
 /* ===== v7 ADMIN ===== */
 const APP_LINK="https://satyajeetmeher91.github.io/bijayahousing/";
-const ADMIN_TABS=["dashboard","products","orders","customers","payments","reports"];
+const ADMIN_TABS=["dashboard","products","orders","customers","payments","reports","team"];
 const ADMIN_ACTIONS=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword","adminCreatePayment","adminGetPayments","adminUpdatePayment","adminRemindPayment","adminRecordPayment","adminBulkPayments","adminUpdateOrderDelivery","adminChangePassword","adminGetLoginLog","adminBackupNow","adminGetBackupInfo"];
 const selPay=new Set(),selCust=new Set();
 const isOverdue=p=>isDue(p)&&Date.now()-new Date(p.date).getTime()>7*864e5;
@@ -3838,6 +3917,7 @@ function adminTab(tab){
   if(tab==="payments")loadAdminPayments();
   if(tab==="dashboard")loadDashboardExtras();
   if(tab==="reports")renderReports();
+  if(tab==="team")loadAdminTeam();
 }
 
 /* --- dashboard: login log + backup --- */
@@ -3857,6 +3937,66 @@ async function backupNow(){
       toast("Backup saved: "+d.name,5000);
       loadDashboardExtras();
     }catch(e){toast("Backup failed: "+e.message,5000);}
+  });
+}
+
+/* --- team / sub-admins (Super Admin only) --- */
+let teamList=[];
+async function loadAdminTeam(){
+  if(!isSuperAdminUI())return;
+  try{const d=await apiPost({action:"adminGetTeam"});teamList=d.admins||[];renderAdminTeam();}
+  catch(e){toast("Could not load team: "+e.message);}
+}
+function renderAdminTeam(){
+  const me=currentAdminUser().username;
+  $("teamRows").innerHTML=teamList.length?teamList.map(a=>{
+    const pwId="tpw_"+a.username.replace(/[^a-zA-Z0-9]/g,"");
+    return `<tr>
+      <td data-label="Username"><b>${esc(a.username)}</b>${a.username===me?" (you)":""}</td>
+      <td data-label="Name">${esc(a.name||"—")}</td>
+      <td data-label="Role"><span class="status ${a.level==="super"?"status-active":""}">${esc(a.role||"")}</span></td>
+      <td data-label="Status"><span class="status ${a.active?"status-active":"status-blocked"}">${a.active?"Active":"Inactive"}</span></td>
+      <td data-label="Password">
+        <span id="${pwId}" class="cart-meta" data-pw="${esc(a.passwordVisible||"")}">••••••••</span>
+        ${a.passwordVisible?`<button type="button" class="iconbtn" title="Show/Hide" onclick="toggleTeamPasswordVisibility('${pwId}')">👁</button>`:""}
+      </td>
+      <td data-label=""><button type="button" class="outline" onclick='openTeamForm(${JSON.stringify(a.username)})'>Edit</button></td>
+    </tr>`;
+  }).join(""):`<tr><td colspan="6"><div class="empty"><h3>No team members yet</h3><p class="muted">Add a Sub Admin to let counter staff handle orders and payments without full access.</p></div></td></tr>`;
+}
+function toggleTeamPasswordVisibility(id){
+  const el=$(id);if(!el)return;
+  const showing=el.dataset.showing==="1";
+  el.textContent=showing?"••••••••":(el.dataset.pw||"—");
+  el.dataset.showing=showing?"0":"1";
+}
+function openTeamForm(username){
+  const a=username?teamList.find(x=>x.username===username):null;
+  $("tfTitle").textContent=a?"Edit Team Member":"Add Team Member";
+  $("tfUsername").value=a?a.username:"";
+  $("tfUsername").disabled=!!a;
+  $("tfName").value=a?a.name||"":"";
+  $("tfLevel").value=a?a.level:"staff";
+  $("tfActive").checked=a?!!a.active:true;
+  $("tfPassword").value="";
+  $("tfPassword").placeholder=a?"Leave blank to keep the current password":"8 to 64 characters";
+  $("tfPwLabel").textContent=a?"New password (optional)":"Password *";
+  openModal("teamFormModal");
+}
+async function saveTeamMember(){
+  const username=$("tfUsername").value.trim(),name=$("tfName").value.trim(),level=$("tfLevel").value,active=$("tfActive").checked,password=$("tfPassword").value;
+  const isNew=!teamList.some(x=>x.username===username);
+  if(!/^[A-Za-z0-9._-]{3,30}$/.test(username)){toast("Username must be 3 to 30 letters, digits, dot, dash or underscore");return;}
+  if(!name){toast("Enter a name");return;}
+  if(isNew&&!password){toast("Set a password for this new team member");return;}
+  if(password&&(password.length<8||password.length>64)){toast("Password must be 8 to 64 characters");return;}
+  await busy($("tfSaveBtn"),async()=>{
+    try{
+      await apiPost({action:"adminSaveAdmin",username,name,level,active,password:password||undefined});
+      closeModal();
+      toast("Team member saved");
+      await loadAdminTeam();
+    }catch(e){toast("Could not save: "+e.message);}
   });
 }
 
