@@ -656,6 +656,7 @@ body.admin-mode .langsel{display:none}
 <div class="modal" id="checkoutModal">
   <div class="modal-head"><div><h2 style="margin:0">Checkout</h2></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
+    <div class="notice hidden" id="checkoutEditBanner" style="margin-bottom:10px">✎ You're editing an existing order. Adjust the items in your cart, then submit to update it. <button type="button" class="outline" style="margin-top:8px" onclick="cancelEditingOrder();closeModal();">Stop editing</button></div>
     <div class="checkout-summary" id="checkoutSummary"></div>
     <div class="formgrid">
       <div class="field"><label>Full Name *</label><input id="custName" required placeholder="Your name"></div>
@@ -671,7 +672,7 @@ body.admin-mode .langsel{display:none}
     </div>
     <div id="couponAppliedNote" class="notice hidden" style="margin-top:10px"></div>
     <p class="notice" style="margin-top:15px">Your order is saved, then opens in WhatsApp.</p>
-    <button type="button" class="primary" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order & Open WhatsApp</button>
+    <button type="button" class="primary" id="checkoutSubmitBtn" style="width:100%;margin-top:10px" onclick="placeOrder()">Place Order & Open WhatsApp</button>
   </div>
 </div>
 
@@ -1231,6 +1232,12 @@ body.admin-mode .langsel{display:none}
     <div class="field"><label>Method</label><select id="dvMethod"><option value="Pickup">Pickup from shop</option><option value="Delivery">Home delivery</option></select></div>
     <div class="field" style="margin-top:12px"><label>Delivery charge (₹)</label><input id="dvCharge" type="number" inputmode="decimal" min="0" step="1" placeholder="0"></div>
     <div class="field" style="margin-top:12px"><label>Expected delivery date</label><input id="dvDate" type="date"></div>
+    <div class="notice hidden" id="dvCustomerPrefs" style="margin-top:12px"></div>
+    <div class="formgrid" style="margin-top:12px">
+      <div class="field"><label>Driver name</label><input id="dvDriverName"></div>
+      <div class="field"><label>Driver phone</label><input id="dvDriverPhone" inputmode="numeric"></div>
+      <div class="field full"><label>Vehicle number</label><input id="dvVehicleNo" placeholder="e.g. OD 03 AB 1234"></div>
+    </div>
     <button type="button" class="primary" id="dvBtn" style="width:100%;margin-top:16px" onclick="saveDelivery()">Save</button>
   </div>
 </div>
@@ -2558,7 +2565,7 @@ function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.fi
 function openCart(){if(!customer()){showCustomerLogin("login");return}$("drawerBackdrop").classList.add("show");$("cartDrawer").classList.add("show")}
 function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer").classList.remove("show")}
 
-function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=c.address||"";$("custPincode").value=c.pin||"";$("custNote").value="";$("custPrefDate").value="";$("custPrefSlot").value="";$("custMapLink").value="";$("custCoupon").value="";appliedCoupon="";$("couponAppliedNote").classList.add("hidden");closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
+function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();const em=editingOrderId?editingOrderMeta:null;$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=em?.customer?.address||c.address||"";$("custPincode").value=em?.customer?.pin||c.pin||"";$("custNote").value=em?.note||"";$("custPrefDate").value=em?.preferredDate||"";$("custPrefSlot").value=em?.preferredSlot||"";$("custMapLink").value=em?.mapLink||"";$("custCoupon").value=em?.coupon||"";appliedCoupon=em?.coupon||"";$("couponAppliedNote").classList.add("hidden");if(em)document.querySelectorAll('input[name="dlvMethod"]').forEach(r=>{r.checked=r.value===(em.deliveryMethod||"Pickup");});$("checkoutSubmitBtn").textContent=editingOrderId?("Update Order "+editingOrderId):"Place Order & Open WhatsApp";$("checkoutEditBanner").classList.toggle("hidden",!editingOrderId);closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
 function validateCheckout(){const name=$("custName").value.trim(),phone=$("custPhone").value.replace(/\D/g,""),address=$("custAddress").value.trim(),pin=$("custPincode").value.replace(/\D/g,"");if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid name, phone, address and pincode");return null}return{name,phone,address,pin,note:$("custNote").value.trim()}}
 function checkoutDeliveryExtras(){return{preferredDate:$("custPrefDate")?.value||"",preferredSlot:$("custPrefSlot")?.value||"",mapLink:$("custMapLink")?.value.trim()||"",coupon:appliedCoupon||""}}
 let appliedCoupon="";
@@ -2587,41 +2594,83 @@ async function applyCheckoutCoupon(){
     box.textContent=e.message;
   }
 }
+let editingOrderId=null,editingOrderMeta=null;
+function editMyOrder(id){
+  const o=orders.find(x=>String(x.id)===String(id));
+  if(!o){toast("Order not found");return;}
+  if(String(o.status||"New").toLowerCase()!=="new"){toast("This order can no longer be edited");return;}
+  if(cart.length&&!confirm("This will replace the items currently in your cart with this order's items. Continue?"))return;
+  cart=(o.items||[]).map(it=>{
+    const size=it.size||"";
+    return {key:(it.code||it.id)+"|"+size,id:it.code||it.id,size,price:Number(it.price)||0,qty:Number(it.qty!=null?it.qty:it.quantity)||0};
+  });
+  editingOrderId=o.id;
+  editingOrderMeta=o;
+  saveLocal();updateCart();
+  closeModal();
+  toast("Editing "+o.id+" — adjust items in your cart, then checkout");
+  openCart();
+}
+function cancelEditingOrder(){
+  editingOrderId=null;editingOrderMeta=null;
+  cart=[];saveLocal();updateCart();
+}
+async function cancelMyOrder(id){
+  if(!confirm("Cancel this order? Any reserved stock will be released."))return;
+  try{
+    await apiPost({action:"customerCancelOrder",customerToken:customer()?.token,orderId:id});
+    toast("Order cancelled");
+    loadCustomerOrders();
+  }catch(e){toast("Could not cancel: "+e.message);}
+}
 async function placeOrder(){
   const c=validateCheckout();
   if(!c)return;
   const total=cart.reduce((a,x)=>a+(Number(x.price)||0)*(Number(x.qty)||0),0);
-  const id="ORD-"+Date.now().toString().slice(-8);
+  const isEdit=!!editingOrderId;
+  const id=isEdit?editingOrderId:"ORD-"+Date.now().toString().slice(-8);
   const order={
     id,
-    date:new Date().toISOString(),
+    date:isEdit?editingOrderMeta.date:new Date().toISOString(),
     customer:{...c,id:customer()?.customerId||customer()?.id||""},
     items:cart.map(x=>({...x,code:x.id,name:products.find(p=>normalizeAccessValue(p.id)===normalizeAccessValue(x.id))?.name||"Product",price:Number(x.price)||0,qty:Number(x.qty)||0})),
     total,
     deliveryMethod:selectedDeliveryMethod(),
-    status:"New",
+    status:isEdit?editingOrderMeta.status:"New",
     ...checkoutDeliveryExtras()
   };
-  const button=document.querySelector("#checkoutModal .primary");
+  const button=$("checkoutSubmitBtn");
   if(button)button.disabled=true;
   try{
     const loggedCustomer=customer();
-    const result=await apiPost({action:"saveOrder",order,customerToken:loggedCustomer?.token});
+    const result=isEdit
+      ?await apiPost({action:"customerEditOrder",customerToken:loggedCustomer?.token,orderId:id,order})
+      :await apiPost({action:"saveOrder",order,customerToken:loggedCustomer?.token});
     if(result.orderId)order.id=result.orderId;
     if(Array.isArray(result.items)){order.items=result.items.map(i=>({id:i.code,code:i.code,name:i.name,size:i.size,qty:i.quantity,price:i.price}));order.total=Number(result.total)||order.total;}
-    orders.unshift(order);
+    if(isEdit){
+      const idx=orders.findIndex(x=>String(x.id)===String(id));
+      if(idx>=0)orders[idx]={...orders[idx],...order};else orders.unshift(order);
+    }else{
+      orders.unshift(order);
+    }
     saveLocal();
     cart=[];
+    editingOrderId=null;editingOrderMeta=null;
     saveLocal();
     updateCart();
     closeModal();
     renderAdmin();
     await loadCustomerOrders();
-    window.pendingWhatsAppOrder=order;
-    showOrderSuccess();
-    setTimeout(()=>tryOpenWhatsApp(order),450);
+    if(isEdit){
+      toast("Order "+id+" updated");
+    }else{
+      window.pendingWhatsAppOrder=order;
+      showOrderSuccess();
+      setTimeout(()=>tryOpenWhatsApp(order),450);
+    }
   }catch(error){
-    toast("Order could not be saved: "+error.message,5000);
+    toast((isEdit?"Order could not be updated: ":"Order could not be saved: ")+error.message,5000);
     if(/left of|out of stock|not available/i.test(error.message)){loadProductsFromApi(true).catch(()=>{});}
   }finally{
     if(button)button.disabled=false;
@@ -2715,22 +2764,28 @@ function showWhatsAppCopyFallback(o){
   if(btn)btn.onclick=async()=>{
     const ok=await copyOrderTextToClipboard(text);
     toast(ok?"Order copied — now open WhatsApp and paste it":"Couldn't copy automatically. Please screenshot this order instead.");
+    if(ok)reportWhatsAppEvent(o.id,"Copied");
   };
   $("waFallbackModal")?.classList.add("show");
   $("modalBackdrop")?.classList.add("show");
 }
 
+function reportWhatsAppEvent(orderId,state){
+  if(!orderId)return;
+  apiPost({action:"orderWhatsAppEvent",customerToken:customer()?.token,orderId,state}).catch(()=>{});
+}
 function tryOpenWhatsApp(o){
   if(!o||!o.id){toast("Order details are unavailable");return;}
   const webUrl=whatsappWebUrl(o);
   if(!isAndroidRuntime()){
     const w=window.open(webUrl,"_blank","noopener,noreferrer");
     if(!w)window.location.href=webUrl;
+    reportWhatsAppEvent(o.id,"Opened");
     return;
   }
 
   let handedOff=false;
-  const onHide=()=>{handedOff=true;};
+  const onHide=()=>{handedOff=true;reportWhatsAppEvent(o.id,"Opened");};
   document.addEventListener("visibilitychange",onHide,{once:true});
   window.addEventListener("pagehide",onHide,{once:true});
 
@@ -2979,7 +3034,8 @@ async function postJson(payload,timeout){
   }finally{clearTimeout(timer);}
 }
 
-const CUSTOMER_ACTIONS=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto","changeCustomerPassword","getMyPayments","customerPaymentEvent","createDownloadLink"];
+const CUSTOMER_ACTIONS=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto","changeCustomerPassword","getMyPayments","customerPaymentEvent","createDownloadLink",
+  "customerCancelOrder","customerEditOrder","orderWhatsAppEvent","previewCoupon","getMyUsuals","requestQuote","getMyQuotes","acceptQuote","declineQuote"];
 const BACKGROUND_ACTIONS=["getCustomerPhoto","getMyPayments"];
 function adminSessionExpired(){
   sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_user");
@@ -4439,7 +4495,7 @@ function renderCustomerOrders(){
       ?`<span class="cart-meta" style="text-decoration:line-through">${money((Number(o.originalTotal)||0)+charge)}</span> <strong>${money(grand)}</strong> <span class="cart-meta">(revised)</span>`
       :`<strong>${money(grand)}</strong>`;
     const oid=arg(o.id);
-    return `<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty!=null?i.qty:i.quantity)||0} × ${money(i.price)}</div>`).join("")}</div>${charge>0?`<div class="cart-meta">Delivery charge: ${money(charge)}</div>`:""}<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">${amountHtml}<span class="status">${esc(orderStatusLabel(status,o.deliveryMethod))}</span></div><div class="cart-meta">${o.deliveryMethod==="Delivery"?"🚚 Home delivery":"🏬 Pickup from shop"}</div><details class="track"><summary>📦 Track order</summary>${orderTimelineHtml(o)}</details><div class="order-actions"><button type="button" class="outline" onclick="reorderById(${oid})">🔁 Reorder</button><button type="button" class="outline" onclick="resendOrderById(${oid})">↗ Resend Order to WhatsApp</button></div>${canInvoice?`<button type="button" class="outline" style="width:100%;margin-top:8px" onclick="downloadInvoiceById(${oid})">🧾 Download Invoice</button>`:`<p class="cart-meta" style="margin-top:8px;text-align:center">Invoice available once your order is confirmed</p>`}</div>`;
+    return `<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty!=null?i.qty:i.quantity)||0} × ${money(i.price)}</div>`).join("")}</div>${charge>0?`<div class="cart-meta">Delivery charge: ${money(charge)}</div>`:""}<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">${amountHtml}<span class="status">${esc(orderStatusLabel(status,o.deliveryMethod))}</span></div><div class="cart-meta">${o.deliveryMethod==="Delivery"?"🚚 Home delivery":"🏬 Pickup from shop"}</div><details class="track"><summary>📦 Track order</summary>${orderTimelineHtml(o)}</details><div class="order-actions">${sl==="new"?`<button type="button" class="outline" onclick="editMyOrder(${oid})">✎ Edit Order</button><button type="button" class="outline" onclick="cancelMyOrder(${oid})">✕ Cancel Order</button>`:""}<button type="button" class="outline" onclick="reorderById(${oid})">🔁 Reorder</button><button type="button" class="outline" onclick="resendOrderById(${oid})">↗ Resend Order to WhatsApp</button></div>${canInvoice?`<button type="button" class="outline" style="width:100%;margin-top:8px" onclick="downloadInvoiceById(${oid})">🧾 Download Invoice</button>`:`<p class="cart-meta" style="margin-top:8px;text-align:center">Invoice available once your order is confirmed</p>`}</div>`;
   }).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
 }
 function reorderById(id){
@@ -4573,7 +4629,10 @@ function showMyReceipt(id){
 /* ===== v7 ADMIN ===== */
 const APP_LINK="https://satyajeetmeher91.github.io/bijayahousing/";
 const ADMIN_TABS=["dashboard","products","orders","customers","payments","reports","quotes","team","settings"];
-const ADMIN_ACTIONS=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword","adminCreatePayment","adminGetPayments","adminUpdatePayment","adminRemindPayment","adminRecordPayment","adminBulkPayments","adminUpdateOrderDelivery","adminChangePassword","adminGetLoginLog","adminBackupNow","adminGetBackupInfo"];
+const ADMIN_ACTIONS=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword","adminCreatePayment","adminGetPayments","adminUpdatePayment","adminRemindPayment","adminRecordPayment","adminBulkPayments","adminUpdateOrderDelivery","adminChangePassword","adminGetLoginLog","adminBackupNow","adminGetBackupInfo",
+  "adminGetTeam","adminSaveAdmin","adminGetActivity","adminGetAlertSettings","adminSaveAlertSettings","adminTestAlert","adminGetSettings","adminSaveSettings","adminLockPhotos",
+  "adminStockIn","adminStockAdjust","adminGetStockLog","adminGetLowStock","adminBulkPriceUpdate","adminGetPriceBatches","adminUndoPriceBatch","adminImportProducts","adminArchiveOrders",
+  "adminSetCustomerRate","adminGetStatement","adminGetReports","adminGetDuesAging","adminGetDailyClosing","adminGetQuotes","adminSaveQuote","adminGetCoupons","adminSaveCoupon","adminDeleteCoupon"];
 const selPay=new Set(),selCust=new Set();
 const isOverdue=p=>isDue(p)&&Date.now()-new Date(p.date).getTime()>7*864e5;
 const csvCell=v=>{let s=String(v==null?"":v);if(/^[=+\-@]/.test(s))s="'"+s;return /[",\r\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
@@ -4861,7 +4920,7 @@ async function declineQuoteAdmin(){
   if(!qpCurrent)return;
   if(!confirm("Decline this quotation request?"))return;
   try{
-    await apiPost({action:"declineQuote",quoteId:qpCurrent.id});
+    await apiPost({action:"declineQuote",quoteId:qpCurrent.id,adminToken:sessionStorage.getItem("admin_token")});
     toast("Quotation declined");
     closeModal();
     loadAdminQuotes();
