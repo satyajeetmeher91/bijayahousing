@@ -363,6 +363,44 @@ body.admin-mode .langsel{display:none}
 @media(max-width:820px){.rtable td.stack{display:block;text-align:left}.rtable td.stack::before{display:block;margin-bottom:4px}}
 @media(max-width:720px){.toolbar>button{flex:1 1 45%;padding-left:8px;padding-right:8px}.langsel{padding:9px 4px;max-width:64px}}
 </style>
+<style id="wixTheme">
+:root{--primary:#1c1f23;--accent:#f2a900;--bg:#f3f2ee}
+.topbar{background:#1c1f23;border-bottom:3px solid #f2a900}
+.topbar .brand{color:#fff}
+.brand-mark{background:#f2a900;color:#1c1f23;border-radius:6px}
+.topbar .outline,.topbar .iconbtn{background:transparent;color:#fff;border-color:rgba(255,255,255,.28);border-radius:6px}
+.topbar .search input,.topbar .langsel{background:#2a2e33;border:1px solid #3a3f45;color:#fff;border-radius:6px}
+.topbar .search input::placeholder{color:#9aa1a9}
+.primary{background:#f2a900;border-color:#f2a900;color:#1c1f23;border-radius:6px}
+.hero{background:#1c1f23;border-radius:6px;padding:64px 48px 80px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:14px;background:repeating-linear-gradient(-45deg,#f2a900 0 18px,#1c1f23 18px 36px)}
+.hero h1{font-weight:900;letter-spacing:-.02em;line-height:1.04;margin:0 0 14px}
+.hero .hero-sub{color:#c9ced4;max-width:52ch;margin:0}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.hero-cta a,.hero-cta button{border-radius:6px;padding:13px 22px;font-weight:900;text-decoration:none;display:inline-block;border:1px solid #f2a900;background:#f2a900;color:#1c1f23}
+.hero-cta .ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.hero-stats{border-left:3px solid #f2a900;padding-left:22px}
+.hero-stats div{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.hero-stats div:last-child{border-bottom:0}
+.hero-stats b{display:block;font-size:34px;color:#fff;font-weight:900}
+.hero-stats span{color:#aeb4bb;font-size:13px}
+.section-head h2{font-weight:900;border-left:5px solid #f2a900;padding-left:12px}
+.categories{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;overflow:visible;padding:2px 0 10px}
+.categories .chip.cat-tile{display:flex;flex-direction:column;align-items:flex-start;gap:14px;min-height:112px;padding:16px;border-radius:6px;border:1px solid var(--line);border-bottom:4px solid var(--line);background:var(--surface);color:var(--text);font-weight:800;text-align:left}
+.cat-ico{font-size:30px;line-height:1}
+.categories .chip.cat-tile:hover{border-bottom-color:#f2a900}
+.categories .chip.cat-tile.active{background:#1c1f23;color:#fff;border-bottom-color:#f2a900}
+.product{border-radius:8px}
+.why{margin:34px 0 0}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.why-grid div{background:var(--surface);border:1px solid var(--line);border-top:4px solid #f2a900;border-radius:6px;padding:18px}
+.why-grid b{display:block;font-size:17px;margin-bottom:6px}
+.why-grid span{color:var(--muted);font-size:14px}
+.contact-strip.foot{background:#1c1f23;color:#fff;border:0;border-top:5px solid #f2a900;border-radius:6px;margin:34px 0 0;padding:22px}
+.contact-strip.foot span{color:#aeb4bb}
+.contact-strip.foot .outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+@media(max-width:720px){.hero{padding:38px 22px 56px}.hero-card{display:none}}
+</style>
 </head>
 <body>
 <div id="appLoadingScreen" class="app-loading-screen">
@@ -416,22 +454,18 @@ body.admin-mode .langsel{display:none}
   </div>
   <section class="hero">
     <div>
-      <div style="font-size:12px;letter-spacing:.12em;font-weight:900;color:#93c5fd;margin-bottom:10px">WELCOME TO BIJAYA HOUSING.</div>
-      <h1>Shop smarter.<br>Choose what you need.</h1>
-      <p>Browse products by category, choose the right size, set your quantity and send your order directly through WhatsApp.</p>
-      <button type="button" class="primary" onclick="document.getElementById('productsSection').scrollIntoView()">Explore Products →</button>
+      <h1>Everything you need to build, under one roof.</h1>
+      <p class="hero-sub">Cement, TMT, paints, tiles, hardware, pumps, sanitary and plumbing items. Pick what you need and send your order on WhatsApp.</p>
+      <div class="hero-cta"><button type="button" onclick="document.getElementById('categoriesHead').scrollIntoView()">Shop now</button><a class="ghost" target="_blank" href="https://wa.me/918114832749">WhatsApp us</a></div>
     </div>
-    <div class="hero-card"><small>Order support</small><div class="big">WhatsApp</div><small>Fast order confirmation through 8114832749</small></div>
-  </section>
-  <section class="contact-strip">
-    <div><strong>BIJAYA HOUSING</strong><span>Agalpur</span></div>
-    <div class="contact-actions">
-      <a class="outline" href="tel:8114832749">☎ Raj Kishor</a>
-      <a class="outline" href="tel:9078523132">☎ Dibya Kishor</a>
-      <a class="primary" target="_blank" href="https://wa.me/918114832749">WhatsApp</a>
+    <div class="hero-stats">
+      <div><b id="hsProducts">0</b><span>Products in stock list</span></div>
+      <div><b id="hsCats">0</b><span>Categories</span></div>
+      <div id="hsBrandsRow"><b id="hsBrands">0</b><span>Brands</span></div>
     </div>
   </section>
-  <div class="section-head"><h2>Categories</h2><span class="sync-wrap"><span class="sync-label" id="syncLabel"></span><button type="button" class="outline" id="reloadProductsBtn" onclick="reloadProducts()">↻ Reload Products</button></span></div>
+  
+  <div class="section-head" id="categoriesHead"><h2>Categories</h2><span class="sync-wrap"><span class="sync-label" id="syncLabel"></span><button type="button" class="outline" id="reloadProductsBtn" onclick="reloadProducts()">↻ Reload Products</button></span></div>
   <div class="categories" id="categories"></div>
   <div class="subcategories hidden" id="subcategories"></div>
   <section id="productsSection">
@@ -441,6 +475,20 @@ body.admin-mode .langsel{display:none}
       <div class="field" style="min-width:140px"><select id="brandSelect" onchange="renderProducts()"><option value="All">All Brands</option></select></div>
     </div>
     <div class="grid" id="productGrid"></div>
+  </section>
+  <section class="why"><div class="section-head" style="margin-top:0"><h2>Why shop with us</h2></div><div class="why-grid">
+    <div><b>Everything in one place</b><span>From cement and TMT to taps, tiles and pumps.</span></div>
+    <div><b>Order on WhatsApp</b><span>Build your cart and send it to the shop in one tap.</span></div>
+    <div><b>Pay by UPI</b><span>Pay your order through a UPI payment request.</span></div>
+    <div><b>Track your orders</b><span>See order and payment status in your profile.</span></div>
+  </div></section>
+  <section class="contact-strip foot">
+    <div><strong>BIJAYA HOUSING</strong><span>Agalpur</span></div>
+    <div class="contact-actions">
+      <a class="outline" href="tel:8114832749">☎ Raj Kishor</a>
+      <a class="outline" href="tel:9078523132">☎ Dibya Kishor</a>
+      <a class="primary" target="_blank" href="https://wa.me/918114832749">WhatsApp</a>
+    </div>
   </section>
   </div>
 </main>
@@ -2335,7 +2383,7 @@ function renderCategories(){
       box.innerHTML="";
     }else{
       box.classList.remove("hidden");
-      box.innerHTML=cats.map(c=>`<button type="button" class="chip ${normalizeAccessValue(category)===normalizeAccessValue(c)?"active":""}" onclick="setCategory(decodeURIComponent('${encodeURIComponent(c)}'))">${esc(c)}</button>`).join("");
+      box.innerHTML=cats.map(c=>`<button type="button" class="chip cat-tile ${normalizeAccessValue(category)===normalizeAccessValue(c)?"active":""}" onclick="setCategory(decodeURIComponent('${encodeURIComponent(c)}'))"><span class="cat-ico">${catIcon(c)}</span><span>${esc(c)}</span></button>`).join("");
     }
   }
   if($("statCategories"))$("statCategories").textContent=uniqueCats.length;
@@ -5381,6 +5429,12 @@ document.addEventListener("keydown",e=>{
 
 
 const copyPayAmount=()=>{const p=myPayments.find(x=>x.id===payAssistId);if(p)copyText(Number(payable(p)).toFixed(2),"Amount copied");};
+
+function catIcon(n){n=String(n).toLowerCase();const m=[[/cement/,"🏗️"],[/tmt|steel|rod|bar/,"🔩"],[/paint|distemper|putty/,"🎨"],[/tile|marble|granite/,"🧱"],[/pump|motor|water/,"💧"],[/sanitary|bath|toilet|wash/,"🚽"],[/plumb|pipe|fitting|tap/,"🔧"],[/hardware|tool/,"🛠️"],[/electric|wire|light/,"💡"]];for(const [r,i] of m)if(r.test(n))return i;return "📦";}
+function updateHeroStats(){try{const a=products.filter(p=>p.active!==false);const set=(i,v)=>{const e=document.getElementById(i);if(e)e.textContent=v;};const br=new Set(a.map(p=>p.brand).filter(Boolean)).size;set("hsProducts",a.length);set("hsCats",new Set(a.map(p=>String(p.category||"").trim()).filter(Boolean)).size);set("hsBrands",br);const r=document.getElementById("hsBrandsRow");if(r)r.style.display=br?"":"none";}catch(e){}}
+const _renderCategoriesOrig=renderCategories;
+renderCategories=function(){_renderCategoriesOrig();updateHeroStats();};
+updateHeroStats();
 </script>
 
 </body>
