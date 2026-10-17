@@ -155,10 +155,10 @@ html,body{max-width:100%;overflow-x:hidden}
 .product-view-modal.show{display:flex;flex-direction:column;animation:productMobileIn .2s ease}
 .product-view-modal .modal-head{flex:0 0 auto;border-radius:0;padding:12px 16px}
 .product-view-body{display:grid;grid-template-columns:1.05fr .95fr;flex:1 1 auto;min-height:0;touch-action:pan-y}
-.product-view-image{background:var(--surface2);display:flex;align-items:center;justify-content:center;min-height:0;height:100%;overflow:hidden}
-.product-view-image img{width:100%;height:100%;max-height:100%;object-fit:contain;display:block}
-.product-view-image{position:relative}
-.pv-thumbs{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center;padding:0 10px;overflow-x:auto}
+.product-view-image{background:var(--surface2);display:flex;flex-direction:column;min-height:0;height:100%;overflow:hidden}
+.pv-main{flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.product-view-image img#viewProductImage{width:100%;height:100%;max-height:100%;object-fit:contain;display:block}
+.pv-thumbs{flex:0 0 auto;display:flex;gap:8px;justify-content:center;padding:10px;overflow-x:auto;background:var(--surface);border-top:1px solid var(--line)}
 .pv-thumb{flex:0 0 auto;width:52px;height:52px;padding:0;border:2px solid rgba(255,255,255,.9);border-radius:10px;background:var(--surface);overflow:hidden;opacity:.85;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .pv-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .pv-thumb.active{border-color:var(--accent);opacity:1}
@@ -193,8 +193,9 @@ html,body{max-width:100%;overflow-x:hidden}
   .product-view-modal.show{animation:productMobileIn .2s ease}
   .product-view-body{display:flex;flex-direction:column;min-height:0}
   .pv-hint{display:block}
-  .product-view-image{height:43dvh;min-height:230px;flex:0 0 43dvh}
-  .product-view-image img{max-height:43dvh}
+  .product-view-image{height:auto;min-height:0;flex:0 0 auto}
+  .pv-main{height:43dvh;min-height:230px;flex:0 0 auto}
+  .product-view-image img#viewProductImage{max-height:43dvh}
   .product-view-info{padding:20px 18px 25px;overflow:auto}
   .product-view-info h2{font-size:25px}
   .product-view-price{font-size:26px}
@@ -696,7 +697,7 @@ body.admin-mode .langsel{display:none}
     </div>
   </div>
   <div class="product-view-body">
-    <div class="product-view-image"><img id="viewProductImage" src="" alt="Product"><div class="pv-thumbs hidden" id="viewProductThumbs"></div></div>
+    <div class="product-view-image"><div class="pv-main"><img id="viewProductImage" src="" alt="Product"></div><div class="pv-thumbs hidden" id="viewProductThumbs"></div></div>
     <div class="product-view-info">
       <div class="product-view-category" id="viewProductCategory"></div>
       <h2 id="viewProductName"></h2>
