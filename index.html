@@ -157,6 +157,11 @@ html,body{max-width:100%;overflow-x:hidden}
 .product-view-body{display:grid;grid-template-columns:1.05fr .95fr;flex:1 1 auto;min-height:0;touch-action:pan-y}
 .product-view-image{background:var(--surface2);display:flex;align-items:center;justify-content:center;min-height:0;height:100%;overflow:hidden}
 .product-view-image img{width:100%;height:100%;max-height:100%;object-fit:contain;display:block}
+.product-view-image{position:relative}
+.pv-thumbs{position:absolute;left:0;right:0;bottom:10px;display:flex;gap:8px;justify-content:center;padding:0 10px;overflow-x:auto}
+.pv-thumb{flex:0 0 auto;width:52px;height:52px;padding:0;border:2px solid rgba(255,255,255,.9);border-radius:10px;background:var(--surface);overflow:hidden;opacity:.85;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.pv-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.pv-thumb.active{border-color:var(--accent);opacity:1}
 .pv-nav{display:flex;align-items:center;gap:8px}
 .pv-pos{font-size:12px;color:var(--muted);font-weight:800;margin-left:8px}
 .pv-hint{display:none;font-size:11px;color:var(--muted);text-align:center;padding:6px 0 0}
@@ -691,7 +696,7 @@ body.admin-mode .langsel{display:none}
     </div>
   </div>
   <div class="product-view-body">
-    <div class="product-view-image"><img id="viewProductImage" src="" alt="Product"></div>
+    <div class="product-view-image"><img id="viewProductImage" src="" alt="Product"><div class="pv-thumbs hidden" id="viewProductThumbs"></div></div>
     <div class="product-view-info">
       <div class="product-view-category" id="viewProductCategory"></div>
       <h2 id="viewProductName"></h2>
@@ -762,7 +767,7 @@ body.admin-mode .langsel{display:none}
       <div class="field"><label>Category *</label><input id="pCategory" placeholder="e.g. Tiles"></div>
       <div class="field"><label>Subcategory</label><input id="pSubcategory" placeholder="Optional, e.g. Wall Tiles"></div>
       <div class="field full"><label>Description</label><textarea id="pDescription"></textarea></div>
-      <div class="field"><label>Image ID</label><input id="pImageId" placeholder="IMG001"><div class="notice">GitHub image name: <b>IMG001.webp</b>. Leave blank if no image.</div></div>
+      <div class="field"><label>Image ID</label><input id="pImageId" placeholder="IMG001, IMG001-2, IMG001-3"><div class="notice">GitHub image name: <b>IMG001.webp</b>. For more than one image, separate them with commas — the first one is the cover shown on the product card. Leave blank if no image.</div></div>
       <div class="field"><label>Default Price (₹)</label><input id="pPrice" type="number" min="0" step=".01"></div>
       <div class="field full"><label>Sizes / Price / Size Stock (optional)</label><input id="pSizes" placeholder="S:399:12, M:449:15, L:499:13, XL:549:10"><div class="notice">Format: Size:Price:Size Stock</div></div>
       <div class="field"><label>Stock</label><input id="pStock" type="number" min="0" value="0"></div>
@@ -1020,7 +1025,7 @@ body.admin-mode .langsel{display:none}
 <div class="modal over no-i18n" id="importModal">
   <div class="modal-head"><div><h2 style="margin:0">Import Products</h2></div><button type="button" class="iconbtn" onclick="closeModal()">×</button></div>
   <div class="modal-body">
-    <p class="notice">Paste or upload a CSV with a header row. Recognised columns: <b>id, name, category, subcategory, brand, description, imageId, price, cost, stock, sizes, reorder, discount, active</b>. Only <b>name, category, price</b> are required for a new product; include <b>id</b> to update an existing one. Sizes look like <code>S:399:12; M:449:15</code> (name:price:stock).</p>
+    <p class="notice">Paste or upload a CSV with a header row. Recognised columns: <b>id, name, category, subcategory, brand, description, imageId, price, cost, stock, sizes, reorder, discount, active</b>. Only <b>name, category, price</b> are required for a new product; include <b>id</b> to update an existing one. Sizes look like <code>S:399:12; M:449:15</code> (name:price:stock). For several images in <b>imageId</b>, separate them with <code>|</code> (e.g. <code>IMG001|IMG001-2</code>).</p>
     <input type="file" id="impFile" accept=".csv,text/csv" onchange="handleImportFile(event)">
     <textarea id="impText" style="width:100%;min-height:140px;margin-top:10px;border:1px solid var(--line);border-radius:12px;padding:10px;font-family:monospace;font-size:12px" placeholder="id,name,category,price,stock&#10;,Putty 20kg,Paint,450,30"></textarea>
     <div style="display:flex;gap:10px;margin-top:14px"><button type="button" class="outline" style="flex:1" onclick="previewImport()">Preview</button><button type="button" class="primary hidden" id="impConfirmBtn" style="flex:1" onclick="commitImport()">Import</button></div>
@@ -1731,7 +1736,7 @@ function calcAddToCart(id,qty,preferredSize){
   const stock=Number(s?s.stock:p.stock)||0;
   const need=Math.min(qty,stock);
   if(need<=0){toast("This item is out of stock");return;}
-  if(need<qty)toast(`Only ${need} in stock — added ${need}`);
+  if(need<qty)toast(canSeeStock()?`Only ${need} in stock — added ${need}`:`Added ${need} — that's all we can supply right now`);
   const key=p.id+"|"+size;
   const existing=cart.find(i=>i.key===key);
   if(existing)existing.qty=Math.min(stock,existing.qty+need);
@@ -2417,8 +2422,9 @@ function setCategory(c){category=String(c||"All").trim()||"All";window.selectedS
 function setSubcategory(s){window.selectedSubcategory=String(s||"All").trim()||"All";renderSubcategories();renderProducts();}
 
 
+function splitImageIds(v){return String(v||"").split(/[,|;\n]+/).map(x=>x.trim()).filter(Boolean);}
 function githubImageCandidates(imageId, directUrl=""){
-  const raw=String(imageId||"").trim();
+  const raw=splitImageIds(imageId)[0]||"";
   const direct=String(directUrl||"").trim();
   const out=[];
   if(direct)out.push(direct);
@@ -2495,14 +2501,7 @@ function openProductView(id){
   viewedProductQty=1;
   viewedProductSize=p.sizes?.[0]?.name||"";
 
-  const viewImg=$("viewProductImage");
-  viewImg.src=DEFAULT_IMAGE;
-  viewImg.alt=p.name||"Product";
-  const viewCandidates=githubImageCandidates(p.imageId,p.image);
-  let vi=0;
-  const tryViewImage=()=>{if(vi>=viewCandidates.length){viewImg.src=DEFAULT_IMAGE;return;}const src=viewCandidates[vi++];viewImg.onerror=tryViewImage;viewImg.onload=()=>{viewImg.classList.add("img-ready")};viewImg.src=src};
-  tryViewImage();
-  $("viewProductImage").alt=p.name||"Product";
+  pvSetupGallery(p);
   $("viewProductCategory").textContent=p.category||"";
   $("viewProductName").textContent=p.name||"Product";
   $("viewProductCode").textContent="Product Code: "+(p.id||"-");
@@ -2538,7 +2537,7 @@ function updateProductViewPrice(){
   const price=s?s.price:p.price;
   const stock=s?s.stock:p.stock;
   $("viewProductPrice").textContent=money(price);
-  $("viewProductStock").textContent=stock>0?`${stock} available`:"Out of stock";
+  $("viewProductStock").textContent=stock>0?(canSeeStock()?`${stock} available`:""):"Out of stock";
   const btn=$("viewAddToCartBtn");
   if(btn){btn.disabled=stock<=0;btn.textContent=stock>0?"Add to Cart":"Out of Stock";}
 }
@@ -2549,7 +2548,7 @@ function changeViewQty(delta){
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(viewedProductSize));
   const stock=Number(s?s.stock:p.stock)||0;
   const next=Math.max(1,Math.min(stock||1,viewedProductQty+delta));
-  if(delta>0&&next===viewedProductQty&&stock>0)toast("Maximum available stock reached");
+  if(delta>0&&next===viewedProductQty&&stock>0)toast(canSeeStock()?"Maximum available stock reached":"Sorry, you can't add more of this item right now");
   viewedProductQty=next;
   $("viewProductQty").value=String(viewedProductQty);
 }
@@ -2578,10 +2577,43 @@ function addViewedProductToCart(){
   const key=p.id+"|"+viewedProductSize;
   const existing=cart.find(i=>i.key===key);
   const current=existing?existing.qty:0;
-  if(current+viewedProductQty>stock){toast("Maximum available stock reached");return;}
+  if(current+viewedProductQty>stock){toast(canSeeStock()?"Maximum available stock reached":"Sorry, you can't add more of this item right now");return;}
   if(existing)existing.qty+=viewedProductQty;
   else cart.push({key,id:p.id,size:viewedProductSize,price,qty:viewedProductQty});
   saveLocal();updateCart();closeProductView();toast("Added to cart");
+}
+
+/* --- product view: multiple images --- */
+let pvImgs=[],pvImgIdx=0;
+function pvLoad(img,cands,done){
+  let i=0;
+  const next=()=>{
+    if(i>=cands.length){img.onerror=null;img.src=DEFAULT_IMAGE;return;}
+    img.onerror=next;img.onload=()=>{img.onload=null;if(done)done();};img.src=cands[i++];
+  };
+  next();
+}
+function pvSetupGallery(p){
+  const ids=splitImageIds(p.imageId);
+  pvImgs=ids.length?ids.map((id,i)=>githubImageCandidates(id,i===0?p.image:"")):[githubImageCandidates("",p.image)];
+  pvImgs=pvImgs.filter(c=>c.length);
+  if(!pvImgs.length)pvImgs=[[DEFAULT_IMAGE]];
+  pvImgIdx=0;
+  const th=$("viewProductThumbs");
+  if(th){
+    th.innerHTML=pvImgs.length>1?pvImgs.map((c,i)=>`<button type="button" class="pv-thumb" data-i="${i}" aria-label="Image ${i+1}" onclick="pvShowImage(${i})"><img alt=""></button>`).join(""):"";
+    th.classList.toggle("hidden",pvImgs.length<2);
+    th.querySelectorAll(".pv-thumb img").forEach((im,i)=>pvLoad(im,pvImgs[i]));
+  }
+  pvShowImage(0);
+}
+function pvShowImage(i){
+  if(i<0||i>=pvImgs.length)return;
+  pvImgIdx=i;
+  const img=$("viewProductImage");
+  img.classList.remove("img-ready");img.src=DEFAULT_IMAGE;
+  pvLoad(img,pvImgs[i],()=>img.classList.add("img-ready"));
+  document.querySelectorAll("#viewProductThumbs .pv-thumb").forEach(b=>b.classList.toggle("active",Number(b.dataset.i)===i));
 }
 
 /* --- product view: next / previous (buttons, swipe, arrow keys) --- */
@@ -2609,17 +2641,20 @@ function navProductView(dir){
 }
 (function(){
   const m=document.getElementById("productViewModal");if(!m)return;
-  let sx=0,sy=0,st=0,ok=false;
+  let sx=0,sy=0,st=0,ok=false,onImg=false;
   m.addEventListener("touchstart",e=>{
     if(e.touches.length!==1){ok=false;return;}
     const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now();
     ok=!e.target.closest("input,textarea,select");
+    onImg=!!e.target.closest(".product-view-image");
   },{passive:true});
   m.addEventListener("touchend",e=>{
     if(!ok)return;ok=false;
     const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
     if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-st<800){
-      navProductView(dx<0?1:-1);  // swipe left -> next, swipe right -> previous
+      const dir=dx<0?1:-1;  // swipe left -> next, swipe right -> previous
+      if(onImg&&pvImgs.length>1&&pvImgIdx+dir>=0&&pvImgIdx+dir<pvImgs.length)pvShowImage(pvImgIdx+dir);
+      else navProductView(dir);
     }
   },{passive:true});
   document.addEventListener("keydown",e=>{
@@ -2664,13 +2699,13 @@ function addToCart(id){
   const key=p.id+"|"+size;
   const existing=cart.find(i=>i.key===key);
   const current=existing?Number(existing.qty)||0:0;
-  if(current+1>stock){toast("Maximum available stock reached");return;}
+  if(current+1>stock){toast(canSeeStock()?"Maximum available stock reached":"Sorry, you can't add more of this item right now");return;}
   if(existing)existing.qty+=1;
   else cart.push({key,id:p.id,size,price,qty:1});
   saveLocal();updateCart();toast("Added to cart");
 }
 
-function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.find(y=>y.id===x.id);if(!x)return;if(delta>0){const s=p?.sizes?.find(y=>y.name===x.size),stock=s?s.stock:p?.stock||0;if(x.qty>=stock){toast("Maximum stock reached");return}}x.qty+=delta;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveLocal();updateCart()}
+function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.find(y=>y.id===x.id);if(!x)return;if(delta>0){const s=p?.sizes?.find(y=>y.name===x.size),stock=s?s.stock:p?.stock||0;if(x.qty>=stock){toast(canSeeStock()?"Maximum stock reached":"Sorry, you can't add more of this item right now");return}}x.qty+=delta;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveLocal();updateCart()}
 function openCart(){if(!customer()){showCustomerLogin("login");return}$("drawerBackdrop").classList.add("show");$("cartDrawer").classList.add("show")}
 function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer").classList.remove("show")}
 
@@ -4216,7 +4251,7 @@ async function saveProduct(){
   const name=$("pName").value.trim(),cat=$("pCategory").value.trim();
   if(!id||!name||!cat){toast("Product ID, product name and category are required");return}
   const sizes=$("pSizes").value.split(",").map(x=>x.trim()).filter(Boolean).map(x=>{const [n,pr,st]=x.split(":");return{name:String(n||"").trim(),price:Number(pr)||0,stock:st!==undefined?Number(st)||0:Number($("pStock").value)||0}}).filter(x=>x.name);
-  const p={id,name,category:cat,subcategory:$("pSubcategory").value.trim(),description:$("pDescription").value.trim(),imageId:$("pImageId").value.trim().toUpperCase(),price:Number($("pPrice").value)||0,stock:Number($("pStock").value)||0,active:$("pActive").value==="true",brand:$("pBrand").value.trim(),discountAllowed:$("pDiscountAllowed").value==="true",sizes};
+  const p={id,name,category:cat,subcategory:$("pSubcategory").value.trim(),description:$("pDescription").value.trim(),imageId:splitImageIds($("pImageId").value).map(x=>/^https?:\/\//i.test(x)?x:x.toUpperCase()).join(", "),price:Number($("pPrice").value)||0,stock:Number($("pStock").value)||0,active:$("pActive").value==="true",brand:$("pBrand").value.trim(),discountAllowed:$("pDiscountAllowed").value==="true",sizes};
   if(isSuperAdminUI()){
     if($("pCost").value!=="")p.cost=Number($("pCost").value)||0;
     p.reorderLevel=$("pReorderLevel").value;
@@ -4473,7 +4508,9 @@ function cardStock(p,sizeName){
   const s=p.sizes?.length?p.sizes.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(sizeName)):null;
   return Number(s?s.stock:p.stock)||0;
 }
+function canSeeStock(){try{return !!sessionStorage.getItem("admin_token");}catch(e){return false;}}
 function stockBadgeHtml(n){
+  if(!canSeeStock())return n<=0?`<span class="stock-badge out">Out of stock</span>`:"";
   return n<=0?`<span class="stock-badge out">Out of stock</span>`:(n<=5?`<span class="stock-badge low">Only ${n} left</span>`:"");
 }
 function refreshCardStock(id,size){
