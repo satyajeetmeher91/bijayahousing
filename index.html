@@ -437,7 +437,7 @@ body.admin-mode .langsel{display:none}
   <div class="nav">
     <div class="brand"><div class="brand-mark">BH</div><span id="brandName">BIJAYA HOUSING</span></div>
     <div class="nav-spacer"></div>
-    <div class="search" id="customerSearch"><span>⌕</span><input id="searchInput" placeholder="Search products..."></div>
+    <div class="search" id="customerSearch"><span>⌕</span><input id="searchInput" type="search" name="shop-search" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Search products..."></div>
     <select id="langSelect" class="langsel no-i18n" aria-label="Language" title="Language / भाषा / ଭାଷା" onchange="setLang(this.value)"><option value="en">EN</option><option value="hi">हिं</option><option value="or">ଓଡ଼ି</option></select>
     <a class="outline callbtn" href="tel:8114832749">☎ Raj Kishor</a>
     <button type="button" class="outline profilebtn" onclick="openCustomerProfile()">👤 Profile<span class="badge hidden" id="profileBadge">0</span></button>
@@ -2414,8 +2414,9 @@ function renderSubcategories(){
   if(!box)return;
   if(category==="All"){box.classList.add("hidden");box.innerHTML="";return;}
   const subs=[...new Set(products.filter(p=>p.active!==false&&normalizeAccessValue(p.category)===normalizeAccessValue(category)).map(p=>String(p.subcategory||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-  if(!subs.length){box.classList.add("hidden");box.innerHTML="";return;}
-  const current=window.selectedSubcategory||"All";
+  if(!subs.length){window.selectedSubcategory="All";box.classList.add("hidden");box.innerHTML="";return;}
+  let current=window.selectedSubcategory||"All";
+  if(current!=="All"&&!subs.some(x=>normalizeAccessValue(x)===normalizeAccessValue(current))){window.selectedSubcategory=current="All";}
   box.classList.remove("hidden");
   box.innerHTML=["All",...subs].map(s=>`<button type="button" class="chip ${normalizeAccessValue(current)===normalizeAccessValue(s)?"active":""}" onclick="setSubcategory(decodeURIComponent('${encodeURIComponent(s)}'))">${esc(s)}</button>`).join("");
 }
@@ -2587,10 +2588,16 @@ function addViewedProductToCart(){
 /* --- product view: multiple images --- */
 let pvImgs=[],pvImgIdx=0;
 function pvLoad(img,cands,done){
+  const tok=(img.__pvTok=(img.__pvTok||0)+1);   // a newer request makes older ones stop
+  img.src=DEFAULT_IMAGE;                         // never keep showing the previous product's picture
   let i=0;
   const next=()=>{
-    if(i>=cands.length){img.onerror=null;img.src=DEFAULT_IMAGE;return;}
-    img.onerror=next;img.onload=()=>{img.onload=null;if(done)done();};img.src=cands[i++];
+    if(img.__pvTok!==tok)return;
+    if(i>=cands.length){return;}
+    const url=cands[i++],probe=new Image();
+    probe.onload=()=>{if(img.__pvTok!==tok)return;img.src=url;if(done)done();};
+    probe.onerror=next;
+    probe.src=url;
   };
   next();
 }
@@ -2642,22 +2649,27 @@ function navProductView(dir){
 }
 (function(){
   const m=document.getElementById("productViewModal");if(!m)return;
-  let sx=0,sy=0,st=0,ok=false,onImg=false;
+  let sx=0,sy=0,ok=false,lastNav=0;
+  const go=dx=>{
+    const now=Date.now();if(now-lastNav<300)return;
+    lastNav=now;navProductView(dx<0?1:-1);   // swipe left -> next, swipe right -> previous
+  };
   m.addEventListener("touchstart",e=>{
     if(e.touches.length!==1){ok=false;return;}
-    const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now();
-    ok=!e.target.closest("input,textarea,select");
-    onImg=!!e.target.closest(".product-view-image");
+    const t=e.touches[0];sx=t.clientX;sy=t.clientY;
+    ok=!e.target.closest("input,textarea,select,.pv-thumbs");
+  },{passive:true});
+  m.addEventListener("touchmove",e=>{
+    if(!ok)return;
+    const t=e.touches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.5){ok=false;go(dx);}
   },{passive:true});
   m.addEventListener("touchend",e=>{
     if(!ok)return;ok=false;
     const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
-    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-st<800){
-      const dir=dx<0?1:-1;  // swipe left -> next, swipe right -> previous
-      if(onImg&&pvImgs.length>1&&pvImgIdx+dir>=0&&pvImgIdx+dir<pvImgs.length)pvShowImage(pvImgIdx+dir);
-      else navProductView(dir);
-    }
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(dx);
   },{passive:true});
+  m.addEventListener("touchcancel",()=>{ok=false;},{passive:true});
   document.addEventListener("keydown",e=>{
     if(!m.classList.contains("show")||e.target.closest?.("input,textarea,select"))return;
     if(e.key==="ArrowRight")navProductView(1);
@@ -4275,7 +4287,14 @@ async function loadAdminOrders(){
   }catch(e){console.error("Admin orders error:",e);toast("Could not load orders: "+e.message);}
 }
 
-if($("searchInput"))$("searchInput").addEventListener("input",()=>{if(customer())renderProducts();});if($("accessType"))$("accessType").addEventListener("change",updateAccessBoxes);
+(function(){
+  const si=$("searchInput");if(!si)return;
+  let touched=false;window.__searchTouched=()=>touched;
+  ["keydown","paste","focus","touchstart","mousedown"].forEach(ev=>si.addEventListener(ev,()=>{touched=true;},{passive:true}));
+  si.addEventListener("input",()=>{if(customer())renderProducts();});
+  // browsers sometimes auto-fill this box a few seconds after load; wipe anything the customer did not type
+  [300,1500,4000,8000].forEach(ms=>setTimeout(()=>{if(!touched&&si.value){si.value="";if(customer())renderProducts();}},ms));
+})();if($("accessType"))$("accessType").addEventListener("change",updateAccessBoxes);
 
 const __canonicalAppUrl=location.origin+location.pathname;
 let __appBaselineHash=null;
@@ -4541,7 +4560,7 @@ function populateBrandFilter(){
   if(brands.includes(current))sel.value=current;
 }
 function renderProducts(){
-  const q=$("searchInput")?.value.trim().toLowerCase()||"";
+  const q=(window.__searchTouched&&window.__searchTouched()?($("searchInput")?.value||""):"").trim().toLowerCase();
   const selectedSub=window.selectedSubcategory||"All";
   const brand=$("brandSelect")?.value||"All";
   const sort=$("sortSelect")?.value||"default";
@@ -4561,8 +4580,14 @@ function renderProducts(){
   const shown=list.slice(0,productLimit);
   $("productGrid").innerHTML=list.length
     ?shown.map(productCard).join("")+(list.length>shown.length?`<div class="more-wrap"><button type="button" class="outline" onclick="showMoreProducts()">Show more (${list.length-shown.length})</button></div>`:"")
-    :`<div class="empty"><h3>No products found</h3><p>No active products are available in this selection.</p></div>`;
+    :`<div class="empty"><h3>No products found</h3><p>No active products are available in this selection.</p>${(q||brand!=="All"||selectedSub!=="All")?`<p><button type="button" class="outline" onclick="clearProductFilters()">Clear search &amp; filters</button></p>`:""}</div>`;
   scheduleProductImages();
+}
+function clearProductFilters(){
+  const si=$("searchInput");if(si)si.value="";
+  const bs=$("brandSelect");if(bs)bs.value="All";
+  window.selectedSubcategory="All";
+  renderSubcategories();renderProducts();
 }
 function showMoreProducts(){productLimit+=PAGE_SIZE;renderProducts();}
 
