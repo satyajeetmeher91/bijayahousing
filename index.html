@@ -162,6 +162,9 @@ html,body{max-width:100%;overflow-x:hidden}
 .pv-thumb{flex:0 0 auto;width:52px;height:52px;padding:0;border:2px solid rgba(255,255,255,.9);border-radius:10px;background:var(--surface);overflow:hidden;opacity:.85;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .pv-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .pv-thumb.active{border-color:var(--accent);opacity:1}
+#exitHint{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 28px);transform:translate(-50%,16px);z-index:99999;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 32px);padding:11px 20px;border-radius:999px;background:rgba(24,28,33,.94);color:#fff;font:600 13.5px/1.2 inherit;letter-spacing:.2px;box-shadow:0 8px 24px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.08) inset;opacity:0;pointer-events:none;transition:opacity .22s ease,transform .22s ease;white-space:nowrap}
+#exitHint.show{opacity:1;transform:translate(-50%,0)}
+#exitHint .exit-ico{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.16);font-size:13px}
 .pv-nav{display:flex;align-items:center;gap:8px}
 .pv-pos{font-size:12px;color:var(--muted);font-weight:800;margin-left:8px}
 .pv-hint{display:none;font-size:11px;color:var(--muted);text-align:center;padding:6px 0 0}
@@ -3572,7 +3575,67 @@ function setAppView(view,push=true){
 function showLogin(){closeAllOverlays();setAppView("admin",true);}
 function showCustomer(){closeAllOverlays();setAppView("customer",true);}
 function goBackToStore(){closeAllOverlays();setAppView("customer",true);}
-window.addEventListener("popstate",()=>{setAppView(location.hash==="#admin"?"admin":"customer",false);});
+window.addEventListener("popstate",()=>{if(window.__ovPop&&window.__ovPop())return;setAppView(location.hash==="#admin"?"admin":"customer",false);});
+
+/* --- Back button / back swipe closes the open popup (product page, cart, forms) instead of leaving the app --- */
+(function(){
+  let pushed=false,skipPop=false,guardArmed=false,exitTimer=0;
+  const touchDevice=()=>{try{return !!(window.matchMedia&&matchMedia("(pointer: coarse)").matches);}catch(e){return false;}};
+  const overlayOpen=()=>!!document.querySelector(".modal.show,#cartDrawer.show");
+  // "press back again to exit": keep one spare history entry on the home screen
+  function armGuard(){
+    if(guardArmed||exitTimer||!touchDevice()||overlayOpen()||appView!=="customer")return;
+    try{history.pushState({guard:1},"");guardArmed=true;}catch(e){}
+  }
+  function showExitHint(){
+    let h=document.getElementById("exitHint");
+    if(!h){
+      h=document.createElement("div");h.id="exitHint";h.className="no-i18n";h.setAttribute("role","status");h.setAttribute("aria-live","polite");
+      h.innerHTML='<span class="exit-ico" aria-hidden="true">\u21A9</span><span>Swipe back again to exit</span>';
+      document.body.appendChild(h);
+    }
+    void h.offsetWidth;h.classList.add("show");
+  }
+  function hideExitHint(){document.getElementById("exitHint")?.classList.remove("show");}
+  window.__armExitGuard=armGuard;
+  function closeTopOverlay(){
+    if(document.querySelector(".modal.show")){
+      const pv=document.getElementById("productViewModal");
+      const others=[...document.querySelectorAll(".modal.show")].filter(m=>m!==pv);
+      if(pv&&pv.classList.contains("show")&&!others.some(m=>m.classList.contains("over")))closeProductView();
+      else closeModal();
+    }else if(document.querySelector("#cartDrawer.show"))closeCart();
+  }
+  window.__ovPop=function(){
+    if(skipPop){skipPop=false;return true;}
+    if(overlayOpen()){
+      pushed=false;                       // this back press used up our history entry
+      closeTopOverlay();
+      if(overlayOpen()){history.pushState({ov:1},"");pushed=true;}   // another popup is still open underneath
+      return true;
+    }
+    if(guardArmed&&appView==="customer"){
+      // back pressed on the home screen: warn first; a second back inside the window really exits
+      guardArmed=false;
+      showExitHint();
+      clearTimeout(exitTimer);
+      exitTimer=setTimeout(()=>{exitTimer=0;hideExitHint();armGuard();},2500);
+      return true;
+    }
+    return false;
+  };
+  new MutationObserver(()=>{
+    const open=overlayOpen();
+    if(open&&!pushed){try{history.pushState({ov:1},"");pushed=true;}catch(e){}}
+    else if(!open&&pushed){
+      pushed=false;
+      if(history.state&&history.state.ov){skipPop=true;history.back();}   // popup closed with its own button: remove our entry
+      setTimeout(armGuard,400);
+    }
+  }).observe(document.body,{attributes:true,attributeFilter:["class"],subtree:true});
+  setTimeout(armGuard,1500);
+  window.addEventListener("pageshow",()=>setTimeout(armGuard,500));
+})();
 
 function currentAdminUser(){try{return JSON.parse(sessionStorage.getItem("admin_user")||"{}");}catch(e){return {};}}
 function isSuperAdminUI(){return !/sub|staff|limited|helper|employee|counter/i.test(String(currentAdminUser().role||""));}
