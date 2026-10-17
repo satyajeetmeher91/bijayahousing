@@ -2298,6 +2298,9 @@ function applyLoadedProducts(list,access,isAdmin=false){
     localStorage.setItem("bijaya_customer",JSON.stringify(c));
     loaded=filterProductsForCustomer(loaded,c);
   }
+  const _seen={},_dups=[];
+  loaded.forEach(x=>{const k=String(x.id).toLowerCase();_seen[k]=(_seen[k]||0)+1;x.uid=_seen[k]===1?x.id:x.id+"~"+_seen[k];if(_seen[k]===2)_dups.push(x.id);});
+  if(_dups.length){console.warn("Duplicate Product IDs in the sheet:",_dups);if(isAdmin)setTimeout(()=>toast("Duplicate Product IDs found: "+_dups.slice(0,5).join(", ")+" - make each ID unique"),1500);}
   products=loaded;
   renderCategories();
   populateBrandFilter();
@@ -2495,11 +2498,15 @@ let viewedProductId=null;
 let viewedProductSize="";
 let viewedProductQty=1;
 
+function findViewedProduct(){
+  const w=String(viewedProductId||"").trim().toLowerCase();
+  return products.find(x=>String(x.uid||x.id||"").trim().toLowerCase()===w)||products.find(x=>String(x.id||"").trim().toLowerCase()===w);
+}
 function openProductView(id){
   const wanted=String(id||"").trim().toLowerCase();
-  const p=products.find(x=>String(x.id||"").trim().toLowerCase()===wanted);
+  const p=products.find(x=>String(x.uid||x.id||"").trim().toLowerCase()===wanted)||products.find(x=>String(x.id||"").trim().toLowerCase()===wanted);
   if(!p)return;
-  viewedProductId=id;
+  viewedProductId=p.uid||p.id;
   viewedProductQty=1;
   viewedProductSize=p.sizes?.[0]?.name||"";
 
@@ -2533,7 +2540,7 @@ function selectViewedSize(size,btn){
 }
 
 function updateProductViewPrice(){
-  const p=products.find(x=>x.id===viewedProductId);
+  const p=findViewedProduct();
   if(!p)return;
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(viewedProductSize));
   const price=s?s.price:p.price;
@@ -2545,7 +2552,7 @@ function updateProductViewPrice(){
 }
 
 function changeViewQty(delta){
-  const p=products.find(x=>x.id===viewedProductId);
+  const p=findViewedProduct();
   if(!p)return;
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(viewedProductSize));
   const stock=Number(s?s.stock:p.stock)||0;
@@ -2556,7 +2563,7 @@ function changeViewQty(delta){
 }
 
 function setViewQty(value){
-  const p=products.find(x=>x.id===viewedProductId);
+  const p=findViewedProduct();
   if(!p)return;
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(viewedProductSize));
   const stock=Number(s?s.stock:p.stock)||0;
@@ -2570,7 +2577,7 @@ function setViewQty(value){
 
 function addViewedProductToCart(){
   if(!customer()){closeProductView();showCustomerLogin();return;}
-  const p=products.find(x=>x.id===viewedProductId);
+  const p=findViewedProduct();
   if(!p)return;
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(viewedProductSize));
   const price=s?s.price:p.price;
@@ -2628,7 +2635,7 @@ function pvShowImage(i){
 function pvList(){
   const cur=normalizeAccessValue(viewedProductId);
   let l=Array.isArray(window.__viewList)?window.__viewList:[];
-  if(!l.some(x=>normalizeAccessValue(x)===cur))l=products.filter(p=>p.active!==false).map(p=>p.id);
+  if(!l.some(x=>normalizeAccessValue(x)===cur))l=products.filter(p=>p.active!==false).map(p=>p.uid||p.id);
   return l;
 }
 function pvIndex(l){const cur=normalizeAccessValue(viewedProductId);return l.findIndex(x=>normalizeAccessValue(x)===cur);}
@@ -4545,7 +4552,7 @@ function productCard(p){
   const first=p.sizes?.[0],price=first?first.price:p.price;
   const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);
   const dk=productDomKey(p.id),stock=cardStock(p,first?first.name:"");
-  const pid=`decodeProductArg('${safeProductArg(p.id)}')`;
+  const pid=`decodeProductArg('${safeProductArg(p.uid||p.id)}')`;
   return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView(${pid})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView(${pid})}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" width="300" height="300" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div><div class="stock-slot" id="stock-${dk}">${stockBadgeHtml(stock)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize(decodeProductArg('${safeProductArg(p.id)}'),decodeProductArg('${safeProductArg(s.name)}'),this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" id="add-${dk}" ${stock<=0?"disabled":""} onclick="event.stopPropagation();addToCart(${pid})">${stock<=0?"Out of Stock":"Add to Cart"}</button></div></div></article>`;
 }
 function productMinPrice(p){
@@ -4572,7 +4579,7 @@ function renderProducts(){
   if(sort==="priceAsc")list=[...list].sort((a,b)=>productMinPrice(a)-productMinPrice(b));
   else if(sort==="priceDesc")list=[...list].sort((a,b)=>productMinPrice(b)-productMinPrice(a));
   else if(sort==="name")list=[...list].sort((a,b)=>a.name.localeCompare(b.name));
-  window.__viewList=list.map(p=>p.id);
+  window.__viewList=list.map(p=>p.uid||p.id);
   const sig=category+"|"+selectedSub+"|"+q+"|"+brand+"|"+sort;
   if(sig!==lastListSig){lastListSig=sig;productLimit=PAGE_SIZE;}
   $("productTitle").textContent=category==="All"?"All Products":(selectedSub!=="All"?`${category} • ${selectedSub}`:category);
