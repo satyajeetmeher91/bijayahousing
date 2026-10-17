@@ -151,10 +151,19 @@ html,body{max-width:100%;overflow-x:hidden}
 @media(max-width:720px){.orders-toolbar{align-items:stretch}.order-filter-wrap{width:100%;min-width:0}.order-filter-wrap select{width:100%}.orders-table{min-width:980px}.order-summary-bar{overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}.order-summary-pill{flex:0 0 auto}}
 
 /* Product quick-view / full-window popup */
-.product-view-modal{width:min(980px,calc(100% - 28px));padding:0;overflow:hidden}
-.product-view-body{display:grid;grid-template-columns:1.05fr .95fr;min-height:560px}
-.product-view-image{background:var(--surface2);display:flex;align-items:center;justify-content:center;min-height:560px}
-.product-view-image img{width:100%;height:100%;max-height:620px;object-fit:contain;display:block}
+.product-view-modal{width:100%;height:100dvh;max-height:100dvh;left:0;top:0;transform:none;border-radius:0;padding:0;overflow:hidden}
+.product-view-modal.show{display:flex;flex-direction:column;animation:productMobileIn .2s ease}
+.product-view-modal .modal-head{flex:0 0 auto;border-radius:0;padding:12px 16px}
+.product-view-body{display:grid;grid-template-columns:1.05fr .95fr;flex:1 1 auto;min-height:0;touch-action:pan-y}
+.product-view-image{background:var(--surface2);display:flex;align-items:center;justify-content:center;min-height:0;height:100%;overflow:hidden}
+.product-view-image img{width:100%;height:100%;max-height:100%;object-fit:contain;display:block}
+.pv-nav{display:flex;align-items:center;gap:8px}
+.pv-pos{font-size:12px;color:var(--muted);font-weight:800;margin-left:8px}
+.pv-hint{display:none;font-size:11px;color:var(--muted);text-align:center;padding:6px 0 0}
+@keyframes pvInRight{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pvInLeft{from{opacity:0;transform:translateX(-60px)}to{opacity:1;transform:translateX(0)}}
+.product-view-body.pv-next{animation:pvInRight .22s ease}
+.product-view-body.pv-prev{animation:pvInLeft .22s ease}
 .product-view-info{padding:30px;display:flex;flex-direction:column;overflow:auto}
 .product-view-category{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .product-view-info h2{font-size:32px;line-height:1.1;margin:8px 0 8px}
@@ -177,7 +186,8 @@ html,body{max-width:100%;overflow-x:hidden}
 @media(max-width:720px){
   .product-view-modal{width:100%;height:100dvh;max-height:100dvh;left:0;top:0;transform:none;border-radius:0}
   .product-view-modal.show{animation:productMobileIn .2s ease}
-  .product-view-body{display:flex;flex-direction:column;min-height:0;height:calc(100dvh - 72px)}
+  .product-view-body{display:flex;flex-direction:column;min-height:0}
+  .pv-hint{display:block}
   .product-view-image{height:43dvh;min-height:230px;flex:0 0 43dvh}
   .product-view-image img{max-height:43dvh}
   .product-view-info{padding:20px 18px 25px;overflow:auto}
@@ -673,8 +683,12 @@ body.admin-mode .langsel{display:none}
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
 <div class="modal product-view-modal" id="productViewModal">
   <div class="modal-head">
-    <div><strong>Product Details</strong></div>
-    <button type="button" class="iconbtn" onclick="closeProductView()" aria-label="Close product details">×</button>
+    <div><strong>Product Details</strong><span class="pv-pos" id="viewProductPos"></span></div>
+    <div class="pv-nav">
+      <button type="button" class="iconbtn" id="pvPrevBtn" onclick="navProductView(-1)" aria-label="Previous product">‹</button>
+      <button type="button" class="iconbtn" id="pvNextBtn" onclick="navProductView(1)" aria-label="Next product">›</button>
+      <button type="button" class="iconbtn" onclick="closeProductView()" aria-label="Close product details">×</button>
+    </div>
   </div>
   <div class="product-view-body">
     <div class="product-view-image"><img id="viewProductImage" src="" alt="Product"></div>
@@ -2501,6 +2515,8 @@ function openProductView(id){
   $("viewProductSizes").innerHTML=hasSizes?p.sizes.map(s=>`<button type="button" class="product-view-size ${s.name===viewedProductSize?"selected":""}" onclick="selectViewedSize('${esc(s.name)}',this)">${esc(s.name)}</button>`).join(""):"";
 
   updateProductViewPrice();
+  updateProductViewPos();
+  const _info=document.querySelector("#productViewModal .product-view-info");if(_info)_info.scrollTop=0;
   $("productViewModal").classList.add("show");
   $("modalBackdrop").classList.add("show");
   document.body.style.overflow="hidden";
@@ -2567,6 +2583,51 @@ function addViewedProductToCart(){
   else cart.push({key,id:p.id,size:viewedProductSize,price,qty:viewedProductQty});
   saveLocal();updateCart();closeProductView();toast("Added to cart");
 }
+
+/* --- product view: next / previous (buttons, swipe, arrow keys) --- */
+function pvList(){
+  const cur=normalizeAccessValue(viewedProductId);
+  let l=Array.isArray(window.__viewList)?window.__viewList:[];
+  if(!l.some(x=>normalizeAccessValue(x)===cur))l=products.filter(p=>p.active!==false).map(p=>p.id);
+  return l;
+}
+function pvIndex(l){const cur=normalizeAccessValue(viewedProductId);return l.findIndex(x=>normalizeAccessValue(x)===cur);}
+function updateProductViewPos(){
+  const l=pvList(),i=pvIndex(l);
+  const el=$("viewProductPos");if(el)el.textContent=i>=0&&l.length>1?`${i+1} / ${l.length}`:"";
+  const pb=$("pvPrevBtn"),nb=$("pvNextBtn");
+  if(pb)pb.disabled=i<=0;if(nb)nb.disabled=i<0||i>=l.length-1;
+  [pb,nb].forEach(b=>{if(b)b.style.opacity=b.disabled?".35":"1";});
+}
+function navProductView(dir){
+  if(!$("productViewModal")?.classList.contains("show"))return;
+  const l=pvList(),i=pvIndex(l),n=i+dir;
+  if(i<0||n<0||n>=l.length)return;
+  openProductView(l[n]);
+  const b=document.querySelector("#productViewModal .product-view-body");
+  if(b){b.classList.remove("pv-next","pv-prev");void b.offsetWidth;b.classList.add(dir>0?"pv-next":"pv-prev");}
+}
+(function(){
+  const m=document.getElementById("productViewModal");if(!m)return;
+  let sx=0,sy=0,st=0,ok=false;
+  m.addEventListener("touchstart",e=>{
+    if(e.touches.length!==1){ok=false;return;}
+    const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now();
+    ok=!e.target.closest("input,textarea,select");
+  },{passive:true});
+  m.addEventListener("touchend",e=>{
+    if(!ok)return;ok=false;
+    const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5&&Date.now()-st<800){
+      navProductView(dx<0?1:-1);  // swipe left -> next, swipe right -> previous
+    }
+  },{passive:true});
+  document.addEventListener("keydown",e=>{
+    if(!m.classList.contains("show")||e.target.closest?.("input,textarea,select"))return;
+    if(e.key==="ArrowRight")navProductView(1);
+    else if(e.key==="ArrowLeft")navProductView(-1);
+  });
+})();
 
 function closeProductView(){
   $("productViewModal")?.classList.remove("show");
@@ -4454,6 +4515,7 @@ function renderProducts(){
   if(sort==="priceAsc")list=[...list].sort((a,b)=>productMinPrice(a)-productMinPrice(b));
   else if(sort==="priceDesc")list=[...list].sort((a,b)=>productMinPrice(b)-productMinPrice(a));
   else if(sort==="name")list=[...list].sort((a,b)=>a.name.localeCompare(b.name));
+  window.__viewList=list.map(p=>p.id);
   const sig=category+"|"+selectedSub+"|"+q+"|"+brand+"|"+sort;
   if(sig!==lastListSig){lastListSig=sig;productLimit=PAGE_SIZE;}
   $("productTitle").textContent=category==="All"?"All Products":(selectedSub!=="All"?`${category} • ${selectedSub}`:category);
