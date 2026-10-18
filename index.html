@@ -165,6 +165,18 @@ html,body{max-width:100%;overflow-x:hidden}
 #exitHint{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 28px);transform:translate(-50%,16px);z-index:99999;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 32px);padding:11px 20px;border-radius:999px;background:rgba(24,28,33,.94);color:#fff;font:600 13.5px/1.2 inherit;letter-spacing:.2px;box-shadow:0 8px 24px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.08) inset;opacity:0;pointer-events:none;transition:opacity .22s ease,transform .22s ease;white-space:nowrap}
 #exitHint.show{opacity:1;transform:translate(-50%,0)}
 #exitHint .exit-ico{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.16);font-size:13px}
+.min-order-note{margin:0 0 12px;padding:11px 13px;border-radius:12px;background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.55);font-size:13px}
+.min-order-note .mo-text{display:flex;flex-direction:column;gap:2px}
+.min-order-note .mo-text span{opacity:.85}
+.min-order-note .mo-bar{margin-top:9px;height:6px;border-radius:99px;background:rgba(245,158,11,.25);overflow:hidden}
+.min-order-note .mo-bar i{display:block;height:100%;background:#f59e0b;border-radius:99px;transition:width .3s ease}
+.min-order-note.ok{background:rgba(22,163,74,.12);border-color:rgba(22,163,74,.5)}
+.min-order-note.shake{animation:moShake .45s ease}
+@keyframes moShake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+#cartCheckoutBtn.is-short{opacity:.65}
+.moq-chip{display:inline-block;margin:2px 0 6px;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:700;background:rgba(245,158,11,.16);border:1px solid rgba(245,158,11,.5)}
+.product-view-moq{display:inline-block;margin:0 0 8px;padding:5px 12px;border-radius:99px;font-size:13px;font-weight:700;background:rgba(245,158,11,.16);border:1px solid rgba(245,158,11,.5)}
+.cart-meta.moq-warn{color:#d97706;font-weight:700}
 .pv-nav{display:flex;align-items:center;gap:8px}
 .pv-pos{font-size:12px;color:var(--muted);font-weight:800;margin-left:8px}
 .pv-hint{display:none;font-size:11px;color:var(--muted);text-align:center;padding:6px 0 0}
@@ -686,7 +698,7 @@ body.admin-mode .langsel{display:none}
 <aside class="drawer" id="cartDrawer">
   <div class="drawer-head"><h2 style="margin:0">Your Cart</h2><button type="button" class="iconbtn" onclick="closeCart()">×</button></div>
   <div class="drawer-body" id="cartBody"></div>
-  <div class="drawer-foot"><div class="totalrow"><span>Total</span><span id="cartTotal">₹0</span></div><button type="button" class="primary" style="width:100%" onclick="openCheckout()">Proceed to Checkout →</button></div>
+  <div class="drawer-foot"><div class="min-order-note hidden" id="minOrderNote" role="status"></div><div class="totalrow"><span>Total</span><span id="cartTotal">₹0</span></div><button type="button" class="primary" id="cartCheckoutBtn" style="width:100%" onclick="openCheckout()">Proceed to Checkout →</button></div>
 </aside>
 
 <div class="modal-backdrop" id="modalBackdrop" onclick="closeModal()"></div>
@@ -711,9 +723,10 @@ body.admin-mode .langsel{display:none}
       <div class="product-view-sizes" id="viewProductSizes"></div>
       <div class="product-view-stock" id="viewProductStock"></div>
       <div class="product-view-label">Quantity</div>
+      <div class="product-view-moq hidden" id="viewMinQtyNote"></div>
       <div class="product-view-qty">
         <button type="button" onclick="changeViewQty(-1)" aria-label="Decrease quantity">−</button>
-        <input id="viewProductQty" class="qty-input" type="number" min="1" inputmode="numeric" value="1" aria-label="Quantity" oninput="setViewQty(this.value)" onchange="setViewQty(this.value)">
+        <input id="viewProductQty" class="qty-input" type="number" min="1" inputmode="numeric" value="1" aria-label="Quantity" oninput="setViewQty(this.value)" onchange="setViewQty(this.value,true)">
         <button type="button" onclick="changeViewQty(1)" aria-label="Increase quantity">+</button>
       </div>
       <div class="product-view-actions">
@@ -777,6 +790,7 @@ body.admin-mode .langsel{display:none}
       <div class="field"><label>Stock</label><input id="pStock" type="number" min="0" value="0"></div>
       <div class="field"><label>Active</label><select id="pActive"><option value="true">Yes</option><option value="false">No</option></select></div>
       <div class="field"><label>Brand</label><input id="pBrand" placeholder="Optional"></div>
+      <div class="field"><label>Minimum order quantity</label><input id="pMinQty" type="number" min="1" step="1" placeholder="1 = no minimum"></div>
       <div class="field"><label>Allow special rates/discounts</label><select id="pDiscountAllowed"><option value="true">Yes</option><option value="false">No</option></select></div>
       <div class="field super-admin-only hidden"><label>Cost Price (₹)</label><input id="pCost" type="number" min="0" step=".01"></div>
       <div class="field super-admin-only hidden"><label>Low-stock alert level</label><input id="pReorderLevel" type="number" min="0" step="1" placeholder="shop default"></div>
@@ -1361,6 +1375,38 @@ const money=n=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",ma
 const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 function saveLocal(){localStorage.setItem("shop_cart",JSON.stringify(cart));localStorage.setItem("shop_orders",JSON.stringify(orders));}
 
+function moqOf(p){return Math.max(1,Math.floor(Number(p&&p.minQty))||1);}
+function moqViolations(){
+  return cart.map(x=>{const p=products.find(y=>y.id===x.id),m=moqOf(p);return p&&(Number(x.qty)||0)<m?{name:p.name+(x.size?` (${x.size})`:""),moq:m}:null;}).filter(Boolean);
+}
+function moqAlert(){
+  const v=moqViolations();if(!v.length)return false;
+  toast(`Minimum order for ${v[0].name} is ${v[0].moq}. Please increase the quantity.`,4500);
+  const n=$("minOrderNote");if(n){n.classList.remove("shake");void n.offsetWidth;n.classList.add("shake");}
+  return true;
+}
+let shopMinOrder=0;
+function cartSubtotal(){return cart.reduce((a,x)=>a+(Number(x.price)||0)*(Number(x.qty)||0),0);}
+function minOrderShortfall(){const t=cartSubtotal();return shopMinOrder>0&&cart.length&&t<shopMinOrder?Math.ceil((shopMinOrder-t)*100)/100:0;}
+function minOrderAlert(){
+  const short=minOrderShortfall();if(!short)return false;
+  toast(`Minimum order is ${money(shopMinOrder)}. Add ${money(short)} more to continue.`,4200);
+  const n=$("minOrderNote");if(n){n.classList.remove("shake");void n.offsetWidth;n.classList.add("shake");}
+  return true;
+}
+function updateMinOrderNote(){
+  const n=$("minOrderNote"),btn=$("cartCheckoutBtn");if(!n)return;
+  const mv=moqViolations();
+  if(mv.length){n.classList.remove("hidden","ok");n.innerHTML=`<div class="mo-text"><b>Minimum quantity not met</b><span>${mv.map(v=>esc(v.name)+" \u2013 minimum "+v.moq).join("<br>")}</span></div>`;btn?.classList.add("is-short");return;}
+  const total=cartSubtotal(),short=minOrderShortfall();
+  if(!(shopMinOrder>0)||!cart.length){n.classList.add("hidden");n.innerHTML="";btn?.classList.remove("is-short");return;}
+  const pct=Math.max(0,Math.min(100,Math.round(total/shopMinOrder*100)));
+  n.classList.remove("hidden");n.classList.toggle("ok",!short);
+  n.innerHTML=short
+    ?`<div class="mo-text"><b>Minimum order ${esc(money(shopMinOrder))}</b><span>Add ${esc(money(short))} more to place your order.</span></div><div class="mo-bar"><i style="width:${pct}%"></i></div>`
+    :`<div class="mo-text"><b>\u2713 Minimum order reached</b><span>You can proceed to checkout.</span></div>`;
+  btn?.classList.toggle("is-short",!!short);
+}
 function updateCart(){
   const badge=$("cartBadge");
   if(badge)badge.textContent=String(cart.reduce((a,x)=>a+(Number(x.qty)||0),0));
@@ -1374,7 +1420,7 @@ function updateCart(){
         <img src="${esc(img)}" alt="${esc(p?.name||"Product")}" onerror="this.onerror=null;this.src='${DEFAULT_IMAGE}'">
         <div>
           <h4>${esc(p?.name||"Product")}</h4>
-          <div class="cart-meta">${x.size?`Size: ${esc(x.size)} • `:""}${money(x.price)} each</div>
+          <div class="cart-meta">${x.size?`Size: ${esc(x.size)} • `:""}${money(x.price)} each</div>${moqOf(p)>1?`<div class="cart-meta${(Number(x.qty)||0)<moqOf(p)?" moq-warn":""}">Minimum order: ${moqOf(p)}</div>`:""}
           <div class="qty">
             <button type="button" onclick="changeQty(decodeProductArg('${safeKey}'),-1)" aria-label="Decrease quantity">−</button>
             <input class="cart-qty-input" type="text" inputmode="numeric" value="${Number(x.qty)||0}" readonly aria-label="Quantity">
@@ -1387,6 +1433,7 @@ function updateCart(){
   }
   const totalEl=$("cartTotal");
   if(totalEl)totalEl.textContent=money(cart.reduce((a,x)=>a+(Number(x.price)||0)*(Number(x.qty)||0),0));
+  updateMinOrderNote();
 }
 
 function safeProductArg(value){return encodeURIComponent(String(value ?? "")).replace(/'/g,"%27");}
@@ -1738,7 +1785,9 @@ function calcAddToCart(id,qty,preferredSize){
   const s=p.sizes?.find(x=>x.name===size);
   const price=s?s.price:p.price;
   const stock=Number(s?s.stock:p.stock)||0;
-  const need=Math.min(qty,stock);
+  const moq=moqOf(p);
+  if(stock<moq){toast("This item is out of stock");return;}
+  const need=Math.min(Math.max(qty,moq),stock);
   if(need<=0){toast("This item is out of stock");return;}
   if(need<qty)toast(canSeeStock()?`Only ${need} in stock — added ${need}`:`Added ${need} — that's all we can supply right now`);
   const key=p.id+"|"+size;
@@ -2243,6 +2292,7 @@ function normalizeProduct(p){
     brand:String(p?.brand??p?.Brand??"").trim(),
     cost:p?.cost!==undefined?Number(p.cost)||0:undefined,
     reorderLevel:p?.reorderLevel,
+    minQty:Math.max(1,Math.floor(Number(p?.minQty??p?.["Min Order Qty"]??1))||1),
     discountAllowed:p?.discountAllowed,
     sizes
   };
@@ -2510,7 +2560,7 @@ function openProductView(id){
   const p=products.find(x=>String(x.uid||x.id||"").trim().toLowerCase()===wanted)||products.find(x=>String(x.id||"").trim().toLowerCase()===wanted);
   if(!p)return;
   viewedProductId=p.uid||p.id;
-  viewedProductQty=1;
+  viewedProductQty=moqOf(p);
   viewedProductSize=p.sizes?.[0]?.name||"";
 
   pvSetupGallery(p);
@@ -2518,7 +2568,7 @@ function openProductView(id){
   $("viewProductName").textContent=p.name||"Product";
   $("viewProductCode").textContent="Product Code: "+(p.id||"-");
   $("viewProductDescription").textContent=p.description||"No description available.";
-  $("viewProductQty").value="1";
+  $("viewProductQty").value=String(viewedProductQty);
 
   const hasSizes=Array.isArray(p.sizes)&&p.sizes.length;
   $("viewSizeLabel").classList.toggle("hidden",!hasSizes);
@@ -2537,8 +2587,8 @@ function selectViewedSize(size,btn){
   viewedProductSize=size;
   document.querySelectorAll("#viewProductSizes .product-view-size").forEach(b=>b.classList.remove("selected"));
   btn.classList.add("selected");
-  viewedProductQty=1;
-  $("viewProductQty").value="1";
+  viewedProductQty=moqOf(findViewedProduct());
+  $("viewProductQty").value=String(viewedProductQty);
   updateProductViewPrice();
 }
 
@@ -2549,9 +2599,11 @@ function updateProductViewPrice(){
   const price=s?s.price:p.price;
   const stock=s?s.stock:p.stock;
   $("viewProductPrice").textContent=money(price);
-  $("viewProductStock").textContent=stock>0?(canSeeStock()?`${stock} available`:""):"Out of stock";
+  const moq=moqOf(p),ok=stock>0&&stock>=moq;
+  $("viewProductStock").textContent=ok?(canSeeStock()?`${stock} available`:""):"Out of stock";
+  const mn=$("viewMinQtyNote");if(mn){mn.textContent=moq>1?`Minimum order: ${moq}`:"";mn.classList.toggle("hidden",moq<=1);}
   const btn=$("viewAddToCartBtn");
-  if(btn){btn.disabled=stock<=0;btn.textContent=stock>0?"Add to Cart":"Out of Stock";}
+  if(btn){btn.disabled=!ok;btn.textContent=ok?"Add to Cart":"Out of Stock";}
 }
 
 function changeViewQty(delta){
@@ -2559,20 +2611,24 @@ function changeViewQty(delta){
   if(!p)return;
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(viewedProductSize));
   const stock=Number(s?s.stock:p.stock)||0;
-  const next=Math.max(1,Math.min(stock||1,viewedProductQty+delta));
+  const moq=moqOf(p);
+  const next=Math.max(moq,Math.min(stock||moq,viewedProductQty+delta));
+  if(delta<0&&next===viewedProductQty&&moq>1)toast(`Minimum order for this item is ${moq}`);
   if(delta>0&&next===viewedProductQty&&stock>0)toast(canSeeStock()?"Maximum available stock reached":"Sorry, you can't add more of this item right now");
   viewedProductQty=next;
   $("viewProductQty").value=String(viewedProductQty);
 }
 
-function setViewQty(value){
+function setViewQty(value,final){
   const p=findViewedProduct();
   if(!p)return;
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(viewedProductSize));
   const stock=Number(s?s.stock:p.stock)||0;
   let n=parseInt(String(value).replace(/\D/g,''),10);
   if(!Number.isFinite(n)||n<1)n=1;
+  const moq=moqOf(p);
   if(stock>0)n=Math.min(n,stock);
+  if(final&&n<moq){n=moq;toast(`Minimum order for this item is ${moq}`);}
   viewedProductQty=n;
   const input=$("viewProductQty");
   if(input && String(input.value)!==String(n)) input.value=String(n);
@@ -2585,11 +2641,13 @@ function addViewedProductToCart(){
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(viewedProductSize));
   const price=s?s.price:p.price;
   const stock=Number(s?s.stock:p.stock)||0;
-  if(stock<=0){toast("This item is out of stock");return;}
+  const moq=moqOf(p);
+  if(stock<=0||stock<moq){toast("This item is out of stock");return;}
   const key=p.id+"|"+viewedProductSize;
   const existing=cart.find(i=>i.key===key);
   const current=existing?existing.qty:0;
   if(current+viewedProductQty>stock){toast(canSeeStock()?"Maximum available stock reached":"Sorry, you can't add more of this item right now");return;}
+  if(current+viewedProductQty<moq){toast(`Minimum order for this item is ${moq}. Please increase the quantity.`,4000);viewedProductQty=moq-current;$("viewProductQty").value=String(viewedProductQty);return;}
   if(existing)existing.qty+=viewedProductQty;
   else cart.push({key,id:p.id,size:viewedProductSize,price,qty:viewedProductQty});
   saveLocal();updateCart();closeProductView();toast("Added to cart");
@@ -2712,27 +2770,36 @@ function getSelectedSize(id){
 
 function addToCart(id){
   if(!customer()){showCustomerLogin();return;}
-  const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));
+  const w=normalizeAccessValue(id);
+  const p=products.find(x=>normalizeAccessValue(x.uid||x.id)===w)||products.find(x=>normalizeAccessValue(x.id)===w);
   if(!p)return;
-  const size=getSelectedSize(id);
+  const size=getSelectedSize(p.id);
   const s=p.sizes?.find(x=>normalizeAccessValue(x.name)===normalizeAccessValue(size));
   const price=s?s.price:p.price;
   const stock=Number(s?s.stock:p.stock)||0;
-  if(stock<=0){toast("This item is out of stock");return;}
+  const moq=moqOf(p);
+  if(stock<=0||stock<moq){toast("This item is out of stock");return;}
   const key=p.id+"|"+size;
   const existing=cart.find(i=>i.key===key);
   const current=existing?Number(existing.qty)||0:0;
-  if(current+1>stock){toast(canSeeStock()?"Maximum available stock reached":"Sorry, you can't add more of this item right now");return;}
-  if(existing)existing.qty+=1;
-  else cart.push({key,id:p.id,size,price,qty:1});
-  saveLocal();updateCart();toast("Added to cart");
+  const add=existing?1:moq;
+  if(current+add>stock){toast(canSeeStock()?"Maximum available stock reached":"Sorry, you can't add more of this item right now");return;}
+  if(existing)existing.qty+=add;
+  else cart.push({key,id:p.id,size,price,qty:add});
+  saveLocal();updateCart();toast(add>1?`Added ${add} (minimum order for this item)`:"Added to cart");
 }
 
-function changeQty(key,delta){const x=cart.find(i=>i.key===key),p=x&&products.find(y=>y.id===x.id);if(!x)return;if(delta>0){const s=p?.sizes?.find(y=>y.name===x.size),stock=s?s.stock:p?.stock||0;if(x.qty>=stock){toast(canSeeStock()?"Maximum stock reached":"Sorry, you can't add more of this item right now");return}}x.qty+=delta;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveLocal();updateCart()}
+function changeQty(key,delta){
+  const x=cart.find(i=>i.key===key),p=x&&products.find(y=>y.id===x.id);if(!x)return;
+  const moq=moqOf(p);
+  if(delta>0){const s=p?.sizes?.find(y=>y.name===x.size),stock=s?s.stock:p?.stock||0;if(x.qty>=stock){toast(canSeeStock()?"Maximum stock reached":"Sorry, you can't add more of this item right now");return}}
+  if(delta<0&&x.qty+delta<moq&&moq>1){cart=cart.filter(i=>i.key!==key);saveLocal();updateCart();toast(`Removed from cart (minimum order is ${moq})`);return;}
+  x.qty+=delta;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveLocal();updateCart();
+}
 function openCart(){if(!customer()){showCustomerLogin("login");return}$("drawerBackdrop").classList.add("show");$("cartDrawer").classList.add("show")}
 function closeCart(){$("drawerBackdrop").classList.remove("show");$("cartDrawer").classList.remove("show")}
 
-function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}const c=customer();const em=editingOrderId?editingOrderMeta:null;$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=em?.customer?.address||c.address||"";$("custPincode").value=em?.customer?.pin||c.pin||"";$("custNote").value=em?.note||"";$("custPrefDate").value=em?.preferredDate||"";$("custPrefSlot").value=em?.preferredSlot||"";$("custMapLink").value=em?.mapLink||"";$("custCoupon").value=em?.coupon||"";appliedCoupon=em?.coupon||"";$("couponAppliedNote").classList.add("hidden");if(em)document.querySelectorAll('input[name="dlvMethod"]').forEach(r=>{r.checked=r.value===(em.deliveryMethod||"Pickup");});$("checkoutSubmitBtn").textContent=editingOrderId?("Update Order "+editingOrderId):"Place Order & Open WhatsApp";$("checkoutEditBanner").classList.toggle("hidden",!editingOrderId);closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
+function openCheckout(){if(!customer()){showCustomerLogin();return}if(!cart.length){toast("Your cart is empty");return}if(moqAlert()||minOrderAlert())return;const c=customer();const em=editingOrderId?editingOrderMeta:null;$("custName").value=c.name||"";$("custPhone").value=c.phone||"";$("custAddress").value=em?.customer?.address||c.address||"";$("custPincode").value=em?.customer?.pin||c.pin||"";$("custNote").value=em?.note||"";$("custPrefDate").value=em?.preferredDate||"";$("custPrefSlot").value=em?.preferredSlot||"";$("custMapLink").value=em?.mapLink||"";$("custCoupon").value=em?.coupon||"";appliedCoupon=em?.coupon||"";$("couponAppliedNote").classList.add("hidden");if(em)document.querySelectorAll('input[name="dlvMethod"]').forEach(r=>{r.checked=r.value===(em.deliveryMethod||"Pickup");});$("checkoutSubmitBtn").textContent=editingOrderId?("Update Order "+editingOrderId):"Place Order & Open WhatsApp";$("checkoutEditBanner").classList.toggle("hidden",!editingOrderId);closeCart();$("checkoutSummary").innerHTML=cart.map(x=>`<div class="checkout-line"><span>${esc(products.find(p=>p.id===x.id)?.name||"Product")} ${x.size?`(${esc(x.size)})`:""} × ${x.qty}</span><b>${money(x.price*x.qty)}</b></div>`).join("")+`<hr style="border:0;border-top:1px solid var(--line)"><div class="checkout-line"><b>Total</b><b>${money(cart.reduce((a,x)=>a+x.price*x.qty,0))}</b></div>`;$("checkoutModal").classList.add("show");$("modalBackdrop").classList.add("show")}
 function validateCheckout(){const name=$("custName").value.trim(),phone=$("custPhone").value.replace(/\D/g,""),address=$("custAddress").value.trim(),pin=$("custPincode").value.replace(/\D/g,"");if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid name, phone, address and pincode");return null}return{name,phone,address,pin,note:$("custNote").value.trim()}}
 function checkoutDeliveryExtras(){return{preferredDate:$("custPrefDate")?.value||"",preferredSlot:$("custPrefSlot")?.value||"",mapLink:$("custMapLink")?.value.trim()||"",coupon:appliedCoupon||""}}
 let appliedCoupon="";
@@ -2794,6 +2861,7 @@ async function placeOrder(){
   const c=validateCheckout();
   if(!c)return;
   const total=cart.reduce((a,x)=>a+(Number(x.price)||0)*(Number(x.qty)||0),0);
+  if(moqAlert()||minOrderAlert())return;
   const isEdit=!!editingOrderId;
   const id=isEdit?editingOrderId:"ORD-"+Date.now().toString().slice(-8);
   const order={
@@ -4327,14 +4395,14 @@ async function savePriceEdit(){
 
 function generateInvoiceById(id){const o=orders.find(x=>String(x.id)===String(id));if(!o){toast("Order not found");return;}generateInvoice(o);}
 
-function openProductForm(){editingId=null;$("productModalTitle").textContent="Add Product";["pId","pName","pCategory","pSubcategory","pDescription","pImageId","pPrice","pSizes","pBrand","pCost","pReorderLevel"].forEach(id=>$(id).value="");$("pStock").value=0;$("pActive").value="true";$("pDiscountAllowed").value="true";$("productModal").classList.add("show");$("modalBackdrop").classList.add("show")}
-function editProduct(id){const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));if(!p)return;editingId=p.id;$("productModalTitle").textContent="Edit Product";$("pId").value=p.id||"";$("pName").value=p.name||"";$("pCategory").value=p.category||"";$("pSubcategory").value=p.subcategory||"";$("pDescription").value=p.description||"";$("pImageId").value=p.imageId||"";$("pPrice").value=p.price||0;$("pSizes").value=(p.sizes||[]).map(s=>`${s.name}:${s.price}:${s.stock}`).join(", ");$("pStock").value=p.stock||0;$("pActive").value=String(p.active!==false);$("pBrand").value=p.brand||"";$("pDiscountAllowed").value=String(p.discountAllowed!==false);$("pCost").value=p.cost||"";$("pReorderLevel").value=p.reorderLevel??"";$("productModal").classList.add("show");$("modalBackdrop").classList.add("show")}
+function openProductForm(){editingId=null;$("productModalTitle").textContent="Add Product";["pId","pName","pCategory","pSubcategory","pDescription","pImageId","pPrice","pSizes","pBrand","pMinQty","pCost","pReorderLevel"].forEach(id=>$(id).value="");$("pStock").value=0;$("pActive").value="true";$("pDiscountAllowed").value="true";$("productModal").classList.add("show");$("modalBackdrop").classList.add("show")}
+function editProduct(id){const p=products.find(x=>normalizeAccessValue(x.id)===normalizeAccessValue(id));if(!p)return;editingId=p.id;$("productModalTitle").textContent="Edit Product";$("pId").value=p.id||"";$("pName").value=p.name||"";$("pCategory").value=p.category||"";$("pSubcategory").value=p.subcategory||"";$("pDescription").value=p.description||"";$("pImageId").value=p.imageId||"";$("pPrice").value=p.price||0;$("pSizes").value=(p.sizes||[]).map(s=>`${s.name}:${s.price}:${s.stock}`).join(", ");$("pStock").value=p.stock||0;$("pActive").value=String(p.active!==false);$("pBrand").value=p.brand||"";$("pMinQty").value=p.minQty>1?p.minQty:"";$("pDiscountAllowed").value=String(p.discountAllowed!==false);$("pCost").value=p.cost||"";$("pReorderLevel").value=p.reorderLevel??"";$("productModal").classList.add("show");$("modalBackdrop").classList.add("show")}
 async function saveProduct(){
   const id=$("pId").value.trim()||("P"+Date.now());
   const name=$("pName").value.trim(),cat=$("pCategory").value.trim();
   if(!id||!name||!cat){toast("Product ID, product name and category are required");return}
   const sizes=$("pSizes").value.split(",").map(x=>x.trim()).filter(Boolean).map(x=>{const [n,pr,st]=x.split(":");return{name:String(n||"").trim(),price:Number(pr)||0,stock:st!==undefined?Number(st)||0:Number($("pStock").value)||0}}).filter(x=>x.name);
-  const p={id,name,category:cat,subcategory:$("pSubcategory").value.trim(),description:$("pDescription").value.trim(),imageId:splitImageIds($("pImageId").value).map(x=>/^https?:\/\//i.test(x)?x:x.toUpperCase()).join(", "),price:Number($("pPrice").value)||0,stock:Number($("pStock").value)||0,active:$("pActive").value==="true",brand:$("pBrand").value.trim(),discountAllowed:$("pDiscountAllowed").value==="true",sizes};
+  const p={id,name,category:cat,subcategory:$("pSubcategory").value.trim(),description:$("pDescription").value.trim(),imageId:splitImageIds($("pImageId").value).map(x=>/^https?:\/\//i.test(x)?x:x.toUpperCase()).join(", "),price:Number($("pPrice").value)||0,stock:Number($("pStock").value)||0,active:$("pActive").value==="true",brand:$("pBrand").value.trim(),minQty:Math.max(1,Math.floor(Number($("pMinQty").value)||1)),discountAllowed:$("pDiscountAllowed").value==="true",sizes};
   if(isSuperAdminUI()){
     if($("pCost").value!=="")p.cost=Number($("pCost").value)||0;
     p.reorderLevel=$("pReorderLevel").value;
@@ -4616,7 +4684,7 @@ function productCard(p){
   const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);
   const dk=productDomKey(p.id),stock=cardStock(p,first?first.name:"");
   const pid=`decodeProductArg('${safeProductArg(p.uid||p.id)}')`;
-  return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView(${pid})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView(${pid})}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" width="300" height="300" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div><div class="stock-slot" id="stock-${dk}">${stockBadgeHtml(stock)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize(decodeProductArg('${safeProductArg(p.id)}'),decodeProductArg('${safeProductArg(s.name)}'),this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" id="add-${dk}" ${stock<=0?"disabled":""} onclick="event.stopPropagation();addToCart(${pid})">${stock<=0?"Out of Stock":"Add to Cart"}</button></div></div></article>`;
+  return `<article class="product product-clickable" tabindex="0" role="button" aria-label="View ${esc(p.name)} details" onclick="openProductView(${pid})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProductView(${pid})}"><div class="product-img"><img class="async-product-image" loading="lazy" decoding="async" width="300" height="300" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="${esc(p.name)}"></div><div class="product-body"><div class="product-cat">${esc(p.category)}${p.subcategory?` • ${esc(p.subcategory)}`:""}</div><h3>${esc(p.name)}</h3><div class="desc">${esc(p.description||"")}</div><div class="price" id="price-${dk}">${money(price)}</div>${moqOf(p)>1?`<div class="moq-chip">Min order: ${moqOf(p)}</div>`:""}<div class="stock-slot" id="stock-${dk}">${stockBadgeHtml(stock)}</div>${p.sizes?.length?`<div class="size-row" id="sizes-${dk}">${p.sizes.map((s,i)=>`<button type="button" class="size ${i===0?"selected":""}" onclick="event.stopPropagation();selectSize(decodeProductArg('${safeProductArg(p.id)}'),decodeProductArg('${safeProductArg(s.name)}'),this)">${esc(s.name)}</button>`).join("")}</div>`:""}<div class="addrow"><button type="button" class="primary" id="add-${dk}" ${stock<=0?"disabled":""} onclick="event.stopPropagation();addToCart(${pid})">${stock<=0?"Out of Stock":"Add to Cart"}</button></div></div></article>`;
 }
 function productMinPrice(p){
   if(p.sizes?.length)return Math.min(...p.sizes.map(s=>Number(s.price)||0).filter(n=>n>0));
@@ -4752,7 +4820,7 @@ function reorderById(id){
     if(p.sizes?.length&&!s){skipped.push(it.name);return;}
     const stock=Number(s?s.stock:p.stock)||0,price=s?s.price:p.price,size=s?s.name:"";
     const key=p.id+"|"+size,ex=cart.find(i=>i.key===key),have=ex?ex.qty:0;
-    const want=Math.min(Number(it.qty)||1,stock-have);
+    const moq=moqOf(p);let want=Math.min(Math.max(Number(it.qty)||1,ex?1:moq),stock-have);if(!ex&&want<moq)want=0;
     if(want<=0){skipped.push(it.name);return;}
     if(ex)ex.qty+=want;else cart.push({key,id:p.id,size,price,qty:want});
     added++;
@@ -5571,6 +5639,7 @@ async function loadPublicSettingsBanner(){
   try{
     const d=await apiGet("settings");
     const s=d.settings||{};
+    shopMinOrder=Number(s.MIN_ORDER)||0;updateCart();
     const today=new Date().toISOString().slice(0,10);
     const onHoliday=s.HOLIDAY_FROM&&s.HOLIDAY_TO&&today>=s.HOLIDAY_FROM&&today<=s.HOLIDAY_TO;
     const bannerLive=s.BANNER_TEXT&&(!s.BANNER_UNTIL||today<=s.BANNER_UNTIL);
