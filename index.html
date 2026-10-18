@@ -177,6 +177,48 @@ html,body{max-width:100%;overflow-x:hidden}
 .moq-chip{display:inline-block;margin:2px 0 6px;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:700;background:rgba(245,158,11,.16);border:1px solid rgba(245,158,11,.5)}
 .product-view-moq{display:inline-block;margin:0 0 8px;padding:5px 12px;border-radius:99px;font-size:13px;font-weight:700;background:rgba(245,158,11,.16);border:1px solid rgba(245,158,11,.5)}
 .cart-meta.moq-warn{color:#d97706;font-weight:700}
+.pf-dash,.pf-page{background:var(--bg)}
+.pf-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.pf-page .modal-body{max-width:760px;margin:0 auto}
+.pf-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;max-width:1040px;margin:0 auto}
+@media(min-width:900px){.pf-layout{grid-template-columns:330px minmax(0,1fr);gap:22px;align-items:start}.pf-side{position:sticky;top:12px}}
+.pf-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+.pf-side .pf-card{margin-bottom:0}
+.pf-card-head{padding:15px 18px 11px;font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.pf-hero{text-align:center}
+.pf-hero-top{height:96px;background:var(--accent);background:linear-gradient(135deg,var(--accent),#a855f7)}
+.pf-avatar-wrap{position:relative;display:block;width:100px;height:100px;margin:-52px auto 8px;cursor:pointer}
+.pf-avatar{width:100px;height:100px;font-size:40px;border:4px solid var(--surface);box-shadow:0 6px 18px rgba(15,23,42,.2);overflow:hidden}
+.pf-cam{position:absolute;right:0;bottom:2px;width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.pf-hero-body{padding:0 18px 18px}
+.pf-name{display:block;font-size:20px}
+.pf-type{display:inline-block;margin:7px 0 4px;padding:3px 13px;border-radius:99px;font-size:12px;font-weight:800;background:var(--surface2);color:var(--muted)}
+.pf-phone{font-size:13px;color:var(--muted)}
+.pf-progress{margin-top:16px;text-align:left;background:var(--surface2);border-radius:14px;padding:12px 14px}
+.pf-progress-top{display:flex;justify-content:space-between;font-size:13px}
+.pf-bar{height:8px;border-radius:99px;background:var(--line);margin:9px 0;overflow:hidden}
+.pf-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#f97316,#ec4899);transition:width .45s ease}
+.pf-missing{display:flex;flex-wrap:wrap;gap:6px}
+.pf-chip{border:1px dashed var(--muted);background:none;color:var(--text);border-radius:99px;padding:4px 11px;font-size:12px;font-weight:700;cursor:pointer}
+.pf-done{font-size:12.5px;color:var(--success);font-weight:700}
+.pf-row{display:flex;align-items:center;gap:13px;width:100%;padding:13px 18px;background:none;border:0;border-top:1px solid var(--line);border-radius:0;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.pf-row:active{background:var(--surface2)}
+.pf-ico{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--surface2);font-size:20px;flex:0 0 auto}
+.pf-rt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pf-rt b{font-size:15px}
+.pf-rt small{font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pf-pill{font-size:11.5px;font-weight:800;padding:5px 12px;border-radius:99px;color:#fff;white-space:nowrap}
+.pf-pill.ok{background:linear-gradient(90deg,#16a34a,#65a30d)}
+.pf-pill.warn{background:linear-gradient(90deg,#f97316,#ef4444)}
+.pf-pill.bad{background:linear-gradient(90deg,#ef4444,#db2777)}
+.pf-chev{color:var(--muted);font-size:24px;line-height:1}
+.pf-banner{display:block;width:100%;max-width:1040px;margin:0 auto 14px;padding:12px 14px;border-radius:14px;border:1px solid rgba(245,158,11,.55);background:rgba(245,158,11,.14);color:inherit;font:inherit;font-weight:700;text-align:left;cursor:pointer}
+.pf-formcard{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:15px}
+.pf-save{width:100%;margin-top:4px}
+.pf-check{display:flex;align-items:center;gap:11px;font-weight:700;font-size:14px;cursor:pointer}
+.pf-check input{width:20px;height:20px;flex:0 0 auto}
+.pf-hint{font-size:12px;color:var(--muted)}
+#paymentsSection:not(.hidden)~#pfPayEmpty{display:none}
 .pv-nav{display:flex;align-items:center;gap:8px}
 .pv-pos{font-size:12px;color:var(--muted);font-weight:800;margin-left:8px}
 .pv-hint{display:none;font-size:11px;color:var(--muted);text-align:center;padding:6px 0 0}
@@ -799,63 +841,104 @@ body.admin-mode .langsel{display:none}
   </div>
 </div>
 
-<div class="modal sheet" id="profileModal">
-  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">←</button><div class="grow"><h2 style="margin:0">My Profile</h2></div></div>
+<div class="modal sheet pf-dash" id="profileModal">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">My Dashboard</h2><div class="pf-sub" id="pfWelcome">Welcome</div></div></div>
   <div class="modal-body">
     <div id="profileLoggedOut" class="hidden">
       <div class="checkout-summary"><b>You're not logged in.</b><br><span class="notice">Log in or create a profile to save your details for faster checkout.</span></div>
       <button type="button" class="primary" style="width:100%" onclick="showCustomerLogin()">Customer Login / Sign Up</button>
     </div>
     <div id="profileLoggedIn" class="hidden">
-      <div class="profile-card">
-        <div class="avatar" id="profileAvatar">B</div>
-        <div>
-          <strong id="profileName">Customer</strong>
-          <div class="notice" id="profilePhone"></div>
-          <div class="notice" id="profileType">Type: Customer</div>
-          <div class="customer-id-badge" style="margin-top:6px">ID: <span id="profileCustomerId">—</span></div>
-        </div>
-      </div>
-      <div id="paymentsSection" class="hidden" style="margin-top:14px">
-        <h3 style="margin:0 0 10px">Payments</h3>
-        <div id="payBalance" class="pay-balance hidden"></div>
-        <div id="customerPayments"></div>
-      </div>
-      <input type="file" id="profilePhotoInput" onchange="handleProfilePhotoSelected(this.files[0])" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;z-index:-1">
-      <label for="profilePhotoInput" class="outline" style="display:block;width:100%;margin-top:10px;text-align:center;cursor:pointer;box-sizing:border-box">📷 Change Photo</label>
-      <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="viewMyIdCard()">🪪 View ID Card</button>
-      <div id="profileViewBox" style="margin-top:16px">
-        <div class="info-grid" id="profileViewInfo"></div>
-        <button type="button" class="outline" style="width:100%;margin-top:10px" onclick="profileStartEdit()">✎ Edit Profile</button>
-      </div>
-      <div id="profileEditBox" class="hidden" style="margin-top:16px">
-        <div class="formgrid">
-          <div class="field"><label>Full Name</label><input id="profileNameInput"></div>
-          <div class="field"><label>Phone Number</label><input id="profilePhoneInput" readonly></div>
-          <div class="field full"><label>Address</label><textarea id="profileAddressInput"></textarea></div>
-          <div class="field"><label>Pincode</label><input id="profilePinInput" inputmode="numeric"></div>
-        </div>
-        <div style="display:flex;gap:10px;margin-top:14px">
-          <button type="button" class="primary" style="flex:1" onclick="saveCustomerProfile()">Save Profile</button>
-          <button type="button" class="outline" style="flex:1" onclick="profileCancelEdit()">Cancel</button>
-        </div>
-      </div>
-      <details class="pw-box" open><summary>App Theme</summary>
-        <div class="theme-row" id="themeRow"></div>
-      </details>
-      <div id="tempPwNotice" class="account-note hidden" style="margin-top:14px">You are using a temporary password. Please change it below.</div>
-      <details class="pw-box" id="pwBox"><summary>Change Password</summary>
-        <div class="field"><label>Current Password</label><input id="pwOld" type="password" autocomplete="current-password"></div>
-        <div class="field"><label>New Password</label><input id="pwNew" type="password" autocomplete="new-password" placeholder="At least 6 characters"></div>
-        <button type="button" class="primary" id="pwBtn" style="width:100%;margin-top:12px" onclick="changeMyPassword()">Update Password</button>
-      </details>
-      <button type="button" class="outline" style="width:100%;margin-top:9px" onclick="customerLogout()">Logout</button>
-      <div class="profile-orders" style="margin-top:22px">
-        <h3 style="margin:0 0 10px">My Orders</h3>
-        <div id="customerOrders"></div>
+      <button type="button" class="pf-banner hidden" id="tempPwNotice" onclick="pfOpen('pfSecurity')">&#128274; You are using a temporary password. Tap here to change it.</button>
+      <div class="pf-layout">
+        <aside class="pf-side">
+          <div class="pf-card pf-hero">
+            <div class="pf-hero-top"></div>
+            <label for="profilePhotoInput" class="pf-avatar-wrap" title="Change photo">
+              <div class="avatar pf-avatar" id="profileAvatar">B</div><span class="pf-cam">&#128247;</span>
+            </label>
+            <input type="file" id="profilePhotoInput" accept="image/*" onchange="handleProfilePhotoSelected(this.files[0])" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;z-index:-1">
+            <div class="pf-hero-body">
+              <strong class="pf-name" id="profileName">Customer</strong>
+              <div class="pf-type" id="profileType">Customer</div>
+              <div class="pf-phone" id="profilePhone"></div>
+              <div class="customer-id-badge" style="margin-top:8px">ID: <span id="profileCustomerId">&mdash;</span></div>
+              <div class="pf-progress">
+                <div class="pf-progress-top"><b>Profile completeness</b><span id="pfPct">0%</span></div>
+                <div class="pf-bar"><i id="pfBar"></i></div>
+                <div class="pf-missing" id="pfMissing"></div>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <section class="pf-main">
+          <div class="pf-card"><div class="pf-card-head">My account</div><div id="pfRowsAccount"></div></div>
+          <div class="pf-card"><div class="pf-card-head">Activity</div><div id="pfRowsActivity"></div></div>
+          <div class="pf-card"><div class="pf-card-head">Settings</div><div id="pfRowsSettings"></div></div>
+        </section>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal sheet over pf-page" id="pfPersonal">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">Personal details</h2><div class="pf-sub">Your name and birthday</div></div></div>
+  <div class="modal-body"><div class="pf-formcard">
+    <div class="field"><label>Full name *</label><input id="pfName" autocomplete="name" placeholder="Your full name"></div>
+    <div class="field"><label>Birthday</label><input id="pfBirthday" type="date" min="1920-01-01"><div class="pf-hint">Optional. Day, month and year.</div></div>
+    <button type="button" class="primary pf-save" onclick="pfSave('personal',this)">Save changes</button>
+  </div></div>
+</div>
+<div class="modal sheet over pf-page" id="pfContact">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">Contact &amp; WhatsApp</h2><div class="pf-sub">How we can reach you</div></div></div>
+  <div class="modal-body"><div class="pf-formcard">
+    <div class="field"><label>Mobile number</label><input id="pfMobile" readonly><div class="pf-hint">This is your login number. To change it, please call the shop.</div></div>
+    <label class="pf-check"><input type="checkbox" id="pfWaSame" onchange="pfWaToggle()"> My WhatsApp number is the same as my mobile number</label>
+    <div class="field"><label>WhatsApp number</label><input id="pfWhatsapp" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit WhatsApp number"></div>
+    <button type="button" class="primary pf-save" onclick="pfSave('contact',this)">Save changes</button>
+  </div></div>
+</div>
+<div class="modal sheet over pf-page" id="pfAddress">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">Address</h2><div class="pf-sub">Where we deliver</div></div></div>
+  <div class="modal-body"><div class="pf-formcard">
+    <div class="field"><label>Address *</label><textarea id="pfAddr" rows="3" placeholder="House / shop no., street, area, landmark"></textarea></div>
+    <div class="field"><label>District</label><input id="pfDistrict" list="pfDistrictList" autocomplete="off" placeholder="Select or type your district"></div>
+    <datalist id="pfDistrictList"><option value="Angul"><option value="Balangir"><option value="Balasore"><option value="Bargarh"><option value="Bhadrak"><option value="Boudh"><option value="Cuttack"><option value="Deogarh"><option value="Dhenkanal"><option value="Gajapati"><option value="Ganjam"><option value="Jagatsinghpur"><option value="Jajpur"><option value="Jharsuguda"><option value="Kalahandi"><option value="Kandhamal"><option value="Kendrapara"><option value="Kendujhar (Keonjhar)"><option value="Khordha"><option value="Koraput"><option value="Malkangiri"><option value="Mayurbhanj"><option value="Nabarangpur"><option value="Nayagarh"><option value="Nuapada"><option value="Puri"><option value="Rayagada"><option value="Sambalpur"><option value="Subarnapur"><option value="Sundargarh"></datalist>
+    <div class="field"><label>Pincode *</label><input id="pfPin" inputmode="numeric" maxlength="6" placeholder="6-digit pincode"></div>
+    <button type="button" class="primary pf-save" onclick="pfSave('address',this)">Save changes</button>
+  </div></div>
+</div>
+<div class="modal sheet over pf-page" id="pfSocial">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">Social media</h2><div class="pf-sub">Add your profile links</div></div></div>
+  <div class="modal-body"><div class="pf-formcard">
+    <div class="field"><label>&#128247; Instagram</label><input id="pfSocInstagram" autocapitalize="off" placeholder="@username or link"></div>
+    <div class="field"><label>&#128089; Facebook</label><input id="pfSocFacebook" autocapitalize="off" placeholder="Profile or page link"></div>
+    <div class="field"><label>&#9654;&#65039; YouTube</label><input id="pfSocYoutube" autocapitalize="off" placeholder="@channel or link"></div>
+    <div class="field"><label>&#127760; Website</label><input id="pfSocWebsite" autocapitalize="off" placeholder="www.example.com"></div>
+    <div class="pf-hint">All optional. You can type just a username or paste the full link.</div>
+    <button type="button" class="primary pf-save" onclick="pfSave('social',this)">Save changes</button>
+  </div></div>
+</div>
+<div class="modal sheet over pf-page" id="pfOrders">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">My orders</h2><div class="pf-sub">Your order history</div></div></div>
+  <div class="modal-body"><div id="customerOrders"></div></div>
+</div>
+<div class="modal sheet over pf-page" id="pfPayments">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">Payments</h2><div class="pf-sub">Payment requests and balance</div></div></div>
+  <div class="modal-body"><div id="paymentsSection" class="hidden"><div id="payBalance" class="pay-balance hidden"></div><div id="customerPayments"></div></div>
+  <div class="empty" id="pfPayEmpty"><h3>No payments yet</h3><p>Payment requests from the shop will appear here.</p></div></div>
+</div>
+<div class="modal sheet over pf-page" id="pfAppearance">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">Appearance</h2><div class="pf-sub">Choose how the app looks</div></div></div>
+  <div class="modal-body"><div class="pf-formcard"><div class="theme-row" id="themeRow"></div></div></div>
+</div>
+<div class="modal sheet over pf-page" id="pfSecurity">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">Password &amp; security</h2><div class="pf-sub">Keep your account safe</div></div></div>
+  <div class="modal-body"><div class="pf-formcard" id="pwBox">
+    <div class="field"><label>Current password</label><input id="pwOld" type="password" autocomplete="current-password"></div>
+    <div class="field"><label>New password</label><input id="pwNew" type="password" autocomplete="new-password" placeholder="At least 6 characters"></div>
+    <button type="button" class="primary pf-save" id="pwBtn" onclick="changeMyPassword()">Update password</button>
+  </div></div>
 </div>
 
 <div class="modal" id="customerLoginModal">
@@ -1464,6 +1547,8 @@ async function refreshCustomerSessionSilently(){
         updated.address=d.customer.address||updated.address;
         updated.passwordType=d.customer.passwordType||"";
         updated.pin=d.customer.pin||updated.pin;
+        updated.district=d.customer.district||"";updated.whatsapp=d.customer.whatsapp||"";updated.whatsappSame=!!d.customer.whatsappSame;
+        updated.birthday=d.customer.birthday||"";updated.social=d.customer.social||{};
         updated.accessType=d.customer.accessType||updated.accessType;
         updated.allowedCategories=d.customer.allowedCategories||updated.allowedCategories;
         updated.allowedProducts=d.customer.allowedProducts||updated.allowedProducts;
@@ -1578,6 +1663,7 @@ async function customerLogin(){
       phone:c.phone||"",
       address:c.address||"",
       pin:c.pin||"",
+      district:c.district||"",whatsapp:c.whatsapp||"",whatsappSame:!!c.whatsappSame,birthday:c.birthday||"",social:c.social||{},
       status:c.status||"Active",
       type:c.type||"Customer",
       passwordType:c.passwordType||"",
@@ -1601,47 +1687,156 @@ async function customerLogin(){
   }
 }
 
+const PF_THEME_LABEL={};
+function pfFmtDate(iso){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(iso||""))return "";
+  const d=new Date(iso+"T00:00:00");
+  return isNaN(d)?"":d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
+}
+function pfSocialList(c){const s=c.social||{};return [["instagram","Instagram"],["facebook","Facebook"],["youtube","YouTube"],["website","Website"]].filter(([k])=>s[k]);}
+function pfCompleteness(c){
+  const items=[
+    {label:"Name",page:"pfPersonal",ok:!!(c.name&&c.name.trim())},
+    {label:"Birthday",page:"pfPersonal",ok:!!c.birthday},
+    {label:"WhatsApp",page:"pfContact",ok:!!c.whatsapp},
+    {label:"Address",page:"pfAddress",ok:!!(c.address&&String(c.pin||"").length===6)},
+    {label:"District",page:"pfAddress",ok:!!c.district},
+    {label:"Social links",page:"pfSocial",ok:pfSocialList(c).length>0}
+  ];
+  const done=items.filter(i=>i.ok).length;
+  return {items,pct:Math.round(done/items.length*100)};
+}
+function pfRow(icon,title,sub,onclick,pill,pillCls){
+  return `<button type="button" class="pf-row" onclick="${onclick}"><span class="pf-ico">${icon}</span><span class="pf-rt"><b>${esc(title)}</b><small>${esc(sub)}</small></span>${pill?`<span class="pf-pill ${pillCls||"ok"}">${esc(pill)}</span>`:""}<span class="pf-chev">&#8250;</span></button>`;
+}
+function renderProfileDashboard(){
+  const c=customer();if(!c||!$("pfRowsAccount"))return;
+  const first=String(c.name||"").trim().split(/\s+/)[0]||"there";
+  $("pfWelcome").textContent="Welcome, "+first;
+  $("profileName").textContent=c.name||"Customer";
+  $("profilePhone").textContent=c.phone?"+91 "+c.phone:"";
+  $("profileType").textContent=c.type||"Customer";
+  $("profileCustomerId").textContent=c.customerId||c.id||"?";
+  const av=$("profileAvatar");
+  if(av&&!av.querySelector("img")){av.textContent=(c.name||"B")[0].toUpperCase();av.style.background="";}
+  const cp=pfCompleteness(c);
+  $("pfPct").textContent=cp.pct+"%";
+  $("pfBar").style.width=cp.pct+"%";
+  const miss=cp.items.filter(i=>!i.ok);
+  $("pfMissing").innerHTML=miss.length?miss.map(i=>`<button type="button" class="pf-chip" onclick="pfOpen('${i.page}')">+ ${esc(i.label)}</button>`).join(""):'<span class="pf-done">&#10003; Your profile is complete</span>';
+  const persOk=!!(c.name&&c.birthday);
+  const contactSub=c.whatsappSame&&c.whatsapp?"WhatsApp same as mobile":(c.whatsapp?"WhatsApp "+c.whatsapp:"Add your WhatsApp number");
+  const addrBits=[c.address,c.district,c.pin].filter(Boolean).join(", ");
+  const soc=pfSocialList(c);
+  $("pfRowsAccount").innerHTML=
+    pfRow("&#128100;","Personal details",[c.name,pfFmtDate(c.birthday)||"Add your birthday"].filter(Boolean).join(" \u00b7 "),"pfOpen('pfPersonal')",persOk?"Done":"Add",persOk?"ok":"warn")+
+    pfRow("&#128241;","Contact & WhatsApp",(c.phone||"")+" \u00b7 "+contactSub,"pfOpen('pfContact')",c.whatsapp?"Done":"Add",c.whatsapp?"ok":"warn")+
+    pfRow("&#128205;","Address",addrBits||"Add your delivery address","pfOpen('pfAddress')",(c.address&&c.district)?"Done":"Add",(c.address&&c.district)?"ok":"warn")+
+    pfRow("&#128279;","Social media",soc.length?soc.map(x=>x[1]).join(", "):"Add your profile links","pfOpen('pfSocial')",soc.length?"Done":"Add",soc.length?"ok":"warn");
+  const due=(typeof myPayments!=="undefined"?myPayments.filter(isDue).length:0);
+  $("pfRowsActivity").innerHTML=
+    pfRow("&#129534;","My orders","View and track your orders","pfOpen('pfOrders')")+
+    pfRow("&#128179;","Payments",due?`${due} payment request${due>1?"s":""} waiting`:"Payment requests and balance","pfOpen('pfPayments')",due?due+" due":"",due?"bad":"")+
+    pfRow("&#129706;","ID card","View or download your ID card","viewMyIdCard()");
+  const temp=c.passwordType==="Temporary";
+  $("pfRowsSettings").innerHTML=
+    pfRow("&#127912;","Appearance","Choose a colour theme","pfOpen('pfAppearance')")+
+    pfRow("&#128274;","Password & security",temp?"You are using a temporary password":"Change your password","pfOpen('pfSecurity')",temp?"Change":"",temp?"warn":"")+
+    pfRow("&#128682;","Logout","Sign out from this device","customerLogout()");
+  $("tempPwNotice")?.classList.toggle("hidden",!temp);
+}
+function pfFill(id,c){
+  const v=(k,val)=>{const el=$(k);if(el)el.value=val==null?"":val;};
+  if(id==="pfPersonal"){v("pfName",c.name);v("pfBirthday",c.birthday);$("pfBirthday").max=new Date().toISOString().slice(0,10);}
+  if(id==="pfContact"){
+    v("pfMobile",c.phone);
+    const same=!!c.whatsappSame||(!!c.whatsapp&&c.whatsapp===c.phone);
+    $("pfWaSame").checked=same;v("pfWhatsapp",same?c.phone:c.whatsapp);pfWaToggle();
+  }
+  if(id==="pfAddress"){v("pfAddr",c.address);v("pfDistrict",c.district);v("pfPin",c.pin);}
+  if(id==="pfSocial"){const s=c.social||{};v("pfSocInstagram",s.instagram);v("pfSocFacebook",s.facebook);v("pfSocYoutube",s.youtube);v("pfSocWebsite",s.website);}
+  if(id==="pfSecurity"){v("pwOld","");v("pwNew","");}
+}
+function pfWaToggle(){
+  const same=$("pfWaSame").checked,inp=$("pfWhatsapp");
+  if(same)inp.value=$("pfMobile").value;
+  inp.disabled=same;
+}
+function pfOpen(id){
+  const c=customer();if(!c){showCustomerLogin();return;}
+  const m=$(id);if(!m)return;
+  pfFill(id,c);
+  m.classList.add("show");$("modalBackdrop").classList.add("show");document.body.style.overflow="hidden";m.scrollTop=0;
+  if(id==="pfOrders")loadCustomerOrders(true);
+  if(id==="pfPayments"){renderMyPayments();refreshMyPayments();}
+  if(id==="pfAppearance")renderThemePicker();
+}
+function pfSocialUrl(kind,raw){
+  let v=String(raw||"").trim();if(!v)return "";
+  if(/^https?:\/\//i.test(v))return v;
+  if(kind==="website")return "https://"+v.replace(/^\/+/,"");
+  if(/^(www\.|[a-z0-9-]+\.[a-z]{2,}\/)/i.test(v))return "https://"+v;
+  v=v.replace(/^@/,"");
+  if(!/^[A-Za-z0-9._-]{2,60}$/.test(v))return null;
+  return kind==="instagram"?"https://instagram.com/"+v:kind==="facebook"?"https://facebook.com/"+v:"https://youtube.com/@"+v;
+}
+async function pfSave(section,btn){
+  const c=customer();if(!c)return;
+  const patch={};
+  if(section==="personal"){
+    const name=$("pfName").value.trim(),b=$("pfBirthday").value;
+    if(!name){toast("Please enter your name");return}
+    if(b){const d=new Date(b+"T00:00:00");if(isNaN(d)||d>new Date()||d.getFullYear()<1920){toast("Please enter a valid birthday");return}}
+    patch.name=name;patch.birthday=b||"";
+  }else if(section==="contact"){
+    const same=$("pfWaSame").checked;
+    const wa=same?String(c.phone||""):$("pfWhatsapp").value.replace(/\D/g,"").slice(-10);
+    if(!same&&wa&&wa.length!==10){toast("Enter a valid 10-digit WhatsApp number");return}
+    patch.whatsapp=wa;patch.whatsappSame=!!(same&&wa);
+  }else if(section==="address"){
+    const address=$("pfAddr").value.trim(),pin=$("pfPin").value.replace(/\D/g,"");
+    if(!address){toast("Please enter your address");return}
+    if(pin.length!==6){toast("Pincode must be 6 digits");return}
+    patch.address=address;patch.district=$("pfDistrict").value.trim();patch.pin=pin;
+  }else if(section==="social"){
+    const social={};
+    for(const [k,id,label] of [["instagram","pfSocInstagram","Instagram"],["facebook","pfSocFacebook","Facebook"],["youtube","pfSocYoutube","YouTube"],["website","pfSocWebsite","Website"]]){
+      const u=pfSocialUrl(k,$(id).value);
+      if(u===null){toast(label+": please enter a valid username or link");return}
+      if(u.length>200){toast(label+" link is too long");return}
+      social[k]=u;
+    }
+    patch.social=social;
+  }
+  const updated={...c,...patch};
+  await busy(btn,async()=>{
+    try{
+      await apiPost({action:"saveCustomer",customer:updated,customerToken:c.token});
+      localStorage.setItem("bijaya_customer",JSON.stringify(updated));
+      closeModal();
+      renderProfileDashboard();
+      toast("Saved");
+    }catch(e){toast("Could not save: "+e.message);}
+  });
+}
 async function openCustomerProfile(){
   const c=customer();
   $("profileLoggedOut").classList.toggle("hidden",!!c);
   $("profileLoggedIn").classList.toggle("hidden",!c);
-
   if(c){
-    $("profileAvatar").textContent=(c.name||"B")[0].toUpperCase();
-    $("profileAvatar").style.background="";
-    $("profileName").textContent=c.name||"Customer";
-    $("profilePhone").textContent=c.phone||"";
-    $("profileType").textContent="Type: "+(c.type||"Customer");
-    $("profileCustomerId").textContent=c.customerId||c.id||"—";
-    $("profileViewInfo").innerHTML=[["Full Name",c.name||"—"],["Phone Number",c.phone||"—"],["Pincode",c.pin||"—"],["Address",c.address||"—"]].map(([k,v])=>`<div><b>${k}</b>${esc(v)}</div>`).join("");
-    profileCancelEdit();
+    renderProfileDashboard();
     renderThemePicker();
     const box=$("customerOrders");
-    if(box)box.innerHTML='<div class="empty"><h3>Loading your orders…</h3><p>Checking your saved orders.</p></div>';
+    if(box)box.innerHTML='<div class="empty"><h3>Loading your orders...</h3><p>Checking your saved orders.</p></div>';
     loadCustomerPhoto(c);
-    $("tempPwNotice")?.classList.toggle("hidden",c.passwordType!=="Temporary");
     renderMyPayments();
     refreshMyPayments();
   }
-
   $("profileModal").classList.add("show");
   $("modalBackdrop").classList.add("show");
   document.body.style.overflow="hidden";
+  $("profileModal").scrollTop=0;
   if(c) await loadCustomerOrders(true);
-}
-
-function profileStartEdit(){
-  const c=customer();if(!c)return;
-  $("profileNameInput").value=c.name||"";
-  $("profilePhoneInput").value=c.phone||"";
-  $("profileAddressInput").value=c.address||"";
-  $("profilePinInput").value=c.pin||"";
-  $("profileViewBox").classList.add("hidden");
-  $("profileEditBox").classList.remove("hidden");
-}
-function profileCancelEdit(){
-  $("profileEditBox").classList.add("hidden");
-  $("profileViewBox").classList.remove("hidden");
 }
 /* --- customer: quotation requests --- */
 function openQuotesModal(){
@@ -1798,24 +1993,6 @@ function calcAddToCart(id,qty,preferredSize){
   closeModal();
 }
 
-async function saveCustomerProfile(){
-  const c=customer();
-  if(!c)return;
-
-  const updated={...c,name:$("profileNameInput").value.trim(),address:$("profileAddressInput").value.trim(),pin:$("profilePinInput").value.replace(/\D/g,"")};
-
-  if(!updated.name){toast("Name is required");return}
-  if(updated.pin.length!==6){toast("Pincode must be 6 digits");return}
-
-  try{
-    await apiPost({action:"saveCustomer",customer:updated,customerToken:c.token});
-    localStorage.setItem("bijaya_customer",JSON.stringify(updated));
-    openCustomerProfile();
-    toast("Profile saved");
-  }catch(e){
-    toast("Could not save profile: "+e.message);
-  }
-}
 
 function setAvatarImage(el,base64){
   if(!el)return;
@@ -3503,6 +3680,7 @@ function notifyPaymentChange(p){
 function updatePayBadge(){
   const n=myPayments.filter(isDue).length,b=$("profileBadge");
   if(b){b.textContent=n;b.classList.toggle("hidden",!n);}
+  if($("profileModal")?.classList.contains("show"))renderProfileDashboard();
 }
 
 function maybeShowPayPopup(){
