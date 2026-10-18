@@ -3922,14 +3922,27 @@ function showCustomer(){closeAllOverlays();setAppView("customer",true);}
 function goBackToStore(){closeAllOverlays();setAppView("customer",true);}
 window.addEventListener("popstate",()=>{if(window.__ovPop&&window.__ovPop())return;setAppView(location.hash==="#admin"?"admin":"customer",false);});
 
-/* --- Back button / back swipe closes the open popup (product page, cart, forms) instead of leaving the app --- */
+/* --- Back button / back swipe: every open page owns one history step, so each back press closes exactly one page --- */
 (function(){
-  let pushed=false,skipPop=false,guardArmed=false,exitTimer=0,catAway=false;
+  let entries=0,skipPop=false,skipTimer=0,guardArmed=false,exitTimer=0,catAway=false;
   const touchDevice=()=>{try{return !!(window.matchMedia&&matchMedia("(pointer: coarse)").matches);}catch(e){return false;}};
-  const overlayOpen=()=>!!document.querySelector(".modal.show,#cartDrawer.show,#menuDrawer.show");
-  // "press back again to exit": keep one spare history entry on the home screen
+  const overlayCount=()=>document.querySelectorAll(".modal.show,#cartDrawer.show,#menuDrawer.show").length;
+  function goBackQuiet(n){                       // go back without running our own back handler
+    skipPop=true;clearTimeout(skipTimer);skipTimer=setTimeout(()=>{skipPop=false;},900);
+    try{history.go(-n);}catch(e){skipPop=false;}
+  }
+  function closeTopOverlay(){
+    if(document.querySelector(".modal.show")){
+      const pv=document.getElementById("productViewModal");
+      const others=[...document.querySelectorAll(".modal.show")].filter(m=>m!==pv);
+      if(pv&&pv.classList.contains("show")&&!others.some(m=>m.classList.contains("over")))closeProductView();
+      else closeModal();
+    }else if(document.querySelector("#cartDrawer.show"))closeCart();
+    else if(document.querySelector("#menuDrawer.show"))closeMenu();
+  }
+  // "press back again to exit": keep one spare history step on the home screen
   function armGuard(){
-    if(guardArmed||exitTimer||!touchDevice()||overlayOpen()||appView!=="customer")return;
+    if(guardArmed||exitTimer||!touchDevice()||overlayCount()||appView!=="customer")return;
     try{history.pushState({guard:1},"");guardArmed=true;}catch(e){}
   }
   function showExitHint(){
@@ -3946,33 +3959,21 @@ window.addEventListener("popstate",()=>{if(window.__ovPop&&window.__ovPop())retu
   window.__catChanged=function(isHome){
     if(appView!=="customer")return;
     if(!isHome&&!catAway){try{history.pushState({cat:1},"");catAway=true;}catch(e){}}
-    else if(isHome&&catAway){catAway=false;if(history.state&&history.state.cat){skipPop=true;history.back();}}
+    else if(isHome&&catAway){catAway=false;if(history.state&&history.state.cat)goBackQuiet(1);}
   };
-  function closeTopOverlay(){
-    if(document.querySelector(".modal.show")){
-      const pv=document.getElementById("productViewModal");
-      const others=[...document.querySelectorAll(".modal.show")].filter(m=>m!==pv);
-      if(pv&&pv.classList.contains("show")&&!others.some(m=>m.classList.contains("over")))closeProductView();
-      else closeModal();
-    }else if(document.querySelector("#cartDrawer.show"))closeCart();
-    else if(document.querySelector("#menuDrawer.show"))closeMenu();
-  }
   window.__ovPop=function(){
-    if(skipPop){skipPop=false;return true;}
-    if(overlayOpen()){
-      pushed=false;                       // this back press used up our history entry
+    if(skipPop){skipPop=false;clearTimeout(skipTimer);return true;}
+    if(overlayCount()>0){
+      if(entries>0)entries--;                // this back press used up one page's history step
       closeTopOverlay();
-      if(overlayOpen()){history.pushState({ov:1},"");pushed=true;}   // another popup is still open underneath
       return true;
     }
     if(catAway&&appView==="customer"){
-      // back from a category returns to the home category before anything can close the app
       catAway=false;setCategory(window.__homeCat||"All",true);
       try{window.scrollTo(0,0);}catch(e){}
       return true;
     }
     if(guardArmed&&appView==="customer"){
-      // back pressed on the home screen: warn first; a second back inside the window really exits
       guardArmed=false;
       showExitHint();
       clearTimeout(exitTimer);
@@ -3981,15 +3982,19 @@ window.addEventListener("popstate",()=>{if(window.__ovPop&&window.__ovPop())retu
     }
     return false;
   };
+  // one history step per open page, added at the moment the page opens (inside the tap)
   new MutationObserver(()=>{
-    const open=overlayOpen();
-    if(open&&!pushed){try{history.pushState({ov:1},"");pushed=true;}catch(e){}}
-    else if(!open&&pushed){
-      pushed=false;
-      if(history.state&&history.state.ov){skipPop=true;history.back();}   // popup closed with its own button: remove our entry
-      setTimeout(armGuard,400);
+    const n=overlayCount();
+    if(n>entries){
+      for(let k=entries;k<n;k++){try{history.pushState({ov:1},"");}catch(e){break;}}
+      entries=n;
+    }else if(n<entries){                       // pages closed with their own buttons: remove their steps
+      const k=entries-n;entries=n;
+      if(history.state&&history.state.ov)goBackQuiet(k);
     }
+    if(n===0)setTimeout(armGuard,400);
   }).observe(document.body,{attributes:true,attributeFilter:["class"],subtree:true});
+  ["pointerup","click"].forEach(ev=>document.addEventListener(ev,()=>{if(!guardArmed)armGuard();},true));
   setTimeout(armGuard,1500);
   window.addEventListener("pageshow",()=>setTimeout(armGuard,500));
 })();
