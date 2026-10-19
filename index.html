@@ -177,9 +177,9 @@ html,body{max-width:100%;overflow-x:hidden}
 .moq-chip{display:inline-block;margin:2px 0 6px;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:700;background:rgba(245,158,11,.16);border:1px solid rgba(245,158,11,.5)}
 .product-view-moq{display:inline-block;margin:0 0 8px;padding:5px 12px;border-radius:99px;font-size:13px;font-weight:700;background:rgba(245,158,11,.16);border:1px solid rgba(245,158,11,.5)}
 .cart-meta.moq-warn{color:#d97706;font-weight:700}
-.menubtn{position:relative;margin-left:2px}
+.menubtn{position:relative;margin-left:2px;background:var(--primary);border-color:var(--primary)}
 .burger{display:flex;flex-direction:column;gap:4px;width:20px}
-.burger i{display:block;height:2.5px;border-radius:2px;background:var(--text)}
+.burger i{display:block;height:2.5px;border-radius:2px;background:#fff}
 body.admin-mode .menubtn{display:none!important}
 .menu-backdrop{position:fixed;inset:0;z-index:125;background:rgba(2,6,23,.5);opacity:0;pointer-events:none;transition:opacity .25s ease}
 .menu-backdrop.show{opacity:1;pointer-events:auto}
@@ -206,6 +206,55 @@ body.admin-mode .menubtn{display:none!important}
 .menu-links{display:flex;flex-direction:column;gap:2px;padding:10px 20px;border-top:1px solid var(--line)}
 .menu-links a,.menu-links button{background:none;border:0;padding:8px 0;color:var(--muted);font:inherit;font-size:13.5px;font-weight:600;text-align:left;text-decoration:none;cursor:pointer;border-radius:0}
 .menu-ver{padding:6px 20px 14px;font-size:11.5px;color:var(--muted)}
+.ord-wrap{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.ord-tabs{display:flex;gap:4px;padding:0 14px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.ord-tabs::-webkit-scrollbar{display:none}
+.ord-tab{position:relative;display:flex;align-items:center;gap:7px;padding:15px 12px 13px;background:none;border:0;border-radius:0;color:var(--muted);font:inherit;font-weight:800;font-size:14px;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-1px;cursor:pointer}
+.ord-tab.active{color:var(--text);border-bottom-color:#f5b83d}
+.ord-count{min-width:22px;height:22px;padding:0 6px;border-radius:99px;background:var(--surface2);border:1px solid var(--line);font-size:12px;display:grid;place-items:center;color:var(--text)}
+.ord-tools{display:flex;gap:10px;padding:14px;border-bottom:1px solid var(--line)}
+.ord-search{flex:1;display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.ord-search input{flex:1;min-width:0;border:0;outline:none;padding:11px 14px;background:transparent;color:var(--text)}
+.ord-search span{display:grid;place-items:center;width:46px;border-left:1px solid var(--line);color:var(--muted)}
+.ord-head,.ord-row{display:grid;grid-template-columns:1.15fr 1.05fr .5fr 1.45fr .95fr 52px;gap:10px;align-items:center;padding:0 16px}
+.ord-head{background:var(--surface2);height:46px;font-weight:800;font-size:13.5px;color:var(--muted);border-bottom:1px solid var(--line)}
+.ord-row{position:relative;min-height:66px;padding-top:11px;padding-bottom:11px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px}
+.ord-row:active{background:var(--surface2)}
+.ord-row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--stripe,#94a3b8)}
+.ord-id{font-weight:900;text-decoration:underline;text-underline-offset:3px;color:var(--text)}
+.ord-date small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.ord-items{text-align:center;color:var(--muted);font-weight:700}
+.ord-total{font-weight:900;white-space:nowrap}
+.ord-total s{display:block;color:var(--muted);font-weight:600;font-size:12px}
+.ord-pill{display:inline-flex;align-items:center;justify-content:space-between;gap:8px;min-width:150px;max-width:100%;padding:6px 12px;border-radius:99px;border:1px solid var(--stripe,#94a3b8);background:color-mix(in srgb,var(--stripe,#94a3b8) 16%,transparent);color:var(--text);font-size:12.5px;font-weight:700;white-space:nowrap}
+.ord-eye{justify-self:end;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:none;border:1px solid var(--line);color:var(--muted);font-size:17px}
+.ord-empty{padding:34px 18px;text-align:center;color:var(--muted)}
+.ord-more{display:block;margin:14px auto;padding:10px 22px}
+@media(max-width:700px){
+  .ord-head{display:none}
+  .ord-row{grid-template-columns:1fr auto;grid-template-areas:"id total" "date items" "status eye";row-gap:8px;padding:13px 14px 13px 18px}
+  .ord-row .ord-id{grid-area:id}.ord-row .ord-total{grid-area:total;text-align:right}
+  .ord-row .ord-date{grid-area:date}.ord-row .ord-items{grid-area:items;text-align:right}
+  .ord-row .ord-status{grid-area:status}.ord-row .ord-eye{grid-area:eye}
+  .ord-pill{min-width:0}
+}
+.od-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.od-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}
+.od-cell{background:var(--surface2);border-radius:14px;padding:11px 13px}
+.od-cell small{display:block;color:var(--muted);font-size:12px;margin-bottom:3px}
+.od-cell b{font-size:14.5px}
+.od-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px;overflow:hidden}
+.od-card h3{margin:0 0 10px;font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.od-table{width:100%;border-collapse:collapse;font-size:14px}
+.od-table th{text-align:left;color:var(--muted);font-size:12px;padding:6px 6px 8px;border-bottom:1px solid var(--line)}
+.od-table td{padding:10px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+.od-table th:last-child,.od-table td:last-child{text-align:right}
+.od-table .num{text-align:center}
+.od-code{display:block;color:var(--muted);font-size:12px}
+.od-sum{display:flex;justify-content:space-between;padding:6px 0}
+.od-sum.total{font-size:17px;font-weight:900;border-top:1px solid var(--line);margin-top:6px;padding-top:12px}
+.od-actions{display:flex;flex-wrap:wrap;gap:10px}
+.od-actions button{flex:1 1 150px}
 .pf-dash,.pf-page{background:var(--bg)}
 .pf-sub{font-size:12px;color:var(--muted);margin-top:2px}
 .pf-page .modal-body{max-width:760px;margin:0 auto}
@@ -973,6 +1022,10 @@ body.admin-mode .langsel{display:none}
 <div class="modal sheet over pf-page" id="pfOrders">
   <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">My orders</h2><div class="pf-sub">Your order history</div></div></div>
   <div class="modal-body"><div id="customerOrders"></div></div>
+</div>
+<div class="modal sheet over pf-page" id="pfOrderDetail">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0" id="odTitle">Order</h2><div class="pf-sub" id="odSub"></div></div></div>
+  <div class="modal-body"><div id="orderDetailBody"></div></div>
 </div>
 <div class="modal sheet over pf-page" id="pfPayments">
   <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">Payments</h2><div class="pf-sub">Payment requests and balance</div></div></div>
@@ -3130,6 +3183,7 @@ async function cancelMyOrder(id){
   try{
     await apiPost({action:"customerCancelOrder",customerToken:customer()?.token,orderId:id});
     toast("Order cancelled");
+    if($("pfOrderDetail")?.classList.contains("show"))closeModal();
     loadCustomerOrders();
   }catch(e){toast("Could not cancel: "+e.message);}
 }
@@ -5081,28 +5135,107 @@ function normalizeServerOrder(o){
     statusHistory:Array.isArray(o.statusHistory)?o.statusHistory:[]
   };
 }
-function renderCustomerOrders(){
-  const c=getCustomer(),box=$("customerOrders");
-  if(!box)return;
-  if(!c){box.innerHTML="";return;}
+const ORD_STRIPE={"new":"#f59e0b","confirmed":"#6366f1","processing":"#3b82f6","ready":"#14b8a6","out for delivery":"#8b5cf6","completed":"#22c55e","cancelled":"#f97316","canceled":"#f97316"};
+const ORD_TABS=[["all","All Orders"],["pending","Pending"],["processing","Processing"],["completed","Completed"],["cancelled","Cancelled"]];
+function ordGroup(o){
+  const st=String(o.status||"New").toLowerCase();
+  if(st==="new"||st==="confirmed")return "pending";
+  if(st==="completed")return "completed";
+  if(st.startsWith("cancel"))return "cancelled";
+  return "processing";
+}
+function ordGrand(o){return (Number(o.total)||0)+(Number(o.deliveryCharge)||0);}
+function ordMine(){
+  const c=getCustomer();if(!c)return [];
   const customerId=String(c.customerId||c.id||"").trim().toUpperCase();
   const phone=String(c.phone||"").replace(/\D/g,"").slice(-10);
-  const mine=orders.filter(o=>{
+  return orders.filter(o=>{
     const oid=String(o.customer?.id||o.customer?.customerId||"").trim().toUpperCase();
     const op=String(o.customer?.phone||"").replace(/\D/g,"").slice(-10);
     return (customerId&&oid===customerId)||(!oid&&phone&&op===phone);
-  });
-  box.innerHTML=mine.length?mine.map(o=>{
-    const status=String(o.status||"New"),sl=status.toLowerCase();
-    const canInvoice=sl!=="new"&&sl!=="cancelled"&&sl!=="canceled";
-    const charge=Number(o.deliveryCharge)||0,grand=(Number(o.total)||0)+charge;
-    const priceChanged=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
-    const amountHtml=priceChanged
-      ?`<span class="cart-meta" style="text-decoration:line-through">${money((Number(o.originalTotal)||0)+charge)}</span> <strong>${money(grand)}</strong> <span class="cart-meta">(revised)</span>`
-      :`<strong>${money(grand)}</strong>`;
-    const oid=arg(o.id);
-    return `<div class="order-card"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(o.id)}</b><span class="cart-meta">${new Date(o.date).toLocaleString("en-IN")}</span></div><div class="order-items">${(o.items||[]).map(i=>`<div><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""} × ${Number(i.qty!=null?i.qty:i.quantity)||0} × ${money(i.price)}</div>`).join("")}</div>${charge>0?`<div class="cart-meta">Delivery charge: ${money(charge)}</div>`:""}<div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">${amountHtml}<span class="status">${esc(orderStatusLabel(status,o.deliveryMethod))}</span></div><div class="cart-meta">${o.deliveryMethod==="Delivery"?"🚚 Home delivery":"🏬 Pickup from shop"}</div><details class="track"><summary>📦 Track order</summary>${orderTimelineHtml(o)}</details><div class="order-actions">${sl==="new"?`<button type="button" class="outline" onclick="editMyOrder(${oid})">✎ Edit Order</button><button type="button" class="outline" onclick="cancelMyOrder(${oid})">✕ Cancel Order</button>`:""}<button type="button" class="outline" onclick="reorderById(${oid})">🔁 Reorder</button><button type="button" class="outline" onclick="resendOrderById(${oid})">↗ Resend Order to WhatsApp</button></div>${canInvoice?`<button type="button" class="outline" style="width:100%;margin-top:8px" onclick="downloadInvoiceById(${oid})">🧾 Download Invoice</button>`:`<p class="cart-meta" style="margin-top:8px;text-align:center">Invoice available once your order is confirmed</p>`}</div>`;
-  }).join(""):`<div class="empty"><h3>No previous orders</h3><p>Your orders will appear here after checkout.</p></div>`;
+  }).sort((x,y)=>new Date(y.date)-new Date(x.date));
+}
+function ordFmtDate(d){
+  const t=new Date(d);if(isNaN(t))return {d:"",t:""};
+  const dd=String(t.getDate()).padStart(2,"0"),mm=String(t.getMonth()+1).padStart(2,"0");
+  return {d:`${dd}/${mm}/${t.getFullYear()}`,t:t.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit",hour12:true})};
+}
+function ordPill(o){
+  const st=String(o.status||"New"),col=ORD_STRIPE[st.toLowerCase()]||"#94a3b8";
+  return `<span class="ord-pill" style="--stripe:${col}"><span>${esc(orderStatusLabel(st,o.deliveryMethod))}</span><span aria-hidden="true">&#8964;</span></span>`;
+}
+window.__ordTab=window.__ordTab||"all";window.__ordQ=window.__ordQ||"";window.__ordLimit=25;
+function ordSetTab(t){window.__ordTab=t;window.__ordLimit=25;renderCustomerOrders();}
+function ordSearch(v){window.__ordQ=v;window.__ordLimit=25;renderCustomerOrders(true);}
+function ordMore(){window.__ordLimit+=25;renderCustomerOrders(true);}
+function renderCustomerOrders(listOnly){
+  const c=getCustomer(),box=$("customerOrders");
+  if(!box)return;
+  if(!c){box.innerHTML="";return;}
+  const mine=ordMine();
+  if(!box.querySelector("#ordList")){
+    box.innerHTML=`<div class="ord-wrap"><div class="ord-tabs" id="ordTabs"></div><div class="ord-tools"><div class="ord-search"><input id="ordSearchInput" type="search" autocomplete="off" placeholder="Search orders" oninput="ordSearch(this.value)"><span aria-hidden="true">&#128269;</span></div></div><div class="ord-head"><span>Order ID &#8595;</span><span>Date/Time</span><span class="ord-items">Items</span><span>Status</span><span>Total</span><span></span></div><div id="ordList"></div></div>`;
+    $("ordSearchInput").value=window.__ordQ;
+    listOnly=false;
+  }
+  const counts={all:mine.length,pending:0,processing:0,completed:0,cancelled:0};
+  mine.forEach(o=>{counts[ordGroup(o)]++;});
+  if(!listOnly){
+    $("ordTabs").innerHTML=ORD_TABS.filter(([k])=>k!=="cancelled"||counts.cancelled>0||window.__ordTab==="cancelled").map(([k,l])=>`<button type="button" class="ord-tab${window.__ordTab===k?" active":""}" onclick="ordSetTab('${k}')">${l}${k!=="all"&&counts[k]?`<span class="ord-count">${counts[k]}</span>`:""}</button>`).join("");
+  }
+  const q=window.__ordQ.trim().toLowerCase();
+  let list=mine.filter(o=>window.__ordTab==="all"||ordGroup(o)===window.__ordTab);
+  if(q)list=list.filter(o=>String(o.id).toLowerCase().includes(q)||(o.items||[]).some(i=>String(i.name||"").toLowerCase().includes(q)||String(i.code||i.id||"").toLowerCase().includes(q)));
+  const shown=list.slice(0,window.__ordLimit);
+  $("ordList").innerHTML=shown.length?shown.map(o=>{
+    const st=String(o.status||"New"),col=ORD_STRIPE[st.toLowerCase()]||"#94a3b8",dt=ordFmtDate(o.date);
+    const changed=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
+    const charge=Number(o.deliveryCharge)||0;
+    return `<div class="ord-row" style="--stripe:${col}" onclick="openOrderDetail(${arg(o.id)})"><span class="ord-id">#${esc(o.id)}</span><span class="ord-date">${esc(dt.d)}<small>${esc(dt.t)}</small></span><span class="ord-items">${(o.items||[]).length}</span><span class="ord-status">${ordPill(o)}</span><span class="ord-total">${changed?`<s>${money((Number(o.originalTotal)||0)+charge)}</s>`:""}${money(ordGrand(o))}</span><button type="button" class="ord-eye" aria-label="View order" onclick="event.stopPropagation();openOrderDetail(${arg(o.id)})">&#128065;</button></div>`;
+  }).join("")+(list.length>shown.length?`<button type="button" class="outline ord-more" onclick="ordMore()">Show more orders</button>`:""):`<div class="ord-empty"><h3 style="margin:0 0 6px;color:var(--text)">${mine.length?"No orders found":"No previous orders"}</h3><p style="margin:0">${mine.length?"Try another tab or search.":"Your orders will appear here after checkout."}</p></div>`;
+}
+function openOrderDetail(id){
+  const o=orders.find(x=>String(x.id)===String(id));
+  if(!o){toast("Order not found. Please refresh your orders.");return;}
+  const st=String(o.status||"New"),sl=st.toLowerCase(),dt=ordFmtDate(o.date);
+  const canInvoice=sl!=="new"&&sl!=="cancelled"&&sl!=="canceled";
+  const charge=Number(o.deliveryCharge)||0,grand=ordGrand(o);
+  const changed=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
+  const oid=arg(o.id);
+  const items=o.items||[];
+  const sub=items.reduce((a,i)=>a+(Number(i.price)||0)*(Number(i.qty!=null?i.qty:i.quantity)||0),0);
+  $("odTitle").textContent="Order #"+o.id;
+  $("odSub").textContent=dt.d+(dt.t?" \u00b7 "+dt.t:"");
+  $("orderDetailBody").innerHTML=`
+    <div class="od-card">
+      <div class="od-top"><div>${ordPill(o)}</div><div class="od-sum total" style="border:0;margin:0;padding:0;gap:10px">${changed?`<s class="cart-meta">${money((Number(o.originalTotal)||0)+charge)}</s>`:""}<span>${money(grand)}</span></div></div>
+      <div class="od-grid">
+        <div class="od-cell"><small>Order date</small><b>${esc(dt.d)}</b></div>
+        <div class="od-cell"><small>Items</small><b>${items.length}</b></div>
+        <div class="od-cell"><small>${o.deliveryMethod==="Delivery"?"Delivery":"Pickup"}</small><b>${o.deliveryMethod==="Delivery"?"Home delivery":"Pickup from shop"}</b></div>
+      </div>
+      ${changed?`<div class="cart-meta">The shop revised the price of this order.</div>`:""}
+    </div>
+    <div class="od-card"><h3>Items</h3>
+      <table class="od-table"><thead><tr><th>Product</th><th class="num">Qty</th><th>Amount</th></tr></thead><tbody>
+      ${items.map(i=>{const q=Number(i.qty!=null?i.qty:i.quantity)||0;return `<tr><td>${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""}<span class="od-code">[${esc(i.code||i.id||"-")}] \u00b7 ${money(i.price)} each</span></td><td class="num">${q}</td><td>${money((Number(i.price)||0)*q)}</td></tr>`;}).join("")}
+      </tbody></table>
+      <div style="margin-top:10px">
+        <div class="od-sum"><span>Subtotal</span><span>${money(sub)}</span></div>
+        ${charge>0?`<div class="od-sum"><span>Delivery charge</span><span>${money(charge)}</span></div>`:""}
+        <div class="od-sum total"><span>Total</span><span>${money(grand)}</span></div>
+      </div>
+    </div>
+    <div class="od-card"><h3>Track order</h3>${orderTimelineHtml(o)}</div>
+    <div class="od-card"><h3>Actions</h3>
+      <div class="od-actions">
+        ${sl==="new"?`<button type="button" class="outline" onclick="editMyOrder(${oid})">&#9999;&#65039; Edit Order</button><button type="button" class="outline" onclick="cancelMyOrder(${oid})">&#10060; Cancel Order</button>`:""}
+        <button type="button" class="outline" onclick="reorderById(${oid})">&#128257; Reorder</button>
+        <button type="button" class="outline" onclick="resendOrderById(${oid})">&#128172; Send to WhatsApp</button>
+      </div>
+      ${canInvoice?`<button type="button" class="primary" style="width:100%;margin-top:12px" onclick="downloadInvoiceById(${oid})">&#128196; Download Invoice</button>`:`<p class="cart-meta" style="margin:12px 0 0;text-align:center">Invoice available once your order is confirmed</p>`}
+    </div>`;
+  pfOpen("pfOrderDetail");
 }
 function reorderById(id){
   const o=orders.find(x=>String(x.id)===String(id));
