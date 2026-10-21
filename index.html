@@ -408,6 +408,72 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
 .chosen{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#eff6ff;border-radius:12px;padding:10px 12px;font-weight:800}
 
 /* ===== Customer hub (admin) ===== */
+
+
+
+.ord-id .ord-cust{display:block;font-weight:600;font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px;word-break:break-word}
+/* --- Admin products list --- */
+.ap-tabs{display:flex;gap:6px;overflow-x:auto;padding:4px;margin-top:12px;background:var(--surface2);border-radius:14px;scrollbar-width:none}
+.ap-tabs::-webkit-scrollbar{display:none}
+.ap-tab{border:0;background:none;padding:8px 14px;border-radius:10px;font-weight:700;font-size:13px;color:var(--muted);white-space:nowrap;cursor:pointer}
+.ap-tab.active{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(15,23,42,.12)}
+.ap-card{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px}
+.ap-cols,.ap-row{display:grid;grid-template-columns:56px minmax(0,2.2fr) 84px minmax(0,1fr) 70px minmax(0,1.2fr) auto;gap:12px;align-items:center}
+.ap-cols{padding:14px 0 8px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line);margin-top:10px}
+.ap-row{padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}
+.ap-row:last-of-type{border-bottom:0}
+.ap-thumb{width:52px;height:52px;border-radius:12px;background:var(--surface2);overflow:hidden;display:grid;place-items:center;color:var(--muted);font-weight:800}
+.ap-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ap-name{min-width:0}.ap-name b{display:block;word-break:break-word}.ap-name small{color:var(--muted);font-size:11px}
+.ap-pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+.ap-pill.off{color:var(--muted);background:var(--surface2)}
+.ap-pill.low{color:#b42318;border-color:#fecdca;background:#fef3f2}
+.ap-act{display:flex;gap:6px;justify-content:flex-end}
+.ap-more{width:100%;margin-top:14px}
+@media(max-width:720px){
+  .ap-cols{display:none}
+  .ap-row{grid-template-columns:56px minmax(0,1fr) auto;grid-template-areas:"t n a" "t m a";gap:4px 12px}
+  .ap-row .ap-thumb{grid-area:t}.ap-row .ap-name{grid-area:n}.ap-row .ap-act{grid-area:a;flex-direction:column}
+  .ap-row .ap-c-status,.ap-row .ap-c-price,.ap-row .ap-c-stock,.ap-row .ap-c-cat{display:none}
+  .ap-row .ap-mobile-meta{grid-area:m;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px}
+}
+@media(min-width:721px){.ap-mobile-meta{display:none}}
+/* --- Admin customer profile --- */
+.cp-hero{display:flex;gap:16px;align-items:center;margin-bottom:14px}
+.cp-avatar{width:84px;height:84px;border-radius:50%;flex:0 0 84px;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;font-size:30px;font-weight:800;color:var(--muted)}
+.cp-avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.cp-hero-main{min-width:0;flex:1}
+.cp-name-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.cp-name{margin:0;font-size:24px;line-height:1.15;word-break:break-word}
+.cp-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px;font-size:13px}
+.cp-meta b{display:block;color:var(--muted);font-size:11px;font-weight:700;margin-bottom:1px}
+.cp-meta span{word-break:break-word}
+.cp-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.cp-actions>*{flex:1 1 auto;text-align:center;text-decoration:none;box-sizing:border-box}
+.cp-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:14px;align-items:start}
+.cp-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px}
+.cp-h{margin:0 0 6px;font-size:16px}
+.cp-range{color:var(--accent);font-weight:700;font-size:13px}
+.cp-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;font-weight:700;margin:6px 0 4px}
+.cp-legend .l1{color:#4f46e5}.cp-legend .l2{color:#8b5cf6}
+.cp-chart{width:100%;overflow:hidden}
+.cp-chart svg{display:block;width:100%;height:auto}
+.cp-chart-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;font-size:13px}
+.cp-check{display:flex;gap:8px;align-items:center;font-weight:600;cursor:pointer}
+.cp-side{display:grid;gap:14px}
+.cp-row{display:flex;gap:12px;align-items:flex-start}
+.cp-row b{font-size:14px}
+.cp-ico{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:0 0 34px;font-weight:800}
+.cp-ico-green{background:#dcfce7;color:#15803d}.cp-ico-red{background:#fee2e2;color:#b42318}.cp-ico-amber{background:#fef3c7;color:#b45309}
+.cp-two{display:flex;gap:22px;margin-top:4px;font-size:13px}
+.cp-two small{display:block;color:var(--muted);font-size:11px}
+.cp-divider{height:1px;background:var(--line);margin:12px 0}
+.cp-admin-tag{font-size:10px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 7px;margin-left:6px;vertical-align:middle}
+.cp-loc-box{background:var(--surface2);border-radius:14px;padding:12px;font-size:13px;display:grid;gap:8px}
+.cp-loc-box code{font-size:13px;word-break:break-all}
+.cp-loc-btns{display:flex;gap:8px;flex-wrap:wrap}
+.cp-loc-btns>*{flex:1 1 auto;text-align:center;text-decoration:none;box-sizing:border-box}
+@media(max-width:720px){.cp-grid{grid-template-columns:1fr}.cp-avatar{width:68px;height:68px;flex-basis:68px;font-size:24px}.cp-name{font-size:20px}}
 .cd-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .cd-actions>*{flex:1 1 auto;text-align:center;text-decoration:none;box-sizing:border-box}
 .subtabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:16px;overflow-x:auto}
@@ -668,7 +734,6 @@ body.admin-mode .langsel{display:none}
     <div id="adminDashboardTab"><div class="stats" id="adminStats"></div>
       <div class="dash-grid">
         <div class="panel"><h3>Recent admin logins</h3><div id="loginLog"></div></div>
-        <div class="panel"><h3>Backup</h3><p class="muted" id="backupInfo"></p><button type="button" class="primary" id="backupBtn" onclick="backupNow()">Back up now</button><p class="muted" style="margin-top:10px">Copies the whole Google Sheet into a private Drive folder. For automatic weekly backups, run <b>installTriggers</b> once in Apps Script.</p></div>
       </div></div>
 
     <div id="adminProductsTab" class="hidden"><div class="panel">
@@ -676,7 +741,13 @@ body.admin-mode .langsel{display:none}
       <details class="pw-box" id="lowStockBox" style="margin-top:12px"><summary>Low Stock <span id="lowStockCount" class="hidden" style="background:var(--danger);color:#fff;border-radius:999px;padding:1px 8px;font-size:12px;margin-left:6px">0</span></summary>
         <div id="lowStockList"><div class="muted" style="padding:8px 0">Loading…</div></div>
       </details>
-      <div class="tablewrap" style="margin-top:12px"><table class="table rtable"><thead><tr><th>Product</th><th>Category</th><th>Subcategory</th><th>Image ID</th><th>Sizes / Price</th><th>Stock</th><th>Active</th><th>Action</th></tr></thead><tbody id="adminProductsBody"></tbody></table></div>
+      <div class="ap-tabs" id="apCatTabs" role="tablist" aria-label="Product categories"></div>
+      <div class="ap-card">
+        <div class="ap-head"><h3 style="margin:0">Products</h3><p class="muted" style="margin:2px 0 0;font-size:13px">Manage your products and see their stock. <span id="apCount"></span></p></div>
+        <div class="ap-cols" aria-hidden="true"><span></span><span>Name</span><span>Status</span><span>Price</span><span>Stock</span><span>Category</span><span></span></div>
+        <div id="adminProductsBody"></div>
+        <button type="button" class="outline ap-more hidden" id="apMoreBtn" onclick="apLoadMore()">Load more</button>
+      </div>
     </div></div>
 
     <div id="adminOrdersTab" class="hidden"><div class="panel">
@@ -687,7 +758,12 @@ body.admin-mode .langsel{display:none}
         </select></div>
       </div>
       <div class="order-summary-bar" id="orderSummaryBar"></div>
-      <div class="tablewrap"><table class="table orders-table rtable"><thead><tr><th>Order</th><th>Customer</th><th>Items / Product Code</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody id="ordersBody"></tbody></table></div>
+      <div class="ord-wrap" style="margin-top:12px">
+        <div class="ord-tools"><div class="ord-search"><input id="adminOrdSearchInput" type="search" autocomplete="off" placeholder="Search order ID, customer or phone" oninput="adminOrdSearch(this.value)"><span aria-hidden="true">&#128269;</span></div></div>
+        <div class="ord-head"><span>Order ID &#8595;</span><span>Date/Time</span><span class="ord-items">Items</span><span>Status</span><span>Total</span><span></span></div>
+        <div id="ordersBody"></div>
+        <button type="button" class="outline ord-more hidden" id="adminOrdMore" onclick="adminOrdMore()">Show more orders</button>
+      </div>
     </div></div>
 
     <div id="adminCustomersTab" class="hidden"><div class="panel">
@@ -799,6 +875,12 @@ body.admin-mode .langsel{display:none}
         <div class="toolbar"><span class="grow"></span><button type="button" class="outline" onclick="openCouponForm()">+ Add Coupon</button></div>
         <div class="tablewrap"><table class="table"><thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min order</th><th>Valid</th><th>Active</th><th></th></tr></thead><tbody id="couponRows"></tbody></table></div>
       </details>
+      <details class="pw-box" style="margin-top:14px"><summary>Backup</summary>
+        <p class="muted" id="backupInfo" style="margin-top:10px">Checking last backup…</p>
+        <button type="button" class="primary" id="backupBtn" onclick="backupNow()">Back up now</button>
+        <p class="muted" style="margin-top:10px">Copies the whole Google Sheet into a private Drive folder and keeps the newest copies. For automatic weekly backups, run <b>installTriggers</b> once in Apps Script.</p>
+      </details>
+
     </div></div>
 
       <div class="dl-fallback hidden" id="repFb"><span>Download didn't start?</span><button type="button" class="outline" onclick="openDlInBrowser()">Open in browser</button><button type="button" class="outline" onclick="copyDlLink()">Copy link</button></div>
@@ -902,6 +984,10 @@ body.admin-mode .langsel{display:none}
   </div>
 </div>
 
+<div class="modal sheet no-i18n" id="adminOrderDetailModal">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0" id="adminOdTitle">Order</h2><div class="pf-sub" id="adminOdSub"></div></div></div>
+  <div class="modal-body"><div id="adminOdBody"></div></div>
+</div>
 <div class="modal no-i18n" id="priceEditModal">
   <div class="modal-head">
     <div><h2 style="margin:0">Edit Order Prices</h2><div style="font-size:12px;color:var(--muted)" id="priceEditOrderId"></div></div>
@@ -1070,6 +1156,10 @@ body.admin-mode .langsel{display:none}
       <div class="field" style="margin-top:12px"><label>Mobile Number *</label><input id="signupPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
       <div class="field" style="margin-top:12px"><label>Address *</label><textarea id="signupAddress" placeholder="House / street / village / town"></textarea></div>
       <div class="field" style="margin-top:12px"><label>Pincode *</label><input id="signupPin" inputmode="numeric" placeholder="6-digit pincode"></div>
+      <div class="field" style="margin-top:12px"><label>Exact location *</label>
+        <button type="button" class="outline" id="signupLocBtn" style="width:100%" onclick="getSignupLocation()">📍 Get my location</button>
+        <div id="signupLocStatus" class="muted" style="margin-top:6px;font-size:13px">Turn on GPS and tap the button. This is needed to register.</div>
+      </div>
       <button type="button" class="primary" style="width:100%;margin-top:16px" onclick="customerSignup()">Submit Registration</button>
       <div class="account-note" style="margin-top:14px">Your registration will remain Pending until BIJAYA HOUSING approves it. Save the Customer ID shown after you submit. After approval, call <b>8114832749</b> to receive your password.</div>
     </div>
@@ -1079,11 +1169,24 @@ body.admin-mode .langsel{display:none}
 <div class="modal sheet no-i18n" id="customerDetailModal">
   <div class="modal-head">
     <button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">←</button>
-    <div class="grow"><h2 style="margin:0" id="cdTitle">Customer</h2><div style="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap"><span class="customer-id-badge" id="cdIdBadge"></span><span class="status" id="cdStatus"></span></div></div>
+    <div class="grow"><h2 style="margin:0">Customer profile</h2></div>
   </div>
   <div class="modal-body">
-    <div class="cd-actions">
-      <a class="outline" id="cdCallBtn" href="tel:">☎ Call</a>
+    <div class="cp-hero">
+      <div class="cp-avatar" id="cdAvatar"><span id="cdAvatarTxt">?</span></div>
+      <div class="cp-hero-main">
+        <div class="cp-name-row"><h2 id="cdTitle" class="cp-name">Customer</h2><span class="status" id="cdStatus"></span></div>
+        <div class="cp-meta">
+          <div><b>Type</b><span id="cdMetaType">—</span></div>
+          <div><b>Customer ID</b><span class="customer-id-badge" id="cdIdBadge"></span></div>
+          <div><b>Phone</b><span id="cdMetaPhone">—</span></div>
+          <div><b>Pincode</b><span id="cdMetaPin">—</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cp-actions">
+      <button type="button" class="outline" onclick="cdTabSwitch('details');cdStartEdit()">Edit</button>
+      <a class="primary" id="cdCallBtn" href="tel:">Contact</a>
       <button type="button" class="outline" onclick="viewCustomerIdCardAdmin(cdId)">🪪 ID Card</button>
       <button type="button" class="outline" onclick="manageCustomerAccess(cdId)">🔒 Access</button>
       <button type="button" class="outline" onclick="openResetPassword(cdId)">🔑 Reset Password</button>
@@ -1091,12 +1194,39 @@ body.admin-mode .langsel{display:none}
       <button type="button" class="outline hidden" id="cdBlockBtn" onclick="setCustomerStatus(cdId,this.dataset.next)">Block</button>
     </div>
     <div class="subtabs">
-      <button type="button" class="subtab active" data-pane="details" onclick="cdTabSwitch('details')">Details</button>
+      <button type="button" class="subtab active" data-pane="summary" onclick="cdTabSwitch('summary')">Summary</button>
+      <button type="button" class="subtab" data-pane="details" onclick="cdTabSwitch('details')">Details</button>
       <button type="button" class="subtab" data-pane="payments" onclick="cdTabSwitch('payments')">Payments <span id="cdPayCount"></span></button>
       <button type="button" class="subtab" data-pane="orders" onclick="cdTabSwitch('orders')">Orders <span id="cdOrderCount"></span></button>
     </div>
 
-    <div id="cdPaneDetails">
+    <div id="cdPaneSummary">
+      <div class="cp-grid">
+        <div class="cp-card cp-chart-card">
+          <div class="between"><h3 class="cp-h">Order History</h3><span class="cp-range">Last 12 months</span></div>
+          <div class="cp-legend"><span id="cdLegendNow"></span><span id="cdLegendPrev"></span></div>
+          <div id="cdChart" class="cp-chart"></div>
+          <div class="cp-chart-foot"><label class="cp-check"><input type="checkbox" id="cdCompare" checked onchange="renderCdChart()"> Compare to previous period</label></div>
+        </div>
+        <div class="cp-side">
+          <div class="cp-card cp-standing">
+            <div class="cp-row"><span class="cp-ico cp-ico-green" id="cdStandIco">₹</span><div><b id="cdStandTitle">In Good Standing</b><div class="cp-two"><div><small>Last payment</small><span id="cdLastPayDate">—</span></div><div><small>Amount</small><span id="cdLastPayAmt">—</span></div></div></div></div>
+            <div class="cp-divider"></div>
+            <div class="cp-row"><span class="cp-ico cp-ico-amber">🏷</span><div><b id="cdOpenTitle">Open Orders</b><div class="cp-two"><div><small>Latest order</small><span id="cdOpenDate">—</span></div><div><small>Status</small><span id="cdOpenStatus">—</span></div></div></div></div>
+          </div>
+          <div class="cp-card" id="cdLocCard">
+            <h3 class="cp-h">Location <span class="cp-admin-tag">Admin only</span></h3>
+            <div id="cdLocBody"></div>
+          </div>
+        </div>
+      </div>
+      <div class="cp-card" style="margin-top:14px">
+        <h3 class="cp-h">At a glance</h3>
+        <div class="info-grid" id="cdGlance"></div>
+      </div>
+    </div>
+
+    <div id="cdPaneDetails" class="hidden">
       <div id="cdViewBox">
         <div class="info-grid" id="cdViewInfo"></div>
         <button type="button" class="outline" style="width:100%;margin-top:14px" onclick="cdStartEdit()">✎ Edit Profile</button>
@@ -1724,6 +1854,29 @@ function showAuthMode(mode){
   $("signupModeBtn")?.classList.toggle("outline",login);
 }
 
+let __signupLoc=null;
+function getSignupLocation(){
+  const st=$("signupLocStatus"),btn=$("signupLocBtn");
+  const fail=msg=>{__signupLoc=null;st.textContent=msg;st.style.color="#b42318";btn.textContent="📍 Get my location";toast(msg,5000);};
+  if(!navigator.geolocation){fail("Location is not available on this device. Please use a phone with GPS.");return;}
+  btn.disabled=true;btn.textContent="Getting location…";st.style.color="";st.textContent="Getting your location…";
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      btn.disabled=false;
+      __signupLoc={lat:Number(pos.coords.latitude.toFixed(6)),lng:Number(pos.coords.longitude.toFixed(6))};
+      btn.textContent="✅ Location captured";st.style.color="#067647";
+      st.textContent="Location saved for registration. You can tap again to refresh it.";
+    },
+    err=>{
+      btn.disabled=false;
+      if(err&&err.code===1)fail("Location is blocked. Please turn ON GPS and allow location access for this app, then tap Get my location again.");
+      else if(err&&err.code===3)fail("Could not get your location in time. Please turn ON GPS, move to an open area and try again.");
+      else fail("GPS is off or unavailable. Please turn ON GPS and tap Get my location again.");
+    },
+    {enableHighAccuracy:true,timeout:20000,maximumAge:0}
+  );
+}
+
 async function customerSignup(){
   const name=$("signupName").value.trim();
   const type=$("signupType").value;
@@ -1733,9 +1886,17 @@ async function customerSignup(){
   if(!name||!type||phone.length!==10||!address||pin.length!==6){
     toast("Enter valid name, type, 10-digit phone, address and 6-digit pincode"); return;
   }
+  if(!__signupLoc){
+    toast("Please turn ON GPS and tap 'Get my location' before registering.",5000);
+    $("signupLocBtn")?.scrollIntoView({block:"center",behavior:"smooth"});
+    return;
+  }
   try{
-    const d=await apiPost({action:"signupCustomer",customer:{name,type,phone,address,pin}});
+    const d=await apiPost({action:"signupCustomer",customer:{name,type,phone,address,pin,lat:__signupLoc.lat,lng:__signupLoc.lng}});
     $("signupName").value=""; $("signupPhone").value=""; $("signupAddress").value=""; $("signupPin").value="";
+    __signupLoc=null;
+    if($("signupLocBtn")){$("signupLocBtn").textContent="📍 Get my location";}
+    if($("signupLocStatus")){$("signupLocStatus").style.color="";$("signupLocStatus").textContent="Turn on GPS and tap the button. This is needed to register.";}
     showAuthMode("login");
     const box=$("signupSuccessBox");
     if(box && d.customerId){
@@ -4126,9 +4287,49 @@ function renderAdminStats(){
   const b=$("payTabBadge");
   if(b){b.textContent=verifying.length;b.classList.toggle("hidden",!verifying.length);}
 }
+let apCat="All",apLimit=20;
+const AP_PAGE=20;
+function apStock(p){return p.sizes?.length?p.sizes.reduce((t,s)=>t+Number(s.stock||0),0):Number(p.stock)||0;}
+function apPrice(p){
+  if(p.sizes?.length){
+    const v=p.sizes.map(s=>Number(s.price)||0);const lo=Math.min(...v),hi=Math.max(...v);
+    return lo===hi?money(lo):money(lo)+" – "+money(hi);
+  }
+  return money(p.price);
+}
+function setApCat(c){apCat=c;apLimit=AP_PAGE;renderAdminProductList();}
+function apLoadMore(){apLimit+=AP_PAGE;renderAdminProductList();}
+function renderAdminProductList(){
+  const body=$("adminProductsBody");if(!body)return;
+  const cats=[...new Set(products.map(p=>String(p.category||"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{sensitivity:"base"}));
+  if(apCat!=="All"&&!cats.includes(apCat))apCat="All";
+  const tabs=$("apCatTabs");
+  if(tabs)tabs.innerHTML=["All",...cats].map(c=>`<button type="button" role="tab" class="ap-tab${c===apCat?" active":""}" aria-selected="${c===apCat}" onclick="setApCat(${arg(c)})">${esc(c)}</button>`).join("");
+  const list=products.filter(p=>apCat==="All"||String(p.category||"").trim()===apCat)
+    .sort((a,b)=>String(a.name||"").localeCompare(String(b.name||""),undefined,{sensitivity:"base",numeric:true}));
+  const shown=list.slice(0,apLimit);
+  body.innerHTML=shown.length?shown.map(p=>{
+    const imageUrl=String(p.image||"").trim()||githubImageUrl(p.imageId);
+    const active=p.active!==false,stock=apStock(p);
+    const stockPill=stock<=0?`<span class="ap-pill low">Out</span>`:stock<=5?`<span class="ap-pill low">${stock}</span>`:`<span>${stock}</span>`;
+    const initial=esc(String(p.name||"?").trim().charAt(0).toUpperCase());
+    return `<div class="ap-row">
+      <div class="ap-thumb">${imageUrl||p.imageId?`<img class="async-product-image" loading="lazy" decoding="async" width="52" height="52" data-src="${esc(imageUrl)}" data-image-id="${esc(p.imageId||"")}" data-direct-src="${esc(p.image||"")}" alt="">`:initial}</div>
+      <div class="ap-name"><b>${esc(p.name)}</b><small>${esc(p.id)}${p.subcategory?" · "+esc(p.subcategory):""}</small></div>
+      <div class="ap-c-status"><span class="ap-pill${active?"":" off"}">${active?"Active":"Inactive"}</span></div>
+      <div class="ap-c-price">${apPrice(p)}</div>
+      <div class="ap-c-stock">${stockPill}</div>
+      <div class="ap-c-cat">${esc(p.category||"—")}</div>
+      <div class="ap-act"><button type="button" class="outline" onclick="editProduct(${arg(p.id)})">Edit</button><button type="button" class="outline" onclick="openStockInModal(${arg(p.id)})">+ Stock</button></div>
+      <div class="ap-mobile-meta"><span class="ap-pill${active?"":" off"}">${active?"Active":"Inactive"}</span><b>${apPrice(p)}</b><span>Stock: ${stockPill}</span><span class="muted">${esc(p.category||"")}</span></div>
+    </div>`;
+  }).join(""):`<div class="empty"><h3>No products in this category</h3></div>`;
+  if($("apCount"))$("apCount").textContent=list.length?`Showing ${shown.length} of ${list.length}.`:"";
+  const more=$("apMoreBtn");if(more)more.classList.toggle("hidden",list.length<=shown.length);
+  if(typeof scheduleProductImages==="function")scheduleProductImages();
+}
 function renderAdmin(){
-  const body=$("adminProductsBody");
-  if(body)body.innerHTML=products.map(p=>`<tr><td data-label="Product"><b>${esc(p.name)}</b><br><span class="cart-meta">${esc(p.id)}</span></td><td data-label="Category">${esc(p.category)}</td><td data-label="Subcategory">${esc(p.subcategory||"—")}</td><td data-label="Image ID">${esc(p.imageId||"—")}</td><td data-label="Sizes / Price">${p.sizes?.length?p.sizes.map(s=>`${esc(s.name)} ${money(s.price)}`).join("<br>"):money(p.price)}</td><td data-label="Stock">${p.sizes?.length?p.sizes.reduce((a,s)=>a+Number(s.stock||0),0):p.stock}</td><td data-label="Active">${p.active!==false?"Yes":"No"}</td><td data-label="Action"><div class="row-actions"><button type="button" class="outline" onclick="editProduct(${arg(p.id)})">Edit</button><button type="button" class="outline" onclick="openStockInModal(${arg(p.id)})">📦 Stock In</button></div></td></tr>`).join("");
+  renderAdminProductList();
   renderAdminOrders();
   renderAdminStats();
   renderCategoryPickers();
@@ -4304,23 +4505,88 @@ async function commitImport(){
 function orderStatus(o){return String(o.status||"New").trim()||"New";}
 function orderSortRank(status){const s=status.toLowerCase();if(s==="completed")return 90;if(s==="cancelled"||s==="canceled")return 100;if(s==="new")return 10;if(s==="confirmed")return 20;if(s==="processing")return 30;if(s==="ready")return 40;return 50;}
 function setOrderStatusFilter(value){orderStatusFilter=value||"All";renderAdminOrders();}
+window.__aoQ="";window.__aoLimit=25;window.__aoOpenId=null;
+function adminOrdSearch(v){window.__aoQ=v;window.__aoLimit=25;renderAdminOrders();}
+function adminOrdMore(){window.__aoLimit+=25;renderAdminOrders();}
+function adminOrdPill(o){
+  const st=orderStatus(o),col=ORD_STRIPE[st.toLowerCase()]||"#94a3b8";
+  return `<span class="ord-pill" style="--stripe:${col}"><span>${esc(st)}</span></span>`;
+}
 function renderAdminOrders(){
   const body=$("ordersBody");if(!body)return;
   const counts={New:0,Confirmed:0,Processing:0,Ready:0,"Out for Delivery":0,Completed:0,Cancelled:0};
   orders.forEach(o=>{const s=orderStatus(o),key=s.toLowerCase()==="canceled"?"Cancelled":s;if(counts[key]!==undefined)counts[key]++;});
   if($("orderSummaryBar"))$("orderSummaryBar").innerHTML=Object.entries(counts).map(([k,v])=>`<span class="order-summary-pill">${k}<strong>${v}</strong></span>`).join("");
   let list=orders.filter(o=>orderStatusFilter==="All"||orderStatus(o).toLowerCase()===orderStatusFilter.toLowerCase()||(orderStatusFilter==="Cancelled"&&["cancelled","canceled"].includes(orderStatus(o).toLowerCase())));
+  const q=String(window.__aoQ||"").trim().toLowerCase();
+  if(q)list=list.filter(o=>String(o.id).toLowerCase().includes(q)||String(o.customer?.name||"").toLowerCase().includes(q)||digits(o.customer?.phone).includes(digits(q)||"\u0000")||String(o.customer?.id||"").toLowerCase().includes(q));
   list=[...list].sort((a,b)=>{const r=orderSortRank(orderStatus(a))-orderSortRank(orderStatus(b));return r||new Date(b.date)-new Date(a.date);});
+  const shown=list.slice(0,window.__aoLimit);
+  body.innerHTML=shown.length?shown.map(o=>{
+    const st=orderStatus(o),col=ORD_STRIPE[st.toLowerCase()]||"#94a3b8",dt=ordFmtDate(o.date);
+    const changed=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
+    const charge=Number(o.deliveryCharge)||0;
+    return `<div class="ord-row" style="--stripe:${col}" onclick="openAdminOrderDetail(${arg(o.id)})"><span class="ord-id">#${esc(o.id)}<small class="ord-cust">${esc(o.customer?.name||"")}</small></span><span class="ord-date">${esc(dt.d)}<small>${esc(dt.t)}</small></span><span class="ord-items">${(o.items||[]).length}</span><span class="ord-status">${adminOrdPill(o)}</span><span class="ord-total">${changed?`<s>${money((Number(o.originalTotal)||0)+charge)}</s>`:""}${money(ordGrand(o))}</span><button type="button" class="ord-eye" aria-label="View order" onclick="event.stopPropagation();openAdminOrderDetail(${arg(o.id)})">&#128065;</button></div>`;
+  }).join(""):`<div class="ord-empty"><h3 style="margin:0 0 6px;color:var(--text)">No matching orders</h3><p style="margin:0">Try another status or search.</p></div>`;
+  const more=$("adminOrdMore");if(more)more.classList.toggle("hidden",list.length<=shown.length);
+  refreshAdminOrderDetail();
+}
+function openAdminOrderDetail(id){
+  const o=orders.find(x=>String(x.id)===String(id));
+  if(!o){toast("Order not found. Please refresh orders.");return;}
+  window.__aoOpenId=String(o.id);
+  renderAdminOrderDetail(o);
+  openModal("adminOrderDetailModal");
+}
+function refreshAdminOrderDetail(){
+  if(!$("adminOrderDetailModal")?.classList.contains("show"))return;
+  const o=orders.find(x=>String(x.id)===String(window.__aoOpenId));
+  if(o)renderAdminOrderDetail(o);
+}
+function renderAdminOrderDetail(o){
+  const cur=orderStatus(o),dt=ordFmtDate(o.date),items=o.items||[],charge=Number(o.deliveryCharge)||0,grand=ordGrand(o);
+  const changed=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
+  const sub=items.reduce((t,i)=>t+(Number(i.price)||0)*(Number(i.qty!=null?i.qty:i.quantity)||0),0);
+  const cid=o.customer?.id,oid=arg(o.id);
   const statusOptions=["New","Confirmed","Processing","Ready","Out for Delivery","Completed","Cancelled"];
-  body.innerHTML=list.length?list.map(o=>{
-    const items=o.items||[];
-    const itemHtml=items.length?items.map(i=>`<div style="margin-bottom:5px"><b>[${esc(i.code||i.id||"-")}]</b> ${esc(i.name||"Product")}${i.size?` <span class="cart-meta">(${esc(i.size)})</span>`:""} × ${Number(i.qty)||0} @ ${money(i.price)}</div>`).join(""):`<span class="cart-meta">No item details</span>`;
-    const priceChanged=o.originalTotal!=null&&Number(o.originalTotal)!==Number(o.total);
-    const amountHtml=priceChanged?`<span class="cart-meta" style="text-decoration:line-through">${money(o.originalTotal)}</span><br><b>${money(o.total)}</b>`:`<b>${money(o.total)}</b>`;
-    const cur=orderStatus(o),cid=o.customer?.id,charge=Number(o.deliveryCharge)||0;
-    const nameHtml=cid?`<button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(cid)})"><b>${esc(o.customer?.name||cid)}</b></button>`:`<b>${esc(o.customer?.name||"")}</b>`;
-    return `<tr><td data-label="Order"><b>${esc(o.id)}</b><br><span class="cart-meta">${fmtDT(o.date)}</span></td><td data-label="Customer">${nameHtml}<br>${esc(o.customer?.phone||"")}<br><span class="cart-meta">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</span><br><span class="cart-meta">${o.deliveryMethod==="Delivery"?"🚚 Delivery":"🏬 Pickup"}${o.expectedDelivery?" • "+fmtD(o.expectedDelivery):""}</span></td><td data-label="Items" class="stack">${itemHtml}</td><td data-label="Amount">${amountHtml}${charge?`<br><span class="cart-meta">+ ${money(charge)} delivery</span>`:""}</td><td data-label="Status"><select class="order-status-select" onchange="adminChangeOrderStatus(${arg(o.id)},this.value)">${statusOptions.map(s=>`<option value="${s}" ${cur===s?"selected":""}>${s}</option>`).join("")}</select></td><td data-label="Action" class="action-cell"><div class="row-actions"><button type="button" class="outline" onclick="openDeliveryModal(${arg(o.id)})">🚚 Delivery</button><button type="button" class="outline" onclick="openPriceEditModal(${arg(o.id)})">✏️ Prices</button><button type="button" class="outline" onclick="generateInvoiceById(${arg(o.id)})">🧾 Invoice</button></div></td></tr>`;
-  }).join(""):`<tr><td colspan="6" class="full"><div class="empty"><h3>No matching orders</h3></div></td></tr>`;
+  const nameHtml=cid?`<button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(cid)})"><b>${esc(o.customer?.name||cid)}</b></button>`:`<b>${esc(o.customer?.name||"Customer")}</b>`;
+  const phone=digits(o.customer?.phone);
+  $("adminOdTitle").textContent="Order #"+o.id;
+  $("adminOdSub").textContent=dt.d+(dt.t?" \u00b7 "+dt.t:"");
+  $("adminOdBody").innerHTML=`
+    <div class="od-card">
+      <div class="od-top"><select class="order-status-select" style="min-width:170px;font-weight:700" onchange="adminChangeOrderStatus(${oid},this.value)">${statusOptions.map(s=>`<option value="${s}" ${cur===s||(s==="Cancelled"&&cur.toLowerCase()==="canceled")?"selected":""}>${s}</option>`).join("")}</select><div class="od-sum total" style="border:0;margin:0;padding:0;gap:10px">${changed?`<s class="cart-meta">${money((Number(o.originalTotal)||0)+charge)}</s>`:""}<span>${money(grand)}</span></div></div>
+      <div class="cart-meta" style="margin-top:8px">Change the status here. When you set <b>Completed</b>, the customer sees <b>Delivered</b>.</div>
+      <div class="od-grid">
+        <div class="od-cell"><small>Order date</small><b>${esc(dt.d)}</b></div>
+        <div class="od-cell"><small>Items</small><b>${items.length}</b></div>
+        <div class="od-cell"><small>${o.deliveryMethod==="Delivery"?"Delivery":"Pickup"}</small><b>${o.deliveryMethod==="Delivery"?"Home delivery":"Pickup from shop"}${o.expectedDelivery?" \u00b7 "+esc(fmtD(o.expectedDelivery)):""}</b></div>
+      </div>
+      ${changed?`<div class="cart-meta">Price was revised from the original order.</div>`:""}
+    </div>
+    <div class="od-card"><h3>Customer</h3>
+      <div>${nameHtml}${cid?` <span class="customer-id-badge">${esc(cid)}</span>`:""}</div>
+      ${phone?`<div style="margin-top:6px"><a href="tel:${esc(phone)}">${esc(o.customer?.phone)}</a></div>`:""}
+      <div class="cart-meta" style="margin-top:6px">${esc(o.customer?.address||"")} ${esc(o.customer?.pin||"")}</div>
+    </div>
+    <div class="od-card"><h3>Items</h3>
+      <table class="od-table"><thead><tr><th>Product</th><th class="num">Qty</th><th>Amount</th></tr></thead><tbody>
+      ${items.map(i=>{const q=Number(i.qty!=null?i.qty:i.quantity)||0;return `<tr><td>${esc(i.name||"Product")}${i.size?` (${esc(i.size)})`:""}<span class="od-code">[${esc(i.code||i.id||"-")}] \u00b7 ${money(i.price)} each</span></td><td class="num">${q}</td><td>${money((Number(i.price)||0)*q)}</td></tr>`;}).join("")}
+      </tbody></table>
+      <div style="margin-top:10px">
+        <div class="od-sum"><span>Subtotal</span><span>${money(sub)}</span></div>
+        ${charge>0?`<div class="od-sum"><span>Delivery charge</span><span>${money(charge)}</span></div>`:""}
+        <div class="od-sum total"><span>Total</span><span>${money(grand)}</span></div>
+      </div>
+    </div>
+    <div class="od-card"><h3>Track order</h3>${orderTimelineHtml(o)}</div>
+    <div class="od-card"><h3>Update</h3>
+      <div class="od-actions">
+        <button type="button" class="outline" onclick="openDeliveryModal(${oid})">&#128666; Delivery</button>
+        <button type="button" class="outline" onclick="openPriceEditModal(${oid})">&#9999;&#65039; Prices</button>
+        <button type="button" class="outline" onclick="generateInvoiceById(${oid})">&#128196; Invoice</button>
+      </div>
+    </div>`;
 }
 
 /* --- Customers --- */
@@ -4349,7 +4615,7 @@ function openCustomerDetailModal(id){
   cdId=id;
   fillCustomerDetail(c);
   cdCancelEdit();
-  cdTabSwitch("details");
+  cdTabSwitch("summary");
   openModal("customerDetailModal");
 }
 function refreshCustomerDetail(){
@@ -4400,6 +4666,9 @@ function fillCustomerDetail(c){
   $("cdIdBadge").textContent=c.id;
   $("cdStatus").className="status "+customerStatusClass(st);
   $("cdStatus").textContent=st;
+  $("cdMetaType").textContent=c.type||"Customer";
+  $("cdMetaPhone").textContent=c.phone||"—";
+  $("cdMetaPin").textContent=c.pin||"—";
   $("cdCallBtn").href="tel:"+digits(c.phone);
   $("cdApproveBtn").classList.toggle("hidden",s!=="pending");
   $("cdBlockBtn").classList.toggle("hidden",s==="pending");
@@ -4417,10 +4686,99 @@ function fillCustomerDetail(c){
   $("cdCreditLimit").value=c.creditLimit||"";
   renderCdPayments();
   renderCustomerDetailOrders(c);
+  renderCdAvatar(c);
+  renderCdLocation(c);
+  renderCdSummary(c);
+}
+const __cdPhotoCache={};
+function renderCdAvatar(c){
+  const box=$("cdAvatar");if(!box)return;
+  const initials=String(c.name||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase()||"?";
+  const put=b64=>{
+    if(cdId!==c.id)return;
+    box.innerHTML=b64?`<img alt="" src="${/^data:/.test(b64)?b64:"data:image/jpeg;base64,"+b64}">`:`<span>${esc(initials)}</span>`;
+  };
+  if(!c.photoId){put(null);return;}
+  if(__cdPhotoCache[c.id]!==undefined){put(__cdPhotoCache[c.id]);return;}
+  put(null);
+  const token=sessionStorage.getItem("admin_token");
+  apiPost({action:"getCustomerPhoto",adminToken:token,customerId:c.id})
+    .then(d=>{__cdPhotoCache[c.id]=d.photoBase64||null;put(__cdPhotoCache[c.id]);})
+    .catch(()=>{});
+}
+function renderCdLocation(c){
+  const box=$("cdLocBody");if(!box)return;
+  const lat=Number(c.lat),lng=Number(c.lng);
+  const has=c.lat!==""&&c.lat!=null&&c.lng!==""&&c.lng!=null&&isFinite(lat)&&isFinite(lng);
+  if(!has){
+    box.innerHTML=`<div class="cp-loc-box"><span>No exact location saved for this customer. Customers who registered before GPS was required will not have one.</span></div>`;
+    return;
+  }
+  const coords=lat.toFixed(6)+", "+lng.toFixed(6);
+  const url="https://www.google.com/maps?q="+encodeURIComponent(lat+","+lng);
+  box.innerHTML=`<div class="cp-loc-box"><div><small class="muted">Latitude, Longitude</small><br><code>${esc(coords)}</code></div><div class="cp-loc-btns"><a class="primary" href="${esc(url)}" target="_blank" rel="noopener">📍 Open in Maps</a><button type="button" class="outline" onclick="copyText(${arg(coords)},'Coordinates copied')">Copy</button></div></div>`;
+}
+function renderCdSummary(c){
+  const mine=customerOrdersFor(c);
+  const live=mine.filter(o=>!["cancelled","canceled"].includes(orderStatus(o).toLowerCase()));
+  // standing
+  const pays=adminPayments.filter(p=>p.customerId===c.id);
+  const dues=pays.filter(isDue).reduce((t,p)=>t+(Number(p.remaining)||Math.max(0,(Number(p.amount)||0)-(Number(p.paidAmount)||0))),0);
+  const paid=pays.filter(p=>(Number(p.paidAmount)||0)>0).sort((x,y)=>new Date(y.paidOn||y.date)-new Date(x.paidOn||x.date))[0];
+  $("cdStandTitle").textContent=dues>0?"Payment Due "+money(dues):"In Good Standing";
+  $("cdStandIco").className="cp-ico "+(dues>0?"cp-ico-red":"cp-ico-green");
+  $("cdLastPayDate").textContent=paid?fmtD(paid.paidOn||paid.date):"—";
+  $("cdLastPayAmt").textContent=paid?money(paid.paidAmount):"—";
+  // open order
+  const open=live.filter(o=>!["completed","delivered"].includes(orderStatus(o).toLowerCase())).sort((x,y)=>new Date(y.date)-new Date(x.date))[0];
+  const latest=open||[...mine].sort((x,y)=>new Date(y.date)-new Date(x.date))[0];
+  $("cdOpenTitle").textContent=open?"Open Order":"Latest Order";
+  $("cdOpenDate").textContent=latest?fmtD(latest.date):"—";
+  $("cdOpenStatus").innerHTML=latest?`<span class="status">${esc(orderStatus(latest))}</span>`:"—";
+  // glance
+  const total=live.reduce((t,o)=>t+(Number(o.total)||0),0);
+  $("cdGlance").innerHTML=[["Registered",fmtD(c.dateRegistered)],["Last login",fmtDT(c.lastLogin)],["Orders",String(mine.length)],["Lifetime ordered",money(total)],["Address",esc(c.address||"—")+(c.pin?" - "+esc(c.pin):"")]].map(([k,v])=>`<div><b>${k}</b>${v}</div>`).join("");
+  renderCdChart();
+}
+function renderCdChart(){
+  const box=$("cdChart");if(!box)return;
+  const c=adminCustomers.find(x=>x.id===cdId);if(!c){box.innerHTML="";return;}
+  const live=customerOrdersFor(c).filter(o=>!["cancelled","canceled"].includes(orderStatus(o).toLowerCase()));
+  const now=new Date(),y0=now.getFullYear(),m0=now.getMonth();
+  const cur=Array(12).fill(0),prev=Array(12).fill(0),labels=[];
+  for(let i=0;i<12;i++){const d=new Date(y0,m0-11+i,1);labels.push(d.toLocaleString("en-IN",{month:"short"}));}
+  live.forEach(o=>{
+    const d=new Date(o.date);if(isNaN(d))return;
+    const diff=(y0-d.getFullYear())*12+(m0-d.getMonth()); // 0 = this month
+    if(diff>=0&&diff<12)cur[11-diff]+=Number(o.total)||0;
+    else if(diff>=12&&diff<24)prev[11-(diff-12)]+=Number(o.total)||0;
+  });
+  const cmp=$("cdCompare")?.checked;
+  const sum=a=>a.reduce((t,v)=>t+v,0);
+  $("cdLegendNow").className="l1";$("cdLegendNow").textContent="○ "+money(sum(cur))+" this year";
+  $("cdLegendPrev").className="l2";$("cdLegendPrev").textContent=cmp?"○ "+money(sum(prev))+" last year":"";
+  const W=640,H=260,L=44,R=12,T=14,B=28,pw=W-L-R,ph=H-T-B;
+  const max=Math.max(1,...cur,...(cmp?prev:[0]));
+  const nice=(()=>{const p=Math.pow(10,Math.floor(Math.log10(max)));const n=max/p;return (n<=1?1:n<=2?2:n<=5?5:10)*p;})();
+  const x=i=>L+(pw*i)/11, y=v=>T+ph-(ph*v)/nice;
+  const pts=a=>a.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`);
+  const fmtTick=v=>v>=100000?(v/100000).toFixed(v%100000?1:0)+"L":v>=1000?(v/1000).toFixed(v%1000?1:0)+"k":String(v);
+  let g="";
+  for(let k=0;k<=4;k++){const v=nice*k/4,yy=y(v);g+=`<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" stroke="#e2e8f0" stroke-width="1"/><text x="${L-8}" y="${yy+4}" text-anchor="end" font-size="11" fill="#94a3b8">${fmtTick(v)}</text>`;}
+  labels.forEach((m,i)=>{g+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="11" fill="#94a3b8">${m}</text>`;});
+  const area=a=>`M${x(0)},${y(0)} L${pts(a).join(" L")} L${x(11)},${y(0)} Z`;
+  const line=(a,col)=>`<polyline fill="none" stroke="${col}" stroke-width="2" points="${pts(a).join(" ")}"/>`+a.map((v,i)=>`<circle cx="${x(i)}" cy="${y(v)}" r="3.5" fill="#fff" stroke="${col}" stroke-width="2"/>`).join("");
+  let body="";
+  if(cmp)body+=`<path d="${area(prev)}" fill="#8b5cf6" opacity=".10"/>`+line(prev,"#8b5cf6");
+  body+=`<path d="${area(cur)}" fill="#4f46e5" opacity=".10"/>`+line(cur,"#4f46e5");
+  box.innerHTML=sum(cur)+sum(prev)===0
+    ?`<div class="empty" style="padding:30px 10px"><h3>No orders in the last 12 months</h3></div>`
+    :`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Order value by month">${g}${body}</svg>`;
 }
 function cdTabSwitch(pane){
   document.querySelectorAll("#customerDetailModal .subtab").forEach(b=>b.classList.toggle("active",b.dataset.pane===pane));
-  ["details","payments","orders"].forEach(p=>$("cdPane"+p[0].toUpperCase()+p.slice(1))?.classList.toggle("hidden",p!==pane));
+  ["summary","details","payments","orders"].forEach(p=>$("cdPane"+p[0].toUpperCase()+p.slice(1))?.classList.toggle("hidden",p!==pane));
+  if(pane==="summary")renderCdChart();
 }
 function customerOrdersFor(c){
   const cid=String(c.id||"").trim().toUpperCase(),phone=digits(c.phone).slice(-10);
@@ -5087,7 +5445,7 @@ function selectedDeliveryMethod(){
 const FLOW_PICKUP=["New","Confirmed","Processing","Ready","Completed"];
 const FLOW_DELIVERY=["New","Confirmed","Processing","Ready","Out for Delivery","Completed"];
 function orderStatusLabel(status,method){
-  if(status==="Completed")return method==="Delivery"?"Delivered":"Picked up";
+  if(status==="Completed")return "Delivered";
   return status;
 }
 function orderTimelineHtml(o){
@@ -5136,7 +5494,7 @@ function normalizeServerOrder(o){
   };
 }
 const ORD_STRIPE={"new":"#f59e0b","confirmed":"#6366f1","processing":"#3b82f6","ready":"#14b8a6","out for delivery":"#8b5cf6","completed":"#22c55e","cancelled":"#f97316","canceled":"#f97316"};
-const ORD_TABS=[["all","All Orders"],["pending","Pending"],["processing","Processing"],["completed","Completed"],["cancelled","Cancelled"]];
+const ORD_TABS=[["all","All Orders"],["pending","Pending"],["processing","Processing"],["completed","Delivered"],["cancelled","Cancelled"]];
 function ordGroup(o){
   const st=String(o.status||"New").toLowerCase();
   if(st==="new"||st==="confirmed")return "pending";
@@ -5398,8 +5756,14 @@ function adminTab(tab){
 async function loadDashboardExtras(){
   if(!sessionStorage.getItem("admin_token"))return;
   try{
-    const [log,info]=await Promise.all([apiPost({action:"adminGetLoginLog"}),apiPost({action:"adminGetBackupInfo"})]);
-    $("loginLog").innerHTML=(log.log||[]).slice(0,8).map(e=>`<div class="log-row"><span class="status ${e.result==="Success"?"status-active":e.result==="Password Changed"?"":"status-blocked"}">${esc(e.result)}</span><span>${esc(e.username)}</span><span class="cart-meta">${fmtDT(e.time)}</span></div>`).join("")||`<div class="cart-meta">No entries yet</div>`;
+    const log=await apiPost({action:"adminGetLoginLog"});
+    $("loginLog").innerHTML=(log.log||[]).slice(0,8).map(e=>`<div class="log-row"><span class="status ${e.result==="Success"?"status-active":e.result==="Password Changed"?"":"status-blocked"}">${esc(e.result)}</span><span>${esc(e.username)}</span><span class="cart-meta">${fmtDT(e.time)}</span></div>`).join("")||`<div class="cart-meta">No logins yet.</div>`;
+  }catch(e){if(e.message!=="Admin session expired")console.error(e);}
+}
+async function loadBackupInfo(){
+  if(!sessionStorage.getItem("admin_token")||!isSuperAdminUI())return;
+  try{
+    const info=await apiPost({action:"adminGetBackupInfo"});
     $("backupInfo").textContent=info.lastBackup?`Last backup: ${fmtDT(info.lastBackup)} (newest ${info.keep} copies are kept)`:"No backup yet.";
   }catch(e){if(e.message!=="Admin session expired")console.error(e);}
 }
@@ -5409,7 +5773,7 @@ async function backupNow(){
       toast("Backing up… this can take a few seconds",6000);
       const d=await apiPost({action:"adminBackupNow"});
       toast("Backup saved: "+d.name,5000);
-      loadDashboardExtras();
+      loadBackupInfo();
     }catch(e){toast("Backup failed: "+e.message,5000);}
   });
 }
@@ -5497,7 +5861,7 @@ const RATE_TYPES=["Customer","Plumber","Electrician","Painter","Raj Mistri","Til
 const ALERT_EVENT_LABELS={order:"New order",signup:"New signup",payment:"Payment claim",quote:"Quotation request",cancel:"Order cancelled",lowstock:"Low stock"};
 async function loadAdminSettingsTab(){
   if(!isSuperAdminUI())return;
-  await Promise.all([loadShopSettings(),loadAlertSettings(),loadCoupons()]);
+  await Promise.all([loadShopSettings(),loadAlertSettings(),loadCoupons(),loadBackupInfo()]);
 }
 async function loadShopSettings(){
   try{
