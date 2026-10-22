@@ -10,6 +10,7 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://script.google.com">
 <script>try{var __t=localStorage.getItem("app_theme");if(__t)document.documentElement.setAttribute("data-theme",__t);}catch(e){}</script>
+<script>try{if(/[?&]portfolio=/.test(location.search))document.documentElement.classList.add("pp-mode");}catch(e){}</script>
 <style>
 :root{
   --bg:#f6f7fb;--surface:#fff;--surface2:#f1f5f9;--text:#0f172a;--muted:#64748b;
@@ -412,6 +413,100 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
 
 
 .ord-id .ord-cust{display:block;font-weight:600;font-size:12px;color:var(--muted);text-decoration:none;margin-top:2px;word-break:break-word}
+
+/* --- Portfolio: admin tab --- */
+#customerDetailModal .subtabs{flex-wrap:wrap;overflow:visible}
+#customerDetailModal .subtab{flex:1 1 auto}
+.pt-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}
+.pt-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.pt-row>*{flex:1 1 auto;text-align:center;text-decoration:none;box-sizing:border-box}
+.pt-thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pt-th{position:relative;width:76px;height:76px;border-radius:12px;overflow:hidden;background:var(--surface2);border:1px solid var(--line)}
+.pt-th img{width:100%;height:100%;object-fit:cover;display:block}
+.pt-th button{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(15,23,42,.78);color:#fff;font-size:13px;line-height:22px;padding:0;cursor:pointer}
+.pt-entry{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;background:var(--surface)}
+.pt-entry h4{margin:0;font-size:16px;word-break:break-word}
+.pt-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-bottom:6px}
+.pt-note{white-space:pre-wrap;font-size:14px;margin:6px 0 0;word-break:break-word}
+.pt-pill{border-radius:999px;padding:2px 9px;font-weight:700;font-size:11px;border:1px solid var(--line)}
+.pt-pill.pub{background:#dcfce7;color:#15803d;border-color:#bbf7d0}
+.pt-pill.priv{background:var(--surface2);color:var(--muted)}
+
+/* --- Portfolio: public page (opened from the ID-card QR) --- */
+html.pp-mode body>*:not(#pubPortfolio):not(script):not(style){display:none!important}
+#pubPortfolio{display:none}
+html.pp-mode #pubPortfolio{display:block}
+html.pp-mode body{background:#f5f1e8}
+.pp{--pp-bg:#f5f1e8;--pp-ink:#13243d;--pp-navy:#0b3d82;--pp-gold:#a9740f;--pp-card:#fff;--pp-line:#e3dccb;--pp-muted:#5d6b80;
+  background:var(--pp-bg);color:var(--pp-ink);min-height:100vh;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.pp *{box-sizing:border-box}
+.pp-wrap{max-width:980px;margin:0 auto;padding:0 20px}
+.pp-top{display:flex;align-items:center;gap:12px;padding:16px 0}
+.pp-top img{height:44px;width:auto;display:block;border-radius:6px}
+.pp-top span{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--pp-muted);text-transform:uppercase}
+.pp-hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:center;padding:18px 0 30px}
+.pp-pill{display:inline-block;background:var(--pp-navy);color:#fff;font-weight:700;font-size:13px;padding:6px 14px;border-radius:999px;letter-spacing:.02em}
+.pp-name{font-family:Georgia,"Times New Roman",serif;font-weight:800;font-size:clamp(38px,8vw,72px);line-height:1.02;margin:14px 0 12px;color:var(--pp-ink);word-break:break-word}
+.pp-headline{font-size:18px;color:var(--pp-muted);max-width:34em;margin:0 0 20px}
+.pp-cta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.pp-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border-radius:14px;font-weight:800;font-size:15px;text-decoration:none;border:2px solid var(--pp-ink);color:var(--pp-ink);background:transparent}
+.pp-btn.primary{background:var(--pp-ink);color:#fff}
+.pp-btn.wa{background:#16a34a;border-color:#16a34a;color:#fff}
+.pp-social{display:flex;gap:10px;flex-wrap:wrap}
+.pp-chip{display:inline-flex;align-items:center;gap:9px;padding:8px 14px 8px 8px;border-radius:999px;background:var(--pp-card);border:1px solid var(--pp-line);color:var(--pp-ink);text-decoration:none;font-weight:700;font-size:14px;max-width:100%}
+.pp-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-chip svg{width:26px;height:26px;flex:0 0 26px}
+.pp-photo{aspect-ratio:4/5;border-radius:26px;overflow:hidden;background:linear-gradient(160deg,#dfe7f2,#c4d3e8);border:6px solid var(--pp-navy);display:grid;place-items:center;font-family:Georgia,serif;font-size:72px;font-weight:800;color:var(--pp-navy);box-shadow:0 22px 50px rgba(11,61,130,.2)}
+.pp-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.pp-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:6px 0 34px}
+.pp-stat{background:var(--pp-card);border:1px solid var(--pp-line);border-radius:18px;padding:16px;text-align:center}
+.pp-stat b{display:block;font-family:Georgia,serif;font-size:30px;line-height:1.1;color:var(--pp-navy)}
+.pp-stat small{color:var(--pp-muted);font-weight:600;font-size:12px}
+.pp h2.pp-h{font-family:Georgia,serif;font-size:clamp(26px,5vw,36px);margin:0 0 14px}
+.pp-about{margin-bottom:38px}
+.pp-about p{font-size:17px;margin:0;max-width:46em;white-space:pre-wrap}
+.pp-line{width:56px;height:4px;background:var(--pp-gold);border-radius:4px;margin:0 0 16px}
+.pp-work{margin-bottom:40px}
+.pp-entry{display:grid;grid-template-columns:96px minmax(0,1fr);gap:16px;margin-bottom:20px}
+.pp-date{padding-top:18px;text-align:right;color:var(--pp-muted);font-weight:700;font-size:13px;line-height:1.3}
+.pp-date b{display:block;font-family:Georgia,serif;font-size:26px;color:var(--pp-navy)}
+.pp-ecard{background:var(--pp-card);border:1px solid var(--pp-line);border-radius:22px;padding:18px;position:relative}
+.pp-ecard h3{margin:0 0 6px;font-size:20px;font-family:Georgia,serif}
+.pp-ecard p{margin:0;color:#334155;white-space:pre-wrap;word-break:break-word}
+.pp-gal{display:grid;gap:8px;margin-top:14px}
+.pp-gal.n1{grid-template-columns:1fr}
+.pp-gal.n2{grid-template-columns:1fr 1fr}
+.pp-gal.n4{grid-template-columns:1fr 1fr}
+.pp-gal.n3,.pp-gal.n5,.pp-gal.n6{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pp-gal.n3 .pp-g:first-child{grid-column:span 2;grid-row:span 2}
+.pp-g{position:relative;border-radius:14px;overflow:hidden;background:#e8edf5;aspect-ratio:4/3;border:0;padding:0;cursor:zoom-in;display:block;width:100%}
+.pp-gal.n1 .pp-g{aspect-ratio:16/10;max-height:440px}
+.pp-g img{width:100%;height:100%;object-fit:cover;display:block}
+.pp-g.load::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);animation:ppShine 1.2s infinite}
+@keyframes ppShine{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.pp-cta2{background:var(--pp-navy);color:#fff;border-radius:26px;padding:28px 22px;text-align:center;margin-bottom:28px}
+.pp-cta2 h2{font-family:Georgia,serif;margin:0 0 6px;font-size:clamp(24px,5vw,32px)}
+.pp-cta2 p{margin:0 0 16px;opacity:.85}
+.pp-cta2 .pp-btn{border-color:#fff;color:#fff}
+.pp-cta2 .pp-btn.primary{background:#fff;color:var(--pp-navy)}
+.pp-foot{border-top:1px solid var(--pp-line);padding:20px 0 34px;display:flex;align-items:center;gap:14px;color:var(--pp-muted);font-size:13px}
+.pp-foot img{height:40px;width:auto;border-radius:6px}
+.pp-empty{text-align:center;padding:60px 20px;color:var(--pp-muted)}
+.pp-empty h2{font-family:Georgia,serif;color:var(--pp-ink)}
+.pp-skel{height:20px;border-radius:10px;background:#e7e2d4;margin:12px 0;animation:ppPulse 1.2s infinite}
+@keyframes ppPulse{50%{opacity:.5}}
+.pp-lb{position:fixed;inset:0;z-index:99999;background:rgba(8,16,30,.94);display:grid;place-items:center;padding:16px}
+.pp-lb img{max-width:100%;max-height:86vh;border-radius:12px;display:block}
+.pp-lb button{position:absolute;border:0;background:rgba(255,255,255,.16);color:#fff;width:46px;height:46px;border-radius:50%;font-size:22px;cursor:pointer}
+.pp-lb .x{top:14px;right:14px}.pp-lb .pv{left:12px;top:50%}.pp-lb .nx{right:12px;top:50%}
+@media(max-width:720px){
+  .pp-hero{grid-template-columns:1fr;gap:20px}
+  .pp-photo{order:-1;max-width:300px;width:100%;margin:0 auto;font-size:56px}
+  .pp-entry{grid-template-columns:1fr;gap:6px}
+  .pp-date{text-align:left;padding-top:0;display:flex;gap:8px;align-items:baseline}
+  .pp-date b{display:inline;font-size:20px}
+  .pp-stats .pp-stat b{font-size:24px}
+}
 /* --- Admin products list --- */
 .ap-tabs{display:flex;gap:6px;overflow-x:auto;padding:4px;margin-top:12px;background:var(--surface2);border-radius:14px;scrollbar-width:none}
 .ap-tabs::-webkit-scrollbar{display:none}
@@ -1199,6 +1294,7 @@ body.admin-mode .langsel{display:none}
       <button type="button" class="subtab" data-pane="details" onclick="cdTabSwitch('details')">Details</button>
       <button type="button" class="subtab" data-pane="payments" onclick="cdTabSwitch('payments')">Payments <span id="cdPayCount"></span></button>
       <button type="button" class="subtab" data-pane="orders" onclick="cdTabSwitch('orders')">Orders <span id="cdOrderCount"></span></button>
+      <button type="button" class="subtab" data-pane="portfolio" onclick="cdTabSwitch('portfolio')">Portfolio</button>
     </div>
 
     <div id="cdPaneSummary">
@@ -1262,6 +1358,7 @@ body.admin-mode .langsel{display:none}
     </div>
 
     <div id="cdPaneOrders" class="hidden"><div id="customerDetailOrders"></div></div>
+    <div id="cdPanePortfolio" class="hidden"><div id="cdPortfolioBox"></div></div>
   </div>
 </div>
 
@@ -1676,8 +1773,16 @@ body.admin-mode .langsel{display:none}
 
 <div class="toast" id="toast"></div>
 
+<div id="pubPortfolio" aria-live="polite"></div>
+<script>/*! qrcode-generator (c) Kazuhiko Arase, MIT licence */
+var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1})},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(o*r,n*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(){var t=n("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});
+</script>
 <script>
 
+const PUBLIC_BASE="https://satyajeetmeher91.github.io/bijayahousing/";
+const PORTFOLIO_MODE=/[?&]portfolio=/.test(location.search);
+const PORTFOLIO_ID=(()=>{try{return String(new URLSearchParams(location.search).get("portfolio")||"").trim().toUpperCase().replace(/[^A-Z0-9\-]/g,"").slice(0,40);}catch(e){return "";}})();
+const portfolioUrl=id=>PUBLIC_BASE+"?portfolio="+encodeURIComponent(id);
 const API_URL="https://script.google.com/macros/s/AKfycbwXpRGn-_VTG7qTbGp-I-rNDmm_XBzvqgPIH3eB_OsNsq7OtD7R3KZnsXGMyWvJj8e4/exec";
 const WHATSAPP_NUMBER="918114832749";
 const GITHUB_IMAGE_BASE="https://satyajeetmeher91.github.io/bijayahousing/images/";
@@ -2479,6 +2584,297 @@ async function loadCustomerPhoto(c){
   }
 }
 
+/* ===== PORTFOLIO: admin tab (inside the customer profile) ===== */
+const ptState={cid:null,loaded:false,settings:{enabled:false,headline:"",bio:""},entries:[],form:null};
+const __ptImgCache={};
+function ptToday(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function ptFmtDate(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(String(v||"")))return "";const d=new Date(v+"T00:00:00");return isNaN(d)?"":d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});}
+async function ptLoad(force){
+  const box=$("cdPortfolioBox");if(!box||!cdId)return;
+  if(ptState.cid!==cdId){ptState.cid=cdId;ptState.loaded=false;ptState.form=null;}
+  if(ptState.loaded&&!force){ptRender();return;}
+  box.innerHTML=`<div class="empty"><h3>Loading portfolio…</h3></div>`;
+  const wanted=cdId;
+  try{
+    const d=await apiPost({action:"adminGetPortfolio",customerId:wanted});
+    if(cdId!==wanted)return;
+    ptState.settings=d.settings||{enabled:false,headline:"",bio:""};
+    ptState.entries=d.entries||[];
+    ptState.loaded=true;
+    ptRender();
+  }catch(e){
+    if(e.message==="Admin session expired")return;
+    box.innerHTML=`<div class="empty"><h3>Could not load portfolio</h3><p>${esc(e.message)}</p><button type="button" class="outline" onclick="ptLoad(true)">Try again</button></div>`;
+  }
+}
+function ptSyncSettings(){
+  if(!$("ptHeadline"))return;
+  ptState.settings={enabled:$("ptEnabled").checked,headline:$("ptHeadline").value,bio:$("ptBio").value};
+}
+function ptSyncForm(){
+  const f=ptState.form;if(!f||!$("ptTitle"))return;
+  f.date=$("ptDate").value;f.title=$("ptTitle").value;f.note=$("ptNote").value;f.pub=$("ptPub").checked;
+}
+function ptThumbHtml(kind,i,src,imageId){
+  const img=src?`<img alt="" src="${src}">`:`<img alt="" data-ptimg="${esc(imageId)}">`;
+  return `<div class="pt-th">${img}<button type="button" aria-label="Remove photo" onclick="ptRemoveImg('${kind}',${i})">&times;</button></div>`;
+}
+function ptRender(){
+  const box=$("cdPortfolioBox");if(!box)return;
+  ptSyncSettings();ptSyncForm();
+  const s=ptState.settings,f=ptState.form,url=portfolioUrl(cdId);
+  const total=f?f.keep.length+f.newImgs.length:0;
+  const formHtml=f?`
+    <div class="pt-card" id="ptFormCard">
+      <h3 class="cp-h">${f.id?"Edit entry":"Add work / update"}</h3>
+      <div class="field"><label>Date</label><input type="date" id="ptDate" value="${esc(f.date)}"></div>
+      <div class="field" style="margin-top:10px"><label>Title *</label><input id="ptTitle" maxlength="120" value="${esc(f.title)}" placeholder="e.g. Bathroom plumbing, Saheed Nagar"></div>
+      <div class="field" style="margin-top:10px"><label>Your note (work quality, response, behaviour)</label><textarea id="ptNote" rows="4" maxlength="1500" placeholder="What was done and how he performed">${esc(f.note)}</textarea></div>
+      <div style="margin-top:10px"><label style="font-weight:700;font-size:13px">Photos (${total}/6)</label>
+        <div class="pt-thumbs">
+          ${f.keep.map((id,i)=>ptThumbHtml("keep",i,null,id)).join("")}
+          ${f.newImgs.map((b,i)=>ptThumbHtml("new",i,"data:image/jpeg;base64,"+b,"")).join("")}
+        </div>
+        <button type="button" class="outline" style="margin-top:10px;width:100%" ${total>=6?"disabled":""} onclick="$('ptFile').click()">📷 Add photos</button>
+        <input type="file" id="ptFile" accept="image/*" multiple class="hidden" onchange="ptPickFiles(this)">
+      </div>
+      <label class="cp-check" style="margin-top:12px"><input type="checkbox" id="ptPub" ${f.pub?"checked":""}> Show this entry on the public portfolio</label>
+      <div class="pt-row"><button type="button" class="primary" id="ptSaveBtn" onclick="ptSaveEntry(this)">Save entry</button><button type="button" class="outline" onclick="ptCancelForm()">Cancel</button></div>
+    </div>`:"";
+  const entriesHtml=ptState.entries.length?ptState.entries.map(e=>`
+    <div class="pt-entry">
+      <div class="pt-meta"><span>${esc(ptFmtDate(e.date))}</span><span class="pt-pill ${e.public?"pub":"priv"}">${e.public?"Public":"Private"}</span></div>
+      <h4>${esc(e.title)}</h4>
+      ${e.note?`<p class="pt-note">${esc(e.note)}</p>`:""}
+      ${e.images.length?`<div class="pt-thumbs">${e.images.map(id=>`<div class="pt-th"><img alt="" data-ptimg="${esc(id)}"></div>`).join("")}</div>`:""}
+      <div class="pt-row">
+        <button type="button" class="outline" onclick="ptEditEntry(${arg(e.id)})">Edit</button>
+        <button type="button" class="outline" onclick="ptTogglePublic(${arg(e.id)},this)">${e.public?"Hide from public":"Show on public"}</button>
+        <button type="button" class="outline" style="color:#b42318" onclick="ptDeleteEntry(${arg(e.id)})">Delete</button>
+      </div>
+    </div>`).join(""):`<div class="empty" style="padding:24px 10px"><h3>No entries yet</h3><p>Add the customer's work and your notes over time. Public ones appear on the portfolio page.</p></div>`;
+  box.innerHTML=`
+    <div class="pt-card">
+      <div class="between"><h3 class="cp-h">Public portfolio</h3>
+        <label class="cp-check"><input type="checkbox" id="ptEnabled" ${s.enabled?"checked":""}> Switched on</label></div>
+      <div class="field" style="margin-top:6px"><label>Headline (one line under the name)</label><input id="ptHeadline" maxlength="90" value="${esc(s.headline)}" placeholder="e.g. Trusted plumber for homes and shops in Agalpur"></div>
+      <div class="field" style="margin-top:10px"><label>About (what you think of his work)</label><textarea id="ptBio" rows="4" maxlength="700" placeholder="A short professional introduction">${esc(s.bio)}</textarea></div>
+      <div class="pt-row">
+        <button type="button" class="primary" onclick="ptSaveSettings(this)">Save</button>
+        <a class="outline" href="${esc(url)}" target="_blank" rel="noopener">Open public page</a>
+        <button type="button" class="outline" onclick="copyText(${arg(url)},'Portfolio link copied')">Copy link</button>
+      </div>
+      <p class="muted" style="margin:10px 0 0;font-size:12px">The page shows name, type, phone and Facebook/Instagram from the profile, plus your public entries. Address and location are never shown. It stays hidden until you switch it on.</p>
+    </div>
+    ${formHtml}
+    <div class="between" style="margin:16px 0 0"><h3 class="cp-h" style="margin:0">Work &amp; notes</h3>${f?"":`<button type="button" class="primary" onclick="ptNewEntry()">+ Add entry</button>`}</div>
+    ${entriesHtml}`;
+  ptHydrateThumbs();
+}
+function ptHydrateThumbs(){
+  document.querySelectorAll("#cdPortfolioBox img[data-ptimg]").forEach(async img=>{
+    const id=img.dataset.ptimg,cid=ptState.cid;if(!id||img.src)return;
+    const key=cid+":"+id;
+    try{
+      if(!__ptImgCache[key]){
+        const d=await apiPost({action:"adminGetPortfolioImage",customerId:cid,imageId:id});
+        __ptImgCache[key]=d.imageBase64?"data:"+(d.mimeType||"image/jpeg")+";base64,"+d.imageBase64:"";
+      }
+      if(__ptImgCache[key])img.src=__ptImgCache[key];
+    }catch(e){}
+  });
+}
+async function ptCompress(file,maxSide,q){
+  const url=URL.createObjectURL(file);
+  try{
+    const img=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error("Could not read this photo"));i.src=url;});
+    const s=Math.min(1,maxSide/Math.max(img.naturalWidth||img.width,img.naturalHeight||img.height));
+    const c=document.createElement("canvas");
+    c.width=Math.max(1,Math.round((img.naturalWidth||img.width)*s));c.height=Math.max(1,Math.round((img.naturalHeight||img.height)*s));
+    const x=c.getContext("2d");x.fillStyle="#fff";x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);
+    return c.toDataURL("image/jpeg",q).split(",")[1];
+  }finally{URL.revokeObjectURL(url);}
+}
+async function ptPickFiles(input){
+  const f=ptState.form;if(!f)return;
+  ptSyncForm();
+  const files=[...input.files];input.value="";
+  const room=6-(f.keep.length+f.newImgs.length);
+  if(files.length>room)toast("Only "+Math.max(room,0)+" more photo(s) can be added to this entry.");
+  for(const file of files.slice(0,Math.max(room,0))){
+    try{f.newImgs.push(await ptCompress(file,1100,0.74));}
+    catch(e){toast(e.message||"Photo skipped");}
+  }
+  ptRender();
+}
+function ptRemoveImg(kind,i){
+  const f=ptState.form;if(!f)return;ptSyncForm();
+  if(kind==="keep")f.keep.splice(i,1);else f.newImgs.splice(i,1);
+  ptRender();
+}
+function ptNewEntry(){ptSyncSettings();ptState.form={id:null,date:ptToday(),title:"",note:"",pub:true,keep:[],newImgs:[]};ptRender();$("ptFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});}
+function ptEditEntry(id){
+  const e=ptState.entries.find(x=>x.id===id);if(!e)return;
+  ptSyncSettings();
+  ptState.form={id:e.id,date:e.date||ptToday(),title:e.title,note:e.note,pub:!!e.public,keep:[...e.images],newImgs:[]};
+  ptRender();$("ptFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function ptCancelForm(){ptState.form=null;ptRender();}
+async function ptSaveSettings(btn){
+  ptSyncSettings();
+  await busy(btn,async()=>{
+    try{
+      const s=ptState.settings;
+      const d=await apiPost({action:"adminSavePortfolioSettings",customerId:cdId,enabled:s.enabled,headline:s.headline,bio:s.bio});
+      ptState.settings=d.settings;
+      toast(s.enabled?"Saved. Public portfolio is ON":"Saved. Public portfolio is OFF");
+    }catch(e){if(e.message!=="Admin session expired")toast("Could not save: "+e.message,5000);}
+  });
+}
+async function ptSaveEntry(btn){
+  ptSyncForm();
+  const f=ptState.form;if(!f)return;
+  if(!f.title.trim()){toast("Please enter a title");$("ptTitle")?.focus();return;}
+  await busy(btn,async()=>{
+    try{
+      await apiPost({action:"adminSavePortfolioEntry",customerId:cdId,entry:{id:f.id,date:f.date,title:f.title,note:f.note,public:f.pub,keepImages:f.keep,newImages:f.newImgs}});
+      ptState.form=null;
+      toast("Entry saved");
+      await ptLoad(true);
+    }catch(e){if(e.message!=="Admin session expired")toast("Could not save: "+e.message,5000);}
+  });
+}
+async function ptTogglePublic(id,btn){
+  const e=ptState.entries.find(x=>x.id===id);if(!e)return;
+  await busy(btn,async()=>{
+    try{
+      await apiPost({action:"adminSavePortfolioEntry",customerId:cdId,entry:{id:e.id,date:e.date,title:e.title,note:e.note,public:!e.public,keepImages:e.images,newImages:[]}});
+      await ptLoad(true);
+    }catch(err){if(err.message!=="Admin session expired")toast("Could not update: "+err.message,5000);}
+  });
+}
+async function ptDeleteEntry(id){
+  if(!confirm("Delete this entry and its photos? This cannot be undone."))return;
+  try{
+    await apiPost({action:"adminDeletePortfolioEntry",customerId:cdId,entryId:id});
+    toast("Entry deleted");
+    await ptLoad(true);
+  }catch(e){if(e.message!=="Admin session expired")toast("Could not delete: "+e.message,5000);}
+}
+
+/* ===== PORTFOLIO: public page (opened from the ID-card QR, no login) ===== */
+const __ppImg={},__ppQueue=[];let __ppActive=0,__ppData=null;
+function ppFetchImage(id){
+  if(__ppImg[id])return __ppImg[id];
+  __ppImg[id]=new Promise(resolve=>{
+    __ppQueue.push(async()=>{
+      try{
+        const d=await apiPost({action:"getPublicPortfolioImage",customerId:PORTFOLIO_ID,imageId:id});
+        resolve(d.imageBase64?"data:"+(d.mimeType||"image/jpeg")+";base64,"+d.imageBase64:null);
+      }catch(e){resolve(null);}
+    });
+    ppPump();
+  });
+  return __ppImg[id];
+}
+function ppPump(){
+  while(__ppActive<3&&__ppQueue.length){
+    const job=__ppQueue.shift();__ppActive++;
+    job().finally(()=>{__ppActive--;ppPump();});
+  }
+}
+const PP_LOGO=()=>`<img src="${BH_LOGO_SRC}" alt="Bijaya Housing">`;
+const PP_FB='<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#1877f2"/><text x="17.5" y="25" text-anchor="middle" font-size="24" font-weight="900" fill="#fff" font-family="Arial,sans-serif">f</text></svg>';
+const PP_IG='<svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="ppig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fdc468"/><stop offset=".35" stop-color="#f5593d"/><stop offset=".7" stop-color="#d6249f"/><stop offset="1" stop-color="#5b51d8"/></linearGradient></defs><rect width="32" height="32" rx="9" fill="url(#ppig)"/><rect x="8" y="8" width="16" height="16" rx="5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="none" stroke="#fff" stroke-width="2"/><circle cx="21" cy="11" r="1.2" fill="#fff"/></svg>';
+function ppEmpty(root,title,text){
+  root.innerHTML=`<div class="pp"><div class="pp-wrap"><div class="pp-top">${PP_LOGO()}<span>Bijaya Housing</span></div><div class="pp-empty"><h2>${esc(title)}</h2><p>${esc(text||"")}</p></div></div></div>`;
+}
+function ppPhone(p){p=String(p||"").replace(/\D/g,"");return p.length===10?"+91 "+p.slice(0,5)+" "+p.slice(5):p;}
+async function initPublicPortfolio(){
+  const root=$("pubPortfolio");
+  $("appLoadingScreen")?.classList.add("hidden");
+  document.title="Portfolio | Bijaya Housing";
+  root.innerHTML=`<div class="pp"><div class="pp-wrap"><div class="pp-top">${PP_LOGO()}<span>Bijaya Housing</span></div><div class="pp-skel" style="width:35%"></div><div class="pp-skel" style="height:64px;width:70%"></div><div class="pp-skel" style="width:85%"></div><div class="pp-skel" style="height:180px;margin-top:26px"></div></div></div>`;
+  if(!PORTFOLIO_ID){ppEmpty(root,"Portfolio not found","This link looks incomplete. Please scan the QR code again.");return;}
+  try{
+    const d=await apiPost({action:"getPublicPortfolio",customerId:PORTFOLIO_ID});
+    if(!d.available){ppEmpty(root,"This portfolio isn't available","It may not be published yet. Please check back later.");return;}
+    __ppData=d;
+    ppRender(root,d);
+  }catch(e){
+    root.innerHTML=`<div class="pp"><div class="pp-wrap"><div class="pp-top">${PP_LOGO()}<span>Bijaya Housing</span></div><div class="pp-empty"><h2>Couldn't load the portfolio</h2><p>${esc(navigator.onLine===false?"You seem to be offline.":"Please check your internet and try again.")}</p><button type="button" class="pp-btn primary" onclick="initPublicPortfolio()">Try again</button></div></div></div>`;
+  }
+}
+function ppRender(root,d){
+  const p=d.profile,entries=d.entries||[];
+  document.title=(p.name||"Portfolio")+" | Bijaya Housing";
+  const initials=esc(String(p.name||"?").trim().split(/\s+/).slice(0,2).map(w=>w[0]||"").join("").toUpperCase()||"?");
+  const phone=String(p.phone||"").replace(/\D/g,"");
+  const wa=phone.length===10?`https://wa.me/91${phone}?text=${encodeURIComponent("Hello "+(p.name||"")+", I saw your work on your Bijaya Housing portfolio.")}`:"";
+  const fbH=socialHandle(p.facebook),igH=socialHandle(p.instagram);
+  const chips=[
+    fbH&&p.facebook?`<a class="pp-chip" href="${esc(p.facebook)}" target="_blank" rel="noopener">${PP_FB}<span>/${esc(fbH)}</span></a>`:"",
+    igH&&p.instagram?`<a class="pp-chip" href="${esc(p.instagram)}" target="_blank" rel="noopener">${PP_IG}<span>/${esc(igH)}</span></a>`:""
+  ].join("");
+  const photos=entries.reduce((t,e)=>t+e.images.length,0);
+  const latest=entries.map(e=>e.date).filter(Boolean).sort().pop();
+  const latestTxt=latest?new Date(latest+"T00:00:00").toLocaleDateString("en-IN",{month:"short",year:"numeric"}):"—";
+  const workHtml=entries.length?entries.map((e,ei)=>{
+    const dt=e.date?new Date(e.date+"T00:00:00"):null;
+    const dHtml=dt&&!isNaN(dt)?`<b>${dt.getDate()}</b>${esc(dt.toLocaleDateString("en-IN",{month:"short",year:"numeric"}))}`:"";
+    const n=Math.min(e.images.length,6);
+    return `<article class="pp-entry"><div class="pp-date">${dHtml}</div><div class="pp-ecard"><h3>${esc(e.title)}</h3>${e.note?`<p>${esc(e.note)}</p>`:""}${n?`<div class="pp-gal n${n}">${e.images.slice(0,6).map((id,ii)=>`<button type="button" class="pp-g load" data-ppimg="${esc(id)}" aria-label="Open photo ${ii+1} of ${esc(e.title)}" onclick="ppOpenLb(${ei},${ii})"><img alt="${esc(e.title)}"></button>`).join("")}</div>`:""}</div></article>`;
+  }).join(""):`<div class="pp-empty" style="padding:30px 10px"><p>New work will appear here soon.</p></div>`;
+  root.innerHTML=`<div class="pp"><div class="pp-wrap">
+    <div class="pp-top">${PP_LOGO()}<span>Bijaya Housing customer</span></div>
+    <section class="pp-hero">
+      <div>
+        <span class="pp-pill">${esc(p.type||"Professional")}</span>
+        <h1 class="pp-name">${esc(p.name)}</h1>
+        ${p.headline?`<p class="pp-headline">${esc(p.headline)}</p>`:""}
+        <div class="pp-cta">
+          ${phone?`<a class="pp-btn primary" href="tel:+91${esc(phone)}">&#128222; Call ${esc(ppPhone(phone))}</a>`:""}
+          ${wa?`<a class="pp-btn wa" href="${esc(wa)}" target="_blank" rel="noopener">WhatsApp</a>`:""}
+        </div>
+        ${chips?`<div class="pp-social">${chips}</div>`:""}
+      </div>
+      <div class="pp-photo" id="ppPhoto">${initials}</div>
+    </section>
+    ${entries.length?`<section class="pp-stats"><div class="pp-stat"><b>${entries.length}</b><small>Projects shown</small></div><div class="pp-stat"><b>${photos}</b><small>Work photos</small></div><div class="pp-stat"><b>${esc(latestTxt)}</b><small>Latest update</small></div></section>`:""}
+    ${p.bio?`<section class="pp-about"><div class="pp-line"></div><h2 class="pp-h">About</h2><p>${esc(p.bio)}</p></section>`:""}
+    <section class="pp-work"><div class="pp-line"></div><h2 class="pp-h">Recent work</h2>${workHtml}</section>
+    ${phone?`<section class="pp-cta2"><h2>Need this work done?</h2><p>Get in touch directly with ${esc(String(p.name||"").split(" ")[0])}.</p><div class="pp-cta" style="justify-content:center;margin:0"><a class="pp-btn primary" href="tel:+91${esc(phone)}">&#128222; ${esc(ppPhone(phone))}</a>${wa?`<a class="pp-btn" href="${esc(wa)}" target="_blank" rel="noopener">WhatsApp</a>`:""}</div></section>`:""}
+    <footer class="pp-foot">${PP_LOGO()}<div>Portfolio verified by <b>Bijaya Housing</b>, Agalpur, Balangir, Odisha.</div></footer>
+  </div></div>`;
+  // profile photo + work photos, loaded lazily a few at a time
+  if(p.hasPhoto)ppFetchImage("profile").then(src=>{if(src){const el=$("ppPhoto");if(el)el.innerHTML=`<img alt="${esc(p.name)}" src="${src}">`;}});
+  root.querySelectorAll("[data-ppimg]").forEach(btn=>{
+    ppFetchImage(btn.dataset.ppimg).then(src=>{
+      btn.classList.remove("load");
+      if(src)btn.querySelector("img").src=src;else btn.style.display="none";
+    });
+  });
+}
+let __ppLb={list:[],i:0};
+async function ppOpenLb(ei,ii){
+  const e=(__ppData?.entries||[])[ei];if(!e)return;
+  const list=(await Promise.all(e.images.slice(0,6).map(id=>ppFetchImage(id)))).filter(Boolean);
+  const own=await ppFetchImage(e.images[ii]);
+  __ppLb={list,i:Math.max(0,list.indexOf(own))};
+  if(!list.length)return;
+  let lb=$("ppLb");if(!lb){lb=document.createElement("div");lb.id="ppLb";lb.className="pp-lb";document.body.appendChild(lb);}
+  lb.style.display="grid";ppLbDraw();
+  lb.onclick=ev=>{if(ev.target===lb)ppCloseLb();};
+}
+function ppLbDraw(){
+  const lb=$("ppLb");if(!lb)return;
+  const {list,i}=__ppLb;
+  lb.innerHTML=`<img alt="" src="${list[i]}"><button type="button" class="x" aria-label="Close" onclick="ppCloseLb()">&times;</button>${list.length>1?`<button type="button" class="pv" aria-label="Previous" onclick="ppLbStep(-1)">&#8249;</button><button type="button" class="nx" aria-label="Next" onclick="ppLbStep(1)">&#8250;</button>`:""}`;
+}
+function ppLbStep(d){const n=__ppLb.list.length;__ppLb.i=(__ppLb.i+d+n)%n;ppLbDraw();}
+function ppCloseLb(){const lb=$("ppLb");if(lb)lb.style.display="none";}
+document.addEventListener("keydown",e=>{if(!document.documentElement.classList.contains("pp-mode"))return;if(e.key==="Escape")ppCloseLb();if(e.key==="ArrowRight")ppLbStep(1);if(e.key==="ArrowLeft")ppLbStep(-1);});
+
 function roundRectPath(ctx,x,y,w,h,r){
   ctx.beginPath();
   ctx.moveTo(x+r,y);
@@ -2625,8 +3021,25 @@ function fmtIdBirthday(v){
   const d=new Date(v+"T00:00:00");
   return isNaN(d)?"":d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});
 }
+function drawQr(ctx,text,x,y,size,color){
+  const qr=qrcode(0,"M");qr.addData(String(text));qr.make();
+  const n=qr.getModuleCount(),quiet=2,cell=Math.max(2,Math.floor(size/(n+quiet*2)));
+  const total=cell*(n+quiet*2),ox=x+Math.floor((size-total)/2),oy=y+Math.floor((size-total)/2);
+  ctx.fillStyle="#ffffff";roundRectPath(ctx,x,y,size,size,12);ctx.fill();
+  ctx.strokeStyle="#cdd7e6";ctx.lineWidth=2;roundRectPath(ctx,x+1,y+1,size-2,size-2,12);ctx.stroke();
+  ctx.fillStyle=color||"#0b1b36";
+  for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))ctx.fillRect(ox+(c+quiet)*cell,oy+(r+quiet)*cell,cell,cell);
+}
 async function renderIdCardCanvas(data){
-  const W=640,H=1130;
+  // First pass on a tall canvas just measures how much room the details need,
+  // second pass draws the real card at exactly that height (no overlap, no big gaps).
+  const probe=await renderIdCardCanvasH(data,2000);
+  const H=Math.max(1130,Math.ceil(probe.__needH||1200));
+  return renderIdCardCanvasH(data,H);
+}
+async function renderIdCardCanvasH(data,H){
+  const adminLoc=data.adminLocation&&isFinite(Number(data.adminLocation.lat))&&isFinite(Number(data.adminLocation.lng))?data.adminLocation:null;
+  const W=640;
   const canvas=document.createElement("canvas");
   canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext("2d");
@@ -2742,13 +3155,30 @@ async function renderIdCardCanvas(data){
     y+=rowH;
   });
 
-  // barcode + gradient bar
-  const by=Math.max(y+14,H-190);
-  const bh=72;
-  drawBarcode39(ctx,String(data.customerId||"-"),PX,by,330,bh,"#111827");
-  const gx=W-12-210,gg=ctx.createLinearGradient(gx,0,W-12,0);
-  gg.addColorStop(0,"rgba(11,61,130,0)");gg.addColorStop(1,NAVY);
-  ctx.fillStyle=gg;ctx.fillRect(gx,by+6,198,bh-6);
+  // barcode + QR codes
+  const QS=164,idTxt=String(data.customerId||"-");
+  const cap=(t,cx,yy,col)=>{ctx.fillStyle=col||"#475569";ctx.font="800 12px Arial";ctx.textAlign="center";ctx.fillText(t,cx,yy);};
+  const BLOCK=adminLoc?(64+34+QS+64+46):(QS+98);
+  canvas.__needH=y+10+BLOCK;
+  if(adminLoc){
+    const by=Math.max(y+10,H-BLOCK);
+    drawBarcode39(ctx,idTxt,PX,by,W-PX*2,64,"#111827");
+    const qy=by+64+34;
+    drawQr(ctx,portfolioUrl(idTxt),PX,qy,QS);
+    cap("SCAN: PORTFOLIO",PX+QS/2,qy+QS+22);
+    const lx=W-PX-QS;
+    drawQr(ctx,"https://www.google.com/maps?q="+Number(adminLoc.lat).toFixed(6)+","+Number(adminLoc.lng).toFixed(6),lx,qy,QS,"#7f1d1d");
+    cap("ADMIN ONLY: LOCATION",lx+QS/2,qy+QS+22,"#b42318");
+    ctx.fillStyle="#b42318";ctx.font="700 12px Arial";ctx.textAlign="center";
+    ctx.fillText("Contains the customer's location. Do not give this copy to the customer.",W/2,H-62);
+  }else{
+    const by=Math.max(y+10,H-BLOCK);
+    drawBarcode39(ctx,idTxt,PX,by+46,300,72,"#111827");
+    ctx.fillStyle="#475569";ctx.font="800 14px Arial";ctx.textAlign="left";
+    ctx.fillText(idTxt,PX,by+46+72+24);
+    drawQr(ctx,portfolioUrl(idTxt),W-PX-QS,by,QS);
+    cap("SCAN: VIEW PORTFOLIO",W-PX-QS/2,by+QS+22);
+  }
   ctx.fillStyle="#64748b";ctx.font="500 13px Arial";ctx.textAlign="center";
   ctx.fillText("Valid while account is active  \u2022  Contact 8114832749",W/2,H-34);
 
@@ -2778,6 +3208,7 @@ async function viewCustomerIdCardAdmin(id){
   await showIdCardFor({
     name:c.name,type:c.type,phone:c.phone,address:c.address,pin:c.pin,
     whatsapp:c.whatsapp,whatsappSame:c.whatsappSame,birthday:c.birthday,district:c.district,social:c.social,
+    adminLocation:(c.lat!==""&&c.lat!=null&&c.lng!==""&&c.lng!=null)?{lat:c.lat,lng:c.lng}:null,
     customerId:c.id,photoBase64
   });
 }
@@ -3865,7 +4296,7 @@ async function apiPost(data,_retried){
     const c=customer();
     if(c?.token)payload.customerToken=c.token;
   }
-  const d=await postJson(payload,["uploadCustomerPhoto","createDownloadLink"].includes(payload.action)?90000:45000);
+  const d=await postJson(payload,["uploadCustomerPhoto","createDownloadLink","adminSavePortfolioEntry"].includes(payload.action)?90000:45000);
   if(d.ok===false){
     if(ADMIN_ACTIONS.includes(payload.action)&&/unauthorized admin/i.test(d.error||"")){
       adminSessionExpired();
@@ -4862,8 +5293,9 @@ function renderCdChart(){
 }
 function cdTabSwitch(pane){
   document.querySelectorAll("#customerDetailModal .subtab").forEach(b=>b.classList.toggle("active",b.dataset.pane===pane));
-  ["summary","details","payments","orders"].forEach(p=>$("cdPane"+p[0].toUpperCase()+p.slice(1))?.classList.toggle("hidden",p!==pane));
+  ["summary","details","payments","orders","portfolio"].forEach(p=>$("cdPane"+p[0].toUpperCase()+p.slice(1))?.classList.toggle("hidden",p!==pane));
   if(pane==="summary")renderCdChart();
+  if(pane==="portfolio")ptLoad();
 }
 function customerOrdersFor(c){
   const cid=String(c.id||"").trim().toUpperCase(),phone=digits(c.phone).slice(-10);
@@ -5812,7 +6244,7 @@ function showMyReceipt(id){
 const APP_LINK="https://satyajeetmeher91.github.io/bijayahousing/";
 const ADMIN_TABS=["dashboard","products","orders","customers","payments","reports","quotes","team","settings"];
 const ADMIN_ACTIONS=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword","adminCreatePayment","adminGetPayments","adminUpdatePayment","adminRemindPayment","adminRecordPayment","adminBulkPayments","adminUpdateOrderDelivery","adminChangePassword","adminGetLoginLog","adminBackupNow","adminGetBackupInfo",
-  "adminGetTeam","adminSaveAdmin","adminGetActivity","adminGetAlertSettings","adminSaveAlertSettings","adminTestAlert","adminGetSettings","adminSaveSettings","adminLockPhotos",
+  "adminGetPortfolio","adminSavePortfolioSettings","adminSavePortfolioEntry","adminDeletePortfolioEntry","adminGetPortfolioImage","adminGetTeam","adminSaveAdmin","adminGetActivity","adminGetAlertSettings","adminSaveAlertSettings","adminTestAlert","adminGetSettings","adminSaveSettings","adminLockPhotos",
   "adminStockIn","adminStockAdjust","adminGetStockLog","adminGetLowStock","adminBulkPriceUpdate","adminGetPriceBatches","adminUndoPriceBatch","adminImportProducts","adminArchiveOrders",
   "adminSetCustomerRate","adminGetStatement","adminGetReports","adminGetDuesAging","adminGetDailyClosing","adminGetQuotes","adminSaveQuote","adminGetCoupons","adminSaveCoupon","adminDeleteCoupon"];
 const selPay=new Set(),selCust=new Set();
@@ -6556,11 +6988,12 @@ async function init(){
 }
 
 window.addEventListener("pageshow",()=>{
+  if(PORTFOLIO_MODE)return;
   setAppView(location.hash==="#admin" && sessionStorage.getItem("admin_token")?"admin":"customer",false);
 });
 
 setTimeout(()=>{$("appLoadingScreen")?.classList.add("hidden");},15000);
-init();
+if(PORTFOLIO_MODE)initPublicPortfolio();else init();
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"){
     if($("cartDrawer")?.classList.contains("show"))closeCart();
