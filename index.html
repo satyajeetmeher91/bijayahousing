@@ -430,6 +430,11 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
 .pt-note{white-space:pre-wrap;font-size:14px;margin:6px 0 0;word-break:break-word}
 .pt-pill{border-radius:999px;padding:2px 9px;font-weight:700;font-size:11px;border:1px solid var(--line)}
 .pt-pill.pub{background:#dcfce7;color:#15803d;border-color:#bbf7d0}
+.pt-pill.pend{background:#fef3c7;color:#b45309;border-color:#fde68a}
+.pt-pill.rej{background:#fee2e2;color:#b42318;border-color:#fecaca}
+.pt-pill.cust{background:#e0e7ff;color:#3730a3;border-color:#c7d2fe}
+.pt-entry.review{border-color:#f5c451;background:rgba(245,196,81,.10)}
+.cust-pend{display:inline-block;margin-left:6px;background:#fef3c7;color:#b45309;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:800}
 .pt-pill.priv{background:var(--surface2);color:var(--muted)}
 
 /* --- Portfolio: public page (opened from the ID-card QR) --- */
@@ -1205,6 +1210,10 @@ body.admin-mode .langsel{display:none}
   <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">My orders</h2><div class="pf-sub">Your order history</div></div></div>
   <div class="modal-body"><div id="customerOrders"></div></div>
 </div>
+<div class="modal sheet over pf-page" id="pfWork">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">My work</h2><div class="pf-sub">Add your jobs for your portfolio</div></div></div>
+  <div class="modal-body"><div id="cwBox"></div></div>
+</div>
 <div class="modal sheet over pf-page" id="pfOrderDetail">
   <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0" id="odTitle">Order</h2><div class="pf-sub" id="odSub"></div></div></div>
   <div class="modal-body"><div id="orderDetailBody"></div></div>
@@ -1294,7 +1303,7 @@ body.admin-mode .langsel{display:none}
       <button type="button" class="subtab" data-pane="details" onclick="cdTabSwitch('details')">Details</button>
       <button type="button" class="subtab" data-pane="payments" onclick="cdTabSwitch('payments')">Payments <span id="cdPayCount"></span></button>
       <button type="button" class="subtab" data-pane="orders" onclick="cdTabSwitch('orders')">Orders <span id="cdOrderCount"></span></button>
-      <button type="button" class="subtab" data-pane="portfolio" onclick="cdTabSwitch('portfolio')">Portfolio</button>
+      <button type="button" class="subtab" data-pane="portfolio" onclick="cdTabSwitch('portfolio')">Portfolio <span id="cdPortfolioCount"></span></button>
     </div>
 
     <div id="cdPaneSummary">
@@ -2108,6 +2117,7 @@ function renderProfileDashboard(){
   $("pfRowsActivity").innerHTML=
     pfRow("&#129534;","My orders","View and track your orders","pfOpen('pfOrders')")+
     pfRow("&#128179;","Payments",due?`${due} payment request${due>1?"s":""} waiting`:"Payment requests and balance","pfOpen('pfPayments')",due?due+" due":"",due?"bad":"")+
+    pfRow("&#128247;","My work","Add your work to your portfolio","pfOpen('pfWork')")+
     pfRow("&#129706;","ID card","View or download your ID card","viewMyIdCard()");
   const temp=c.passwordType==="Temporary";
   $("pfRowsSettings").innerHTML=
@@ -2141,6 +2151,7 @@ function pfOpen(id){
   if(id==="pfOrders")loadCustomerOrders(true);
   if(id==="pfPayments"){renderMyPayments();refreshMyPayments();}
   if(id==="pfAppearance")renderThemePicker();
+  if(id==="pfWork")cwLoad(true);
 }
 function pfSocialUrl(kind,raw){
   let v=String(raw||"").trim();if(!v)return "";
@@ -2602,6 +2613,7 @@ async function ptLoad(force){
     ptState.entries=d.entries||[];
     ptState.loaded=true;
     ptRender();
+    ptUpdatePending();
   }catch(e){
     if(e.message==="Admin session expired")return;
     box.innerHTML=`<div class="empty"><h3>Could not load portfolio</h3><p>${esc(e.message)}</p><button type="button" class="outline" onclick="ptLoad(true)">Try again</button></div>`;
@@ -2613,7 +2625,7 @@ function ptSyncSettings(){
 }
 function ptSyncForm(){
   const f=ptState.form;if(!f||!$("ptTitle"))return;
-  f.date=$("ptDate").value;f.title=$("ptTitle").value;f.note=$("ptNote").value;f.pub=$("ptPub").checked;
+  f.date=$("ptDate").value;f.title=$("ptTitle").value;f.note=$("ptNote").value;if($("ptPub"))f.pub=$("ptPub").checked;
 }
 function ptThumbHtml(kind,i,src,imageId){
   const img=src?`<img alt="" src="${src}">`:`<img alt="" data-ptimg="${esc(imageId)}">`;
@@ -2638,21 +2650,32 @@ function ptRender(){
         <button type="button" class="outline" style="margin-top:10px;width:100%" ${total>=6?"disabled":""} onclick="$('ptFile').click()">📷 Add photos</button>
         <input type="file" id="ptFile" accept="image/*" multiple class="hidden" onchange="ptPickFiles(this)">
       </div>
-      <label class="cp-check" style="margin-top:12px"><input type="checkbox" id="ptPub" ${f.pub?"checked":""}> Show this entry on the public portfolio</label>
+      ${f.review&&f.review!=="Approved"?`<p class="muted" style="margin:12px 0 0;font-size:12px">This entry came from the customer and is not public yet. Save your edits, then use <b>Approve &amp; publish</b>.</p>`:`<label class="cp-check" style="margin-top:12px"><input type="checkbox" id="ptPub" ${f.pub?"checked":""}> Show this entry on the public portfolio</label>`}
       <div class="pt-row"><button type="button" class="primary" id="ptSaveBtn" onclick="ptSaveEntry(this)">Save entry</button><button type="button" class="outline" onclick="ptCancelForm()">Cancel</button></div>
     </div>`:"";
-  const entriesHtml=ptState.entries.length?ptState.entries.map(e=>`
-    <div class="pt-entry">
-      <div class="pt-meta"><span>${esc(ptFmtDate(e.date))}</span><span class="pt-pill ${e.public?"pub":"priv"}">${e.public?"Public":"Private"}</span></div>
-      <h4>${esc(e.title)}</h4>
-      ${e.note?`<p class="pt-note">${esc(e.note)}</p>`:""}
-      ${e.images.length?`<div class="pt-thumbs">${e.images.map(id=>`<div class="pt-th"><img alt="" data-ptimg="${esc(id)}"></div>`).join("")}</div>`:""}
-      <div class="pt-row">
+  const sorted=[...ptState.entries].sort((x,y)=>(y.review==="Pending")-(x.review==="Pending"));
+  const entriesHtml=sorted.length?sorted.map(e=>{
+    const pend=e.review==="Pending",rej=e.review==="Rejected",open=pend||rej;
+    const pills=(e.source==="Customer"?`<span class="pt-pill cust">From customer</span>`:"")+
+      (pend?`<span class="pt-pill pend">Needs review</span>`:rej?`<span class="pt-pill rej">Rejected</span>`:`<span class="pt-pill ${e.public?"pub":"priv"}">${e.public?"Public":"Private"}</span>`);
+    const acts=open?`
+        <button type="button" class="primary" onclick="ptReview(${arg(e.id)},'approve',this)">&#10004; Approve &amp; publish</button>
+        <button type="button" class="outline" onclick="ptReview(${arg(e.id)},'private',this)">Approve, keep private</button>
+        ${pend?`<button type="button" class="outline" style="color:#b42318" onclick="ptReview(${arg(e.id)},'reject',this)">Reject</button>`:""}
+        <button type="button" class="outline" onclick="ptEditEntry(${arg(e.id)})">Edit</button>
+        <button type="button" class="outline" style="color:#b42318" onclick="ptDeleteEntry(${arg(e.id)})">Delete</button>`:`
         <button type="button" class="outline" onclick="ptEditEntry(${arg(e.id)})">Edit</button>
         <button type="button" class="outline" onclick="ptTogglePublic(${arg(e.id)},this)">${e.public?"Hide from public":"Show on public"}</button>
-        <button type="button" class="outline" style="color:#b42318" onclick="ptDeleteEntry(${arg(e.id)})">Delete</button>
-      </div>
-    </div>`).join(""):`<div class="empty" style="padding:24px 10px"><h3>No entries yet</h3><p>Add the customer's work and your notes over time. Public ones appear on the portfolio page.</p></div>`;
+        <button type="button" class="outline" style="color:#b42318" onclick="ptDeleteEntry(${arg(e.id)})">Delete</button>`;
+    return `<div class="pt-entry${pend?" review":""}">
+      <div class="pt-meta"><span>${esc(ptFmtDate(e.date))}</span>${pills}</div>
+      <h4>${esc(e.title)}</h4>
+      ${e.note?`<p class="pt-note">${esc(e.note)}</p>`:""}
+      ${rej&&e.reviewNote?`<p class="pt-note" style="color:#b42318"><b>Reason sent to customer:</b> ${esc(e.reviewNote)}</p>`:""}
+      ${e.images.length?`<div class="pt-thumbs">${e.images.map(id=>`<div class="pt-th"><img alt="" data-ptimg="${esc(id)}"></div>`).join("")}</div>`:""}
+      <div class="pt-row">${acts}</div>
+    </div>`;
+  }).join(""):`<div class="empty" style="padding:24px 10px"><h3>No entries yet</h3><p>Add the customer's work and your notes over time. The customer can also add work from his profile for you to review. Public ones appear on the portfolio page.</p></div>`;
   box.innerHTML=`
     <div class="pt-card">
       <div class="between"><h3 class="cp-h">Public portfolio</h3>
@@ -2716,7 +2739,7 @@ function ptNewEntry(){ptSyncSettings();ptState.form={id:null,date:ptToday(),titl
 function ptEditEntry(id){
   const e=ptState.entries.find(x=>x.id===id);if(!e)return;
   ptSyncSettings();
-  ptState.form={id:e.id,date:e.date||ptToday(),title:e.title,note:e.note,pub:!!e.public,keep:[...e.images],newImgs:[]};
+  ptState.form={id:e.id,date:e.date||ptToday(),title:e.title,note:e.note,pub:!!e.public,review:e.review,keep:[...e.images],newImgs:[]};
   ptRender();$("ptFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});
 }
 function ptCancelForm(){ptState.form=null;ptRender();}
@@ -2742,6 +2765,27 @@ async function ptSaveEntry(btn){
       toast("Entry saved");
       await ptLoad(true);
     }catch(e){if(e.message!=="Admin session expired")toast("Could not save: "+e.message,5000);}
+  });
+}
+function ptUpdatePending(){
+  const n=ptState.entries.filter(e=>e.review==="Pending").length;
+  if($("cdPortfolioCount"))$("cdPortfolioCount").textContent=n?"("+n+")":"";
+  const c=adminCustomers.find(x=>x.id===ptState.cid);if(c)c.portfolioPending=n;
+  if(typeof renderAdminCustomers==="function")renderAdminCustomers();
+}
+async function ptReview(id,decision,btn){
+  let reason="";
+  if(decision==="reject"){
+    reason=prompt("Why is this being rejected? The customer will see this message.","");
+    if(reason===null)return;
+    if(!reason.trim()){toast("Please write a short reason");return;}
+  }
+  await busy(btn,async()=>{
+    try{
+      await apiPost({action:"adminReviewPortfolioEntry",customerId:cdId,entryId:id,decision,reason});
+      toast(decision==="approve"?"Approved and published":decision==="private"?"Approved, kept private":"Rejected");
+      await ptLoad(true);
+    }catch(e){if(e.message!=="Admin session expired")toast("Could not update: "+e.message,5000);}
   });
 }
 async function ptTogglePublic(id,btn){
@@ -2874,6 +2918,121 @@ function ppLbDraw(){
 function ppLbStep(d){const n=__ppLb.list.length;__ppLb.i=(__ppLb.i+d+n)%n;ppLbDraw();}
 function ppCloseLb(){const lb=$("ppLb");if(lb)lb.style.display="none";}
 document.addEventListener("keydown",e=>{if(!document.documentElement.classList.contains("pp-mode"))return;if(e.key==="Escape")ppCloseLb();if(e.key==="ArrowRight")ppLbStep(1);if(e.key==="ArrowLeft")ppLbStep(-1);});
+
+/* ===== PORTFOLIO: customer side ("My work" in Profile > Activity) ===== */
+const cwState={loaded:false,enabled:false,entries:[],form:null};
+const __cwImgCache={};
+const CW_STATUS={"Pending":["pend","Pending review"],"Published":["pub","Published"],"Approved":["pub","Approved"],"Rejected":["rej","Needs changes"]};
+async function cwLoad(force){
+  const box=$("cwBox");if(!box)return;
+  if(cwState.loaded&&!force){cwRender();return;}
+  box.innerHTML=`<div class="empty"><h3>Loading…</h3></div>`;
+  try{
+    const d=await apiPost({action:"getMyPortfolio"});
+    cwState.enabled=!!d.enabled;cwState.entries=d.entries||[];cwState.loaded=true;
+    cwRender();
+  }catch(e){
+    box.innerHTML=`<div class="empty"><h3>Could not load</h3><p>${esc(e.message)}</p><button type="button" class="outline" onclick="cwLoad(true)">Try again</button></div>`;
+  }
+}
+function cwSyncForm(){
+  const f=cwState.form;if(!f||!$("cwTitle"))return;
+  f.date=$("cwDate").value;f.title=$("cwTitle").value;f.note=$("cwNote").value;
+}
+function cwRender(){
+  const box=$("cwBox");if(!box)return;
+  cwSyncForm();
+  const f=cwState.form,total=f?f.keep.length+f.newImgs.length:0;
+  const cid=(customer()||{}).customerId||(customer()||{}).id||"";
+  const thumb=(kind,i,src,id)=>`<div class="pt-th">${src?`<img alt="" src="${src}">`:`<img alt="" data-cwimg="${esc(id)}">`}<button type="button" aria-label="Remove photo" onclick="cwRemoveImg('${kind}',${i})">&times;</button></div>`;
+  const formHtml=f?`
+    <div class="pt-card" id="cwFormCard">
+      <h3 class="cp-h">${f.id?"Edit your work":"Add your work"}</h3>
+      <p class="muted" style="margin:0 0 10px;font-size:13px">Show jobs you have completed. The shop will check it before it appears on your public portfolio.</p>
+      <div class="field"><label>Date of work</label><input type="date" id="cwDate" value="${esc(f.date)}"></div>
+      <div class="field" style="margin-top:10px"><label>Title *</label><input id="cwTitle" maxlength="120" value="${esc(f.title)}" placeholder="e.g. Bathroom plumbing at Saheed Nagar"></div>
+      <div class="field" style="margin-top:10px"><label>What did you do?</label><textarea id="cwNote" rows="4" maxlength="1500" placeholder="Describe the work, materials used and result">${esc(f.note)}</textarea></div>
+      <div style="margin-top:10px"><label style="font-weight:700;font-size:13px">Photos (${total}/6)</label>
+        <div class="pt-thumbs">${f.keep.map((id,i)=>thumb("keep",i,null,id)).join("")}${f.newImgs.map((b,i)=>thumb("new",i,"data:image/jpeg;base64,"+b,"")).join("")}</div>
+        <button type="button" class="outline" style="margin-top:10px;width:100%" ${total>=6?"disabled":""} onclick="$('cwFile').click()">&#128247; Add photos</button>
+        <input type="file" id="cwFile" accept="image/*" multiple class="hidden" onchange="cwPickFiles(this)">
+      </div>
+      <div class="pt-row"><button type="button" class="primary" onclick="cwSave(this)">Send for review</button><button type="button" class="outline" onclick="cwCancel()">Cancel</button></div>
+    </div>`:"";
+  const list=cwState.entries.length?cwState.entries.map(e=>{
+    const st=CW_STATUS[e.status]||["priv",e.status];
+    const editable=e.status==="Pending"||e.status==="Rejected";
+    return `<div class="pt-entry${e.status==="Pending"?" review":""}">
+      <div class="pt-meta"><span>${esc(ptFmtDate(e.date))}</span><span class="pt-pill ${st[0]}">${esc(st[1])}</span></div>
+      <h4>${esc(e.title)}</h4>
+      ${e.note?`<p class="pt-note">${esc(e.note)}</p>`:""}
+      ${e.status==="Rejected"&&e.reviewNote?`<p class="pt-note" style="color:#b42318"><b>Shop's note:</b> ${esc(e.reviewNote)}</p>`:""}
+      ${e.images.length?`<div class="pt-thumbs">${e.images.map(id=>`<div class="pt-th"><img alt="" data-cwimg="${esc(id)}"></div>`).join("")}</div>`:""}
+      ${editable?`<div class="pt-row"><button type="button" class="outline" onclick="cwEdit(${arg(e.id)})">${e.status==="Rejected"?"Fix &amp; resend":"Edit"}</button><button type="button" class="outline" style="color:#b42318" onclick="cwDelete(${arg(e.id)})">Delete</button></div>`:`<p class="muted" style="margin:10px 0 0;font-size:12px">To change approved work, please contact the shop.</p>`}
+    </div>`;
+  }).join(""):`<div class="empty" style="padding:24px 10px"><h3>No work added yet</h3><p>Add photos and details of jobs you have done. After the shop approves them, they show on your public portfolio.</p></div>`;
+  box.innerHTML=`
+    ${f?"":`<button type="button" class="primary" style="width:100%" onclick="cwNew()">+ Add your work</button>`}
+    ${formHtml}
+    ${cwState.enabled&&cid?`<a class="outline" style="display:block;text-align:center;margin-top:12px;padding:12px;border-radius:14px;text-decoration:none" href="${esc(portfolioUrl(cid))}" target="_blank" rel="noopener">View my public portfolio</a>`:""}
+    <div style="margin-top:6px">${list}</div>`;
+  cwHydrate();
+}
+function cwHydrate(){
+  document.querySelectorAll("#cwBox img[data-cwimg]").forEach(async img=>{
+    const id=img.dataset.cwimg;if(!id||img.src)return;
+    try{
+      if(!__cwImgCache[id]){
+        const d=await apiPost({action:"getMyPortfolioImage",imageId:id});
+        __cwImgCache[id]=d.imageBase64?"data:"+(d.mimeType||"image/jpeg")+";base64,"+d.imageBase64:"";
+      }
+      if(__cwImgCache[id])img.src=__cwImgCache[id];
+    }catch(e){}
+  });
+}
+function cwNew(){cwState.form={id:null,date:ptToday(),title:"",note:"",keep:[],newImgs:[]};cwRender();$("cwFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});}
+function cwEdit(id){
+  const e=cwState.entries.find(x=>x.id===id);if(!e)return;
+  cwState.form={id:e.id,date:e.date||ptToday(),title:e.title,note:e.note,keep:[...e.images],newImgs:[]};
+  cwRender();$("cwFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function cwCancel(){cwState.form=null;cwRender();}
+async function cwPickFiles(input){
+  const f=cwState.form;if(!f)return;cwSyncForm();
+  const files=[...input.files];input.value="";
+  const room=6-(f.keep.length+f.newImgs.length);
+  if(files.length>room)toast("Only "+Math.max(room,0)+" more photo(s) can be added.");
+  for(const file of files.slice(0,Math.max(room,0))){
+    try{f.newImgs.push(await ptCompress(file,1100,0.74));}catch(e){toast(e.message||"Photo skipped");}
+  }
+  cwRender();
+}
+function cwRemoveImg(kind,i){
+  const f=cwState.form;if(!f)return;cwSyncForm();
+  if(kind==="keep")f.keep.splice(i,1);else f.newImgs.splice(i,1);
+  cwRender();
+}
+async function cwSave(btn){
+  cwSyncForm();
+  const f=cwState.form;if(!f)return;
+  if(!f.title.trim()){toast("Please enter a title");$("cwTitle")?.focus();return;}
+  await busy(btn,async()=>{
+    try{
+      await apiPost({action:"saveMyPortfolioEntry",entry:{id:f.id,date:f.date,title:f.title,note:f.note,keepImages:f.keep,newImages:f.newImgs}});
+      cwState.form=null;
+      toast("Sent for review. The shop will check it soon.",4000);
+      await cwLoad(true);
+    }catch(e){toast(e.message||"Could not save",5000);}
+  });
+}
+async function cwDelete(id){
+  if(!confirm("Delete this work and its photos?"))return;
+  try{
+    await apiPost({action:"deleteMyPortfolioEntry",entryId:id});
+    toast("Deleted");
+    await cwLoad(true);
+  }catch(e){toast(e.message||"Could not delete",5000);}
+}
 
 function roundRectPath(ctx,x,y,w,h,r){
   ctx.beginPath();
@@ -4277,7 +4436,7 @@ async function postJson(payload,timeout){
 }
 
 const CUSTOMER_ACTIONS=["saveCustomer","saveOrder","getCustomerOrders","logoutCustomer","uploadCustomerPhoto","getCustomerPhoto","changeCustomerPassword","getMyPayments","customerPaymentEvent","createDownloadLink",
-  "customerCancelOrder","customerEditOrder","orderWhatsAppEvent","previewCoupon","getMyUsuals","requestQuote","getMyQuotes","acceptQuote","declineQuote"];
+  "getMyPortfolio","saveMyPortfolioEntry","deleteMyPortfolioEntry","getMyPortfolioImage","customerCancelOrder","customerEditOrder","orderWhatsAppEvent","previewCoupon","getMyUsuals","requestQuote","getMyQuotes","acceptQuote","declineQuote"];
 const BACKGROUND_ACTIONS=["getCustomerPhoto","getMyPayments"];
 function adminSessionExpired(){
   sessionStorage.removeItem("admin_token");sessionStorage.removeItem("admin_user");
@@ -4296,7 +4455,7 @@ async function apiPost(data,_retried){
     const c=customer();
     if(c?.token)payload.customerToken=c.token;
   }
-  const d=await postJson(payload,["uploadCustomerPhoto","createDownloadLink","adminSavePortfolioEntry"].includes(payload.action)?90000:45000);
+  const d=await postJson(payload,["uploadCustomerPhoto","createDownloadLink","adminSavePortfolioEntry","saveMyPortfolioEntry"].includes(payload.action)?90000:45000);
   if(d.ok===false){
     if(ADMIN_ACTIONS.includes(payload.action)&&/unauthorized admin/i.test(d.error||"")){
       adminSessionExpired();
@@ -5202,6 +5361,7 @@ function fillCustomerDetail(c){
   $("cdCreditLimit").value=c.creditLimit||"";
   renderCdPayments();
   renderCustomerDetailOrders(c);
+  if($("cdPortfolioCount"))$("cdPortfolioCount").textContent=c.portfolioPending?"("+c.portfolioPending+")":"";
   renderCdAvatar(c);
   renderCdLocation(c);
   renderCdSummary(c);
@@ -6244,7 +6404,7 @@ function showMyReceipt(id){
 const APP_LINK="https://satyajeetmeher91.github.io/bijayahousing/";
 const ADMIN_TABS=["dashboard","products","orders","customers","payments","reports","quotes","team","settings"];
 const ADMIN_ACTIONS=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword","adminCreatePayment","adminGetPayments","adminUpdatePayment","adminRemindPayment","adminRecordPayment","adminBulkPayments","adminUpdateOrderDelivery","adminChangePassword","adminGetLoginLog","adminBackupNow","adminGetBackupInfo",
-  "adminGetPortfolio","adminSavePortfolioSettings","adminSavePortfolioEntry","adminDeletePortfolioEntry","adminGetPortfolioImage","adminGetTeam","adminSaveAdmin","adminGetActivity","adminGetAlertSettings","adminSaveAlertSettings","adminTestAlert","adminGetSettings","adminSaveSettings","adminLockPhotos",
+  "adminGetPortfolio","adminReviewPortfolioEntry","adminSavePortfolioSettings","adminSavePortfolioEntry","adminDeletePortfolioEntry","adminGetPortfolioImage","adminGetTeam","adminSaveAdmin","adminGetActivity","adminGetAlertSettings","adminSaveAlertSettings","adminTestAlert","adminGetSettings","adminSaveSettings","adminLockPhotos",
   "adminStockIn","adminStockAdjust","adminGetStockLog","adminGetLowStock","adminBulkPriceUpdate","adminGetPriceBatches","adminUndoPriceBatch","adminImportProducts","adminArchiveOrders",
   "adminSetCustomerRate","adminGetStatement","adminGetReports","adminGetDuesAging","adminGetDailyClosing","adminGetQuotes","adminSaveQuote","adminGetCoupons","adminSaveCoupon","adminDeleteCoupon"];
 const selPay=new Set(),selCust=new Set();
@@ -6597,7 +6757,7 @@ function renderAdminCustomers(){
     acts.push(`<button type="button" class="outline" onclick="openCustomerDetailModal(${arg(c.id)})">Manage</button>`);
     return `<tr>
       <td data-label="Select" class="chk"><input type="checkbox" ${selCust.has(c.id)?"checked":""} ${st==="pending"?"":"disabled"} onchange="toggleCustSel(${arg(c.id)},this.checked)" aria-label="Select customer"></td>
-      <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(c.id)})"><b>${esc(c.name)}</b></button><br><span class="cart-meta">${esc(c.type||"Customer")}</span></td>
+      <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(c.id)})"><b>${esc(c.name)}</b></button><br><span class="cart-meta">${esc(c.type||"Customer")}</span>${c.portfolioPending?`<span class="cust-pend" title="Portfolio work waiting for your review">&#128247; ${c.portfolioPending} to review</span>`:""}</td>
       <td data-label="Phone">${esc(c.phone||"")}</td>
       <td data-label="Customer ID"><span class="customer-id-badge">${esc(c.id||"—")}</span></td>
       <td data-label="Status"><span class="status ${customerStatusClass(c.status)}">${esc(c.status||"Pending")}</span></td>
