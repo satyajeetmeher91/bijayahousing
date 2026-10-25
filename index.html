@@ -430,6 +430,18 @@ body.admin-mode .profilebtn,body.admin-mode .cartbtn,body.admin-mode .adminnavbt
 .pt-note{white-space:pre-wrap;font-size:14px;margin:6px 0 0;word-break:break-word}
 .pt-pill{border-radius:999px;padding:2px 9px;font-weight:700;font-size:11px;border:1px solid var(--line)}
 .pt-pill.pub{background:#dcfce7;color:#15803d;border-color:#bbf7d0}
+.pt-ver{display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px}
+@media(min-width:720px){.pt-ver{grid-template-columns:1fr 1fr}}
+.pt-col{border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--surface2)}
+.pt-col.pol{background:rgba(79,70,229,.06);border-color:#c7d2fe}
+.pt-col.pol.on{border-color:#6366f1;box-shadow:0 0 0 1px #6366f1 inset}
+.pt-colh{display:block;font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.pt-colh small{text-transform:none;font-weight:600;letter-spacing:0}
+.pt-showing{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:13px;font-weight:700}
+.pt-seg{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 14px;font-weight:700;font-size:12px;cursor:pointer;color:var(--muted)}
+.pt-seg.on{background:#4f46e5;border-color:#4f46e5;color:#fff}
+.pt-aibox{border:1px solid #c7d2fe;background:rgba(79,70,229,.05);border-radius:14px;padding:12px;margin-top:12px}
+.pt-ai-h{font-weight:800;margin-bottom:8px}
 .pt-pill.pend{background:#fef3c7;color:#b45309;border-color:#fde68a}
 .pt-pill.rej{background:#fee2e2;color:#b42318;border-color:#fecaca}
 .pt-pill.cust{background:#e0e7ff;color:#3730a3;border-color:#c7d2fe}
@@ -1188,9 +1200,7 @@ body.admin-mode .langsel{display:none}
 <div class="modal sheet over pf-page" id="pfAddress">
   <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0">Address</h2><div class="pf-sub">Where we deliver</div></div></div>
   <div class="modal-body"><div class="pf-formcard">
-    <div class="field"><label>Address *</label><textarea id="pfAddr" rows="3" placeholder="House / shop no., street, area, landmark"></textarea></div>
-    <div class="field"><label>District</label><input id="pfDistrict" list="pfDistrictList" autocomplete="off" placeholder="Select or type your district"></div>
-    <datalist id="pfDistrictList"><option value="Angul"><option value="Balangir"><option value="Balasore"><option value="Bargarh"><option value="Bhadrak"><option value="Boudh"><option value="Cuttack"><option value="Deogarh"><option value="Dhenkanal"><option value="Gajapati"><option value="Ganjam"><option value="Jagatsinghpur"><option value="Jajpur"><option value="Jharsuguda"><option value="Kalahandi"><option value="Kandhamal"><option value="Kendrapara"><option value="Kendujhar (Keonjhar)"><option value="Khordha"><option value="Koraput"><option value="Malkangiri"><option value="Mayurbhanj"><option value="Nabarangpur"><option value="Nayagarh"><option value="Nuapada"><option value="Puri"><option value="Rayagada"><option value="Sambalpur"><option value="Subarnapur"><option value="Sundargarh"></datalist>
+    <div id="pfAddrLegacy" class="muted hidden" style="font-size:13px;margin-bottom:6px"></div><div class="field"><label>Village / Town *</label><input id="pfVillage" autocomplete="off" maxlength="100" placeholder="Village or town name"></div><div class="field"><label>Panchayat / Ward *</label><input id="pfPanchayat" autocomplete="off" maxlength="100" placeholder="Gram panchayat or ward"></div><div class="field"><label>Block / Tehsil</label><input id="pfBlock" autocomplete="off" maxlength="100" placeholder="Optional"></div><div class="field"><label>District *</label><input id="pfDistrict" autocomplete="off" maxlength="100" placeholder="Select or type district" list="pfDistrictList"></div><div class="field"><label>Landmark</label><input id="pfLandmark" autocomplete="off" maxlength="100" placeholder="Near temple, school, shop (optional)"></div><div class="field"><label>State</label><input id="pfState" autocomplete="off" maxlength="100" placeholder="State"></div><datalist id="pfDistrictList"><option value="Angul"><option value="Balangir"><option value="Balasore"><option value="Bargarh"><option value="Bhadrak"><option value="Boudh"><option value="Cuttack"><option value="Deogarh"><option value="Dhenkanal"><option value="Gajapati"><option value="Ganjam"><option value="Jagatsinghpur"><option value="Jajpur"><option value="Jharsuguda"><option value="Kalahandi"><option value="Kandhamal"><option value="Kendrapara"><option value="Kendujhar (Keonjhar)"><option value="Khordha"><option value="Koraput"><option value="Malkangiri"><option value="Mayurbhanj"><option value="Nabarangpur"><option value="Nayagarh"><option value="Nuapada"><option value="Puri"><option value="Rayagada"><option value="Sambalpur"><option value="Subarnapur"><option value="Sundargarh"></datalist>
     <div class="field"><label>Pincode *</label><input id="pfPin" inputmode="numeric" maxlength="6" placeholder="6-digit pincode"></div>
     <button type="button" class="primary pf-save" onclick="pfSave('address',this)">Save changes</button>
   </div></div>
@@ -1259,7 +1269,7 @@ body.admin-mode .langsel{display:none}
       <div class="field"><label>Full Name *</label><input id="signupName" placeholder="Your full name"></div>
       <div class="field" style="margin-top:12px"><label>What are you? *</label><select id="signupType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
       <div class="field" style="margin-top:12px"><label>Mobile Number *</label><input id="signupPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
-      <div class="field" style="margin-top:12px"><label>Address *</label><textarea id="signupAddress" placeholder="House / street / village / town"></textarea></div>
+      <div class="field" style="margin-top:12px"><label>Village / Town *</label><input id="signupVillage" autocomplete="off" maxlength="100" placeholder="Village or town name"></div><div class="field" style="margin-top:12px"><label>Panchayat / Ward *</label><input id="signupPanchayat" autocomplete="off" maxlength="100" placeholder="Gram panchayat or ward"></div><div class="field" style="margin-top:12px"><label>Block / Tehsil</label><input id="signupBlock" autocomplete="off" maxlength="100" placeholder="Optional"></div><div class="field" style="margin-top:12px"><label>District *</label><input id="signupDistrict" autocomplete="off" maxlength="100" placeholder="Select or type district" list="pfDistrictList"></div><div class="field" style="margin-top:12px"><label>Landmark</label><input id="signupLandmark" autocomplete="off" maxlength="100" placeholder="Near temple, school, shop (optional)"></div><div class="field" style="margin-top:12px"><label>State</label><input id="signupState" autocomplete="off" maxlength="100" value="Odisha" placeholder="State"></div>
       <div class="field" style="margin-top:12px"><label>Pincode *</label><input id="signupPin" inputmode="numeric" placeholder="6-digit pincode"></div>
       <div class="field" style="margin-top:12px"><label>Exact location *</label>
         <button type="button" class="outline" id="signupLocBtn" style="width:100%" onclick="getSignupLocation()">📍 Get my location</button>
@@ -1342,8 +1352,9 @@ body.admin-mode .langsel{display:none}
           <div class="field"><label>Full Name</label><input id="cdName"></div>
           <div class="field"><label>Type</label><select id="cdType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
           <div class="field"><label>Phone</label><input id="cdPhone" inputmode="numeric"></div>
-          <div class="field"><label>Pincode</label><input id="cdPin" inputmode="numeric"></div>
-          <div class="field full"><label>Address</label><textarea id="cdAddress" style="min-height:70px"></textarea></div>
+          <div class="field full"><div id="cdAddrLegacy" class="muted hidden" style="font-size:13px"></div></div>
+          <div class="field"><label>Village / Town *</label><input id="cdVillage" autocomplete="off" maxlength="100" placeholder="Village or town name"></div><div class="field"><label>Panchayat / Ward *</label><input id="cdPanchayat" autocomplete="off" maxlength="100" placeholder="Gram panchayat or ward"></div><div class="field"><label>Block / Tehsil</label><input id="cdBlock" autocomplete="off" maxlength="100" placeholder="Optional"></div><div class="field"><label>District *</label><input id="cdDistrict" autocomplete="off" maxlength="100" placeholder="Select or type district" list="pfDistrictList"></div><div class="field"><label>Landmark</label><input id="cdLandmark" autocomplete="off" maxlength="100" placeholder="Near temple, school, shop (optional)"></div><div class="field"><label>State</label><input id="cdState" autocomplete="off" maxlength="100" placeholder="State"></div>
+          <div class="field full"><label>Pincode</label><input id="cdPin" inputmode="numeric"></div>
         </div>
         <div style="display:flex;gap:10px;margin-top:14px">
           <button type="button" class="primary" id="cdSaveBtn" style="flex:1" onclick="saveCustomerDetailEdit()">Save Changes</button>
@@ -1381,8 +1392,8 @@ body.admin-mode .langsel{display:none}
       <div class="field"><label>Full Name *</label><input id="adminCustName" placeholder="Customer name"></div>
       <div class="field"><label>Customer Type *</label><select id="adminCustType"><option value="Customer">Customer</option><option value="Plumber">Plumber</option><option value="Electrician">Electrician</option><option value="Painter">Painter</option><option value="Raj Mistri">Raj Mistri</option><option value="Tile Mistri">Tile Mistri</option><option value="Dealer">Dealer</option></select></div>
       <div class="field"><label>Phone Number *</label><input id="adminCustPhone" inputmode="tel" placeholder="10-digit mobile number"></div>
-      <div class="field"><label>Pincode *</label><input id="adminCustPin" inputmode="numeric" placeholder="6-digit pincode"></div>
-      <div class="field full"><label>Address *</label><textarea id="adminCustAddress" placeholder="Address"></textarea></div>
+<div class="field"><label>Village / Town *</label><input id="adminCustVillage" autocomplete="off" maxlength="100" placeholder="Village or town name"></div><div class="field"><label>Panchayat / Ward *</label><input id="adminCustPanchayat" autocomplete="off" maxlength="100" placeholder="Gram panchayat or ward"></div><div class="field"><label>Block / Tehsil</label><input id="adminCustBlock" autocomplete="off" maxlength="100" placeholder="Optional"></div><div class="field"><label>District *</label><input id="adminCustDistrict" autocomplete="off" maxlength="100" placeholder="Select or type district" list="pfDistrictList"></div><div class="field"><label>Landmark</label><input id="adminCustLandmark" autocomplete="off" maxlength="100" placeholder="Near temple, school, shop (optional)"></div><div class="field"><label>State</label><input id="adminCustState" autocomplete="off" maxlength="100" placeholder="State"></div>
+      <div class="field full"><label>Pincode *</label><input id="adminCustPin" inputmode="numeric" placeholder="6-digit pincode"></div>
     </div>
     <button type="button" class="primary" id="adminCreateBtn" style="width:100%;margin-top:16px" onclick="adminCreateCustomer()">Create Active Account</button>
   </div>
@@ -1996,19 +2007,21 @@ async function customerSignup(){
   const name=$("signupName").value.trim();
   const type=$("signupType").value;
   const phone=$("signupPhone").value.replace(/\D/g,"");
-  const address=$("signupAddress").value.trim();
+  const addr=addrRead("signup");
   const pin=$("signupPin").value.replace(/\D/g,"");
-  if(!name||!type||phone.length!==10||!address||pin.length!==6){
-    toast("Enter valid name, type, 10-digit phone, address and 6-digit pincode"); return;
+  if(!name||!type||phone.length!==10||pin.length!==6){
+    toast("Enter valid name, type, 10-digit phone and 6-digit pincode"); return;
   }
+  const addrErr=addrCheck(addr);
+  if(addrErr){toast(addrErr);return;}
   if(!__signupLoc){
     toast("Please turn ON GPS and tap 'Get my location' before registering.",5000);
     $("signupLocBtn")?.scrollIntoView({block:"center",behavior:"smooth"});
     return;
   }
   try{
-    const d=await apiPost({action:"signupCustomer",customer:{name,type,phone,address,pin,lat:__signupLoc.lat,lng:__signupLoc.lng}});
-    $("signupName").value=""; $("signupPhone").value=""; $("signupAddress").value=""; $("signupPin").value="";
+    const d=await apiPost({action:"signupCustomer",customer:{name,type,phone,pin,addrMode:"structured",...addr,lat:__signupLoc.lat,lng:__signupLoc.lng}});
+    $("signupName").value=""; $("signupPhone").value=""; addrClear("signup"); $("signupPin").value="";
     __signupLoc=null;
     if($("signupLocBtn")){$("signupLocBtn").textContent="📍 Get my location";}
     if($("signupLocStatus")){$("signupLocStatus").style.color="";$("signupLocStatus").textContent="Turn on GPS and tap the button. This is needed to register.";}
@@ -2134,7 +2147,7 @@ function pfFill(id,c){
     const same=!!c.whatsappSame||(!!c.whatsapp&&c.whatsapp===c.phone);
     $("pfWaSame").checked=same;v("pfWhatsapp",same?c.phone:c.whatsapp);pfWaToggle();
   }
-  if(id==="pfAddress"){v("pfAddr",c.address);v("pfDistrict",c.district);v("pfPin",c.pin);}
+  if(id==="pfAddress"){addrFill("pf",c);v("pfPin",c.pin);}
   if(id==="pfSocial"){const s=c.social||{};v("pfSocInstagram",s.instagram);v("pfSocFacebook",s.facebook);v("pfSocYoutube",s.youtube);v("pfSocWebsite",s.website);}
   if(id==="pfSecurity"){v("pwOld","");v("pwNew","");}
 }
@@ -2176,10 +2189,12 @@ async function pfSave(section,btn){
     if(!same&&wa&&wa.length!==10){toast("Enter a valid 10-digit WhatsApp number");return}
     patch.whatsapp=wa;patch.whatsappSame=!!(same&&wa);
   }else if(section==="address"){
-    const address=$("pfAddr").value.trim(),pin=$("pfPin").value.replace(/\D/g,"");
-    if(!address){toast("Please enter your address");return}
+    const a=addrRead("pf"),pin=$("pfPin").value.replace(/\D/g,"");
+    const ae=addrCheck(a);if(ae){toast(ae);return}
     if(pin.length!==6){toast("Pincode must be 6 digits");return}
-    patch.address=address;patch.district=$("pfDistrict").value.trim();patch.pin=pin;
+    Object.assign(patch,a,{pin});
+    patch.address=[a.village&&"Vill. "+a.village,a.panchayat&&"Panchayat "+a.panchayat,a.block&&"Block "+a.block,a.landmark&&"Near "+a.landmark,a.district&&"Dist. "+a.district,a.state].filter(Boolean).join(", ");
+    patch.__structured=true;
   }else if(section==="social"){
     const social={};
     for(const [k,id,label] of [["instagram","pfSocInstagram","Instagram"],["facebook","pfSocFacebook","Facebook"],["youtube","pfSocYoutube","YouTube"],["website","pfSocWebsite","Website"]]){
@@ -2190,10 +2205,11 @@ async function pfSave(section,btn){
     }
     patch.social=social;
   }
+  const structured=!!patch.__structured;delete patch.__structured;
   const updated={...c,...patch};
   await busy(btn,async()=>{
     try{
-      await apiPost({action:"saveCustomer",customer:updated,customerToken:c.token});
+      await apiPost({action:"saveCustomer",customer:structured?{...updated,addrMode:"structured"}:updated,customerToken:c.token});
       localStorage.setItem("bijaya_customer",JSON.stringify(updated));
       closeModal();
       renderProfileDashboard();
@@ -2596,7 +2612,7 @@ async function loadCustomerPhoto(c){
 }
 
 /* ===== PORTFOLIO: admin tab (inside the customer profile) ===== */
-const ptState={cid:null,loaded:false,settings:{enabled:false,headline:"",bio:""},entries:[],form:null};
+const ptState={cid:null,loaded:false,aiReady:false,settings:{enabled:false,headline:"",bio:""},entries:[],form:null};
 const __ptImgCache={};
 function ptToday(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 function ptFmtDate(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(String(v||"")))return "";const d=new Date(v+"T00:00:00");return isNaN(d)?"":d.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"});}
@@ -2611,6 +2627,7 @@ async function ptLoad(force){
     if(cdId!==wanted)return;
     ptState.settings=d.settings||{enabled:false,headline:"",bio:""};
     ptState.entries=d.entries||[];
+    ptState.aiReady=!!d.aiReady;
     ptState.loaded=true;
     ptRender();
     ptUpdatePending();
@@ -2625,7 +2642,7 @@ function ptSyncSettings(){
 }
 function ptSyncForm(){
   const f=ptState.form;if(!f||!$("ptTitle"))return;
-  f.date=$("ptDate").value;f.title=$("ptTitle").value;f.note=$("ptNote").value;if($("ptPub"))f.pub=$("ptPub").checked;
+  f.date=$("ptDate").value;f.title=$("ptTitle").value;f.note=$("ptNote").value;if($("ptPub"))f.pub=$("ptPub").checked;if($("ptAiTitle")){f.aiTitle=$("ptAiTitle").value;f.aiNote=$("ptAiNote").value;f.useAi=$("ptUseAi").checked;}
 }
 function ptThumbHtml(kind,i,src,imageId){
   const img=src?`<img alt="" src="${src}">`:`<img alt="" data-ptimg="${esc(imageId)}">`;
@@ -2650,6 +2667,10 @@ function ptRender(){
         <button type="button" class="outline" style="margin-top:10px;width:100%" ${total>=6?"disabled":""} onclick="$('ptFile').click()">📷 Add photos</button>
         <input type="file" id="ptFile" accept="image/*" multiple class="hidden" onchange="ptPickFiles(this)">
       </div>
+      ${f.hasAi?`<div class="pt-aibox"><div class="pt-ai-h">&#10024; Polished version <small id="ptAiWords"></small></div>
+        <div class="field"><label>Polished title</label><input id="ptAiTitle" maxlength="120" value="${esc(f.aiTitle)}"></div>
+        <div class="field" style="margin-top:8px"><label>Polished description</label><textarea id="ptAiNote" rows="7" maxlength="2500" oninput="ptAiCount()">${esc(f.aiNote)}</textarea></div>
+        <label class="cp-check" style="margin-top:8px"><input type="checkbox" id="ptUseAi" ${f.useAi?"checked":""}> Show the polished version on the public page</label></div>`:""}
       ${f.review&&f.review!=="Approved"?`<p class="muted" style="margin:12px 0 0;font-size:12px">This entry came from the customer and is not public yet. Save your edits, then use <b>Approve &amp; publish</b>.</p>`:`<label class="cp-check" style="margin-top:12px"><input type="checkbox" id="ptPub" ${f.pub?"checked":""}> Show this entry on the public portfolio</label>`}
       <div class="pt-row"><button type="button" class="primary" id="ptSaveBtn" onclick="ptSaveEntry(this)">Save entry</button><button type="button" class="outline" onclick="ptCancelForm()">Cancel</button></div>
     </div>`:"";
@@ -2669,11 +2690,11 @@ function ptRender(){
         <button type="button" class="outline" style="color:#b42318" onclick="ptDeleteEntry(${arg(e.id)})">Delete</button>`;
     return `<div class="pt-entry${pend?" review":""}">
       <div class="pt-meta"><span>${esc(ptFmtDate(e.date))}</span>${pills}</div>
-      <h4>${esc(e.title)}</h4>
-      ${e.note?`<p class="pt-note">${esc(e.note)}</p>`:""}
+      ${ptVersionsHtml(e)}
       ${rej&&e.reviewNote?`<p class="pt-note" style="color:#b42318"><b>Reason sent to customer:</b> ${esc(e.reviewNote)}</p>`:""}
       ${e.images.length?`<div class="pt-thumbs">${e.images.map(id=>`<div class="pt-th"><img alt="" data-ptimg="${esc(id)}"></div>`).join("")}</div>`:""}
       <div class="pt-row">${acts}</div>
+      <div class="pt-row" style="margin-top:6px">${ptAiButtons(e)}</div>
     </div>`;
   }).join(""):`<div class="empty" style="padding:24px 10px"><h3>No entries yet</h3><p>Add the customer's work and your notes over time. The customer can also add work from his profile for you to review. Public ones appear on the portfolio page.</p></div>`;
   box.innerHTML=`
@@ -2739,7 +2760,7 @@ function ptNewEntry(){ptSyncSettings();ptState.form={id:null,date:ptToday(),titl
 function ptEditEntry(id){
   const e=ptState.entries.find(x=>x.id===id);if(!e)return;
   ptSyncSettings();
-  ptState.form={id:e.id,date:e.date||ptToday(),title:e.title,note:e.note,pub:!!e.public,review:e.review,keep:[...e.images],newImgs:[]};
+  ptState.form={id:e.id,date:e.date||ptToday(),title:e.title,note:e.note,pub:!!e.public,review:e.review,keep:[...e.images],newImgs:[],hasAi:!!(e.aiTitle||e.aiNote),aiTitle:e.aiTitle||"",aiNote:e.aiNote||"",useAi:!!e.useAi};
   ptRender();$("ptFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});
 }
 function ptCancelForm(){ptState.form=null;ptRender();}
@@ -2760,11 +2781,52 @@ async function ptSaveEntry(btn){
   if(!f.title.trim()){toast("Please enter a title");$("ptTitle")?.focus();return;}
   await busy(btn,async()=>{
     try{
-      await apiPost({action:"adminSavePortfolioEntry",customerId:cdId,entry:{id:f.id,date:f.date,title:f.title,note:f.note,public:f.pub,keepImages:f.keep,newImages:f.newImgs}});
+      await apiPost({action:"adminSavePortfolioEntry",customerId:cdId,entry:{id:f.id,date:f.date,title:f.title,note:f.note,public:f.pub,keepImages:f.keep,newImages:f.newImgs,...(f.hasAi?{aiTitle:f.aiTitle,aiNote:f.aiNote,useAi:f.useAi}:{})}});
       ptState.form=null;
       toast("Entry saved");
       await ptLoad(true);
     }catch(e){if(e.message!=="Admin session expired")toast("Could not save: "+e.message,5000);}
+  });
+}
+function ptWords(s){const t=String(s||"").trim();return t?t.split(/\s+/).length:0;}
+function ptAiCount(){const el=$("ptAiWords");if(el)el.textContent="("+ptWords($("ptAiNote")?.value)+" words)";}
+function ptVersionsHtml(e){
+  const has=!!(e.aiTitle||e.aiNote);
+  if(!has){
+    return `<h4>${esc(e.title)}</h4>${e.note?`<p class="pt-note">${esc(e.note)}</p>`:""}${e.aiStatus?`<p class="pt-note" style="color:#b45309;font-size:12px">&#10024; ${esc(e.aiStatus)}</p>`:""}`;
+  }
+  const w=ptWords(e.aiNote);
+  return `<div class="pt-ver">
+    <div class="pt-col"><span class="pt-colh">Original</span><h4>${esc(e.title)}</h4>${e.note?`<p class="pt-note">${esc(e.note)}</p>`:`<p class="pt-note muted">(no description)</p>`}</div>
+    <div class="pt-col pol${e.useAi?" on":""}"><span class="pt-colh">&#10024; Polished <small>${w} words${w<150?" &middot; under 150":""}</small></span><h4>${esc(e.aiTitle)}</h4><p class="pt-note">${esc(e.aiNote)}</p></div>
+  </div>
+  <div class="pt-showing">Public page shows:
+    <button type="button" class="pt-seg${e.useAi?" on":""}" onclick="ptSetUseAi(${arg(e.id)},true,this)">Polished</button>
+    <button type="button" class="pt-seg${e.useAi?"":" on"}" onclick="ptSetUseAi(${arg(e.id)},false,this)">Original</button>
+  </div>`;
+}
+function ptAiButtons(e){
+  if(!ptState.aiReady)return `<span class="muted" style="font-size:12px">&#10024; AI polish is off. Add GEMINI_API_KEY in Apps Script to switch it on.</span>`;
+  const has=!!(e.aiTitle||e.aiNote);
+  return `<button type="button" class="outline" onclick="ptPolish(${arg(e.id)},this)">&#10024; ${has?"Regenerate polished version":"Polish with AI"}</button>`;
+}
+async function ptPolish(id,btn){
+  await busy(btn,async()=>{
+    try{
+      toast("Writing the polished version...",2500);
+      await apiPost({action:"adminPolishPortfolioEntry",customerId:cdId,entryId:id});
+      toast("Polished version ready");
+      await ptLoad(true);
+    }catch(e){if(e.message!=="Admin session expired")toast("Could not polish: "+e.message,5000);}
+  });
+}
+async function ptSetUseAi(id,useAi,btn){
+  const e=ptState.entries.find(x=>x.id===id);if(!e||!!e.useAi===!!useAi)return;
+  await busy(btn,async()=>{
+    try{
+      await apiPost({action:"adminSavePortfolioEntry",customerId:cdId,entry:{id:e.id,date:e.date,title:e.title,note:e.note,public:e.public,keepImages:e.images,newImages:[],useAi:!!useAi}});
+      await ptLoad(true);
+    }catch(err){if(err.message!=="Admin session expired")toast("Could not update: "+err.message,5000);}
   });
 }
 function ptUpdatePending(){
@@ -2948,7 +3010,8 @@ function cwRender(){
   const formHtml=f?`
     <div class="pt-card" id="cwFormCard">
       <h3 class="cp-h">${f.id?"Edit your work":"Add your work"}</h3>
-      <p class="muted" style="margin:0 0 10px;font-size:13px">Show jobs you have completed. The shop will check it before it appears on your public portfolio.</p>
+      <p class="muted" style="margin:0 0 10px;font-size:13px">Show jobs you have completed. The shop checks your work and may polish the title and description before it appears on your public portfolio.</p>
+      ${f.live?`<div class="notice" style="margin-bottom:10px;font-size:13px">This work is already approved. After you save, it goes back for review and stays hidden from the public page until the shop approves it again.</div>`:""}
       <div class="field"><label>Date of work</label><input type="date" id="cwDate" value="${esc(f.date)}"></div>
       <div class="field" style="margin-top:10px"><label>Title *</label><input id="cwTitle" maxlength="120" value="${esc(f.title)}" placeholder="e.g. Bathroom plumbing at Saheed Nagar"></div>
       <div class="field" style="margin-top:10px"><label>What did you do?</label><textarea id="cwNote" rows="4" maxlength="1500" placeholder="Describe the work, materials used and result">${esc(f.note)}</textarea></div>
@@ -2961,14 +3024,15 @@ function cwRender(){
     </div>`:"";
   const list=cwState.entries.length?cwState.entries.map(e=>{
     const st=CW_STATUS[e.status]||["priv",e.status];
-    const editable=e.status==="Pending"||e.status==="Rejected";
+    const live=e.status==="Published";
     return `<div class="pt-entry${e.status==="Pending"?" review":""}">
       <div class="pt-meta"><span>${esc(ptFmtDate(e.date))}</span><span class="pt-pill ${st[0]}">${esc(st[1])}</span></div>
       <h4>${esc(e.title)}</h4>
       ${e.note?`<p class="pt-note">${esc(e.note)}</p>`:""}
       ${e.status==="Rejected"&&e.reviewNote?`<p class="pt-note" style="color:#b42318"><b>Shop's note:</b> ${esc(e.reviewNote)}</p>`:""}
       ${e.images.length?`<div class="pt-thumbs">${e.images.map(id=>`<div class="pt-th"><img alt="" data-cwimg="${esc(id)}"></div>`).join("")}</div>`:""}
-      ${editable?`<div class="pt-row"><button type="button" class="outline" onclick="cwEdit(${arg(e.id)})">${e.status==="Rejected"?"Fix &amp; resend":"Edit"}</button><button type="button" class="outline" style="color:#b42318" onclick="cwDelete(${arg(e.id)})">Delete</button></div>`:`<p class="muted" style="margin:10px 0 0;font-size:12px">To change approved work, please contact the shop.</p>`}
+      <div class="pt-row"><button type="button" class="outline" onclick="cwEdit(${arg(e.id)})">${e.status==="Rejected"?"Fix &amp; resend":"Edit"}</button><button type="button" class="outline" style="color:#b42318" onclick="cwDelete(${arg(e.id)})">Delete</button></div>
+      ${live?`<p class="muted" style="margin:8px 0 0;font-size:12px">This work is on your public portfolio. If you edit it, it goes back for review and is hidden until the shop approves it again.</p>`:""}
     </div>`;
   }).join(""):`<div class="empty" style="padding:24px 10px"><h3>No work added yet</h3><p>Add photos and details of jobs you have done. After the shop approves them, they show on your public portfolio.</p></div>`;
   box.innerHTML=`
@@ -2993,7 +3057,7 @@ function cwHydrate(){
 function cwNew(){cwState.form={id:null,date:ptToday(),title:"",note:"",keep:[],newImgs:[]};cwRender();$("cwFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});}
 function cwEdit(id){
   const e=cwState.entries.find(x=>x.id===id);if(!e)return;
-  cwState.form={id:e.id,date:e.date||ptToday(),title:e.title,note:e.note,keep:[...e.images],newImgs:[]};
+  cwState.form={id:e.id,date:e.date||ptToday(),title:e.title,note:e.note,keep:[...e.images],newImgs:[],live:e.status==="Published"||e.status==="Approved"};
   cwRender();$("cwFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});
 }
 function cwCancel(){cwState.form=null;cwRender();}
@@ -3026,13 +3090,34 @@ async function cwSave(btn){
   });
 }
 async function cwDelete(id){
-  if(!confirm("Delete this work and its photos?"))return;
+  const en=cwState.entries.find(x=>x.id===id);
+  if(!confirm((en&&en.status==="Published"?"This work is on your public portfolio. ":"")+"Delete this work and its photos? This cannot be undone."))return;
   try{
     await apiPost({action:"deleteMyPortfolioEntry",entryId:id});
     toast("Deleted");
     await cwLoad(true);
   }catch(e){toast(e.message||"Could not delete",5000);}
 }
+
+/* ===== structured address (village, panchayat, block, district, landmark, state; pincode separate, always last) ===== */
+const ADDR_KEYS=["Village","Panchayat","Block","District","Landmark","State"];
+function addrRead(p){
+  const o={};
+  ADDR_KEYS.forEach(k=>{o[k[0].toLowerCase()+k.slice(1)]=($(p+k)?.value||"").trim().replace(/\s+/g," ");});
+  return o;
+}
+function addrCheck(a){return(!a.village||!a.panchayat||!a.district)?"Please enter Village, Panchayat and District":"";}
+function addrFill(p,c){
+  ADDR_KEYS.forEach(k=>{const el=$(p+k);if(el)el.value=(c&&c[k[0].toLowerCase()+k.slice(1)])||"";});
+  if($(p+"State")&&!$(p+"State").value)$(p+"State").value="Odisha";
+  const note=$(p+"AddrLegacy");
+  if(note){
+    const legacy=c&&!c.village&&c.address;
+    note.classList.toggle("hidden",!legacy);
+    if(legacy)note.textContent="Saved address (old format): "+c.address+". Please fill the boxes below once.";
+  }
+}
+function addrClear(p){ADDR_KEYS.forEach(k=>{const el=$(p+k);if(el)el.value=k==="State"?"Odisha":"";});}
 
 function roundRectPath(ctx,x,y,w,h,r){
   ctx.beginPath();
@@ -3287,8 +3372,10 @@ async function renderIdCardCanvasH(data,H){
   ];
   const bday=fmtIdBirthday(data.birthday);
   if(bday)rows.push(["Birthday",bday,false]);
-  rows.push(["Pincode",[data.pin,data.district].filter(Boolean).join("  \u2022  ")||"-",false]);
-  rows.push(["Address",data.address||"-",false]);
+  let addrText=String(data.address||"").trim()||"-";
+  if(data.district&&addrText!=="-"&&!addrText.toLowerCase().includes(String(data.district).toLowerCase()))addrText+=", Dist. "+data.district;
+  rows.push(["Address",addrText,false]);
+  rows.push(["Pincode",String(data.pin||"-"),false]);
   const rowH=40;
   rows.forEach(([label,value,bold])=>{
     ctx.textAlign="left";
@@ -4455,7 +4542,7 @@ async function apiPost(data,_retried){
     const c=customer();
     if(c?.token)payload.customerToken=c.token;
   }
-  const d=await postJson(payload,["uploadCustomerPhoto","createDownloadLink","adminSavePortfolioEntry","saveMyPortfolioEntry"].includes(payload.action)?90000:45000);
+  const d=await postJson(payload,["uploadCustomerPhoto","createDownloadLink","adminSavePortfolioEntry","saveMyPortfolioEntry","adminPolishPortfolioEntry"].includes(payload.action)?90000:45000);
   if(d.ok===false){
     if(ADMIN_ACTIONS.includes(payload.action)&&/unauthorized admin/i.test(d.error||"")){
       adminSessionExpired();
@@ -5303,7 +5390,7 @@ function cdStartEdit(){
   $("cdName").value=c.name||"";
   $("cdType").value=c.type||"Customer";
   $("cdPhone").value=c.phone||"";
-  $("cdAddress").value=c.address||"";
+  addrFill("cd",c);
   $("cdPin").value=c.pin||"";
   $("cdViewBox").classList.add("hidden");
   $("cdEditBox").classList.remove("hidden");
@@ -5476,8 +5563,10 @@ function renderCustomerDetailOrders(c){
 }
 async function saveCustomerDetailEdit(){
   if(!cdId)return;
-  const customer={name:$("cdName").value.trim(),type:$("cdType").value,phone:digits($("cdPhone").value),address:$("cdAddress").value.trim(),pin:digits($("cdPin").value)};
-  if(!customer.name||customer.phone.length!==10||!customer.address||customer.pin.length!==6){toast("Enter a valid name, 10-digit phone, address and 6-digit pincode");return;}
+  const addr=addrRead("cd");
+  const customer={name:$("cdName").value.trim(),type:$("cdType").value,phone:digits($("cdPhone").value),pin:digits($("cdPin").value),addrMode:"structured",...addr};
+  if(!customer.name||customer.phone.length!==10||customer.pin.length!==6){toast("Enter a valid name, 10-digit phone and 6-digit pincode");return;}
+  const addrErr=addrCheck(addr);if(addrErr){toast(addrErr);return;}
   await busy($("cdSaveBtn"),async()=>{
     try{
       await apiPost({action:"adminUpdateCustomerDetails",customerId:cdId,customer});
@@ -5538,16 +5627,18 @@ function copyCredentials(){
   copyText(`BIJAYA HOUSING login\nCustomer ID: ${d.customerId}\nPassword: ${d.temporaryPassword}\nPlease change your password after logging in.`,"Login details copied");
 }
 function openAdminCustomerForm(){
-  ["adminCustName","adminCustPhone","adminCustAddress","adminCustPin"].forEach(id=>$(id).value="");
+  ["adminCustName","adminCustPhone","adminCustPin"].forEach(id=>$(id).value="");
+  addrClear("adminCust");
   $("adminCustType").value="Customer";
   openModal("adminCustomerModal");
 }
 async function adminCreateCustomer(){
-  const name=$("adminCustName").value.trim(),phone=digits($("adminCustPhone").value),type=$("adminCustType").value,address=$("adminCustAddress").value.trim(),pin=digits($("adminCustPin").value);
-  if(!name||phone.length!==10||!address||pin.length!==6){toast("Enter valid customer details");return;}
+  const name=$("adminCustName").value.trim(),phone=digits($("adminCustPhone").value),type=$("adminCustType").value,pin=digits($("adminCustPin").value),addr=addrRead("adminCust");
+  if(!name||phone.length!==10||pin.length!==6){toast("Enter valid customer details");return;}
+  const addrErr=addrCheck(addr);if(addrErr){toast(addrErr);return;}
   await busy($("adminCreateBtn"),async()=>{
     try{
-      const d=await apiPost({action:"adminCreateCustomer",customer:{name,type,phone,address,pin}});
+      const d=await apiPost({action:"adminCreateCustomer",customer:{name,type,phone,pin,addrMode:"structured",...addr}});
       hideModal("adminCustomerModal");
       showGeneratedCredentials(d);
       await loadAdminCustomers();
@@ -6404,7 +6495,7 @@ function showMyReceipt(id){
 const APP_LINK="https://satyajeetmeher91.github.io/bijayahousing/";
 const ADMIN_TABS=["dashboard","products","orders","customers","payments","reports","quotes","team","settings"];
 const ADMIN_ACTIONS=["getOrders","saveProduct","deleteProduct","getCustomers","adminCreateCustomer","adminApproveCustomer","adminSetCustomerStatus","adminSetCustomerAccess","updateOrderStatus","adminUpdateOrderPricing","adminUpdateCustomerDetails","adminResetCustomerPassword","adminCreatePayment","adminGetPayments","adminUpdatePayment","adminRemindPayment","adminRecordPayment","adminBulkPayments","adminUpdateOrderDelivery","adminChangePassword","adminGetLoginLog","adminBackupNow","adminGetBackupInfo",
-  "adminGetPortfolio","adminReviewPortfolioEntry","adminSavePortfolioSettings","adminSavePortfolioEntry","adminDeletePortfolioEntry","adminGetPortfolioImage","adminGetTeam","adminSaveAdmin","adminGetActivity","adminGetAlertSettings","adminSaveAlertSettings","adminTestAlert","adminGetSettings","adminSaveSettings","adminLockPhotos",
+  "adminGetPortfolio","adminPolishPortfolioEntry","adminReviewPortfolioEntry","adminSavePortfolioSettings","adminSavePortfolioEntry","adminDeletePortfolioEntry","adminGetPortfolioImage","adminGetTeam","adminSaveAdmin","adminGetActivity","adminGetAlertSettings","adminSaveAlertSettings","adminTestAlert","adminGetSettings","adminSaveSettings","adminLockPhotos",
   "adminStockIn","adminStockAdjust","adminGetStockLog","adminGetLowStock","adminBulkPriceUpdate","adminGetPriceBatches","adminUndoPriceBatch","adminImportProducts","adminArchiveOrders",
   "adminSetCustomerRate","adminGetStatement","adminGetReports","adminGetDuesAging","adminGetDailyClosing","adminGetQuotes","adminSaveQuote","adminGetCoupons","adminSaveCoupon","adminDeleteCoupon"];
 const selPay=new Set(),selCust=new Set();
