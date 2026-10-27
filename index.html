@@ -524,6 +524,21 @@ html.pp-mode body{background:#f5f1e8}
   .pp-date b{display:inline;font-size:20px}
   .pp-stats .pp-stat b{font-size:24px}
 }
+
+/* --- Admin order details: centered card on PC, full screen on phones --- */
+.ao-banner{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:18px 20px;border-radius:18px;color:#fff;background:linear-gradient(135deg,var(--c),color-mix(in srgb,var(--c) 62%,#000));box-shadow:0 10px 24px color-mix(in srgb,var(--c) 38%,transparent)}
+.ao-banner small{display:block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.ao-banner b{font-size:24px;line-height:1.15}
+.ao-total{display:flex;gap:10px;align-items:baseline;font-size:28px;font-weight:900}
+.ao-total s{font-size:15px;opacity:.7;font-weight:600}
+.ao-change{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:14px}
+.ao-change label{font-weight:800;font-size:13px;color:var(--muted)}
+.ao-change select{flex:1 1 180px;min-width:0;font-weight:700}
+@media(min-width:900px){
+  #adminOrderDetailModal.modal.sheet{width:min(720px,calc(100% - 48px));height:auto;max-height:92dvh;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:26px;box-shadow:0 30px 90px rgba(15,23,42,.35);animation:none}
+  #adminOrderDetailModal.modal.sheet .modal-head{border-radius:26px 26px 0 0;padding:18px 22px;background:var(--surface)}
+  #adminOrderDetailModal .modal-body{padding:18px 22px 24px}
+}
 /* --- Admin products list --- */
 .ap-tabs{display:flex;gap:6px;overflow-x:auto;padding:4px;margin-top:12px;background:var(--surface2);border-radius:14px;scrollbar-width:none}
 .ap-tabs::-webkit-scrollbar{display:none}
@@ -693,6 +708,20 @@ body.admin-mode .langsel{display:none}
 #adminReportsTab h4{margin:18px 0 8px}
 @media(max-width:820px){.rtable td.stack{display:block;text-align:left}.rtable td.stack::before{display:block;margin-bottom:4px}}
 @media(max-width:720px){.toolbar>button{flex:1 1 45%;padding-left:8px;padding-right:8px}.langsel{padding:9px 4px;max-width:64px}}
+
+/* --- Header: search fills the space between the brand and the cart --- */
+.nav{flex-wrap:nowrap!important}
+.nav-spacer{display:none!important}
+.nav .search{order:0!important;flex:1 1 0!important;width:auto!important;min-width:0;max-width:640px;margin:0 auto}
+@media(max-width:720px){
+  .nav{height:60px;padding:0 10px!important;gap:7px!important}
+  .nav .brand{flex:0 0 auto!important;min-width:0;font-size:11px;line-height:1.05;gap:6px}
+  .nav .brand span:last-child{display:block!important;white-space:normal;max-width:62px;overflow:visible;text-overflow:clip}
+  .nav .brand-mark{width:32px;height:32px;font-size:13px}
+  .nav .search input{padding:10px 8px 10px 30px;font-size:14px}
+  .nav .search span{left:10px}
+  .nav .iconbtn{width:38px;height:38px;font-size:17px}
+}
 </style>
 <style id="wixTheme">
 :root{--primary:#1c1f23;--accent:#f2a900;--bg:#f3f2ee}
@@ -784,10 +813,9 @@ body.admin-mode .langsel{display:none}
       <p class="hero-sub">Cement, TMT, paints, tiles, hardware, pumps, sanitary and plumbing items. Pick what you need and send your order on WhatsApp.</p>
       <div class="hero-cta"><button type="button" onclick="document.getElementById('categoriesHead').scrollIntoView()">Shop now</button><a class="ghost" target="_blank" href="https://wa.me/918114832749">WhatsApp us</a></div>
     </div>
-    <div class="hero-stats">
-      <div><b id="hsProducts">0</b><span>Products in stock list</span></div>
-      <div><b id="hsCats">0</b><span>Categories</span></div>
-      <div id="hsBrandsRow"><b id="hsBrands">0</b><span>Brands</span></div>
+    <div class="hero-stats hero-balance" id="heroBalance">
+      <div><span>Payable balance</span><b id="hbAmount">&hellip;</b><span id="hbNote">Checking your account</span></div>
+    </div>
     </div>
   </section>
   
@@ -934,7 +962,6 @@ body.admin-mode .langsel{display:none}
 
     <div id="adminTeamTab" class="hidden"><div class="panel">
       <div class="toolbar"><h3 class="grow" style="margin:0">Team &amp; Admin Access</h3><button type="button" class="primary" onclick="openTeamForm()">+ Add Team Member</button></div>
-      <p class="notice">A Super Admin can do everything. A Sub Admin is limited to Orders, Payments, Customers (view only), stock-in and low-stock — no product prices, settings, reports, backups or team changes.</p>
       <div class="tablewrap"><table class="table"><thead><tr><th>Username</th><th>Name</th><th>Role</th><th>Status</th><th>Password</th><th></th></tr></thead><tbody id="teamRows"></tbody></table></div>
 
       <details class="pw-box" style="margin-top:16px"><summary>Activity Log</summary>
@@ -970,7 +997,7 @@ body.admin-mode .langsel{display:none}
         <button type="button" class="primary" id="stRatesSaveBtn" style="margin-top:14px" onclick="saveShopSettings()">Save Rates</button>
       </details>
 
-      <details class="pw-box" style="margin-top:14px"><summary>Alerts (Telegram / Email)</summary>
+      <details class="pw-box super-admin-only hidden" style="margin-top:14px"><summary>Alerts (Telegram / Email)</summary>
         <p class="notice">Get notified for new orders, signups, payment claims, cancellations and low stock. Telegram is free: message <b>@BotFather</b> on Telegram, create a bot, and paste its token below.</p>
         <div class="formgrid" style="margin-top:10px">
           <div class="field full"><label>Telegram bot token</label><input id="alTgToken" placeholder="123456789:AA..." autocomplete="off"></div>
@@ -991,7 +1018,6 @@ body.admin-mode .langsel{display:none}
       <details class="pw-box" style="margin-top:14px"><summary>Backup</summary>
         <p class="muted" id="backupInfo" style="margin-top:10px">Checking last backup…</p>
         <button type="button" class="primary" id="backupBtn" onclick="backupNow()">Back up now</button>
-        <p class="muted" style="margin-top:10px">Copies the whole Google Sheet into a private Drive folder and keeps the newest copies. For automatic weekly backups, run <b>installTriggers</b> once in Apps Script.</p>
       </details>
 
     </div></div>
@@ -1801,6 +1827,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 
 const PUBLIC_BASE="https://satyajeetmeher91.github.io/bijayahousing/";
 const PORTFOLIO_MODE=/[?&]portfolio=/.test(location.search);
+(function(){const f=()=>{const el=document.getElementById("searchInput");if(el)el.placeholder=innerWidth<=720?"Search":"Search products...";};document.addEventListener("DOMContentLoaded",f);addEventListener("resize",f);})();
 const PORTFOLIO_ID=(()=>{try{return String(new URLSearchParams(location.search).get("portfolio")||"").trim().toUpperCase().replace(/[^A-Z0-9\-]/g,"").slice(0,40);}catch(e){return "";}})();
 const portfolioUrl=id=>PUBLIC_BASE+"?portfolio="+encodeURIComponent(id);
 const API_URL="https://script.google.com/macros/s/AKfycbwXpRGn-_VTG7qTbGp-I-rNDmm_XBzvqgPIH3eB_OsNsq7OtD7R3KZnsXGMyWvJj8e4/exec";
@@ -3009,9 +3036,8 @@ function cwRender(){
   const thumb=(kind,i,src,id)=>`<div class="pt-th">${src?`<img alt="" src="${src}">`:`<img alt="" data-cwimg="${esc(id)}">`}<button type="button" aria-label="Remove photo" onclick="cwRemoveImg('${kind}',${i})">&times;</button></div>`;
   const formHtml=f?`
     <div class="pt-card" id="cwFormCard">
-      <h3 class="cp-h">${f.id?"Edit your work":"Add your work"}</h3>
+<h3 class="cp-h">Add your work</h3>
       <p class="muted" style="margin:0 0 10px;font-size:13px">Show jobs you have completed. The shop checks your work and may polish the title and description before it appears on your public portfolio.</p>
-      ${f.live?`<div class="notice" style="margin-bottom:10px;font-size:13px">This work is already approved. After you save, it goes back for review and stays hidden from the public page until the shop approves it again.</div>`:""}
       <div class="field"><label>Date of work</label><input type="date" id="cwDate" value="${esc(f.date)}"></div>
       <div class="field" style="margin-top:10px"><label>Title *</label><input id="cwTitle" maxlength="120" value="${esc(f.title)}" placeholder="e.g. Bathroom plumbing at Saheed Nagar"></div>
       <div class="field" style="margin-top:10px"><label>What did you do?</label><textarea id="cwNote" rows="4" maxlength="1500" placeholder="Describe the work, materials used and result">${esc(f.note)}</textarea></div>
@@ -3024,15 +3050,13 @@ function cwRender(){
     </div>`:"";
   const list=cwState.entries.length?cwState.entries.map(e=>{
     const st=CW_STATUS[e.status]||["priv",e.status];
-    const live=e.status==="Published";
     return `<div class="pt-entry${e.status==="Pending"?" review":""}">
       <div class="pt-meta"><span>${esc(ptFmtDate(e.date))}</span><span class="pt-pill ${st[0]}">${esc(st[1])}</span></div>
       <h4>${esc(e.title)}</h4>
       ${e.note?`<p class="pt-note">${esc(e.note)}</p>`:""}
       ${e.status==="Rejected"&&e.reviewNote?`<p class="pt-note" style="color:#b42318"><b>Shop's note:</b> ${esc(e.reviewNote)}</p>`:""}
       ${e.images.length?`<div class="pt-thumbs">${e.images.map(id=>`<div class="pt-th"><img alt="" data-cwimg="${esc(id)}"></div>`).join("")}</div>`:""}
-      <div class="pt-row"><button type="button" class="outline" onclick="cwEdit(${arg(e.id)})">${e.status==="Rejected"?"Fix &amp; resend":"Edit"}</button><button type="button" class="outline" style="color:#b42318" onclick="cwDelete(${arg(e.id)})">Delete</button></div>
-      ${live?`<p class="muted" style="margin:8px 0 0;font-size:12px">This work is on your public portfolio. If you edit it, it goes back for review and is hidden until the shop approves it again.</p>`:""}
+      <p class="muted" style="margin:10px 0 0;font-size:13px;font-weight:600">Submitted. Publish shortly.</p>
     </div>`;
   }).join(""):`<div class="empty" style="padding:24px 10px"><h3>No work added yet</h3><p>Add photos and details of jobs you have done. After the shop approves them, they show on your public portfolio.</p></div>`;
   box.innerHTML=`
@@ -3055,11 +3079,6 @@ function cwHydrate(){
   });
 }
 function cwNew(){cwState.form={id:null,date:ptToday(),title:"",note:"",keep:[],newImgs:[]};cwRender();$("cwFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});}
-function cwEdit(id){
-  const e=cwState.entries.find(x=>x.id===id);if(!e)return;
-  cwState.form={id:e.id,date:e.date||ptToday(),title:e.title,note:e.note,keep:[...e.images],newImgs:[],live:e.status==="Published"||e.status==="Approved"};
-  cwRender();$("cwFormCard")?.scrollIntoView({behavior:"smooth",block:"start"});
-}
 function cwCancel(){cwState.form=null;cwRender();}
 async function cwPickFiles(input){
   const f=cwState.form;if(!f)return;cwSyncForm();
@@ -3088,15 +3107,6 @@ async function cwSave(btn){
       await cwLoad(true);
     }catch(e){toast(e.message||"Could not save",5000);}
   });
-}
-async function cwDelete(id){
-  const en=cwState.entries.find(x=>x.id===id);
-  if(!confirm((en&&en.status==="Published"?"This work is on your public portfolio. ":"")+"Delete this work and its photos? This cannot be undone."))return;
-  try{
-    await apiPost({action:"deleteMyPortfolioEntry",entryId:id});
-    toast("Deleted");
-    await cwLoad(true);
-  }catch(e){toast(e.message||"Could not delete",5000);}
 }
 
 /* ===== structured address (village, panchayat, block, district, landmark, state; pincode separate, always last) ===== */
@@ -3334,7 +3344,7 @@ async function renderIdCardCanvasH(data,H){
   }
   ctx.textAlign="center";
   ctx.fillStyle=DEEP;ctx.font="800 15px Arial";
-  ctx.fillText("CUSTOMER IDENTITY CARD",LX+LW/2,PY+205);
+  ctx.fillText("IDENTITY CARD",LX+LW/2,PY+205);
   ctx.fillStyle=GOLD;ctx.font="700 13px Arial";
   ctx.fillText("AGALPUR, BALANGIR, ODISHA",LX+LW/2,PY+228);
 
@@ -4726,6 +4736,7 @@ async function refreshMyPayments(){
 }
 
 function handlePaymentsUpdate(list){
+  window.__payLoaded=true;
   const seen=readLS(LS_SEEN),changes=[];
   list.forEach(p=>{
     const prev=seen[p.id];
@@ -5317,8 +5328,9 @@ function renderAdminOrderDetail(o){
   $("adminOdSub").textContent=dt.d+(dt.t?" \u00b7 "+dt.t:"");
   $("adminOdBody").innerHTML=`
     <div class="od-card">
-      <div class="od-top"><select class="order-status-select" style="min-width:170px;font-weight:700" onchange="adminChangeOrderStatus(${oid},this.value)">${statusOptions.map(s=>`<option value="${s}" ${cur===s||(s==="Cancelled"&&cur.toLowerCase()==="canceled")?"selected":""}>${s}</option>`).join("")}</select><div class="od-sum total" style="border:0;margin:0;padding:0;gap:10px">${changed?`<s class="cart-meta">${money((Number(o.originalTotal)||0)+charge)}</s>`:""}<span>${money(grand)}</span></div></div>
-      <div class="cart-meta" style="margin-top:8px">Change the status here. When you set <b>Completed</b>, the customer sees <b>Delivered</b>.</div>
+      <div class="ao-banner" style="--c:${ORD_STRIPE[cur.toLowerCase()]||"#64748b"}"><div><small>Order status</small><b>${esc(cur)}</b></div><div class="ao-total">${changed?`<s>${money((Number(o.originalTotal)||0)+charge)}</s>`:""}<span>${money(grand)}</span></div></div>
+      <div class="ao-change"><label for="aoStatusSel">Update status</label><select id="aoStatusSel" class="order-status-select" onchange="adminChangeOrderStatus(${oid},this.value)">${statusOptions.map(s=>`<option value="${s}" ${cur===s||(s==="Cancelled"&&cur.toLowerCase()==="canceled")?"selected":""}>${s}</option>`).join("")}</select></div>
+      <div class="cart-meta" style="margin-top:8px">When you set <b>Completed</b>, the customer sees <b>Delivered</b>.</div>
       <div class="od-grid">
         <div class="od-cell"><small>Order date</small><b>${esc(dt.d)}</b></div>
         <div class="od-cell"><small>Items</small><b>${items.length}</b></div>
@@ -6393,6 +6405,7 @@ function myBalance(){
   return myPayments.filter(p=>["Pending","Failed","Partial","Verifying"].includes(p.status)).reduce((a,p)=>a+payable(p),0);
 }
 function renderMyPayments(){
+  updateHeroBalance();
   const box=$("customerPayments");
   if(!box)return;
   const rank={Pending:0,Failed:0,Partial:0,Verifying:1,Paid:2,Cancelled:3};
@@ -7256,7 +7269,18 @@ document.addEventListener("keydown",e=>{
 const copyPayAmount=()=>{const p=myPayments.find(x=>x.id===payAssistId);if(p)copyText(Number(payable(p)).toFixed(2),"Amount copied");};
 
 function catIcon(n){n=String(n).toLowerCase();const m=[[/cement/,"🏗️"],[/tmt|steel|rod|bar/,"🔩"],[/paint|distemper|putty/,"🎨"],[/tile|marble|granite/,"🧱"],[/pump|motor|water/,"💧"],[/sanitary|bath|toilet|wash/,"🚽"],[/plumb|pipe|fitting|tap/,"🔧"],[/hardware|tool/,"🛠️"],[/electric|wire|light/,"💡"]];for(const [r,i] of m)if(r.test(n))return i;return "📦";}
-function updateHeroStats(){try{const a=products.filter(p=>p.active!==false);const set=(i,v)=>{const e=document.getElementById(i);if(e)e.textContent=v;};const br=new Set(a.map(p=>p.brand).filter(Boolean)).size;set("hsProducts",a.length);set("hsCats",new Set(a.map(p=>String(p.category||"").trim()).filter(Boolean)).size);set("hsBrands",br);const r=document.getElementById("hsBrandsRow");if(r)r.style.display=br?"":"none";}catch(e){}}
+function updateHeroBalance(){
+  try{
+    const amt=document.getElementById("hbAmount"),note=document.getElementById("hbNote");
+    if(!amt||!note)return;
+    if(!window.__payLoaded){amt.textContent="\u2026";amt.style.color="#fff";note.textContent="Checking your account";return;}
+    const bal=myBalance();
+    amt.textContent=money(bal);
+    amt.style.color=bal>0?"#ffb454":"#6ee7a8";
+    note.textContent=bal>0?"Amount due to Bijaya Housing":"All clear. Nothing due";
+  }catch(e){}
+}
+function updateHeroStats(){updateHeroBalance();}
 const _renderCategoriesOrig=renderCategories;
 renderCategories=function(){_renderCategoriesOrig();updateHeroStats();};
 updateHeroStats();
