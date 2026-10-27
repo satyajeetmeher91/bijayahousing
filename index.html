@@ -711,7 +711,8 @@ body.admin-mode .langsel{display:none}
 
 /* --- Header: search fills the space between the brand and the cart --- */
 .nav{flex-wrap:nowrap!important}
-.nav-spacer{display:none!important}
+.nav-spacer{display:block!important;flex:1 1 0}
+.nav:has(.search:not(.hidden)) .nav-spacer{display:none!important}
 .nav .search{order:0!important;flex:1 1 0!important;width:auto!important;min-width:0;max-width:640px;margin:0 auto}
 @media(max-width:720px){
   .nav{height:60px;padding:0 10px!important;gap:7px!important}
@@ -815,7 +816,6 @@ body.admin-mode .langsel{display:none}
     </div>
     <div class="hero-stats hero-balance" id="heroBalance">
       <div><span>Payable balance</span><b id="hbAmount">&hellip;</b><span id="hbNote">Checking your account</span></div>
-    </div>
     </div>
   </section>
   
