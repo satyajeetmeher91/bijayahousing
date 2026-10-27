@@ -539,6 +539,48 @@ html.pp-mode body{background:#f5f1e8}
   #adminOrderDetailModal.modal.sheet .modal-head{border-radius:26px 26px 0 0;padding:18px 22px;background:var(--surface)}
   #adminOrderDetailModal .modal-body{padding:18px 22px 24px}
 }
+
+/* --- Customers & Payments: professional card lists --- */
+.lst-tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.lst-search{position:relative;flex:1 1 260px}
+.lst-search input{width:100%;padding:13px 14px 13px 42px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font:inherit;box-sizing:border-box}
+.lst-search span{position:absolute;left:15px;top:50%;transform:translateY(-50%);opacity:.6;pointer-events:none}
+.lst-tabs{display:flex;gap:6px;overflow-x:auto;padding:4px;margin-top:10px;background:var(--surface2);border-radius:14px;scrollbar-width:none}
+.lst-tabs::-webkit-scrollbar{display:none}
+.lst-tab{border:0;background:none;padding:8px 13px;border-radius:10px;font-weight:700;font-size:13px;color:var(--muted);white-space:nowrap;cursor:pointer;font-family:inherit}
+.lst-tab b{margin-left:5px;font-size:11px;opacity:.75}
+.lst-tab.on{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(15,23,42,.14)}
+.lst{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;margin-top:14px}
+.lc{position:relative;display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 14px 14px 18px;cursor:pointer;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.05);transition:box-shadow .15s,transform .15s}
+.lc:hover{box-shadow:0 8px 22px rgba(15,23,42,.12);transform:translateY(-1px)}
+.lc:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--stripe,#94a3b8)}
+.lc-chk{flex:0 0 auto}
+.lc-av{width:46px;height:46px;flex:0 0 46px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:17px;color:#fff;background:linear-gradient(135deg,var(--stripe,#94a3b8),color-mix(in srgb,var(--stripe,#94a3b8) 60%,#000))}
+.lc-main{min-width:0;flex:1}
+.lc-name{display:block;margin:0;padding:0;border:0;background:none;text-align:left;font:inherit;font-weight:800;font-size:16px;line-height:1.25;color:var(--text);cursor:pointer;word-break:break-word}
+.lc-sub{display:flex;gap:6px 8px;flex-wrap:wrap;align-items:center;margin-top:5px;font-size:12px;color:var(--muted)}
+.lc-due{font-weight:800;color:var(--danger,#b42318);font-size:12px}
+.lc-side{display:grid;gap:5px;justify-items:end;flex:0 0 auto;text-align:right}
+.lc-amt{font-size:18px;font-weight:900;line-height:1.1}
+.lc-chev{color:var(--muted);font-size:20px;line-height:1}
+.lst-more{width:100%;margin-top:14px}
+@media(max-width:560px){.lst{grid-template-columns:1fr}}
+/* payment details: same centered card on PC as the order screen */
+@media(min-width:900px){
+  #adminPaymentDetailModal.modal.sheet{width:min(720px,calc(100% - 48px));height:auto;max-height:92dvh;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:26px;box-shadow:0 30px 90px rgba(15,23,42,.35);animation:none}
+  #adminPaymentDetailModal.modal.sheet .modal-head{border-radius:26px 26px 0 0;padding:18px 22px;background:var(--surface)}
+  #adminPaymentDetailModal .modal-body{padding:18px 22px 24px}
+}
+.ao-minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.ao-mini{background:var(--surface2);border-radius:14px;padding:10px 12px}
+.ao-mini small{display:block;color:var(--muted);font-size:11px;font-weight:700}
+.ao-mini b{font-size:15px}
+.pd-rows{display:grid;gap:0}
+.pd-row{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.pd-row:last-child{border-bottom:0}
+.pd-row span{color:var(--muted);flex:0 0 auto}
+.pd-row b{text-align:right;word-break:break-word}
 /* --- Admin products list --- */
 .ap-tabs{display:flex;gap:6px;overflow-x:auto;padding:4px;margin-top:12px;background:var(--surface2);border-radius:14px;scrollbar-width:none}
 .ap-tabs::-webkit-scrollbar{display:none}
@@ -909,21 +951,27 @@ body.admin-mode .langsel{display:none}
 
     <div id="adminCustomersTab" class="hidden"><div class="panel">
       <div class="toolbar"><h3 class="grow" style="margin:0">Customers</h3><button type="button" class="primary" onclick="openAdminCustomerForm()">+ Create Customer</button><button type="button" class="outline" onclick="loadAdminCustomers(true)">↻ Refresh</button></div>
-      <div class="toolbar">
+      <div class="toolbar" style="display:none">
         <div class="field"><select id="custStatusFilter" onchange="renderAdminCustomers()"><option value="All">All statuses</option><option value="Pending">Pending</option><option value="Active">Active</option><option value="Blocked">Blocked</option></select></div>
       </div>
       <div class="toolbar bulkbar hidden" id="custBulkBar"><b id="custBulkCount"></b><button type="button" class="outline" onclick="selectAllPendingCust(true)">Select all pending</button><button type="button" class="outline" onclick="selectAllPendingCust(false)">Clear</button><button type="button" class="primary" id="custApproveBtn" onclick="approveSelected()">Approve selected</button></div>
-      <div class="tablewrap" style="margin-top:12px"><table class="table rtable"><thead><tr><th></th><th>Customer</th><th>Phone</th><th>Customer ID</th><th>Status</th><th>Due</th><th>Registered</th><th>Action</th></tr></thead><tbody id="adminCustomersBody"></tbody></table></div>
+      <div class="lst-tools"><div class="lst-search"><input id="custSearch" type="search" autocomplete="off" placeholder="Search name, ID or phone" oninput="custSearchChange(this.value)"><span aria-hidden="true">&#128269;</span></div></div>
+      <div class="lst-tabs" id="custTabs" role="tablist" aria-label="Customer status"></div>
+      <div id="adminCustomersBody" class="lst"></div>
+      <button type="button" class="outline lst-more hidden" id="custMore" onclick="custShowMore()">Show more customers</button>
     </div></div>
 
     <div id="adminPaymentsTab" class="hidden"><div class="panel">
       <div class="toolbar"><h3 class="grow" style="margin:0">Payment Requests</h3><button type="button" class="primary" onclick="openPaymentForm()">+ New Request</button><button type="button" class="outline" onclick="openReconcile()">🏦 Match bank statement</button><button type="button" class="outline" onclick="remindOverdue()">🔔 Remind overdue</button><button type="button" class="outline" onclick="loadAdminPayments(false,true)">↻ Refresh</button></div>
-      <div class="toolbar">
+      <div class="toolbar" style="display:none">
         <div class="field"><select id="payAdminFilter" onchange="renderAdminPayments()"><option value="All">All statuses</option><option value="Due">Due (open requests)</option><option value="Overdue">Overdue (7+ days)</option><option value="Partial">Partial</option><option value="Pending">Pending</option><option value="Verifying">Verifying</option><option value="Paid">Paid</option><option value="Failed">Failed</option><option value="Cancelled">Cancelled</option></select></div>
       </div>
       <div class="order-summary-bar" id="paySummaryBar"></div>
       <div class="toolbar bulkbar hidden" id="payBulkBar"><b id="payBulkCount"></b><button type="button" class="primary" onclick="bulkPay('status','Paid')">Mark Paid</button><button type="button" class="outline" onclick="bulkPay('remind')">🔔 Remind</button><button type="button" class="outline" onclick="bulkPay('status','Cancelled')">Cancel requests</button><button type="button" class="outline" onclick="clearPaySel()">Clear</button></div>
-      <div class="tablewrap"><table class="table rtable"><thead><tr><th></th><th>Request</th><th>Customer</th><th>Amount</th><th>Details</th><th>Status</th><th>Action</th></tr></thead><tbody id="adminPaymentsBody"></tbody></table></div>
+      <div class="lst-tools"><div class="lst-search"><input id="paySearch" type="search" autocomplete="off" placeholder="Search customer, request ID or phone" oninput="paySearchChange(this.value)"><span aria-hidden="true">&#128269;</span></div></div>
+      <div class="lst-tabs" id="payTabs" role="tablist" aria-label="Payment status"></div>
+      <div id="adminPaymentsBody" class="lst"></div>
+      <button type="button" class="outline lst-more hidden" id="payMore" onclick="payShowMore()">Show more requests</button>
     </div></div>
 
     <div id="adminReportsTab" class="hidden"><div class="panel">
@@ -1126,6 +1174,10 @@ body.admin-mode .langsel{display:none}
 <div class="modal sheet no-i18n" id="adminOrderDetailModal">
   <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0" id="adminOdTitle">Order</h2><div class="pf-sub" id="adminOdSub"></div></div></div>
   <div class="modal-body"><div id="adminOdBody"></div></div>
+</div>
+<div class="modal sheet no-i18n" id="adminPaymentDetailModal">
+  <div class="modal-head"><button type="button" class="back-btn" onclick="closeModal()" aria-label="Back">&#8592;</button><div class="grow"><h2 style="margin:0" id="adminPdTitle">Payment</h2><div class="pf-sub" id="adminPdSub"></div></div></div>
+  <div class="modal-body"><div id="adminPdBody"></div></div>
 </div>
 <div class="modal no-i18n" id="priceEditModal">
   <div class="modal-head">
@@ -6848,30 +6900,41 @@ async function saveDelivery(){
 }
 
 /* --- customers: due column + bulk approve --- */
+window.__custQ="";window.__custLimit=30;
+function custSearchChange(v){window.__custQ=v;window.__custLimit=30;renderAdminCustomers();}
+function custShowMore(){window.__custLimit+=30;renderAdminCustomers();}
+function setCustFilter(v){const s=$("custStatusFilter");if(s)s.value=v;window.__custLimit=30;renderAdminCustomers();}
+const CUST_STRIPE={active:"#16a34a",pending:"#f59e0b",blocked:"#dc2626"};
 function renderAdminCustomers(){
   const body=$("adminCustomersBody");if(!body)return;
   const f=$("custStatusFilter")?.value||"All";
-  const list=adminCustomers.filter(c=>f==="All"||String(c.status||"Pending").toLowerCase()===f.toLowerCase());
-  [...selCust].forEach(id=>{if(!list.some(c=>c.id===id))selCust.delete(id);});
-  body.innerHTML=list.length?list.map(c=>{
-    const st=String(c.status||"Pending").toLowerCase(),due=customerDue(c.id);
-    const acts=[];
-    if(st==="pending")acts.push(`<button type="button" class="primary" onclick="approveCustomer(${arg(c.id)})">Approve</button>`);
-    if(st==="active")acts.push(`<button type="button" class="outline" onclick="openPaymentForm(${arg(c.id)})">💳 Request</button>`);
-    acts.push(`<button type="button" class="outline" onclick="openCustomerDetailModal(${arg(c.id)})">Manage</button>`);
-    return `<tr>
-      <td data-label="Select" class="chk"><input type="checkbox" ${selCust.has(c.id)?"checked":""} ${st==="pending"?"":"disabled"} onchange="toggleCustSel(${arg(c.id)},this.checked)" aria-label="Select customer"></td>
-      <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(c.id)})"><b>${esc(c.name)}</b></button><br><span class="cart-meta">${esc(c.type||"Customer")}</span>${c.portfolioPending?`<span class="cust-pend" title="Portfolio work waiting for your review">&#128247; ${c.portfolioPending} to review</span>`:""}</td>
-      <td data-label="Phone">${esc(c.phone||"")}</td>
-      <td data-label="Customer ID"><span class="customer-id-badge">${esc(c.id||"—")}</span></td>
-      <td data-label="Status"><span class="status ${customerStatusClass(c.status)}">${esc(c.status||"Pending")}</span></td>
-      <td data-label="Due">${due>0?`<b style="color:var(--danger)">${money(due)}</b>`:`<span class="cart-meta">—</span>`}</td>
-      <td data-label="Registered">${fmtD(c.dateRegistered)}</td>
-      <td data-label="Action"><div class="row-actions">${acts.join("")}</div></td>
-    </tr>`;
-  }).join(""):`<tr><td colspan="8" class="full"><div class="empty"><h3>No customers found</h3></div></td></tr>`;
+  const stOf=c=>String(c.status||"Pending").toLowerCase();
+  const counts={All:adminCustomers.length,Pending:0,Active:0,Blocked:0};
+  adminCustomers.forEach(c=>{const k=stOf(c);if(k==="pending")counts.Pending++;else if(k==="active")counts.Active++;else if(k==="blocked")counts.Blocked++;});
+  const tabs=$("custTabs");
+  if(tabs)tabs.innerHTML=["All","Pending","Active","Blocked"].map(t=>`<button type="button" role="tab" class="lst-tab${t===f?" on":""}" aria-selected="${t===f}" onclick="setCustFilter('${t}')">${t}<b>${counts[t]}</b></button>`).join("");
+  const q=String(window.__custQ||"").trim().toLowerCase();
+  let list=adminCustomers.filter(c=>f==="All"||stOf(c)===f.toLowerCase());
+  if(q)list=list.filter(c=>String(c.name||"").toLowerCase().includes(q)||String(c.id||"").toLowerCase().includes(q)||digits(c.phone).includes(digits(q)||"\u0000")||String(c.type||"").toLowerCase().includes(q));
+  [...selCust].forEach(id=>{if(!adminCustomers.some(c=>c.id===id&&stOf(c)==="pending"))selCust.delete(id);});
+  const shown=list.slice(0,window.__custLimit);
+  body.innerHTML=shown.length?shown.map(c=>{
+    const st=stOf(c),due=customerDue(c.id),col=CUST_STRIPE[st]||"#94a3b8";
+    const initial=esc(String(c.name||"?").trim().charAt(0).toUpperCase()||"?");
+    return `<div class="lc" style="--stripe:${col}" role="button" tabindex="0" onclick="openCustomerDetailModal(${arg(c.id)})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCustomerDetailModal(${arg(c.id)})}">
+      ${st==="pending"?`<input class="lc-chk" type="checkbox" ${selCust.has(c.id)?"checked":""} onclick="event.stopPropagation()" onchange="toggleCustSel(${arg(c.id)},this.checked)" aria-label="Select customer">`:""}
+      <div class="lc-av" aria-hidden="true">${initial}</div>
+      <div class="lc-main">
+        <button type="button" class="lc-name" onclick="event.stopPropagation();openCustomerDetailModal(${arg(c.id)})">${esc(c.name||"Unnamed")}</button>
+        <div class="lc-sub"><span class="customer-id-badge">${esc(c.id||"?")}</span>${due>0?`<span class="lc-due">Due ${money(due)}</span>`:""}${c.portfolioPending?`<span class="cust-pend" title="Portfolio work waiting for your review">&#128247; ${c.portfolioPending}</span>`:""}</div>
+      </div>
+      <div class="lc-side"><span class="status ${customerStatusClass(c.status)}">${esc(c.status||"Pending")}</span><span class="lc-chev" aria-hidden="true">&#8250;</span></div>
+    </div>`;
+  }).join(""):`<div class="empty" style="grid-column:1/-1"><h3>No customers found</h3></div>`;
+  const more=$("custMore");if(more)more.classList.toggle("hidden",list.length<=shown.length);
   updateCustBulk();
 }
+
 function toggleCustSel(id,on){on?selCust.add(id):selCust.delete(id);updateCustBulk();}
 function selectAllPendingCust(on){
   adminCustomers.filter(c=>String(c.status).toLowerCase()==="pending").forEach(c=>on?selCust.add(c.id):selCust.delete(c.id));
@@ -6927,6 +6990,11 @@ function payDetails(p){
     p.customerPaidOn?`<span class="cart-meta">Customer reported paid: ${fmtDT(p.customerPaidOn)}</span>`:"",
     p.paidOn?`<span class="cart-meta">Confirmed: ${fmtDT(p.paidOn)}</span>`:""].filter(Boolean).join("<br>");
 }
+window.__payQ="";window.__payLimit=30;window.__apdId=null;
+function paySearchChange(v){window.__payQ=v;window.__payLimit=30;renderAdminPayments();}
+function payShowMore(){window.__payLimit+=30;renderAdminPayments();}
+function setPayFilter(v){const s=$("payAdminFilter");if(s)s.value=v;window.__payLimit=30;renderAdminPayments();}
+const PAY_STRIPE={Paid:"#16a34a",Pending:"#f59e0b",Partial:"#3b82f6",Verifying:"#8b5cf6",Failed:"#dc2626",Cancelled:"#94a3b8"};
 function renderAdminPayments(){
   const body=$("adminPaymentsBody");if(!body)return;
   const f=$("payAdminFilter")?.value||"All";
@@ -6934,20 +7002,79 @@ function renderAdminPayments(){
   adminPayments.forEach(p=>{const s=sum[p.status];if(s){s.n++;s.amt+=p.amount;}});
   $("paySummaryBar").innerHTML=PAY_STATUSES.map(s=>`<span class="order-summary-pill">${s}<strong>${sum[s].n}</strong> <span class="cart-meta">${money(sum[s].amt)}</span></span>`).join("");
   const rank={Verifying:0,Pending:1,Partial:1,Failed:2,Paid:3,Cancelled:4};
-  const match=p=>f==="All"||(f==="Due"?isDue(p):f==="Overdue"?isOverdue(p):p.status===f);
-  const list=adminPayments.filter(match).sort((a,b)=>(rank[a.status]-rank[b.status])||(new Date(b.date)-new Date(a.date)));
+  const match=(p,flt)=>flt==="All"||(flt==="Due"?isDue(p):flt==="Overdue"?isOverdue(p):p.status===flt);
+  const tabs=$("payTabs");
+  if(tabs)tabs.innerHTML=["All","Due","Overdue","Pending","Partial","Verifying","Paid","Failed","Cancelled"].map(t=>`<button type="button" role="tab" class="lst-tab${t===f?" on":""}" aria-selected="${t===f}" onclick="setPayFilter('${t}')">${t}<b>${adminPayments.filter(p=>match(p,t)).length}</b></button>`).join("");
+  const q=String(window.__payQ||"").trim().toLowerCase();
+  let list=adminPayments.filter(p=>match(p,f));
+  if(q)list=list.filter(p=>String(p.customerName||"").toLowerCase().includes(q)||String(p.id||"").toLowerCase().includes(q)||String(p.customerId||"").toLowerCase().includes(q)||digits(p.phone).includes(digits(q)||"\u0000"));
+  list=[...list].sort((a,b)=>(rank[a.status]-rank[b.status])||(new Date(b.date)-new Date(a.date)));
   [...selPay].forEach(id=>{if(!adminPayments.some(p=>p.id===id))selPay.delete(id);});
-  body.innerHTML=list.length?list.map(p=>`<tr>
-    <td data-label="Select" class="chk"><input type="checkbox" ${selPay.has(p.id)?"checked":""} onchange="togglePaySel(${arg(p.id)},this.checked)" aria-label="Select request"></td>
-    <td data-label="Request"><b>${esc(p.id)}</b><br><span class="cart-meta">${fmtDT(p.date)}</span>${isOverdue(p)?`<br><span class="status st-failed">Overdue</span>`:""}</td>
-    <td data-label="Customer"><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(p.customerId)})"><b>${esc(p.customerName)}</b></button><br><span class="cart-meta">${esc(p.phone)}</span></td>
-    <td data-label="Amount"><b>${money(p.amount)}</b>${p.paidAmount>0&&p.status!=="Paid"?`<br><span class="cart-meta">Due ${money(p.remaining)}</span>`:""}</td>
-    <td data-label="Details" class="stack">${payDetails(p)}</td>
-    <td data-label="Status">${payStatusSelect(p)}</td>
-    <td data-label="Action"><div class="row-actions">${payActions(p)}</div></td>
-  </tr>`).join(""):`<tr><td colspan="7" class="full"><div class="empty"><h3>No payment requests</h3></div></td></tr>`;
+  const shown=list.slice(0,window.__payLimit);
+  body.innerHTML=shown.length?shown.map(p=>{
+    const col=PAY_STRIPE[p.status]||"#94a3b8";
+    return `<div class="lc" style="--stripe:${col}" role="button" tabindex="0" onclick="openAdminPaymentDetail(${arg(p.id)})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openAdminPaymentDetail(${arg(p.id)})}">
+      <input class="lc-chk" type="checkbox" ${selPay.has(p.id)?"checked":""} onclick="event.stopPropagation()" onchange="togglePaySel(${arg(p.id)},this.checked)" aria-label="Select request">
+      <div class="lc-main">
+        <button type="button" class="lc-name" onclick="event.stopPropagation();openAdminPaymentDetail(${arg(p.id)})">${esc(p.customerName||"Customer")}</button>
+        <div class="lc-sub"><span class="customer-id-badge">${esc(p.id)}</span><span>${esc(fmtD(p.date))}</span>${isOverdue(p)?`<span class="status st-failed">Overdue</span>`:""}</div>
+      </div>
+      <div class="lc-side"><span class="lc-amt">${money(p.amount)}</span><span class="status ${stCls(p.status)}">${esc(p.status)}</span>${p.paidAmount>0&&p.status!=="Paid"?`<span class="lc-due">Due ${money(p.remaining)}</span>`:""}</div>
+    </div>`;
+  }).join(""):`<div class="empty" style="grid-column:1/-1"><h3>No payment requests</h3></div>`;
+  const more=$("payMore");if(more)more.classList.toggle("hidden",list.length<=shown.length);
   updatePayBulk();
+  refreshAdminPaymentDetail();
 }
+function openAdminPaymentDetail(id){
+  const p=adminPayments.find(x=>x.id===id);
+  if(!p){toast("Payment not found. Please refresh.");return;}
+  window.__apdId=id;
+  renderAdminPaymentDetail(p);
+  openModal("adminPaymentDetailModal");
+}
+function refreshAdminPaymentDetail(){
+  if(!$("adminPaymentDetailModal")?.classList.contains("show"))return;
+  const p=adminPayments.find(x=>x.id===window.__apdId);
+  if(p)renderAdminPaymentDetail(p);
+}
+function renderAdminPaymentDetail(p){
+  const col=PAY_STRIPE[p.status]||"#64748b",pid=arg(p.id),phone=digits(p.phone);
+  const row=(k,v)=>v?`<div class="pd-row"><span>${k}</span><b>${v}</b></div>`:"";
+  $("adminPdTitle").textContent="Payment "+p.id;
+  $("adminPdSub").textContent=fmtDT(p.date);
+  $("adminPdBody").innerHTML=`
+    <div class="od-card">
+      <div class="ao-banner" style="--c:${col}"><div><small>Payment status</small><b>${esc(p.status)}${isOverdue(p)?" &middot; Overdue":""}</b></div><div class="ao-total"><span>${money(p.amount)}</span></div></div>
+      <div class="ao-minis">
+        <div class="ao-mini"><small>Requested</small><b>${money(p.amount)}</b></div>
+        <div class="ao-mini"><small>Received</small><b>${money(p.paidAmount)}</b></div>
+        <div class="ao-mini"><small>Remaining</small><b style="${p.remaining>0&&p.status!=="Cancelled"?"color:var(--danger,#b42318)":""}">${money(p.status==="Cancelled"?0:p.remaining)}</b></div>
+      </div>
+      <div class="ao-change"><label for="apdStatusSel">Update status</label>${payStatusSelect(p).replace('<select ','<select id="apdStatusSel" ')}</div>
+    </div>
+    <div class="od-card"><h3>Customer</h3>
+      <div><button type="button" class="link-button" onclick="openCustomerDetailModal(${arg(p.customerId)})"><b>${esc(p.customerName||"Customer")}</b></button> <span class="customer-id-badge">${esc(p.customerId||"")}</span></div>
+      ${phone?`<div style="margin-top:6px"><a href="tel:${esc(phone)}">${esc(p.phone)}</a></div>`:""}
+      <div class="pt-row" style="margin-top:10px">
+        ${phone?`<a class="outline" href="tel:${esc(phone)}">&#128222; Call</a><a class="outline" href="https://wa.me/91${esc(phone.slice(-10))}" target="_blank" rel="noopener">WhatsApp</a>`:""}
+        <button type="button" class="outline" onclick="openCustomerDetailModal(${arg(p.customerId)})">View profile</button>
+      </div>
+    </div>
+    <div class="od-card"><h3>Details</h3><div class="pd-rows">
+      ${row("Request date",esc(fmtDT(p.date)))}
+      ${row("Note",esc(p.note||""))}
+      ${row("UPI ID",esc(p.upiId||""))}
+      ${row("Customer says paid",p.reportedAmount>0?esc(money(p.reportedAmount)):"")}
+      ${row("Customer reported on",p.customerPaidOn?esc(fmtDT(p.customerPaidOn)):"")}
+      ${row("UTR number",esc(p.utr||""))}
+      ${row("Confirmed on",p.paidOn?esc(fmtDT(p.paidOn)):"")}
+      ${row("Last reminder",p.remindedOn?esc(fmtDT(p.remindedOn)):"")}
+      ${row("Last updated",p.updatedOn?esc(fmtDT(p.updatedOn))+(p.updatedBy?" by "+esc(p.updatedBy):""):"")}
+    </div></div>
+    <div class="od-card"><h3>Actions</h3><div class="od-actions">${payActions(p)}</div></div>`;
+}
+
 function togglePaySel(id,on){on?selPay.add(id):selPay.delete(id);updatePayBulk();}
 function clearPaySel(){selPay.clear();renderAdminPayments();}
 function updatePayBulk(){
